@@ -49,6 +49,13 @@ class DataSourceClient
         return $decoded;
     }
 
+    public function treeAsset(string $file): string
+    {
+        $baseUrl = str_replace('/data.json', '', config('games.poe2.tree_url'));
+
+        return $this->fetch("tree/assets/{$file}", "{$baseUrl}/assets/{$file}");
+    }
+
     public function pobUniquesLua(string $file): string
     {
         $url = config('games.poe2.pob_uniques_base_url')."/{$file}.lua";

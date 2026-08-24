@@ -48,6 +48,7 @@ class Poe2Importer
         $this->importStatTranslations($gameVersion, $this->client->repoeJson('stat_translations/stat_descriptions'));
         $this->importTree($gameVersion, $this->client->treeJson());
         $this->importUniques($gameVersion);
+        $this->publishTreeAssets();
 
         $gameVersion->update([
             'fingerprint' => $this->client->fingerprint(),
@@ -330,6 +331,25 @@ class Poe2Importer
         }
 
         $this->counts['uniques'] = $this->replace(UniqueItem::class, $gameVersion, array_values($rows), ['name']);
+    }
+
+    /**
+     * Publish the official passive tree sprite sheet (icon images + frame
+     * coordinates) so build pages can render passive icons locally.
+     */
+    protected function publishTreeAssets(): void
+    {
+        $directory = public_path('games/poe2/tree');
+
+        if (! is_dir($directory)) {
+            mkdir($directory, 0755, true);
+        }
+
+        foreach (['skills.webp', 'skills.json'] as $file) {
+            file_put_contents("{$directory}/{$file}", $this->client->treeAsset($file));
+        }
+
+        $this->counts['tree_assets'] = 2;
     }
 
     /** @var array<string, string>|null name => item_class lookup */

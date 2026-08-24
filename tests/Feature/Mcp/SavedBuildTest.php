@@ -63,13 +63,14 @@ test('get_build returns a saved build by public id', function () {
         ->assertHasErrors();
 });
 
-test('the build page renders with escaped markdown guide', function () {
+test('the build page renders with escaped markdown guide and hover entities', function () {
     Poe2Server::tool(SaveBuildTool::class, [
         'name' => 'Spark Starter',
-        'guide_markdown' => "## Concept\n\n<script>alert(1)</script> Roll and zap.",
+        'guide_markdown' => "## Concept\n\n<script>alert(1)</script> Roll and zap with Spark. Grab Astramentis and the Chaos Inoculation keystone.",
         'build' => [
             'class' => 'Witch',
             'skills' => [['gem' => 'Spark', 'supports' => ['Pierce']]],
+            'passives' => ['keystones' => ['Chaos Inoculation']],
             'resistances' => ['fire' => 75],
         ],
     ])->assertOk();
@@ -84,6 +85,18 @@ test('the build page renders with escaped markdown guide', function () {
         ->and($page['props']['build']['name'])->toBe('Spark Starter')
         ->and($page['props']['build']['guide_html'])->toContain('<h2>Concept</h2>')
         ->and($page['props']['build']['guide_html'])->not->toContain('<script>alert(1)</script>');
+
+    // Hover-card entity dictionary covers referenced gems/passives and
+    // guide-mentioned uniques; guide mentions are wrapped in entity spans.
+    $entities = $page['props']['entities'];
+
+    expect($entities)->toHaveKeys(['Spark', 'Pierce', 'Chaos Inoculation', 'Astramentis'])
+        ->and($entities['Spark']['kind'])->toBe('gem')
+        ->and($entities['Pierce']['kind'])->toBe('support')
+        ->and($entities['Chaos Inoculation']['passive_kind'])->toBe('keystone')
+        ->and($entities['Astramentis']['mods'])->toContain('+(50-100) to all Attributes')
+        ->and($page['props']['build']['guide_html'])->toContain('data-entity="Astramentis"')
+        ->and($page['props']['build']['guide_html'])->toContain('data-entity="Spark"');
 });
 
 test('unknown build ids 404', function () {

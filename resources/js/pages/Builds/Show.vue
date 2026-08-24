@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
 import { home } from '@/routes';
 
 interface SkillSetup {
@@ -29,6 +30,22 @@ interface Validation {
     suggestions: string[];
 }
 
+interface Entity {
+    kind: 'gem' | 'support' | 'passive' | 'unique';
+    name: string;
+    color?: string | null;
+    description?: string | null;
+    tags?: string[];
+    spirit_reservation?: number | null;
+    stat_text?: string[];
+    passive_kind?: string;
+    stats?: string[];
+    sprite?: { x: number; y: number; w: number; h: number } | null;
+    base_name?: string;
+    item_class?: string | null;
+    mods?: string[];
+}
+
 const props = defineProps<{
     build: {
         id: string;
@@ -40,16 +57,94 @@ const props = defineProps<{
         created_at: string;
         guide_html: string | null;
     };
+    entities: Record<string, Entity>;
+    spriteUrl: string;
 }>();
 
 const def = props.build.definition;
 const validation = props.build.validation as Validation;
 const identity = [def.class, def.ascendancy].filter(Boolean).join(' · ');
+
+// Case-insensitive entity lookup (guide mentions may differ in casing).
+const entityIndex = computed(() => {
+    const index: Record<string, Entity> = {};
+    for (const entity of Object.values(props.entities)) {
+        index[entity.name.toLowerCase()] = entity;
+    }
+    return index;
+});
+
+function entityFor(name: string): Entity | null {
+    return entityIndex.value[name.toLowerCase()] ?? null;
+}
+
+// One floating hover card, driven by delegation so it also works for
+// data-entity spans inside the server-rendered guide HTML.
+const hovered = ref<Entity | null>(null);
+const cardStyle = ref<Record<string, string>>({});
+let hideTimer: ReturnType<typeof setTimeout> | null = null;
+
+function showCardFor(target: HTMLElement) {
+    const name = target.dataset.entity;
+    const entity = name ? entityFor(name) : null;
+    if (!entity) return;
+
+    if (hideTimer) clearTimeout(hideTimer);
+
+    const rect = target.getBoundingClientRect();
+    const cardWidth = 340;
+    const left = Math.min(Math.max(8, rect.left), window.innerWidth - cardWidth - 8);
+    const below = rect.bottom + 8;
+    const flip = below > window.innerHeight - 260;
+
+    cardStyle.value = {
+        left: `${left}px`,
+        ...(flip ? { bottom: `${window.innerHeight - rect.top + 8}px` } : { top: `${below}px` }),
+    };
+    hovered.value = entity;
+}
+
+function onOver(event: MouseEvent) {
+    const target = (event.target as HTMLElement).closest<HTMLElement>('[data-entity]');
+    if (target) showCardFor(target);
+}
+
+function onOut(event: MouseEvent) {
+    const target = (event.target as HTMLElement).closest<HTMLElement>('[data-entity]');
+    if (!target) return;
+    hideTimer = setTimeout(() => (hovered.value = null), 120);
+}
+
+const gemColors: Record<string, string> = {
+    r: 'bg-red-500/20 text-red-400 border-red-500/40',
+    g: 'bg-green-500/20 text-green-400 border-green-500/40',
+    b: 'bg-blue-500/20 text-blue-400 border-blue-500/40',
+    w: 'bg-zinc-500/20 text-zinc-300 border-zinc-500/40',
+};
+
+function gemBadgeClass(name: string): string {
+    const color = entityFor(name)?.color ?? 'w';
+    return gemColors[color] ?? gemColors.w;
+}
+
+// Icons render at the sheet's native size — scaling would require knowing the
+// full sheet dimensions to keep background-size and -position in step.
+function spriteStyle(entity: Entity): Record<string, string> | null {
+    if (!entity.sprite) return null;
+    const { x, y, w, h } = entity.sprite;
+    return {
+        width: `${w}px`,
+        height: `${h}px`,
+        backgroundImage: `url(${props.spriteUrl})`,
+        backgroundPosition: `-${x}px -${y}px`,
+        backgroundRepeat: 'no-repeat',
+    };
+}
 </script>
 
 <template>
     <Head :title="build.name" />
-    <div class="min-h-screen bg-zinc-950 text-zinc-100">
+    <div class="min-h-screen bg-zinc-950 text-zinc-100" @mouseover="onOver" @mouseout="onOut">
         <div class="mx-auto max-w-3xl px-6 py-12">
             <Link :href="home()" class="text-sm text-zinc-500 hover:text-zinc-300">← PoE2 Theorycrafter</Link>
 
@@ -85,10 +180,22 @@ const identity = [def.class, def.ascendancy].filter(Boolean).join(' · ');
             <section class="mb-10">
                 <h2 class="mb-3 text-lg font-semibold text-white">Skill setups</h2>
                 <div class="divide-y divide-zinc-800 rounded-lg border border-zinc-800">
-                    <div v-for="setup in def.skills" :key="setup.gem" class="flex flex-wrap items-baseline gap-2 p-4">
-                        <span class="font-semibold text-amber-400">{{ setup.gem }}</span>
-                        <span v-if="setup.supports?.length" class="text-sm text-zinc-400">
-                            ← {{ setup.supports.join(', ') }}
+                    <div v-for="setup in def.skills" :key="setup.gem" class="flex flex-wrap items-center gap-x-3 gap-y-2 p-4">
+                        <span
+                            class="flex h-8 w-8 items-center justify-center rounded-md border font-bold"
+                            :class="gemBadgeClass(setup.gem)"
+                        >
+                            {{ setup.gem.charAt(0) }}
+                        </span>
+                        <span class="entity-ref font-semibold text-amber-400" :data-entity="setup.gem">{{ setup.gem }}</span>
+                        <span v-if="setup.supports?.length" class="flex flex-wrap items-center gap-1.5 text-sm text-zinc-400">
+                            ←
+                            <span
+                                v-for="support in setup.supports"
+                                :key="support"
+                                class="entity-ref rounded bg-zinc-900 px-2 py-0.5"
+                                :data-entity="support"
+                            >{{ support }}</span>
                         </span>
                     </div>
                 </div>
@@ -104,12 +211,23 @@ const identity = [def.class, def.ascendancy].filter(Boolean).join(' · ');
             >
                 <div v-if="def.passives?.keystones?.length || def.passives?.notables?.length">
                     <h2 class="mb-3 text-lg font-semibold text-white">Key passives</h2>
-                    <ul class="space-y-1 text-sm">
-                        <li v-for="keystone in def.passives?.keystones ?? []" :key="keystone" class="text-amber-400">
-                            {{ keystone }} <span class="text-zinc-600">(keystone)</span>
-                        </li>
-                        <li v-for="notable in def.passives?.notables ?? []" :key="notable" class="text-zinc-300">
-                            {{ notable }}
+                    <ul class="space-y-2 text-sm">
+                        <li
+                            v-for="passive in [...(def.passives?.keystones ?? []), ...(def.passives?.notables ?? [])]"
+                            :key="passive"
+                            class="flex items-center gap-2"
+                        >
+                            <span
+                                v-if="entityFor(passive)?.sprite"
+                                class="inline-block shrink-0 rounded-sm"
+                                :style="spriteStyle(entityFor(passive)!)!"
+                            />
+                            <span
+                                class="entity-ref"
+                                :class="entityFor(passive)?.passive_kind === 'keystone' ? 'text-amber-400' : 'text-zinc-300'"
+                                :data-entity="passive"
+                            >{{ passive }}</span>
+                            <span v-if="entityFor(passive)?.passive_kind === 'keystone'" class="text-zinc-600">(keystone)</span>
                         </li>
                     </ul>
                 </div>
@@ -135,10 +253,84 @@ const identity = [def.class, def.ascendancy].filter(Boolean).join(' · ');
                 PoE2 Theorycrafter MCP server. Not affiliated with Grinding Gear Games.
             </footer>
         </div>
+
+        <!-- Floating entity hover card -->
+        <Transition name="fade">
+            <div
+                v-if="hovered"
+                class="pointer-events-none fixed z-50 w-[340px] rounded-lg border border-zinc-700 bg-zinc-900 p-4 shadow-xl shadow-black/50"
+                :style="cardStyle"
+            >
+                <!-- Gem / support -->
+                <template v-if="hovered.kind === 'gem' || hovered.kind === 'support'">
+                    <div class="mb-1 flex items-center gap-2">
+                        <span
+                            class="flex h-6 w-6 items-center justify-center rounded border text-xs font-bold"
+                            :class="gemColors[hovered.color ?? 'w'] ?? gemColors.w"
+                        >{{ hovered.name.charAt(0) }}</span>
+                        <span class="font-semibold text-white">{{ hovered.name }}</span>
+                        <span class="text-xs text-zinc-500 uppercase">{{ hovered.kind }}</span>
+                    </div>
+                    <p v-if="hovered.tags?.length" class="mb-2 text-xs text-zinc-500">{{ hovered.tags.join(' · ') }}</p>
+                    <p v-if="hovered.description" class="mb-2 text-sm text-zinc-400">{{ hovered.description }}</p>
+                    <p v-if="hovered.spirit_reservation" class="mb-2 text-sm text-sky-300">
+                        Reserves {{ hovered.spirit_reservation }} Spirit
+                    </p>
+                    <ul v-if="hovered.stat_text?.length" class="space-y-0.5 text-sm text-sky-200/80">
+                        <li v-for="line in hovered.stat_text" :key="line">{{ line }}</li>
+                    </ul>
+                </template>
+
+                <!-- Passive -->
+                <template v-else-if="hovered.kind === 'passive'">
+                    <div class="mb-2 flex items-center gap-2">
+                        <span v-if="hovered.sprite" class="inline-block shrink-0" :style="spriteStyle(hovered)!" />
+                        <div>
+                            <p class="font-semibold text-white">{{ hovered.name }}</p>
+                            <p class="text-xs text-zinc-500 capitalize">{{ hovered.passive_kind }} passive</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-0.5 text-sm text-sky-200/80">
+                        <li v-for="stat in hovered.stats" :key="stat" class="whitespace-pre-line">{{ stat }}</li>
+                    </ul>
+                </template>
+
+                <!-- Unique -->
+                <template v-else-if="hovered.kind === 'unique'">
+                    <div class="mb-2 flex items-center gap-2">
+                        <span class="flex h-6 w-6 items-center justify-center rounded border border-orange-500/40 bg-orange-500/15 text-xs font-bold text-orange-400">U</span>
+                        <div>
+                            <p class="font-semibold text-orange-300">{{ hovered.name }}</p>
+                            <p class="text-xs text-zinc-500">{{ hovered.base_name }} · {{ hovered.item_class }}</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-0.5 text-sm text-sky-200/80">
+                        <li v-for="mod in hovered.mods" :key="mod">{{ mod }}</li>
+                    </ul>
+                </template>
+            </div>
+        </Transition>
     </div>
 </template>
 
 <style scoped>
+:deep(.entity-ref) {
+    cursor: help;
+    text-decoration: underline dotted;
+    text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+    text-underline-offset: 3px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.12s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
 .guide-content :deep(h1),
 .guide-content :deep(h2),
 .guide-content :deep(h3) {
