@@ -2,6 +2,7 @@
 
 namespace App\Domain\Poe2;
 
+use App\Models\Poe2\CharacterClass;
 use App\Models\Poe2\PassiveNode;
 
 /**
@@ -46,10 +47,36 @@ class TreeGraph
 
     public function startNodeId(string $className): ?int
     {
-        return PassiveNode::forVersion($this->context->versionId())
+        $versionId = $this->context->versionId();
+
+        // Primary: the start_classes tag stamped onto class_start nodes at
+        // import time (importers from 2026-08-24 onward).
+        $tagged = PassiveNode::forVersion($versionId)
             ->where('kind', 'class_start')
             ->whereJsonContains('raw->start_classes', $className)
             ->value('node_id');
+
+        if ($tagged !== null) {
+            return $tagged;
+        }
+
+        // Fallback for data imported before the tag existed: the class's
+        // integer_id (from the characters export) matches the tree's
+        // classStartIndex values — both index the same game-data class table.
+        $classIndex = CharacterClass::forVersion($versionId)
+            ->whereLike('name', $className)
+            ->first()
+            ?->raw['integer_id'] ?? null;
+
+        if ($classIndex === null) {
+            return null;
+        }
+
+        return PassiveNode::forVersion($versionId)
+            ->where('kind', 'class_start')
+            ->get(['node_id', 'raw'])
+            ->first(fn ($node) => in_array($classIndex, (array) ($node->raw['classStartIndex'] ?? []), true))
+            ?->node_id;
     }
 
     /**

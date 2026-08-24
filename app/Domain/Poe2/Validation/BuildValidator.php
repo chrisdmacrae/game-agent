@@ -474,7 +474,7 @@ class BuildValidator
                 }
             }
         } else {
-            $this->warnings[] = 'Could not resolve the class start node; verified the allocation is one connected group but not its attachment to the start.';
+            $this->warnings[] = 'Could not resolve the class start node (tree data may predate the current importer — re-run `php artisan poe2:import`); verified the allocation is one connected group but not its attachment to the start.';
             $first = $nodeIds[0];
             $reached[$first] = true;
             $queue[] = $first;

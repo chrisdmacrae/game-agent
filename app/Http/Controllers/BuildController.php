@@ -3,14 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Poe2\BuildPageEnricher;
+use App\Domain\Poe2\PobExporter;
 use App\Models\Poe2\Ascendancy;
 use App\Models\SavedBuild;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class BuildController extends Controller
 {
+    public function pob(string $publicId, PobExporter $exporter): JsonResponse
+    {
+        $build = SavedBuild::where('public_id', $publicId)->firstOrFail();
+
+        return response()->json([
+            'id' => $build->public_id,
+            'code' => $exporter->code($build),
+            'note' => 'Paste into Path of Building (PoE2 fork) via Import/Export Build -> Import from code. Experimental: gem levels default to 20 and rare items import as plain text.',
+        ]);
+    }
+
     public function show(string $publicId, BuildPageEnricher $enricher): Response
     {
         $build = SavedBuild::where('public_id', $publicId)->firstOrFail();

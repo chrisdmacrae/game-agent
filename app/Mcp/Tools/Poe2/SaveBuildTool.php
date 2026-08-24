@@ -2,6 +2,7 @@
 
 namespace App\Mcp\Tools\Poe2;
 
+use App\Domain\Poe2\PobExporter;
 use App\Domain\Poe2\Poe2Context;
 use App\Domain\Poe2\Validation\BuildRules;
 use App\Domain\Poe2\Validation\BuildValidator;
@@ -19,7 +20,7 @@ class SaveBuildTool extends Tool
 
     protected string $description = 'Save a finished build and get a permanent shareable web page URL for it. Give the returned URL to the user — the page shows the build (skills, supports, passives, defenses) plus your guide text. Validate the build first with validate_build and fix violations; the validation result is stored and displayed on the page. Include a thorough guide_markdown: it is the main content readers see.';
 
-    public function handle(Request $request, Poe2Context $context, BuildValidator $validator): Response
+    public function handle(Request $request, Poe2Context $context, BuildValidator $validator, PobExporter $exporter): Response
     {
         $validated = $request->validate(array_merge([
             'name' => 'required|string|max:120',
@@ -43,7 +44,8 @@ class SaveBuildTool extends Tool
             'id' => $build->public_id,
             'url' => $build->url(),
             'validation' => $build->validation,
-            'note' => 'Share the url with the user. The build was validated automatically; if violations are listed, fix them and save again (saving again creates a new page).',
+            'pob_code' => $exporter->code($build),
+            'note' => 'Share the url with the user. The pob_code imports into Path of Building (PoE2 fork). The build was validated automatically; if violations are listed, fix them and save again (saving again creates a new page).',
         ]);
     }
 

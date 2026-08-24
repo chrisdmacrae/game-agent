@@ -61,7 +61,7 @@ class PlanTreePathTool extends Tool
         $plan = $graph->plan($validated['class'], array_keys($resolved));
 
         if ($plan === null) {
-            return Response::error("Could not resolve the class start for \"{$validated['class']}\". Use list_classes for valid class names.");
+            return Response::error("Could not resolve the class start for \"{$validated['class']}\". If the class name is valid (see list_classes), the tree data needs refreshing — the server operator should run `php artisan poe2:import`.");
         }
 
         $names = PassiveNode::forVersion($context->versionId())

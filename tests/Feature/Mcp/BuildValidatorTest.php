@@ -3,6 +3,8 @@
 use App\Mcp\Servers\Poe2Server;
 use App\Mcp\Tools\Poe2\PlanTreePathTool;
 use App\Mcp\Tools\Poe2\ValidateBuildTool;
+use App\Models\Poe2\CharacterClass;
+use App\Models\Poe2\PassiveNode;
 use Tests\Fixtures\Poe2Seeder;
 
 beforeEach(function () {
@@ -283,4 +285,23 @@ test('plan_tree_path reports unreachable targets and unknown names', function ()
         'class' => 'Witch',
         'targets' => ['Made Up Node'],
     ])->assertHasErrors();
+});
+
+test('class start resolution falls back to integer_id for pre-tag imports', function () {
+    // Simulate data imported before start_classes tagging existed.
+    PassiveNode::where('node_id', 900)->get()->each(function ($node) {
+        $node->raw = ['classStartIndex' => [1]];
+        $node->save();
+    });
+    CharacterClass::where('name', 'Witch')->get()->each(function ($class) {
+        $class->raw = ['integer_id' => 1];
+        $class->save();
+    });
+
+    Poe2Server::tool(PlanTreePathTool::class, [
+        'class' => 'Witch',
+        'targets' => ['Chaos Inoculation'],
+    ])
+        ->assertOk()
+        ->assertSee('"points_used":2');
 });

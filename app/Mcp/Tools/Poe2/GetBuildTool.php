@@ -2,6 +2,7 @@
 
 namespace App\Mcp\Tools\Poe2;
 
+use App\Domain\Poe2\PobExporter;
 use App\Models\SavedBuild;
 use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Laravel\Mcp\Request;
@@ -16,7 +17,7 @@ class GetBuildTool extends Tool
 
     protected string $description = 'Load a previously saved build by its id (from a save_build response or a build page URL). Use this to review or iterate on an existing build — then save_build the improved version as a new page.';
 
-    public function handle(Request $request): Response
+    public function handle(Request $request, PobExporter $exporter): Response
     {
         $validated = $request->validate(['id' => 'required|string|max:32']);
 
@@ -35,6 +36,7 @@ class GetBuildTool extends Tool
             'build' => $build->build,
             'validation' => $build->validation,
             'game_version' => $build->gameVersion?->version,
+            'pob_code' => $exporter->code($build),
             'created_at' => $build->created_at->toIso8601String(),
         ]);
     }

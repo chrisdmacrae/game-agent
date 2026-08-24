@@ -87,6 +87,16 @@ const props = defineProps<{
 }>();
 
 const def = props.build.definition;
+
+const pobCopied = ref(false);
+
+async function copyPobCode() {
+    const response = await fetch(`/builds/${props.build.id}/pob`);
+    const { code } = await response.json();
+    await navigator.clipboard.writeText(code);
+    pobCopied.value = true;
+    setTimeout(() => (pobCopied.value = false), 2500);
+}
 const validation = props.build.validation as Validation;
 const identity = [def.class, def.ascendancy].filter(Boolean).join(' · ');
 
@@ -197,6 +207,12 @@ function spriteStyle(entity: Entity): Record<string, string> | null {
                 </div>
                 <h1 class="text-3xl font-bold tracking-tight text-white">{{ build.name }}</h1>
                 <p v-if="build.summary" class="mt-2 text-lg text-zinc-400">{{ build.summary }}</p>
+                <button
+                    class="mt-4 rounded-md border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-sm text-zinc-200 transition hover:bg-zinc-800"
+                    @click="copyPobCode"
+                >
+                    {{ pobCopied ? 'Copied! Paste in PoB → Import from code' : 'Copy Path of Building code' }}
+                </button>
             </header>
 
             <!-- Validation banner -->
