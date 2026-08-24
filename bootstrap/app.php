@@ -15,6 +15,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Behind Cloudflare, the client IP arrives via forwarded headers. Only
+        // trust them when TRUSTED_PROXIES is set (production, origin locked to
+        // Cloudflare) — otherwise headers are ignored and the peer IP is used.
+        if (($trustedProxies = env('TRUSTED_PROXIES')) !== null) {
+            $middleware->trustProxies(at: $trustedProxies === '*'
+                ? '*'
+                : array_map('trim', explode(',', $trustedProxies)));
+        }
+
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 
         $middleware->web(append: [
