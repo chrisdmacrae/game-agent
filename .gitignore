@@ -27,3 +27,6 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+tools/icon-extractor/node_modules
+tools/icon-extractor/.work
+tools/icon-extractor/icons

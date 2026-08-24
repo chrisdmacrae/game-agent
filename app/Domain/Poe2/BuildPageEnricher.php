@@ -203,6 +203,7 @@ class BuildPageEnricher
             'description' => $this->cleanGameText($gem->description),
             'tags' => array_slice($gem->tags, 0, 6),
             'spirit_reservation' => $spirit,
+            'icon' => IconManifest::iconUrlFor($gem->raw['icon_dds_file'] ?? null),
             'stat_text' => $this->cleanGameTextLines($statTexts),
         ];
     }
@@ -237,6 +238,7 @@ class BuildPageEnricher
             'name' => $unique->name,
             'base_name' => $unique->base_name,
             'item_class' => $unique->item_class,
+            'icon' => IconManifest::iconUrlFor($unique->raw['dds'] ?? null),
             'mods' => $mods,
         ];
     }

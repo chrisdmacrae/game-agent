@@ -41,6 +41,7 @@ interface Entity {
     passive_kind?: string;
     stats?: string[];
     sprite?: { x: number; y: number; w: number; h: number } | null;
+    icon?: string | null;
     base_name?: string;
     item_class?: string | null;
     mods?: string[];
@@ -181,7 +182,14 @@ function spriteStyle(entity: Entity): Record<string, string> | null {
                 <h2 class="mb-3 text-lg font-semibold text-white">Skill setups</h2>
                 <div class="divide-y divide-zinc-800 rounded-lg border border-zinc-800">
                     <div v-for="setup in def.skills" :key="setup.gem" class="flex flex-wrap items-center gap-x-3 gap-y-2 p-4">
+                        <img
+                            v-if="entityFor(setup.gem)?.icon"
+                            :src="entityFor(setup.gem)!.icon!"
+                            :alt="setup.gem"
+                            class="h-8 w-8 rounded-md border border-zinc-700 bg-zinc-900 object-contain"
+                        />
                         <span
+                            v-else
                             class="flex h-8 w-8 items-center justify-center rounded-md border font-bold"
                             :class="gemBadgeClass(setup.gem)"
                         >
@@ -264,7 +272,14 @@ function spriteStyle(entity: Entity): Record<string, string> | null {
                 <!-- Gem / support -->
                 <template v-if="hovered.kind === 'gem' || hovered.kind === 'support'">
                     <div class="mb-1 flex items-center gap-2">
+                        <img
+                            v-if="hovered.icon"
+                            :src="hovered.icon"
+                            :alt="hovered.name"
+                            class="h-8 w-8 rounded border border-zinc-700 object-contain"
+                        />
                         <span
+                            v-else
                             class="flex h-6 w-6 items-center justify-center rounded border text-xs font-bold"
                             :class="gemColors[hovered.color ?? 'w'] ?? gemColors.w"
                         >{{ hovered.name.charAt(0) }}</span>
@@ -298,7 +313,16 @@ function spriteStyle(entity: Entity): Record<string, string> | null {
                 <!-- Unique -->
                 <template v-else-if="hovered.kind === 'unique'">
                     <div class="mb-2 flex items-center gap-2">
-                        <span class="flex h-6 w-6 items-center justify-center rounded border border-orange-500/40 bg-orange-500/15 text-xs font-bold text-orange-400">U</span>
+                        <img
+                            v-if="hovered.icon"
+                            :src="hovered.icon"
+                            :alt="hovered.name"
+                            class="max-h-12 rounded border border-orange-500/30 bg-zinc-950 object-contain px-1"
+                        />
+                        <span
+                            v-else
+                            class="flex h-6 w-6 items-center justify-center rounded border border-orange-500/40 bg-orange-500/15 text-xs font-bold text-orange-400"
+                        >U</span>
                         <div>
                             <p class="font-semibold text-orange-300">{{ hovered.name }}</p>
                             <p class="text-xs text-zinc-500">{{ hovered.base_name }} · {{ hovered.item_class }}</p>

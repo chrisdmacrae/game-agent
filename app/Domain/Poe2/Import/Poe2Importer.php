@@ -2,6 +2,8 @@
 
 namespace App\Domain\Poe2\Import;
 
+use App\Domain\Poe2\IconManifest;
+use App\Domain\Poe2\Poe2Context;
 use App\Models\Game;
 use App\Models\GameVersion;
 use App\Models\Poe2\Ascendancy;
@@ -59,6 +61,8 @@ class Poe2Importer
         GameVersion::where('game_id', $game->id)
             ->whereKeyNot($gameVersion->id)
             ->update(['is_active' => false]);
+
+        $this->counts['icon_manifest'] = new IconManifest(new Poe2Context)->write();
 
         return $gameVersion;
     }
@@ -306,6 +310,12 @@ class Poe2Importer
     {
         $rows = [];
 
+        // repoe's uniques export carries the art file for each unique.
+        $ddsByName = collect($this->client->repoeJson('uniques'))
+            ->mapWithKeys(fn (array $unique) => [
+                $unique['name'] ?? '' => $unique['visual_identity']['dds_file'] ?? null,
+            ]);
+
         foreach (config('games.poe2.pob_uniques_files') as $file) {
             $lua = $this->client->pobUniquesLua($file);
 
@@ -325,7 +335,10 @@ class Poe2Importer
                     'variants' => json_encode($parsed['variants']),
                     'mods' => json_encode($parsed['mods']),
                     'source_text' => $parsed['source_text'],
-                    'raw' => json_encode(['source_file' => $file]),
+                    'raw' => json_encode([
+                        'source_file' => $file,
+                        'dds' => $ddsByName[$parsed['name']] ?? null,
+                    ]),
                 ];
             }
         }

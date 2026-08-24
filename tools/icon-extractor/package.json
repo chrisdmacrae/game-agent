@@ -1,0 +1,13 @@
+{
+    "name": "poe2-icon-extractor",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "description": "Offline tool: extracts PoE2 icon art referenced by the app's icon manifest from the game's patch CDN and converts it to PNG.",
+    "scripts": {
+        "extract": "node extract.mjs"
+    },
+    "dependencies": {
+        "pathofexile-dat": "^15.2.0"
+    }
+}
