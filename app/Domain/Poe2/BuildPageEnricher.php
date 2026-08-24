@@ -2,6 +2,7 @@
 
 namespace App\Domain\Poe2;
 
+use App\Models\Poe2\Ascendancy;
 use App\Models\Poe2\Gem;
 use App\Models\Poe2\ItemBase;
 use App\Models\Poe2\ItemMod;
@@ -90,8 +91,34 @@ class BuildPageEnricher
             $entities[$unique->name] ??= $this->uniqueEntity($unique);
         }
 
+        $ascendancyPathIds = [];
+
+        if (($definition['passives']['ascendancy_nodes'] ?? []) !== [] && isset($definition['ascendancy'])) {
+            $ascendancy = Ascendancy::forVersion($versionId)
+                ->whereLike('name', $definition['ascendancy'])
+                ->first();
+
+            if ($ascendancy !== null) {
+                $targetIds = PassiveNode::forVersion($versionId)
+                    ->whereIn('name', $definition['passives']['ascendancy_nodes'])
+                    ->where('ascendancy_key', $ascendancy->key)
+                    ->pluck('node_id')
+                    ->all();
+
+                $plan = new TreeGraph($this->context)->planAscendancy($ascendancy->key, $targetIds);
+
+                if ($plan !== null) {
+                    $ascendancyPathIds = array_merge(
+                        [new TreeGraph($this->context)->ascendancyStartId($ascendancy->key)],
+                        $plan['node_ids'],
+                    );
+                }
+            }
+        }
+
         return [
             'entities' => $entities->all(),
+            'ascendancy_path_ids' => array_values(array_filter($ascendancyPathIds)),
             'gear_view' => $this->gearView($definition, $versionId),
             'guide_html' => $guideHtml !== null
                 ? $this->tagMentions($guideHtml, $entities->keys()->all())

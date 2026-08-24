@@ -305,3 +305,26 @@ test('class start resolution falls back to integer_id for pre-tag imports', func
         ->assertOk()
         ->assertSee('"points_used":2');
 });
+
+test('ascendancy picks must be pathable within 8 points', function () {
+    // Reachable in 2 points: start -> Burning Path -> Infernal Flame.
+    Poe2Server::tool(ValidateBuildTool::class, [
+        'class' => 'Witch',
+        'ascendancy' => 'Infernalist',
+        'skills' => [['gem' => 'Spark']],
+        'passives' => ['ascendancy_nodes' => ['Infernal Flame']],
+    ])
+        ->assertOk()
+        ->assertSee('"valid":true')
+        ->assertSee('allocation uses 2');
+
+    // The distant notable needs 10 points -> violation.
+    Poe2Server::tool(ValidateBuildTool::class, [
+        'class' => 'Witch',
+        'ascendancy' => 'Infernalist',
+        'skills' => [['gem' => 'Spark']],
+        'passives' => ['ascendancy_nodes' => ['Distant Inferno']],
+    ])
+        ->assertOk()
+        ->assertSee('only 8 ascendancy points exist');
+});

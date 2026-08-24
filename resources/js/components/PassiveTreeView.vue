@@ -28,6 +28,7 @@ const props = defineProps<{
     ascendancyNodes: string[];
     nodeIds: number[];
     grantedIds: number[];
+    ascendancyPathIds: number[];
     className?: string;
     ascendancyKey?: string | null;
     ascendancyName?: string;
@@ -61,7 +62,7 @@ const visibleEdges = computed(() =>
 const highlightedIds = computed(() => {
     if (!tree.value) return new Set<number>();
 
-    const ids = new Set<number>(props.nodeIds);
+    const ids = new Set<number>([...props.nodeIds, ...props.ascendancyPathIds]);
     const names = new Set(props.highlightNames.map((name) => name.toLowerCase()));
     const ascNames = new Set(props.ascendancyNodes.map((name) => name.toLowerCase()));
 
@@ -84,6 +85,38 @@ const nodeById = computed(() => {
     for (const node of tree.value?.nodes ?? []) map.set(node.id, node);
     return map;
 });
+
+// In-game, the chosen ascendancy's tree sits in the center of the ring of
+// class starts; the export stores clusters far outside the tree. Translate the
+// visible cluster so its start lands on the class-start centroid.
+const ascendancyOffset = computed(() => {
+    if (!tree.value || !props.ascendancyKey) return null;
+
+    const starts = tree.value.nodes.filter((node) => node.k === 'start');
+    if (!starts.length) return null;
+
+    const center = {
+        x: starts.reduce((sum, node) => sum + node.x, 0) / starts.length,
+        y: starts.reduce((sum, node) => sum + node.y, 0) / starts.length,
+    };
+
+    const cluster = tree.value.nodes.filter((node) => node.a === props.ascendancyKey);
+    if (!cluster.length) return null;
+
+    const anchor = cluster.find((node) => node.k === 'ascstart') ?? cluster[0];
+
+    return { dx: center.x - anchor.x, dy: center.y - anchor.y };
+});
+
+function displayX(node: TreeNode | undefined): number {
+    if (!node) return 0;
+    return node.a && ascendancyOffset.value ? node.x + ascendancyOffset.value.dx : node.x;
+}
+
+function displayY(node: TreeNode | undefined): number {
+    if (!node) return 0;
+    return node.a && ascendancyOffset.value ? node.y + ascendancyOffset.value.dy : node.y;
+}
 
 // Edges between two allocated nodes are highlighted (visible pathing when a
 // full node_ids allocation was saved).
@@ -229,10 +262,10 @@ function iconSize(node: TreeNode): number {
                 <line
                     v-for="([a, b], index) in visibleEdges"
                     :key="`e${index}`"
-                    :x1="nodeById.get(a)?.x"
-                    :y1="nodeById.get(a)?.y"
-                    :x2="nodeById.get(b)?.x"
-                    :y2="nodeById.get(b)?.y"
+                    :x1="displayX(nodeById.get(a))"
+                    :y1="displayY(nodeById.get(a))"
+                    :x2="displayX(nodeById.get(b))"
+                    :y2="displayY(nodeById.get(b))"
                     stroke="#27272a"
                     stroke-width="18"
                 />
@@ -240,10 +273,10 @@ function iconSize(node: TreeNode): number {
                 <line
                     v-for="([a, b], index) in highlightedEdges"
                     :key="`h${index}`"
-                    :x1="nodeById.get(a)?.x"
-                    :y1="nodeById.get(a)?.y"
-                    :x2="nodeById.get(b)?.x"
-                    :y2="nodeById.get(b)?.y"
+                    :x1="displayX(nodeById.get(a))"
+                    :y1="displayY(nodeById.get(a))"
+                    :x2="displayX(nodeById.get(b))"
+                    :y2="displayY(nodeById.get(b))"
                     stroke="#f59e0b"
                     stroke-width="34"
                     stroke-linecap="round"
@@ -251,8 +284,8 @@ function iconSize(node: TreeNode): number {
                 <!-- Nodes -->
                 <g v-for="node in visibleNodes" :key="node.id" :data-node="node.id" :class="node.n || node.st ? 'cursor-help' : ''">
                     <circle
-                        :cx="node.x"
-                        :cy="node.y"
+                        :cx="displayX(node)"
+                        :cy="displayY(node)"
                         :r="radii[node.k] * (highlightedIds.has(node.id) || grantedSet.has(node.id) ? 1.35 : 1)"
                         :fill="grantedSet.has(node.id) ? '#8b5cf6' : highlightedIds.has(node.id) ? '#f59e0b' : node.k === 'small' ? '#3f3f46' : '#18181b'"
                         :stroke="grantedSet.has(node.id) ? '#c4b5fd' : highlightedIds.has(node.id) ? '#fbbf24' : node.k === 'keystone' || node.k === 'start' || node.k === 'ascstart' ? '#71717a' : '#3f3f46'"
@@ -261,8 +294,8 @@ function iconSize(node: TreeNode): number {
                     <!-- Sprite icon, clipped to the node circle -->
                     <svg
                         v-if="node.s && tree.sheet.w"
-                        :x="node.x - iconSize(node) / 2"
-                        :y="node.y - iconSize(node) / 2"
+                        :x="displayX(node) - iconSize(node) / 2"
+                        :y="displayY(node) - iconSize(node) / 2"
                         :width="iconSize(node)"
                         :height="iconSize(node)"
                         :viewBox="`${node.s[0]} ${node.s[1]} ${node.s[2]} ${node.s[3]}`"

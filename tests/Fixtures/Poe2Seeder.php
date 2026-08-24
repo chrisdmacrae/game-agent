@@ -211,6 +211,50 @@ class Poe2Seeder
             'connections' => [],
         ]);
 
+        // Infernalist ascendancy cluster: start (2000) -> small (2002) ->
+        // notable (2001), plus a 9-step chain to an expensive notable (2019).
+        PassiveNode::create([
+            'game_version_id' => $version->id,
+            'node_id' => 2000,
+            'name' => '',
+            'kind' => 'ascendancy_start',
+            'ascendancy_key' => 'Witch1',
+            'stats' => [],
+            'connections' => ['2002', '2010'],
+        ]);
+
+        PassiveNode::create([
+            'game_version_id' => $version->id,
+            'node_id' => 2002,
+            'name' => 'Burning Path',
+            'kind' => 'small',
+            'ascendancy_key' => 'Witch1',
+            'stats' => ['+10% Fire Damage'],
+            'connections' => ['2001'],
+        ]);
+
+        foreach (range(2010, 2018) as $index => $nodeId) {
+            PassiveNode::create([
+                'game_version_id' => $version->id,
+                'node_id' => $nodeId,
+                'name' => "Ember Step {$index}",
+                'kind' => 'small',
+                'ascendancy_key' => 'Witch1',
+                'stats' => [],
+                'connections' => [(string) ($nodeId + 1)],
+            ]);
+        }
+
+        PassiveNode::create([
+            'game_version_id' => $version->id,
+            'node_id' => 2019,
+            'name' => 'Distant Inferno',
+            'kind' => 'notable',
+            'ascendancy_key' => 'Witch1',
+            'stats' => ['Big fire payoff'],
+            'connections' => [],
+        ]);
+
         PassiveNode::create([
             'game_version_id' => $version->id,
             'node_id' => 2001,

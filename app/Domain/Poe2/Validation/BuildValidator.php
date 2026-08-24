@@ -223,6 +223,8 @@ class BuildValidator
             if ($ascendancy === null) {
                 $this->violations[] = 'ascendancy_nodes were given but no valid ascendancy is set on the build.';
             } else {
+                $targetIds = [];
+
                 foreach ($ascendancyNodes as $name) {
                     $node = PassiveNode::forVersion($this->context->versionId())
                         ->whereLike('name', $name)
@@ -231,6 +233,25 @@ class BuildValidator
 
                     if ($node === null) {
                         $this->violations[] = "Ascendancy passive \"{$name}\" was not found on {$ascendancy->name}'s ascendancy tree.";
+                    } else {
+                        $targetIds[] = $node->node_id;
+                    }
+                }
+
+                // Ascendancy trees require pathing too: check the picks are
+                // reachable and fit in the 8 ascendancy points.
+                if ($targetIds !== []) {
+                    $plan = new TreeGraph($this->context)
+                        ->planAscendancy($ascendancy->key, $targetIds);
+
+                    if ($plan === null) {
+                        $this->warnings[] = "Could not resolve {$ascendancy->name}'s ascendancy start node; pathing not verified.";
+                    } elseif ($plan['unreachable'] !== []) {
+                        $this->violations[] = 'Ascendancy picks are not reachable from the ascendancy start: '.implode(', ', $plan['unreachable']).'.';
+                    } elseif ($plan['points_used'] > 8) {
+                        $this->violations[] = "The chosen ascendancy passives need {$plan['points_used']} points including travel nodes, but only 8 ascendancy points exist. Drop a pick.";
+                    } else {
+                        $this->suggestions[] = "Ascendancy allocation uses {$plan['points_used']}/8 points (including travel nodes).";
                     }
                 }
             }

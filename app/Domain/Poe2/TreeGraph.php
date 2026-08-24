@@ -100,7 +100,66 @@ class TreeGraph
             return null;
         }
 
-        $adjacency = $this->adjacency();
+        return $this->planFrom($start, $targetIds, $this->adjacency());
+    }
+
+    /**
+     * Adjacency within one ascendancy's cluster (their connections are stored
+     * on the nodes just like main-tree edges).
+     *
+     * @return array<int, list<int>>
+     */
+    public function ascendancyAdjacency(string $ascendancyKey): array
+    {
+        $adjacency = [];
+
+        PassiveNode::forVersion($this->context->versionId())
+            ->where('ascendancy_key', $ascendancyKey)
+            ->get(['node_id', 'connections'])
+            ->each(function ($node) use (&$adjacency) {
+                foreach ($node->connections as $target) {
+                    $target = (int) $target;
+                    $adjacency[$node->node_id][] = $target;
+                    $adjacency[$target][] = $node->node_id;
+                }
+            });
+
+        return $adjacency;
+    }
+
+    public function ascendancyStartId(string $ascendancyKey): ?int
+    {
+        return PassiveNode::forVersion($this->context->versionId())
+            ->where('ascendancy_key', $ascendancyKey)
+            ->where('kind', 'ascendancy_start')
+            ->value('node_id');
+    }
+
+    /**
+     * Plan a contiguous allocation within an ascendancy cluster, starting
+     * from its (free) ascendancy start node.
+     *
+     * @param  list<int>  $targetIds
+     * @return array{node_ids: list<int>, points_used: int, paths: list<array{target: int, points_added: int, route: list<int>}>, unreachable: list<int>}|null
+     */
+    public function planAscendancy(string $ascendancyKey, array $targetIds): ?array
+    {
+        $start = $this->ascendancyStartId($ascendancyKey);
+
+        if ($start === null) {
+            return null;
+        }
+
+        return $this->planFrom($start, $targetIds, $this->ascendancyAdjacency($ascendancyKey));
+    }
+
+    /**
+     * @param  list<int>  $targetIds
+     * @param  array<int, list<int>>  $adjacency
+     * @return array{node_ids: list<int>, points_used: int, paths: list<array{target: int, points_added: int, route: list<int>}>, unreachable: list<int>}
+     */
+    protected function planFrom(int $start, array $targetIds, array $adjacency): array
+    {
 
         $allocated = [$start => true];
         $remaining = array_values(array_unique($targetIds));

@@ -86,6 +86,7 @@ const props = defineProps<{
     treeUrl: string | null;
     ascendancyKey: string | null;
     gearView: { slots: Record<string, GearViewItem>; jewels: GearViewItem[] };
+    ascendancyPathIds: number[];
 }>();
 
 const def = props.build.definition;
@@ -333,6 +334,7 @@ function spriteStyle(entity: Entity): Record<string, string> | null {
                     :class-name="def.class"
                     :ascendancy-key="ascendancyKey"
                     :ascendancy-name="def.ascendancy"
+                    :ascendancy-path-ids="ascendancyPathIds"
                 />
             </section>
 
