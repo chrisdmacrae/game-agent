@@ -26,7 +26,10 @@ function savePobTestBuild(): SavedBuild
             ],
             'gear' => [
                 ['slot' => 'boots', 'rarity' => 'rare', 'name' => 'Swift Treads', 'mods' => ['30% increased Movement Speed']],
-                ['slot' => 'amulet', 'rarity' => 'unique', 'name' => 'Astramentis', 'base' => 'Stellar Amulet'],
+                ['slot' => 'amulet', 'rarity' => 'unique', 'name' => 'Astramentis'],
+            ],
+            'jewels' => [
+                ['name' => 'From Nothing', 'rarity' => 'unique', 'socket_node_id' => 1003],
             ],
         ],
     ])->assertOk();
@@ -52,7 +55,13 @@ test('the pob code decodes to importable build xml', function () {
         ->toContain('nodes="1000,1001,2001"')
         ->toContain('Rarity: UNIQUE')
         ->toContain('Astramentis')
-        ->toContain('<Slot name="Boots" itemId="1"/>');
+        // Unique base and mods resolve from the database, not agent input.
+        ->toContain('Stellar Amulet')
+        ->toContain('Implicits: 1')
+        ->toContain('+(50-100) to all Attributes')
+        ->toContain('<Slot name="Boots" itemId="1"/>')
+        // Jewels bind to tree sockets inside the Spec.
+        ->toContain('<Socket nodeId="1003" itemId="3"/>');
 
     expect(simplexml_load_string($xml))->not->toBeFalse();
 });

@@ -193,6 +193,15 @@ class Poe2Seeder
 
         PassiveNode::create([
             'game_version_id' => $version->id,
+            'node_id' => 1003,
+            'name' => 'Socket of Testing',
+            'kind' => 'jewel_socket',
+            'stats' => [],
+            'connections' => [],
+        ]);
+
+        PassiveNode::create([
+            'game_version_id' => $version->id,
             'node_id' => 1002,
             'name' => 'Heightened Curses',
             'kind' => 'notable',

@@ -4,7 +4,10 @@ namespace App\Domain\Poe2;
 
 use App\Models\Poe2\Ascendancy;
 use App\Models\Poe2\CharacterClass;
+use App\Models\Poe2\ItemBase;
+use App\Models\Poe2\ItemMod;
 use App\Models\Poe2\PassiveNode;
+use App\Models\Poe2\UniqueItem;
 use App\Models\SavedBuild;
 
 /**
@@ -108,6 +111,8 @@ class PobExporter
         $xml->endElement(); // SkillSet
         $xml->endElement(); // Skills
 
+        [$items, $slots, $jewelSockets] = $this->resolveItems($definition, $versionId);
+
         $xml->startElement('Tree');
         $xml->writeAttribute('activeSpec', '1');
         $xml->startElement('Spec');
@@ -117,10 +122,24 @@ class PobExporter
         $xml->writeAttribute('ascendClassId', (string) $ascendClassId);
         $xml->writeAttribute('nodes', implode(',', array_unique($nodeIds)));
         $xml->writeAttribute('masteryEffects', '');
+
+        if ($jewelSockets !== []) {
+            $xml->startElement('Sockets');
+
+            foreach ($jewelSockets as $nodeId => $itemId) {
+                $xml->startElement('Socket');
+                $xml->writeAttribute('nodeId', (string) $nodeId);
+                $xml->writeAttribute('itemId', (string) $itemId);
+                $xml->endElement();
+            }
+
+            $xml->endElement();
+        }
+
         $xml->endElement();
         $xml->endElement();
 
-        $this->writeItems($xml, $definition);
+        $this->writeItems($xml, $items, $slots);
 
         $xml->writeElement('Notes', trim(
             ($build->name ?? '')."\n\nExported from PoE2 Theorycrafter — ".$build->url(),
@@ -133,8 +152,14 @@ class PobExporter
         return $xml->outputMemory();
     }
 
-    /** @param array<string, mixed> $definition */
-    protected function writeItems(\XMLWriter $xml, array $definition): void
+    /**
+     * Build PoB item texts for all gear and jewels, resolving uniques and
+     * bases against the database (base names, implicits, unique mod lines).
+     *
+     * @param  array<string, mixed>  $definition
+     * @return array{0: array<int, string>, 1: array<string, int>, 2: array<int, int>} [items, slot=>itemId, jewelNodeId=>itemId]
+     */
+    protected function resolveItems(array $definition, int $versionId): array
     {
         $slotNames = [
             'helmet' => 'Helmet',
@@ -153,23 +178,11 @@ class PobExporter
 
         $items = [];
         $slots = [];
+        $jewelSockets = [];
 
         foreach ($definition['gear'] ?? [] as $item) {
-            $rarity = strtoupper($item['rarity'] ?? 'RARE');
-            $name = $item['name'] ?? ucfirst($item['rarity'] ?? 'rare').' item';
-
-            $lines = ["Rarity: {$rarity}", $name];
-
-            if (! empty($item['base'])) {
-                $lines[] = $item['base'];
-            }
-
-            foreach ($item['mods'] ?? [] as $mod) {
-                $lines[] = $mod;
-            }
-
             $itemId = count($items) + 1;
-            $items[$itemId] = implode("\n", $lines);
+            $items[$itemId] = $this->itemText($item, $versionId);
 
             $slotName = $slotNames[$item['slot'] ?? ''] ?? null;
 
@@ -179,16 +192,105 @@ class PobExporter
         }
 
         foreach ($definition['jewels'] ?? [] as $jewel) {
-            $rarity = strtoupper($jewel['rarity'] ?? 'RARE');
-            $lines = ["Rarity: {$rarity}", $jewel['name']];
+            $itemId = count($items) + 1;
+            $items[$itemId] = $this->itemText([
+                'rarity' => $jewel['rarity'] ?? 'rare',
+                'name' => $jewel['name'] ?? null,
+                'mods' => $jewel['mods'] ?? [],
+            ], $versionId);
 
-            foreach ($jewel['mods'] ?? [] as $mod) {
-                $lines[] = $mod;
+            if (isset($jewel['socket_node_id'])) {
+                $jewelSockets[(int) $jewel['socket_node_id']] = $itemId;
             }
-
-            $items[count($items) + 1] = implode("\n", $lines);
         }
 
+        return [$items, $slots, $jewelSockets];
+    }
+
+    /**
+     * PoB raw item text: "Rarity: X" / name / base / "Implicits: N" /
+     * implicit lines / explicit mod lines. Uniques resolve their base and
+     * current-variant mods from the database; rare/magic bases contribute
+     * their implicit lines.
+     *
+     * @param  array<string, mixed>  $item
+     */
+    protected function itemText(array $item, int $versionId): string
+    {
+        $rarity = strtolower($item['rarity'] ?? 'rare');
+        $name = $item['name'] ?? null;
+        $baseName = $item['base'] ?? null;
+        $implicits = [];
+        $mods = $item['mods'] ?? [];
+
+        if ($rarity === 'unique' && $name !== null) {
+            $unique = UniqueItem::forVersion($versionId)->whereLike('name', $name)->first();
+
+            if ($unique !== null) {
+                $baseName ??= $unique->base_name;
+
+                $currentVariant = $unique->variants === [] ? null : count($unique->variants);
+                $uniqueExplicits = [];
+
+                foreach ($unique->mods as $mod) {
+                    $applies = $mod['variants'] === null
+                        || $currentVariant === null
+                        || in_array($currentVariant, $mod['variants'], true);
+
+                    if (! $applies) {
+                        continue;
+                    }
+
+                    if ($mod['is_implicit'] ?? false) {
+                        $implicits[] = $mod['text'];
+                    } else {
+                        $uniqueExplicits[] = $mod['text'];
+                    }
+                }
+
+                // Prefer the database's mod lines over agent-provided ones.
+                if ($uniqueExplicits !== []) {
+                    $mods = $uniqueExplicits;
+                }
+            }
+        } elseif ($baseName !== null) {
+            $base = ItemBase::forVersion($versionId)
+                ->whereLike('name', $baseName)
+                ->whereIn('item_class', IconManifest::EQUIPMENT_CLASSES)
+                ->first();
+
+            if ($base !== null) {
+                $implicits = ItemMod::forVersion($versionId)
+                    ->whereIn('key', array_filter($base->implicits, 'is_string'))
+                    ->pluck('text')
+                    ->filter()
+                    ->all();
+            }
+        }
+
+        $lines = ['Rarity: '.strtoupper($rarity)];
+
+        // Rare/unique items have a name line then a base line; magic/normal
+        // items have only the base line.
+        if (in_array($rarity, ['unique', 'rare'], true)) {
+            $lines[] = $name ?? ($baseName !== null ? "Theorycrafted {$baseName}" : 'Theorycrafted item');
+        }
+
+        if ($baseName !== null || $name === null) {
+            $lines[] = $baseName ?? 'Unknown Base';
+        }
+
+        $lines[] = 'Implicits: '.count($implicits);
+
+        return implode("\n", array_merge($lines, $implicits, $mods));
+    }
+
+    /**
+     * @param  array<int, string>  $items
+     * @param  array<string, int>  $slots
+     */
+    protected function writeItems(\XMLWriter $xml, array $items, array $slots): void
+    {
         $xml->startElement('Items');
         $xml->writeAttribute('activeItemSet', '1');
 
