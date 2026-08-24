@@ -33,6 +33,9 @@ class CraftBuildPrompt extends Prompt
            (what can actually roll on each slot), and key passives in `search_passives`.
         6. Assemble the build, then call `validate_build`. Fix every violation and
            re-validate until clean. Take warnings seriously.
+        7. When the user is happy with the build, offer to save it with `save_build`
+           (include a full guide_markdown writeup) and share the returned URL — it is
+           a permanent public page for the build.
 
         Hard rules to respect:
         - NEVER invent numbers (damage values, spirit costs, mod ranges). Every number

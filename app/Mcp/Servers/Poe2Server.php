@@ -4,6 +4,7 @@ namespace App\Mcp\Servers;
 
 use App\Mcp\Prompts\CraftBuildPrompt;
 use App\Mcp\Tools\Poe2\GetAscendancyTool;
+use App\Mcp\Tools\Poe2\GetBuildTool;
 use App\Mcp\Tools\Poe2\GetGameModelTool;
 use App\Mcp\Tools\Poe2\GetGemTool;
 use App\Mcp\Tools\Poe2\GetMetaContextTool;
@@ -12,6 +13,7 @@ use App\Mcp\Tools\Poe2\GetSupportsForGemTool;
 use App\Mcp\Tools\Poe2\GetUniqueTool;
 use App\Mcp\Tools\Poe2\ListClassesTool;
 use App\Mcp\Tools\Poe2\ListGameModelsTool;
+use App\Mcp\Tools\Poe2\SaveBuildTool;
 use App\Mcp\Tools\Poe2\SearchGameKnowledgeTool;
 use App\Mcp\Tools\Poe2\SearchGemsTool;
 use App\Mcp\Tools\Poe2\SearchModsTool;
@@ -58,6 +60,8 @@ class Poe2Server extends Server
         SearchModsTool::class,
         ValidateBuildTool::class,
         GetPricesTool::class,
+        SaveBuildTool::class,
+        GetBuildTool::class,
     ];
 
     protected array $prompts = [

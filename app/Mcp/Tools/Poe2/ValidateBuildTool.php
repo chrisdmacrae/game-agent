@@ -2,6 +2,7 @@
 
 namespace App\Mcp\Tools\Poe2;
 
+use App\Domain\Poe2\Validation\BuildRules;
 use App\Domain\Poe2\Validation\BuildValidator;
 use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Laravel\Mcp\Request;
@@ -18,28 +19,7 @@ class ValidateBuildTool extends Tool
 
     public function handle(Request $request, BuildValidator $validator): Response
     {
-        $validated = $request->validate([
-            'class' => 'nullable|string|max:50',
-            'ascendancy' => 'nullable|string|max:50',
-            'level' => 'nullable|integer|min:1|max:100',
-            'skills' => 'required|array|min:1',
-            'skills.*.gem' => 'required|string|max:100',
-            'skills.*.supports' => 'nullable|array',
-            'skills.*.supports.*' => 'string|max:100',
-            'spirit_available' => 'nullable|integer|min:0|max:1000',
-            'passives' => 'nullable|array',
-            'passives.keystones' => 'nullable|array',
-            'passives.keystones.*' => 'string|max:100',
-            'passives.notables' => 'nullable|array',
-            'passives.notables.*' => 'string|max:100',
-            'passives.points_used' => 'nullable|integer|min:0|max:200',
-            'resistances' => 'nullable|array',
-            'resistances.fire' => 'nullable|integer|min:-100|max:90',
-            'resistances.cold' => 'nullable|integer|min:-100|max:90',
-            'resistances.lightning' => 'nullable|integer|min:-100|max:90',
-            'resistances.chaos' => 'nullable|integer|min:-200|max:90',
-            'content_tier' => 'nullable|string|in:campaign,early_endgame,endgame,pinnacle',
-        ]);
+        $validated = $request->validate(BuildRules::rules());
 
         return Response::json($validator->validate($validated));
     }
