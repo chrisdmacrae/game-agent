@@ -209,8 +209,46 @@ class BuildValidator
             }
         }
 
+        $ascendancyNodes = $passives['ascendancy_nodes'] ?? [];
+
+        if ($ascendancyNodes !== []) {
+            $ascendancy = isset($build['ascendancy'])
+                ? Ascendancy::forVersion($this->context->versionId())->whereLike('name', $build['ascendancy'])->first()
+                : null;
+
+            if ($ascendancy === null) {
+                $this->violations[] = 'ascendancy_nodes were given but no valid ascendancy is set on the build.';
+            } else {
+                foreach ($ascendancyNodes as $name) {
+                    $node = PassiveNode::forVersion($this->context->versionId())
+                        ->whereLike('name', $name)
+                        ->where('ascendancy_key', $ascendancy->key)
+                        ->first();
+
+                    if ($node === null) {
+                        $this->violations[] = "Ascendancy passive \"{$name}\" was not found on {$ascendancy->name}'s ascendancy tree.";
+                    }
+                }
+            }
+        }
+
+        $nodeIds = $passives['node_ids'] ?? [];
+
+        if ($nodeIds !== []) {
+            $known = PassiveNode::forVersion($this->context->versionId())
+                ->whereIn('node_id', $nodeIds)
+                ->pluck('node_id')
+                ->all();
+
+            $unknown = array_diff($nodeIds, $known);
+
+            if ($unknown !== []) {
+                $this->violations[] = 'Unknown passive node ids: '.implode(', ', array_slice($unknown, 0, 10)).'. Use node_id values from search_passives.';
+            }
+        }
+
         $level = $build['level'] ?? null;
-        $pointsUsed = $passives['points_used'] ?? null;
+        $pointsUsed = $passives['points_used'] ?? ($nodeIds !== [] ? count($nodeIds) : null);
 
         if ($level !== null && $pointsUsed !== null) {
             // Heuristic: roughly 1 point per level plus ~24 from quests/books.

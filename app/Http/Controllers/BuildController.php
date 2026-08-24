@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Poe2\BuildPageEnricher;
+use App\Models\Poe2\Ascendancy;
 use App\Models\SavedBuild;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -37,6 +38,14 @@ class BuildController extends Controller
             ],
             'entities' => $enriched['entities'],
             'spriteUrl' => asset('games/poe2/tree/skills.webp'),
+            'treeUrl' => is_file(public_path('games/poe2/tree/render.json'))
+                ? asset('games/poe2/tree/render.json')
+                : null,
+            'ascendancyKey' => isset($build->build['ascendancy'])
+                ? Ascendancy::forVersion($build->game_version_id ?? 0)
+                    ->whereLike('name', $build->build['ascendancy'])
+                    ->value('key')
+                : null,
         ]);
     }
 }

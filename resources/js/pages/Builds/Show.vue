@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
+import PassiveTreeView from '@/components/PassiveTreeView.vue';
 import { computed, ref } from 'vue';
 import { home } from '@/routes';
 
@@ -18,6 +19,8 @@ interface BuildDefinition {
         keystones?: string[];
         notables?: string[];
         points_used?: number;
+        node_ids?: number[];
+        ascendancy_nodes?: string[];
     };
     resistances?: Record<string, number>;
     content_tier?: string;
@@ -60,6 +63,8 @@ const props = defineProps<{
     };
     entities: Record<string, Entity>;
     spriteUrl: string;
+    treeUrl: string | null;
+    ascendancyKey: string | null;
 }>();
 
 const def = props.build.definition;
@@ -247,6 +252,29 @@ function spriteStyle(entity: Entity): Record<string, string> | null {
                         </li>
                     </ul>
                 </div>
+            </section>
+
+            <!-- Passive tree -->
+            <section
+                v-if="treeUrl && (def.passives?.node_ids?.length || def.passives?.keystones?.length || def.passives?.notables?.length)"
+                class="mb-10"
+            >
+                <h2 class="mb-3 text-lg font-semibold text-white">
+                    Passive tree
+                    <span class="text-sm font-normal text-zinc-500">
+                        {{ def.passives?.node_ids?.length ? `— ${def.passives.node_ids.length} allocated nodes` : '— key nodes highlighted' }}
+                    </span>
+                </h2>
+                <PassiveTreeView
+                    :tree-url="treeUrl"
+                    :sprite-url="spriteUrl"
+                    :highlight-names="[...(def.passives?.keystones ?? []), ...(def.passives?.notables ?? [])]"
+                    :ascendancy-nodes="def.passives?.ascendancy_nodes ?? []"
+                    :node-ids="def.passives?.node_ids ?? []"
+                    :class-name="def.class"
+                    :ascendancy-key="ascendancyKey"
+                    :ascendancy-name="def.ascendancy"
+                />
             </section>
 
             <!-- Guide -->

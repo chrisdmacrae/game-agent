@@ -40,7 +40,9 @@ class ValidateBuildTool extends Tool
             'passives' => $schema->object([
                 'keystones' => $schema->array()->items($schema->string())->description('Keystone names taken.'),
                 'notables' => $schema->array()->items($schema->string())->description('Notable names taken.'),
+                'ascendancy_nodes' => $schema->array()->items($schema->string())->description('Ascendancy passive names taken (must belong to the build\'s ascendancy).'),
                 'points_used' => $schema->integer()->description('Total passive points spent.'),
+                'node_ids' => $schema->array()->items($schema->integer())->description('Exact allocated passive node ids (from search_passives node_id values). Optional but recommended: enables rendering the allocation on the build page tree.'),
             ]),
             'resistances' => $schema->object([
                 'fire' => $schema->integer(),

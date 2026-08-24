@@ -87,6 +87,33 @@ test('warns on resistances below cap for endgame', function () {
         ->assertSee('Fire resistance 40%');
 });
 
+test('validates ascendancy nodes against the selected ascendancy', function () {
+    Poe2Server::tool(ValidateBuildTool::class, [
+        'class' => 'Witch',
+        'ascendancy' => 'Infernalist',
+        'skills' => [['gem' => 'Spark']],
+        'passives' => ['ascendancy_nodes' => ['Infernal Flame']],
+    ])
+        ->assertOk()
+        ->assertSee('"valid":true');
+
+    Poe2Server::tool(ValidateBuildTool::class, [
+        'class' => 'Ranger',
+        'ascendancy' => 'Deadeye',
+        'skills' => [['gem' => 'Spark']],
+        'passives' => ['ascendancy_nodes' => ['Infernal Flame']],
+    ])
+        ->assertOk()
+        ->assertSee("was not found on Deadeye's ascendancy tree");
+
+    Poe2Server::tool(ValidateBuildTool::class, [
+        'skills' => [['gem' => 'Spark']],
+        'passives' => ['ascendancy_nodes' => ['Infernal Flame']],
+    ])
+        ->assertOk()
+        ->assertSee('no valid ascendancy');
+});
+
 test('flags unknown passives', function () {
     Poe2Server::tool(ValidateBuildTool::class, [
         'skills' => [

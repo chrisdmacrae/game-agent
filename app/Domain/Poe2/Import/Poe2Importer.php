@@ -4,6 +4,7 @@ namespace App\Domain\Poe2\Import;
 
 use App\Domain\Poe2\IconManifest;
 use App\Domain\Poe2\Poe2Context;
+use App\Domain\Poe2\TreeRender;
 use App\Models\Game;
 use App\Models\GameVersion;
 use App\Models\Poe2\Ascendancy;
@@ -362,7 +363,14 @@ class Poe2Importer
             file_put_contents("{$directory}/{$file}", $this->client->treeAsset($file));
         }
 
-        $this->counts['tree_assets'] = 2;
+        $sprite = json_decode($this->client->treeAsset('skills.json'), true) ?: [];
+
+        $render = new TreeRender()->build($this->client->treeJson(), $sprite);
+
+        file_put_contents("{$directory}/render.json", json_encode($render));
+
+        $this->counts['tree_assets'] = 3;
+        $this->counts['tree_render_nodes'] = count($render['nodes']);
     }
 
     /** @var array<string, string>|null name => item_class lookup */

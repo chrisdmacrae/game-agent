@@ -150,30 +150,6 @@ class BuildPageEnricher
         return $result;
     }
 
-    /**
-     * Strip the game's inline markup: "[Consume|Consumes]" -> "Consumes",
-     * "[Cold]" -> "Cold".
-     */
-    protected function cleanGameText(?string $text): ?string
-    {
-        if ($text === null) {
-            return null;
-        }
-
-        $text = preg_replace('/\[[^|\]]+\|([^\]]+)\]/', '$1', $text);
-
-        return preg_replace('/\[([^\]]+)\]/', '$1', (string) $text);
-    }
-
-    /**
-     * @param  list<string>  $lines
-     * @return list<string>
-     */
-    protected function cleanGameTextLines(array $lines): array
-    {
-        return array_values(array_map(fn (string $line) => (string) $this->cleanGameText($line), $lines));
-    }
-
     /** @return array<string, mixed> */
     protected function gemEntity(Gem $gem): array
     {
@@ -200,11 +176,11 @@ class BuildPageEnricher
             'kind' => $gem->gem_type === 'support' ? 'support' : 'gem',
             'name' => $gem->name,
             'color' => $gem->color,
-            'description' => $this->cleanGameText($gem->description),
+            'description' => GameText::clean($gem->description),
             'tags' => array_slice($gem->tags, 0, 6),
             'spirit_reservation' => $spirit,
             'icon' => IconManifest::iconUrlFor($gem->raw['icon_dds_file'] ?? null),
-            'stat_text' => $this->cleanGameTextLines($statTexts),
+            'stat_text' => GameText::cleanLines($statTexts),
         ];
     }
 
@@ -215,7 +191,7 @@ class BuildPageEnricher
             'kind' => 'passive',
             'name' => $node->name,
             'passive_kind' => $node->kind,
-            'stats' => $this->cleanGameTextLines($node->stats),
+            'stats' => GameText::cleanLines($node->stats),
             'sprite' => $this->spriteFor($node->raw['icon'] ?? null),
         ];
     }
@@ -229,7 +205,7 @@ class BuildPageEnricher
             ->filter(fn (array $mod) => $mod['variants'] === null
                 || $currentVariant === null
                 || in_array($currentVariant, $mod['variants'], true))
-            ->map(fn (array $mod) => ($mod['is_implicit'] ? '(implicit) ' : '').$this->cleanGameText($mod['text']))
+            ->map(fn (array $mod) => ($mod['is_implicit'] ? '(implicit) ' : '').GameText::clean($mod['text']))
             ->values()
             ->all();
 
@@ -260,10 +236,14 @@ class BuildPageEnricher
                 : [];
         }
 
-        $frame = $frames["normalActive:{$iconPath}"]['frame'] ?? null;
+        foreach (['keystoneActive', 'notableActive', 'normalActive'] as $prefix) {
+            $frame = $frames["{$prefix}:{$iconPath}"]['frame'] ?? null;
 
-        return $frame !== null
-            ? ['x' => $frame['x'], 'y' => $frame['y'], 'w' => $frame['w'], 'h' => $frame['h']]
-            : null;
+            if ($frame !== null) {
+                return ['x' => $frame['x'], 'y' => $frame['y'], 'w' => $frame['w'], 'h' => $frame['h']];
+            }
+        }
+
+        return null;
     }
 }

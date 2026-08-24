@@ -67,7 +67,9 @@ class SaveBuildTool extends Tool
                 'passives' => $schema->object([
                     'keystones' => $schema->array()->items($schema->string()),
                     'notables' => $schema->array()->items($schema->string()),
+                    'ascendancy_nodes' => $schema->array()->items($schema->string())->description('Ascendancy passive names taken (must belong to the build\'s ascendancy).'),
                     'points_used' => $schema->integer(),
+                    'node_ids' => $schema->array()->items($schema->integer())->description('Exact allocated passive node ids (from search_passives). Recommended: enables the build page tree render.'),
                 ]),
                 'resistances' => $schema->object([
                     'fire' => $schema->integer(),
