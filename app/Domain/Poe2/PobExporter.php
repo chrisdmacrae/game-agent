@@ -69,7 +69,9 @@ class PobExporter
 
         $xml->startElement('Build');
         $xml->writeAttribute('level', (string) $level);
-        $xml->writeAttribute('targetVersion', $treeVersion);
+        // PoB2's build-file format version (GameVersions.lua liveTargetVersion)
+        // — NOT the tree version; any other value triggers a conversion popup.
+        $xml->writeAttribute('targetVersion', '0_1');
         $xml->writeAttribute('className', $className);
         $xml->writeAttribute('ascendClassName', $ascendancyName);
         $xml->writeAttribute('mainSocketGroup', '1');

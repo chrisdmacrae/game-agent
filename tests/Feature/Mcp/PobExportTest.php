@@ -45,6 +45,7 @@ test('the pob code decodes to importable build xml', function () {
         ->toContain('className="Witch"')
         ->toContain('ascendClassName="Infernalist"')
         ->toContain('level="90"')
+        ->toContain('targetVersion="0_1"')
         ->toContain('ascendClassId="1"')
         ->toContain('nameSpec="Spark"')
         ->toContain('nameSpec="Pierce"')
