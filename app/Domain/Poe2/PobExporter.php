@@ -65,7 +65,7 @@ class PobExporter
         $xml->setIndent(true);
         $xml->startDocument('1.0', 'UTF-8');
 
-        $xml->startElement('PathOfBuilding');
+        $xml->startElement('PathOfBuilding2');
 
         $xml->startElement('Build');
         $xml->writeAttribute('level', (string) $level);
@@ -126,7 +126,7 @@ class PobExporter
         $xml->startElement('Config');
         $xml->endElement();
 
-        $xml->endElement(); // PathOfBuilding
+        $xml->endElement(); // PathOfBuilding2
 
         return $xml->outputMemory();
     }

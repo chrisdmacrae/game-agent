@@ -41,7 +41,8 @@ test('the pob code decodes to importable build xml', function () {
 
     $xml = gzuncompress(base64_decode(strtr($code, '-_', '+/')));
 
-    expect($xml)->toContain('className="Witch"')
+    expect($xml)->toContain('<PathOfBuilding2>')
+        ->toContain('className="Witch"')
         ->toContain('ascendClassName="Infernalist"')
         ->toContain('level="90"')
         ->toContain('ascendClassId="1"')
