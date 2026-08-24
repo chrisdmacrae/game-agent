@@ -3,6 +3,7 @@
 namespace App\Domain\Poe2\Validation;
 
 use App\Domain\Poe2\Poe2Context;
+use App\Domain\Poe2\TreeGraph;
 use App\Models\Poe2\Ascendancy;
 use App\Models\Poe2\CharacterClass;
 use App\Models\Poe2\Gem;
@@ -451,14 +452,11 @@ class BuildValidator
             return;
         }
 
-        $adjacency = $this->treeAdjacency();
+        $graph = new TreeGraph($this->context);
 
-        $startNodeId = isset($build['class'])
-            ? PassiveNode::forVersion($this->context->versionId())
-                ->where('kind', 'class_start')
-                ->whereJsonContains('raw->start_classes', $build['class'])
-                ->value('node_id')
-            : null;
+        $adjacency = $graph->adjacency();
+
+        $startNodeId = isset($build['class']) ? $graph->startNodeId($build['class']) : null;
 
         $allocated = array_flip($nodeIds);
         $granted = array_flip($grantedIds);
@@ -509,37 +507,6 @@ class BuildValidator
                 .' node(s) are not connected to the class start via allocated nodes: '.$names
                 .'. The game requires sequential pathing — either add connecting travel nodes to node_ids, or declare how each detached node is allocated in passives.granted_nodes (instilled_amulet, unique_jewel, or ascendancy_mechanic).';
         }
-    }
-
-    /**
-     * Undirected adjacency for the whole main tree, cached per game version.
-     *
-     * @return array<int, list<int>>
-     */
-    protected function treeAdjacency(): array
-    {
-        static $cache = [];
-
-        $versionId = $this->context->versionId();
-
-        if (isset($cache[$versionId])) {
-            return $cache[$versionId];
-        }
-
-        $adjacency = [];
-
-        PassiveNode::forVersion($versionId)
-            ->whereNull('ascendancy_key')
-            ->get(['node_id', 'connections'])
-            ->each(function ($node) use (&$adjacency) {
-                foreach ($node->connections as $target) {
-                    $target = (int) $target;
-                    $adjacency[$node->node_id][] = $target;
-                    $adjacency[$target][] = $node->node_id;
-                }
-            });
-
-        return $cache[$versionId] = $adjacency;
     }
 
     protected function findGem(string $name): ?Gem

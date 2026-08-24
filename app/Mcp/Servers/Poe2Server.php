@@ -13,6 +13,7 @@ use App\Mcp\Tools\Poe2\GetSupportsForGemTool;
 use App\Mcp\Tools\Poe2\GetUniqueTool;
 use App\Mcp\Tools\Poe2\ListClassesTool;
 use App\Mcp\Tools\Poe2\ListGameModelsTool;
+use App\Mcp\Tools\Poe2\PlanTreePathTool;
 use App\Mcp\Tools\Poe2\SaveBuildTool;
 use App\Mcp\Tools\Poe2\SearchGameKnowledgeTool;
 use App\Mcp\Tools\Poe2\SearchGemsTool;
@@ -52,6 +53,7 @@ class Poe2Server extends Server
         ListClassesTool::class,
         GetAscendancyTool::class,
         SearchPassivesTool::class,
+        PlanTreePathTool::class,
         SearchGemsTool::class,
         GetGemTool::class,
         GetSupportsForGemTool::class,

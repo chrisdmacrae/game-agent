@@ -31,6 +31,9 @@ class CraftBuildPrompt extends Prompt
            `get_supports_for_gem`. Check spirit costs of persistent effects.
         5. Ground itemization in `search_uniques`, `get_unique`, and `search_mods`
            (what can actually roll on each slot), and key passives in `search_passives`.
+           Then compute the tree with `plan_tree_path` — give it your class and target
+           notables/keystones and it returns legal, contiguous node_ids. Never
+           hand-pick node ids: the game requires sequential pathing.
         6. Assemble the build, then call `validate_build`. Fix every violation and
            re-validate until clean. Take warnings seriously.
         7. When the user is happy with the build, offer to save it with `save_build`

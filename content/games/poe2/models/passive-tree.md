@@ -65,10 +65,12 @@ be declared in `passives.granted_nodes` with their source:
    explicitly allow detached allocation (e.g. the Oracle's **Entwined
    Realities** interacting with keystones).
 
-When planning a tree: pick target notables/keystones, then route real travel
-paths between them and the class start, counting every node. A distant notable
-is usually better obtained via an instilled amulet than a 10-point detour —
-compare the point cost honestly.
+When planning a tree: pick target notables/keystones, then call
+**plan_tree_path** with the class and target names — the server computes the
+travel routes and returns legal node_ids with per-target point costs. Never
+assemble node_ids by hand. If a target costs many points to reach, consider an
+instilled amulet instead (declare it in granted_nodes) — compare the point cost
+honestly.
 
 ## Planning heuristics
 

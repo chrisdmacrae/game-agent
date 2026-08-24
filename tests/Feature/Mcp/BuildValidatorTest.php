@@ -1,6 +1,7 @@
 <?php
 
 use App\Mcp\Servers\Poe2Server;
+use App\Mcp\Tools\Poe2\PlanTreePathTool;
 use App\Mcp\Tools\Poe2\ValidateBuildTool;
 use Tests\Fixtures\Poe2Seeder;
 
@@ -248,4 +249,38 @@ test('gear sanity checks: unknown uniques, duplicate slots, non-amulet instills'
         ->assertSee('Unknown unique item')
         ->assertSee('only amulets can be instilled')
         ->assertSee('has 2 items');
+});
+
+test('plan_tree_path returns a contiguous allocation for named targets', function () {
+    Poe2Server::tool(PlanTreePathTool::class, [
+        'class' => 'Witch',
+        'targets' => ['Chaos Inoculation'],
+    ])
+        ->assertOk()
+        ->assertSee('"points_used":2')
+        ->assertSee('Arcane Path');
+
+    // The planned ids validate cleanly.
+    Poe2Server::tool(ValidateBuildTool::class, [
+        'class' => 'Witch',
+        'skills' => [['gem' => 'Spark']],
+        'passives' => ['node_ids' => [1000, 1001]],
+    ])
+        ->assertOk()
+        ->assertSee('"valid":true');
+});
+
+test('plan_tree_path reports unreachable targets and unknown names', function () {
+    Poe2Server::tool(PlanTreePathTool::class, [
+        'class' => 'Witch',
+        'targets' => ['Heightened Curses'],
+    ])
+        ->assertOk()
+        ->assertSee('unreachable')
+        ->assertSee('Heightened Curses');
+
+    Poe2Server::tool(PlanTreePathTool::class, [
+        'class' => 'Witch',
+        'targets' => ['Made Up Node'],
+    ])->assertHasErrors();
 });
