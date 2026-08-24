@@ -260,12 +260,23 @@ class PobExporter
                 ->first();
 
             if ($base !== null) {
+                // Implicit mod text carries ranges and game markup ("[Chaos]");
+                // resolve both so PoB parses the line.
                 $implicits = ItemMod::forVersion($versionId)
                     ->whereIn('key', array_filter($base->implicits, 'is_string'))
                     ->pluck('text')
                     ->filter()
+                    ->map(fn (string $text) => $this->resolveRanges((string) GameText::clean($text)))
                     ->all();
             }
+
+            // Materialize loose stat priorities ("increased Cast Speed") into
+            // concrete affix lines so PoB's parser counts them.
+            $itemLevel = $item['item_level'] ?? 80;
+            $mods = array_map(
+                fn (string $line) => $this->materializeModLine($line, $base ?? null, $versionId, $itemLevel),
+                $mods,
+            );
         }
 
         $lines = ['Rarity: '.strtoupper($rarity)];
@@ -314,6 +325,69 @@ class PobExporter
 
         $xml->endElement(); // ItemSet
         $xml->endElement(); // Items
+    }
+
+    /**
+     * Turn a loose mod description into a concrete, PoB-parseable affix line
+     * by matching it against the affix pool and taking the midpoint of the
+     * best tier available at the given item level. Lines that already carry
+     * numbers are kept verbatim; unmatched lines pass through unchanged.
+     */
+    protected function materializeModLine(string $line, ?ItemBase $base, int $versionId, int $itemLevel): string
+    {
+        if (preg_match('/\d/', $line)) {
+            return $line;
+        }
+
+        $normalize = fn (string $text) => trim((string) preg_replace(
+            '/\s+/',
+            ' ',
+            strtolower((string) preg_replace('/[()#+%.\d\-]+/', ' ', $text)),
+        ));
+
+        $wanted = $normalize($line);
+
+        if ($wanted === '') {
+            return $line;
+        }
+
+        $baseTags = $base?->tags ?? [];
+
+        $keyPhrase = trim((string) preg_replace('/^(increased|reduced|added)\s+/i', '', trim($line)));
+
+        $candidates = ItemMod::forVersion($versionId)
+            ->where('domain', 'item')
+            ->whereIn('generation_type', ['prefix', 'suffix'])
+            ->whereLike('text', "%{$keyPhrase}%")
+            ->get()
+            ->filter(fn ($mod) => $mod->text !== null && $normalize($mod->text) === $wanted)
+            ->filter(fn ($mod) => $baseTags === [] || array_intersect($mod->spawn_tags, $baseTags) !== []);
+
+        if ($candidates->isEmpty()) {
+            return $line;
+        }
+
+        // Best tier the item level allows; fall back to the lowest tier.
+        $chosen = $candidates
+            ->filter(fn ($mod) => $mod->required_level <= $itemLevel)
+            ->sortByDesc('required_level')
+            ->first() ?? $candidates->sortBy('required_level')->first();
+
+        return $this->resolveRanges($chosen->text);
+    }
+
+    /** Replace "(a-b)" ranges with their midpoints: "+(80-89)" -> "+84.5". */
+    protected function resolveRanges(string $text): string
+    {
+        return (string) preg_replace_callback(
+            '/\((-?\d+(?:\.\d+)?)-(-?\d+(?:\.\d+)?)\)/',
+            function (array $match) {
+                $mid = ((float) $match[1] + (float) $match[2]) / 2;
+
+                return rtrim(rtrim(number_format($mid, 1, '.', ''), '0'), '.');
+            },
+            $text,
+        );
     }
 
     protected function treeVersion(SavedBuild $build): string

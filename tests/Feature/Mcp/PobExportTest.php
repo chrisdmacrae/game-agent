@@ -82,3 +82,27 @@ test('save_build returns a pob code', function () {
         ->assertOk()
         ->assertSee('pob_code');
 });
+
+test('loose rare mods materialize into concrete affix lines', function () {
+    Poe2Server::tool(SaveBuildTool::class, [
+        'name' => 'Materialize Test',
+        'build' => [
+            'class' => 'Witch',
+            'skills' => [['gem' => 'Spark']],
+            'gear' => [[
+                'slot' => 'amulet',
+                'rarity' => 'rare',
+                'base' => 'Stellar Amulet',
+                'mods' => ['increased Cast Speed', '+50 to maximum Life'],
+            ]],
+        ],
+    ])->assertOk();
+
+    $xml = app(PobExporter::class)->xml(SavedBuild::sole());
+
+    // No-number line resolved to the best tier at item level 80, midpoint value.
+    expect($xml)->toContain('12.5% increased Cast Speed')
+        // Lines with concrete numbers pass through verbatim.
+        ->toContain('+50 to maximum Life')
+        ->not->toContain('>increased Cast Speed<');
+});

@@ -200,8 +200,11 @@ const radii: Record<TreeNode['k'], number> = {
     ascstart: 150,
 };
 
+// Icon box = the node circle's diameter (tracking highlight scale), clipped
+// to circle(50%) so the art fills the circle exactly.
 function iconSize(node: TreeNode): number {
-    return radii[node.k] * 2.4;
+    const lit = highlightedIds.value.has(node.id) || grantedSet.value.has(node.id);
+    return radii[node.k] * 2 * (lit ? 1.35 : 1);
 }
 </script>
 
@@ -255,7 +258,7 @@ function iconSize(node: TreeNode): number {
                         :stroke="grantedSet.has(node.id) ? '#c4b5fd' : highlightedIds.has(node.id) ? '#fbbf24' : node.k === 'keystone' || node.k === 'start' || node.k === 'ascstart' ? '#71717a' : '#3f3f46'"
                         :stroke-width="grantedSet.has(node.id) || highlightedIds.has(node.id) ? 30 : 12"
                     />
-                    <!-- Sprite icon (notables, keystones, jewels, ascendancy nodes) -->
+                    <!-- Sprite icon, clipped to the node circle -->
                     <svg
                         v-if="node.s && tree.sheet.w"
                         :x="node.x - iconSize(node) / 2"
@@ -263,7 +266,7 @@ function iconSize(node: TreeNode): number {
                         :width="iconSize(node)"
                         :height="iconSize(node)"
                         :viewBox="`${node.s[0]} ${node.s[1]} ${node.s[2]} ${node.s[3]}`"
-                        style="pointer-events: none"
+                        style="pointer-events: none; clip-path: circle(50%)"
                         :opacity="highlightedIds.has(node.id) || grantedSet.has(node.id) ? 1 : 0.55"
                     >
                         <image :href="spriteUrl" :width="tree.sheet.w" :height="tree.sheet.h" />

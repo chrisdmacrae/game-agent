@@ -7,6 +7,8 @@ use App\Models\GameVersion;
 use App\Models\Poe2\Ascendancy;
 use App\Models\Poe2\CharacterClass;
 use App\Models\Poe2\Gem;
+use App\Models\Poe2\ItemBase;
+use App\Models\Poe2\ItemMod;
 use App\Models\Poe2\PassiveNode;
 use App\Models\Poe2\UniqueItem;
 
@@ -218,6 +220,34 @@ class Poe2Seeder
             'stats' => ['Gain Infernal Flame'],
             'connections' => [],
         ]);
+
+        ItemBase::create([
+            'game_version_id' => $version->id,
+            'metadata_id' => 'Metadata/Items/Amulets/Stellar',
+            'name' => 'Stellar Amulet',
+            'item_class' => 'Amulet',
+            'release_state' => 'released',
+            'implicits' => [],
+            'tags' => ['amulet', 'default'],
+        ]);
+
+        foreach ([
+            ['CastSpeed1', '(5-9)% increased Cast Speed', 'suffix', 10, 'CastSpeed'],
+            ['CastSpeed2', '(10-15)% increased Cast Speed', 'suffix', 40, 'CastSpeed'],
+        ] as [$key, $text, $generation, $level, $group]) {
+            ItemMod::create([
+                'game_version_id' => $version->id,
+                'key' => $key,
+                'domain' => 'item',
+                'generation_type' => $generation,
+                'group_type' => $group,
+                'required_level' => $level,
+                'text' => $text,
+                'spawn_tags' => ['amulet', 'wand'],
+                'spawn_weights' => [],
+                'stats' => [],
+            ]);
+        }
 
         UniqueItem::create([
             'game_version_id' => $version->id,
