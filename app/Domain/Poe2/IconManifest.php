@@ -3,6 +3,7 @@
 namespace App\Domain\Poe2;
 
 use App\Models\Poe2\Gem;
+use App\Models\Poe2\ItemBase;
 use App\Models\Poe2\UniqueItem;
 
 /**
@@ -13,6 +14,16 @@ use App\Models\Poe2\UniqueItem;
  */
 class IconManifest
 {
+    /** Wearable/socketable item classes whose base art the gear screen uses. */
+    public const EQUIPMENT_CLASSES = [
+        'Amulet', 'Belt', 'Body Armour', 'Boots', 'Bow', 'Buckler', 'Claw',
+        'Crossbow', 'Dagger', 'Flail', 'Focus', 'Gloves', 'Helmet', 'Jewel',
+        'LifeFlask', 'ManaFlask', 'One Hand Axe', 'One Hand Mace',
+        'One Hand Sword', 'Quiver', 'Ring', 'Sceptre', 'Shield', 'Spear',
+        'Staff', 'Talisman', 'Two Hand Axe', 'Two Hand Mace', 'Two Hand Sword',
+        'Wand', 'Warstaff',
+    ];
+
     public function __construct(protected Poe2Context $context) {}
 
     public static function keyFor(string $ddsPath): string
@@ -54,6 +65,18 @@ class IconManifest
             ->pluck('raw')
             ->each(function ($raw) use (&$icons) {
                 $dds = (is_array($raw) ? $raw : json_decode((string) $raw, true))['icon_dds_file'] ?? null;
+
+                if ($dds && self::isValidDdsPath($dds)) {
+                    $icons[self::keyFor($dds)] = $dds;
+                }
+            });
+
+        ItemBase::forVersion($versionId)
+            ->whereIn('item_class', self::EQUIPMENT_CLASSES)
+            ->where('release_state', 'released')
+            ->pluck('raw')
+            ->each(function ($raw) use (&$icons) {
+                $dds = (is_array($raw) ? $raw : json_decode((string) $raw, true))['visual_identity']['dds_file'] ?? null;
 
                 if ($dds && self::isValidDdsPath($dds)) {
                     $icons[self::keyFor($dds)] = $dds;

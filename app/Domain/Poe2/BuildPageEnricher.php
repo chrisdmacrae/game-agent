@@ -3,6 +3,8 @@
 namespace App\Domain\Poe2;
 
 use App\Models\Poe2\Gem;
+use App\Models\Poe2\ItemBase;
+use App\Models\Poe2\ItemMod;
 use App\Models\Poe2\PassiveNode;
 use App\Models\Poe2\UniqueItem;
 use App\Models\SavedBuild;
@@ -90,9 +92,94 @@ class BuildPageEnricher
 
         return [
             'entities' => $entities->all(),
+            'gear_view' => $this->gearView($definition, $versionId),
             'guide_html' => $guideHtml !== null
                 ? $this->tagMentions($guideHtml, $entities->keys()->all())
                 : null,
+        ];
+    }
+
+    /**
+     * Resolves every gear entry and jewel against the item database for the
+     * gear screen: icons (unique art or base art), implicits, cleaned mods.
+     *
+     * @param  array<string, mixed>  $definition
+     * @return array{slots: array<string, array<string, mixed>>, jewels: list<array<string, mixed>>}
+     */
+    protected function gearView(array $definition, int $versionId): array
+    {
+        $slots = [];
+
+        foreach ($definition['gear'] ?? [] as $item) {
+            $slots[$item['slot'] ?? 'unknown'] = $this->gearItemView($item, $versionId);
+        }
+
+        $jewels = [];
+
+        foreach ($definition['jewels'] ?? [] as $jewel) {
+            $jewels[] = $this->gearItemView([
+                'slot' => 'jewel',
+                'rarity' => $jewel['rarity'] ?? 'rare',
+                'name' => $jewel['name'] ?? null,
+                'mods' => $jewel['mods'] ?? [],
+            ], $versionId);
+        }
+
+        return ['slots' => $slots, 'jewels' => $jewels];
+    }
+
+    /**
+     * @param  array<string, mixed>  $item
+     * @return array<string, mixed>
+     */
+    protected function gearItemView(array $item, int $versionId): array
+    {
+        $icon = null;
+        $implicits = [];
+        $uniqueMods = [];
+        $baseName = $item['base'] ?? null;
+
+        if (($item['rarity'] ?? null) === 'unique' && ! empty($item['name'])) {
+            $unique = UniqueItem::forVersion($versionId)
+                ->whereLike('name', $item['name'])
+                ->first();
+
+            if ($unique !== null) {
+                $icon = IconManifest::iconUrlFor($unique->raw['dds'] ?? null);
+                $baseName ??= $unique->base_name;
+                $uniqueMods = $this->uniqueEntity($unique)['mods'];
+            }
+        }
+
+        if ($baseName !== null) {
+            $base = ItemBase::forVersion($versionId)
+                ->whereLike('name', $baseName)
+                ->whereIn('item_class', IconManifest::EQUIPMENT_CLASSES)
+                ->first();
+
+            if ($base !== null) {
+                $icon ??= IconManifest::iconUrlFor($base->raw['visual_identity']['dds_file'] ?? null);
+
+                // Implicits are mod keys; resolve them to display text.
+                $implicits = GameText::cleanLines(
+                    ItemMod::forVersion($versionId)
+                        ->whereIn('key', array_filter($base->implicits, 'is_string'))
+                        ->pluck('text')
+                        ->filter()
+                        ->all(),
+                );
+            }
+        }
+
+        return [
+            'slot' => $item['slot'] ?? null,
+            'rarity' => $item['rarity'] ?? 'rare',
+            'name' => $item['name'] ?? null,
+            'base' => $baseName,
+            'icon' => $icon,
+            'implicits' => $implicits,
+            'mods' => $uniqueMods !== [] ? $uniqueMods : GameText::cleanLines($item['mods'] ?? []),
+            'instill' => $item['instill'] ?? null,
         ];
     }
 

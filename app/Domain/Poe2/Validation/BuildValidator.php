@@ -7,6 +7,7 @@ use App\Domain\Poe2\TreeGraph;
 use App\Models\Poe2\Ascendancy;
 use App\Models\Poe2\CharacterClass;
 use App\Models\Poe2\Gem;
+use App\Models\Poe2\ItemBase;
 use App\Models\Poe2\PassiveNode;
 use App\Models\Poe2\UniqueItem;
 
@@ -380,6 +381,16 @@ class BuildValidator
         foreach ($gear as $item) {
             $slot = $item['slot'] ?? 'unknown';
             $slotCounts[$slot] = ($slotCounts[$slot] ?? 0) + 1;
+
+            if (! empty($item['base'])) {
+                $baseExists = ItemBase::forVersion($this->context->versionId())
+                    ->whereLike('name', $item['base'])
+                    ->exists();
+
+                if (! $baseExists) {
+                    $this->warnings[] = "Gear base \"{$item['base']}\" ({$slot}) is not a known item base — use search_item_bases-style exact names so the gear screen can render it.";
+                }
+            }
 
             if (isset($item['instill']) && $slot !== 'amulet') {
                 $this->violations[] = "Gear in slot \"{$slot}\" has an instill — only amulets can be instilled.";

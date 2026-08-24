@@ -50,6 +50,7 @@ class BuildController extends Controller
                 'guide_html' => $enriched['guide_html'],
             ],
             'entities' => $enriched['entities'],
+            'gearView' => $enriched['gear_view'],
             'spriteUrl' => asset('games/poe2/tree/skills.webp'),
             'treeUrl' => is_file(public_path('games/poe2/tree/render.json'))
                 ? asset('games/poe2/tree/render.json')
