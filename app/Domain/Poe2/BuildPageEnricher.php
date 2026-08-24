@@ -68,9 +68,17 @@ class BuildPageEnricher
             $entities[$node->name] ??= $this->passiveEntity($node);
         }
 
+        $gearUniqueNames = collect($definition['gear'] ?? [])
+            ->filter(fn (array $item) => ($item['rarity'] ?? null) === 'unique')
+            ->pluck('name')
+            ->merge(collect($definition['jewels'] ?? [])
+                ->filter(fn (array $jewel) => ($jewel['rarity'] ?? null) === 'unique')
+                ->pluck('name'))
+            ->filter();
+
         $uniques = UniqueItem::forVersion($versionId)
             ->whereIn('name', $this->wantedNames(
-                collect(),
+                $gearUniqueNames,
                 UniqueItem::forVersion($versionId)->pluck('name'),
                 $guideText,
             ))

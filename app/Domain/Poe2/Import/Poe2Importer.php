@@ -274,9 +274,20 @@ class Poe2Importer
     {
         $rows = [];
 
+        $classNames = array_values(array_map(fn (array $class) => $class['name'], $tree['classes'] ?? []));
+
         foreach ($tree['nodes'] ?? [] as $nodeId => $node) {
             if (! is_numeric($nodeId)) {
                 continue;
+            }
+
+            // Tag class-start nodes with the class names they serve, so the
+            // validator can resolve a build's starting point.
+            if (isset($node['classStartIndex'])) {
+                $node['start_classes'] = array_values(array_filter(array_map(
+                    fn ($index) => $classNames[$index] ?? null,
+                    (array) $node['classStartIndex'],
+                )));
             }
 
             $rows[] = [

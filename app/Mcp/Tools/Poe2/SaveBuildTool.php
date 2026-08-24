@@ -70,7 +70,36 @@ class SaveBuildTool extends Tool
                     'ascendancy_nodes' => $schema->array()->items($schema->string())->description('Ascendancy passive names taken (must belong to the build\'s ascendancy).'),
                     'points_used' => $schema->integer(),
                     'node_ids' => $schema->array()->items($schema->integer())->description('Exact allocated passive node ids (from search_passives). Recommended: enables the build page tree render.'),
+                    'granted_nodes' => $schema->array()->items(
+                        $schema->object([
+                            'node_id' => $schema->integer()->required(),
+                            'source' => $schema->string()->enum(['instilled_amulet', 'unique_jewel', 'ascendancy_mechanic'])->required(),
+                            'detail' => $schema->string()->description('e.g. the jewel name or the three distilled emotions.'),
+                        ]),
+                    )->description('Nodes allocated WITHOUT tree pathing via special mechanics: instilled amulets (notables only), unique jewels (e.g. From Nothing), or ascendancy mechanics (e.g. Oracle\'s Entwined Realities). All other node_ids must form a contiguous path from the class start.'),
                 ]),
+
+                'gear' => $schema->array()->items(
+                    $schema->object([
+                        'slot' => $schema->string()->enum(['helmet', 'body', 'gloves', 'boots', 'amulet', 'ring1', 'ring2', 'belt', 'weapon1', 'offhand1', 'weapon2', 'offhand2'])->required(),
+                        'rarity' => $schema->string()->enum(['unique', 'rare', 'magic', 'normal'])->required(),
+                        'name' => $schema->string()->description('Unique item name (validated), or a label for rares.'),
+                        'base' => $schema->string()->description('Base type, e.g. "Stellar Amulet".'),
+                        'mods' => $schema->array()->items($schema->string())->description('Desired affixes for rare gear.'),
+                        'instill' => $schema->object([
+                            'notable' => $schema->string()->required(),
+                            'emotions' => $schema->array()->items($schema->string())->description('The three distilled emotions used.'),
+                        ])->description('Amulet only: the notable passive granted by instilling this amulet.'),
+                    ]),
+                )->description('Structured gear, one entry per slot. Required to substantiate granted_nodes claims (instilled amulets).'),
+                'jewels' => $schema->array()->items(
+                    $schema->object([
+                        'name' => $schema->string()->required(),
+                        'rarity' => $schema->string()->enum(['unique', 'rare', 'magic'])->required(),
+                        'socket_node_id' => $schema->integer()->description('The tree jewel socket node id this jewel sits in.'),
+                        'mods' => $schema->array()->items($schema->string()),
+                    ]),
+                )->description('Jewels socketed in tree jewel sockets. A unique_jewel granted_node requires the unique jewel listed here.'),
                 'resistances' => $schema->object([
                     'fire' => $schema->integer(),
                     'cold' => $schema->integer(),

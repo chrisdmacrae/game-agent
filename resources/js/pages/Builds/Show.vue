@@ -9,6 +9,22 @@ interface SkillSetup {
     supports?: string[];
 }
 
+interface GearItem {
+    slot: string;
+    rarity: string;
+    name?: string;
+    base?: string;
+    mods?: string[];
+    instill?: { notable: string; emotions?: string[] };
+}
+
+interface JewelItem {
+    name: string;
+    rarity: string;
+    socket_node_id?: number;
+    mods?: string[];
+}
+
 interface BuildDefinition {
     class?: string;
     ascendancy?: string;
@@ -21,7 +37,10 @@ interface BuildDefinition {
         points_used?: number;
         node_ids?: number[];
         ascendancy_nodes?: string[];
+        granted_nodes?: { node_id: number; source: string; detail?: string }[];
     };
+    gear?: GearItem[];
+    jewels?: JewelItem[];
     resistances?: Record<string, number>;
     content_tier?: string;
 }
@@ -121,6 +140,21 @@ function onOut(event: MouseEvent) {
     hideTimer = setTimeout(() => (hovered.value = null), 120);
 }
 
+const slotLabels: Record<string, string> = {
+    helmet: 'Helmet',
+    body: 'Body Armour',
+    gloves: 'Gloves',
+    boots: 'Boots',
+    amulet: 'Amulet',
+    ring1: 'Ring',
+    ring2: 'Ring',
+    belt: 'Belt',
+    weapon1: 'Weapon',
+    offhand1: 'Off-hand',
+    weapon2: 'Weapon (Set II)',
+    offhand2: 'Off-hand (Set II)',
+};
+
 const gemColors: Record<string, string> = {
     r: 'bg-red-500/20 text-red-400 border-red-500/40',
     g: 'bg-green-500/20 text-green-400 border-green-500/40',
@@ -217,6 +251,48 @@ function spriteStyle(entity: Entity): Record<string, string> | null {
                 </p>
             </section>
 
+            <!-- Gear -->
+            <section v-if="def.gear?.length || def.jewels?.length" class="mb-10">
+                <h2 class="mb-3 text-lg font-semibold text-white">Gear</h2>
+                <div class="divide-y divide-zinc-800 rounded-lg border border-zinc-800">
+                    <div v-for="item in def.gear ?? []" :key="item.slot" class="flex flex-wrap items-baseline gap-x-3 gap-y-1 p-4">
+                        <span class="w-32 shrink-0 text-sm text-zinc-500">{{ slotLabels[item.slot] ?? item.slot }}</span>
+                        <div class="min-w-0 flex-1">
+                            <p>
+                                <span
+                                    v-if="item.rarity === 'unique' && item.name"
+                                    class="entity-ref font-semibold text-orange-300"
+                                    :data-entity="item.name"
+                                >{{ item.name }}</span>
+                                <span v-else class="font-semibold" :class="item.rarity === 'rare' ? 'text-yellow-200' : 'text-zinc-200'">
+                                    {{ item.name ?? (item.rarity.charAt(0).toUpperCase() + item.rarity.slice(1)) }}
+                                </span>
+                                <span v-if="item.base" class="ml-2 text-sm text-zinc-500">{{ item.base }}</span>
+                            </p>
+                            <p v-if="item.mods?.length" class="mt-0.5 text-sm text-sky-200/70">{{ item.mods.join(' · ') }}</p>
+                            <p v-if="item.instill" class="mt-0.5 text-sm text-violet-300">
+                                Instilled: <span class="entity-ref" :data-entity="item.instill.notable">{{ item.instill.notable }}</span>
+                                <span v-if="item.instill.emotions?.length" class="text-zinc-500"> ({{ item.instill.emotions.join(' + ') }})</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div v-for="jewel in def.jewels ?? []" :key="jewel.name" class="flex flex-wrap items-baseline gap-x-3 gap-y-1 p-4">
+                        <span class="w-32 shrink-0 text-sm text-zinc-500">Jewel</span>
+                        <div class="min-w-0 flex-1">
+                            <p>
+                                <span
+                                    v-if="jewel.rarity === 'unique'"
+                                    class="entity-ref font-semibold text-orange-300"
+                                    :data-entity="jewel.name"
+                                >{{ jewel.name }}</span>
+                                <span v-else class="font-semibold text-yellow-200">{{ jewel.name }}</span>
+                            </p>
+                            <p v-if="jewel.mods?.length" class="mt-0.5 text-sm text-sky-200/70">{{ jewel.mods.join(' · ') }}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Passives + defenses -->
             <section
                 v-if="def.passives?.keystones?.length || def.passives?.notables?.length || def.resistances"
@@ -271,6 +347,7 @@ function spriteStyle(entity: Entity): Record<string, string> | null {
                     :highlight-names="[...(def.passives?.keystones ?? []), ...(def.passives?.notables ?? [])]"
                     :ascendancy-nodes="def.passives?.ascendancy_nodes ?? []"
                     :node-ids="def.passives?.node_ids ?? []"
+                    :granted-ids="(def.passives?.granted_nodes ?? []).map((g) => g.node_id)"
                     :class-name="def.class"
                     :ascendancy-key="ascendancyKey"
                     :ascendancy-name="def.ascendancy"

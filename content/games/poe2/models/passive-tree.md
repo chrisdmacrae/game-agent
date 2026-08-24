@@ -45,6 +45,31 @@ Most builds ignore this and play one set; advanced builds use set II for a buff/
 utility skill with different scaling. When presenting a build, state whether
 weapon-set points are used and for what.
 
+## Allocation rules (HARD CONSTRAINT)
+
+The game engine only allows allocating nodes **contiguously**: every allocated
+node must connect to your class start through other allocated nodes. You cannot
+"cherry-pick" a distant notable without paying for every travel node on the way.
+validate_build enforces this on `passives.node_ids`.
+
+Three mechanics are exceptions — they allocate nodes WITHOUT pathing, and must
+be declared in `passives.granted_nodes` with their source:
+
+1. **Instilled amulets** (`instilled_amulet`): applying three Distilled
+   Emotions to an amulet grants one chosen **notable** (notables only — never
+   keystones or smalls) while the amulet is worn.
+2. **Unique jewels** (`unique_jewel`): certain jewels (e.g. **From Nothing**)
+   allocate specific nodes or nearby clusters from a socketed jewel, with no
+   pathing required.
+3. **Ascendancy mechanics** (`ascendancy_mechanic`): some ascendancy passives
+   explicitly allow detached allocation (e.g. the Oracle's **Entwined
+   Realities** interacting with keystones).
+
+When planning a tree: pick target notables/keystones, then route real travel
+paths between them and the class start, counting every node. A distant notable
+is usually better obtained via an instilled amulet than a 10-point detour —
+compare the point cost honestly.
+
 ## Planning heuristics
 
 - Efficiency = stats per point. Travel to a cluster only if the notables justify

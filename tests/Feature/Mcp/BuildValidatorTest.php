@@ -114,6 +114,63 @@ test('validates ascendancy nodes against the selected ascendancy', function () {
         ->assertSee('no valid ascendancy');
 });
 
+test('accepts a contiguous allocation from the class start', function () {
+    Poe2Server::tool(ValidateBuildTool::class, [
+        'class' => 'Witch',
+        'skills' => [['gem' => 'Spark']],
+        'passives' => ['node_ids' => [1000, 1001]],
+    ])
+        ->assertOk()
+        ->assertSee('"valid":true');
+});
+
+test('rejects a non-contiguous allocation', function () {
+    Poe2Server::tool(ValidateBuildTool::class, [
+        'class' => 'Witch',
+        'skills' => [['gem' => 'Spark']],
+        'passives' => ['node_ids' => [1000, 1001, 1002]],
+    ])
+        ->assertOk()
+        ->assertSee('not contiguous')
+        ->assertSee('Heightened Curses');
+});
+
+test('granted nodes are exempt from pathing', function () {
+    Poe2Server::tool(ValidateBuildTool::class, [
+        'class' => 'Witch',
+        'skills' => [['gem' => 'Spark']],
+        'passives' => [
+            'node_ids' => [1000, 1001, 1002],
+            'granted_nodes' => [['node_id' => 1002, 'source' => 'unique_jewel', 'detail' => 'From Nothing']],
+        ],
+    ])
+        ->assertOk()
+        ->assertSee('"valid":true');
+});
+
+test('instilled amulets can only grant notables', function () {
+    Poe2Server::tool(ValidateBuildTool::class, [
+        'class' => 'Witch',
+        'skills' => [['gem' => 'Spark']],
+        'passives' => [
+            'granted_nodes' => [['node_id' => 1001, 'source' => 'instilled_amulet']],
+        ],
+    ])
+        ->assertOk()
+        ->assertSee('instilling only allocates NOTABLE passives');
+});
+
+test('ascendancy nodes cannot be listed in node_ids', function () {
+    Poe2Server::tool(ValidateBuildTool::class, [
+        'class' => 'Witch',
+        'ascendancy' => 'Infernalist',
+        'skills' => [['gem' => 'Spark']],
+        'passives' => ['node_ids' => [2001]],
+    ])
+        ->assertOk()
+        ->assertSee('passives.ascendancy_nodes instead');
+});
+
 test('flags unknown passives', function () {
     Poe2Server::tool(ValidateBuildTool::class, [
         'skills' => [
@@ -123,4 +180,72 @@ test('flags unknown passives', function () {
     ])
         ->assertOk()
         ->assertSee('Not A Real Keystone');
+});
+
+test('granted instill must match the worn amulet when gear is structured', function () {
+    $base = [
+        'class' => 'Witch',
+        'skills' => [['gem' => 'Spark']],
+        'passives' => [
+            'granted_nodes' => [['node_id' => 1002, 'source' => 'instilled_amulet']],
+        ],
+    ];
+
+    // Gear present but the amulet has no matching instill -> violation.
+    Poe2Server::tool(ValidateBuildTool::class, $base + [
+        'gear' => [['slot' => 'amulet', 'rarity' => 'unique', 'name' => 'Astramentis']],
+    ])
+        ->assertOk()
+        ->assertSee('no amulet in the build');
+
+    // Matching instill -> valid.
+    Poe2Server::tool(ValidateBuildTool::class, $base + [
+        'gear' => [[
+            'slot' => 'amulet',
+            'rarity' => 'unique',
+            'name' => 'Astramentis',
+            'instill' => ['notable' => 'Heightened Curses'],
+        ]],
+    ])
+        ->assertOk()
+        ->assertSee('"valid":true');
+});
+
+test('granted unique_jewel requires a unique jewel in the build', function () {
+    $base = [
+        'class' => 'Witch',
+        'skills' => [['gem' => 'Spark']],
+        'passives' => [
+            'granted_nodes' => [['node_id' => 1001, 'source' => 'unique_jewel', 'detail' => 'From Nothing']],
+        ],
+    ];
+
+    Poe2Server::tool(ValidateBuildTool::class, $base + [
+        'gear' => [['slot' => 'boots', 'rarity' => 'rare', 'mods' => ['30% increased Movement Speed']]],
+    ])
+        ->assertOk()
+        ->assertSee('contains no unique jewel');
+
+    Poe2Server::tool(ValidateBuildTool::class, $base + [
+        'jewels' => [['name' => 'From Nothing', 'rarity' => 'unique']],
+    ])
+        ->assertOk()
+        ->assertSee('"valid":true');
+});
+
+test('gear sanity checks: unknown uniques, duplicate slots, non-amulet instills', function () {
+    Poe2Server::tool(ValidateBuildTool::class, [
+        'class' => 'Witch',
+        'skills' => [['gem' => 'Spark']],
+        'gear' => [
+            ['slot' => 'helmet', 'rarity' => 'unique', 'name' => 'Totally Fake Helm'],
+            ['slot' => 'boots', 'rarity' => 'rare', 'instill' => ['notable' => 'Heightened Curses']],
+            ['slot' => 'belt', 'rarity' => 'rare'],
+            ['slot' => 'belt', 'rarity' => 'rare'],
+        ],
+    ])
+        ->assertOk()
+        ->assertSee('Unknown unique item')
+        ->assertSee('only amulets can be instilled')
+        ->assertSee('has 2 items');
 });

@@ -24,6 +24,10 @@ missing, the build is not done. Use this as the output template.
    weapon-set points do anything special. State total points assumed.
 5. **Gear**: per-slot stat priorities; specific uniques (verified via get_unique)
    with why; rune choices for resistance gaps. Flag the expensive slots.
+   Record it in the build's structured `gear` list (slot, rarity, name, base,
+   mods) and `jewels` list — required to substantiate any granted_nodes claims:
+   an instilled notable must appear on the amulet's `instill`, and jewel-granted
+   nodes need the unique jewel listed.
 6. **Charms + flasks**: which charm(s) and why (usually anti-freeze first).
 7. **Defensive summary**: res caps, life/ES pool, mitigation layer, recovery —
    per the defenses model checklist.

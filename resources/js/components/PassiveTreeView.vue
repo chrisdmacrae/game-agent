@@ -27,6 +27,7 @@ const props = defineProps<{
     highlightNames: string[];
     ascendancyNodes: string[];
     nodeIds: number[];
+    grantedIds: number[];
     className?: string;
     ascendancyKey?: string | null;
     ascendancyName?: string;
@@ -75,6 +76,8 @@ const highlightedIds = computed(() => {
 
     return ids;
 });
+
+const grantedSet = computed(() => new Set(props.grantedIds));
 
 const nodeById = computed(() => {
     const map = new Map<number, TreeNode>();
@@ -247,10 +250,10 @@ function iconSize(node: TreeNode): number {
                     <circle
                         :cx="node.x"
                         :cy="node.y"
-                        :r="radii[node.k] * (highlightedIds.has(node.id) ? 1.35 : 1)"
-                        :fill="highlightedIds.has(node.id) ? '#f59e0b' : node.k === 'small' ? '#3f3f46' : '#18181b'"
-                        :stroke="highlightedIds.has(node.id) ? '#fbbf24' : node.k === 'keystone' || node.k === 'start' || node.k === 'ascstart' ? '#71717a' : '#3f3f46'"
-                        :stroke-width="highlightedIds.has(node.id) ? 30 : 12"
+                        :r="radii[node.k] * (highlightedIds.has(node.id) || grantedSet.has(node.id) ? 1.35 : 1)"
+                        :fill="grantedSet.has(node.id) ? '#8b5cf6' : highlightedIds.has(node.id) ? '#f59e0b' : node.k === 'small' ? '#3f3f46' : '#18181b'"
+                        :stroke="grantedSet.has(node.id) ? '#c4b5fd' : highlightedIds.has(node.id) ? '#fbbf24' : node.k === 'keystone' || node.k === 'start' || node.k === 'ascstart' ? '#71717a' : '#3f3f46'"
+                        :stroke-width="grantedSet.has(node.id) || highlightedIds.has(node.id) ? 30 : 12"
                     />
                     <!-- Sprite icon (notables, keystones, jewels, ascendancy nodes) -->
                     <svg
@@ -261,7 +264,7 @@ function iconSize(node: TreeNode): number {
                         :height="iconSize(node)"
                         :viewBox="`${node.s[0]} ${node.s[1]} ${node.s[2]} ${node.s[3]}`"
                         style="pointer-events: none"
-                        :opacity="highlightedIds.has(node.id) ? 1 : 0.55"
+                        :opacity="highlightedIds.has(node.id) || grantedSet.has(node.id) ? 1 : 0.55"
                     >
                         <image :href="spriteUrl" :width="tree.sheet.w" :height="tree.sheet.h" />
                     </svg>
@@ -273,7 +276,7 @@ function iconSize(node: TreeNode): number {
             >
                 Reset view
             </button>
-            <p class="absolute bottom-3 left-3 text-xs text-zinc-600">Scroll to zoom · drag to pan · hover nodes for details</p>
+            <p class="absolute bottom-3 left-3 text-xs text-zinc-600">Scroll to zoom · drag to pan · hover nodes for details<span v-if="grantedIds.length"> · <span class="text-violet-400">purple</span> = granted (jewel/instill)</span></p>
 
             <!-- Node popup -->
             <div

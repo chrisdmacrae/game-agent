@@ -161,6 +161,27 @@ class Poe2Seeder
             ]],
         ]);
 
+        // A tiny connected tree: Witch start (900) -> travel (1000) -> keystone
+        // (1001). The notable 1002 is deliberately NOT connected to anything.
+        PassiveNode::create([
+            'game_version_id' => $version->id,
+            'node_id' => 900,
+            'name' => '',
+            'kind' => 'class_start',
+            'stats' => [],
+            'connections' => ['1000'],
+            'raw' => ['start_classes' => ['Witch']],
+        ]);
+
+        PassiveNode::create([
+            'game_version_id' => $version->id,
+            'node_id' => 1000,
+            'name' => 'Arcane Path',
+            'kind' => 'small',
+            'stats' => ['+5 to Intelligence'],
+            'connections' => ['1001'],
+        ]);
+
         PassiveNode::create([
             'game_version_id' => $version->id,
             'node_id' => 1001,
@@ -187,6 +208,19 @@ class Poe2Seeder
             'ascendancy_key' => 'Witch1',
             'stats' => ['Gain Infernal Flame'],
             'connections' => [],
+        ]);
+
+        UniqueItem::create([
+            'game_version_id' => $version->id,
+            'name' => 'From Nothing',
+            'base_name' => 'Emerald',
+            'item_class' => 'Jewel',
+            'implicit_count' => 0,
+            'variants' => [],
+            'mods' => [
+                ['text' => 'Allocates a nearby Keystone without pathing', 'tags' => [], 'variants' => null, 'is_implicit' => false],
+            ],
+            'source_text' => 'From Nothing',
         ]);
 
         UniqueItem::create([
