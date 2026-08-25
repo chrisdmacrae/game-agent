@@ -2,13 +2,14 @@
 
 namespace App\Domain\Poe2;
 
+use App\Domain\Builds\BuildPayload;
+use App\Models\Build;
 use App\Models\Poe2\Ascendancy;
 use App\Models\Poe2\Gem;
 use App\Models\Poe2\ItemBase;
 use App\Models\Poe2\ItemMod;
 use App\Models\Poe2\PassiveNode;
 use App\Models\Poe2\UniqueItem;
-use App\Models\SavedBuild;
 use Illuminate\Support\Collection;
 
 /**
@@ -24,12 +25,12 @@ class BuildPageEnricher
     /**
      * @return array{entities: array<string, array<string, mixed>>, guide_html: ?string}
      */
-    public function enrich(SavedBuild $build, ?string $guideHtml): array
+    public function enrich(Build $build, ?string $guideHtml): array
     {
         $definition = $build->build;
 
         $gemNames = collect($definition['skills'] ?? [])
-            ->flatMap(fn (array $setup) => array_merge([$setup['gem'] ?? null], $setup['supports'] ?? []))
+            ->flatMap(fn (array $setup) => array_merge([$setup['gem'] ?? null], BuildPayload::supportNames($setup)))
             ->filter();
 
         $passiveNames = collect($definition['passives']['keystones'] ?? [])
@@ -206,6 +207,12 @@ class BuildPageEnricher
             'icon' => $icon,
             'implicits' => $implicits,
             'mods' => $uniqueMods !== [] ? $uniqueMods : GameText::cleanLines($item['mods'] ?? []),
+            // One entry per rune socket, empty ones normalised to null so the
+            // gear screen can draw a dashed "empty socket" chip for them.
+            'runes' => array_map(
+                fn (mixed $rune) => is_string($rune) && $rune !== '' ? $rune : null,
+                array_values($item['runes'] ?? []),
+            ),
             'instill' => $item['instill'] ?? null,
         ];
     }

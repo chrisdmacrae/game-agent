@@ -17,7 +17,29 @@ trait ProfileValidationRules
     {
         return [
             'name' => $this->nameRules(),
+            'handle' => $this->handleRules($userId),
+            'discord_username' => ['nullable', 'string', 'max:64'],
+            'bio' => ['nullable', 'string', 'max:180'],
             'email' => $this->emailRules($userId),
+        ];
+    }
+
+    /**
+     * The public identity on build pages: slug-ish, unique, and short enough
+     * to sit in a mono byline.
+     *
+     * @return array<int, ValidationRule|array<mixed>|string>
+     */
+    protected function handleRules(?int $userId = null): array
+    {
+        return [
+            'required',
+            'string',
+            'max:30',
+            'regex:/^[a-z0-9]+(?:[-_][a-z0-9]+)*$/i',
+            $userId === null
+                ? Rule::unique(User::class, 'handle')
+                : Rule::unique(User::class, 'handle')->ignore($userId),
         ];
     }
 

@@ -1,7 +1,7 @@
 import { createInertiaApp } from '@inertiajs/vue3';
 import { initializeTheme } from '@/composables/useAppearance';
-import AppLayout from '@/layouts/AppLayout.vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
+import SiteLayout from '@/layouts/byb/SiteLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { initializeFlashToast } from '@/lib/flashToast';
 
@@ -11,23 +11,20 @@ createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
     layout: (name) => {
         switch (true) {
-            case name === 'Welcome':
-            case name.startsWith('Builds/'):
-                return null;
             case name.startsWith('auth/'):
                 return AuthLayout;
             case name.startsWith('settings/'):
-                return [AppLayout, SettingsLayout];
+                return [SiteLayout, SettingsLayout];
             default:
-                return AppLayout;
+                return SiteLayout;
         }
     },
     progress: {
-        color: '#4B5563',
+        color: '#2DE1C2',
     },
 });
 
-// This will set light / dark mode on page load...
+// Build Your Build is dark only; this keeps the html class in place...
 initializeTheme();
 
 // This will listen for flash toast data from the server...

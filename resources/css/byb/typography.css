@@ -1,0 +1,31 @@
+:root{
+--font-display:"Bricolage Grotesque","Arial Black",system-ui,sans-serif;
+--font-body:"Public Sans",system-ui,-apple-system,sans-serif;
+--font-mono:"Azeret Mono",ui-monospace,"SF Mono",monospace;
+
+/* display — Bricolage Grotesque, tight, heavy */
+--type-display-xl:800 64px/0.94 var(--font-display);
+--type-display-l:800 48px/0.96 var(--font-display);
+--type-display-m:700 36px/1.0 var(--font-display);
+
+/* headings */
+--type-h1:700 28px/1.14 var(--font-display);
+--type-h2:700 22px/1.2 var(--font-display);
+--type-h3:600 18px/1.28 var(--font-body);
+
+/* body */
+--type-body-l:400 17px/1.55 var(--font-body);
+--type-body:400 15px/1.6 var(--font-body);
+--type-body-s:400 13px/1.5 var(--font-body);
+--type-strong:600 15px/1.5 var(--font-body);
+
+/* mono — data, numbers, stats, code */
+--type-mono:400 14px/1.5 var(--font-mono);
+--type-mono-s:400 12px/1.45 var(--font-mono);
+--type-stat:700 20px/1.1 var(--font-mono);
+
+/* eyebrow / label — mono, uppercase, wide */
+--type-label:700 11px/1.1 var(--font-mono);
+--track-label:.14em;
+--track-display:-.02em;
+}

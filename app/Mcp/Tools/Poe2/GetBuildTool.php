@@ -3,7 +3,7 @@
 namespace App\Mcp\Tools\Poe2;
 
 use App\Domain\Poe2\PobExporter;
-use App\Models\SavedBuild;
+use App\Models\Build;
 use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Response;
@@ -21,7 +21,11 @@ class GetBuildTool extends Tool
     {
         $validated = $request->validate(['id' => 'required|string|max:32']);
 
-        $build = SavedBuild::where('public_id', $validated['id'])->first();
+        // Drafts are readable by their owner only.
+        $build = Build::query()
+            ->visibleTo($request->user())
+            ->where('public_id', $validated['id'])
+            ->first();
 
         if ($build === null) {
             return Response::error("No saved build with id \"{$validated['id']}\".");
@@ -30,6 +34,7 @@ class GetBuildTool extends Tool
         return Response::json([
             'id' => $build->public_id,
             'url' => $build->url(),
+            'visibility' => $build->visibility,
             'name' => $build->name,
             'summary' => $build->summary,
             'guide_markdown' => $build->guide_markdown,

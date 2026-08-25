@@ -2,9 +2,9 @@
 
 namespace App\Domain\Poe2;
 
+use App\Models\Build;
 use App\Models\Poe2\Ascendancy;
 use App\Models\Poe2\PassiveNode;
-use App\Models\SavedBuild;
 use Illuminate\Support\Str;
 
 /**
@@ -19,7 +19,7 @@ class BuildPlannerExporter
 {
     public function __construct(protected Poe2Context $context) {}
 
-    public function json(SavedBuild $build): string
+    public function json(Build $build): string
     {
         return json_encode(
             $this->build($build),
@@ -27,7 +27,7 @@ class BuildPlannerExporter
         )."\n";
     }
 
-    public function filename(SavedBuild $build): string
+    public function filename(Build $build): string
     {
         return (Str::slug($build->name ?? '') ?: $build->public_id).'.build';
     }
@@ -35,7 +35,7 @@ class BuildPlannerExporter
     /**
      * @return array<string, mixed>
      */
-    public function build(SavedBuild $build): array
+    public function build(Build $build): array
     {
         $definition = $build->build;
         $versionId = $build->game_version_id ?? $this->context->versionId();

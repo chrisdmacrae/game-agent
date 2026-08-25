@@ -1,0 +1,10 @@
+html{color-scheme:dark}
+body{margin:0;background:var(--surface-page);color:var(--text-body);font:var(--type-body);-webkit-font-smoothing:antialiased}
+*,*::before,*::after{box-sizing:border-box}
+a{color:var(--text-link);text-decoration:none}
+a:hover{color:var(--text-link-hover);text-decoration:underline;text-underline-offset:2px}
+::selection{background:var(--teal-500);color:var(--fg-inverse)}
+:focus-visible{outline:2px solid var(--focus-ring);outline-offset:2px}
+h1,h2,h3,h4,p{margin:0}
+button{font-family:inherit}
+.byb-label{font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-faint)}

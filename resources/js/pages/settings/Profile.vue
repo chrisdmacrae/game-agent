@@ -1,84 +1,142 @@
 <script setup lang="ts">
-import { Form, usePage } from '@inertiajs/vue3';
-import { computed } from 'vue';
-import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
+import { useForm } from '@inertiajs/vue3';
+import Button from '@/components/byb/Button.vue';
+import Card from '@/components/byb/Card.vue';
+import { LABEL_CLASS } from '@/components/byb/controls';
+import Input from '@/components/byb/Input.vue';
+import Textarea from '@/components/byb/Textarea.vue';
 import DeleteUser from '@/components/DeleteUser.vue';
-import Heading from '@/components/Heading.vue';
-import InputError from '@/components/InputError.vue';
 import SeoHead from '@/components/SeoHead.vue';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { edit } from '@/routes/profile';
+import { cn } from '@/lib/utils';
+import { update } from '@/routes/profile';
 
-defineOptions({
-    layout: {
-        breadcrumbs: [
-            {
-                title: 'Profile settings',
-                href: edit(),
-            },
-        ],
-    },
+/**
+ * Account settings (scope §3.9). The 760px column and the page heading come
+ * from the settings layout.
+ */
+type Profile = {
+    name: string;
+    handle: string;
+    discord_username: string | null;
+    bio: string | null;
+    email: string;
+};
+
+const props = defineProps<{
+    profile: Profile;
+    pendingEmail: string | null;
+    buildCounts: {
+        published: number;
+        drafts: number;
+    };
+}>();
+
+/**
+ * `name` is not edited here — the public identity is the handle — but the
+ * request validates it, so it rides along unchanged.
+ */
+const form = useForm({
+    name: props.profile.name,
+    handle: props.profile.handle,
+    discord_username: props.profile.discord_username ?? '',
+    bio: props.profile.bio ?? '',
+    email: props.profile.email,
 });
 
-const page = usePage();
-const user = computed(() => page.props.auth.user);
+function save(): void {
+    form.patch(update().url, { preserveScroll: true });
+}
 </script>
 
 <template>
-    <SeoHead title="Profile settings" noindex />
+    <SeoHead title="Settings" noindex />
 
-    <h1 class="sr-only">Profile settings</h1>
+    <div class="flex flex-col gap-4">
+        <form class="flex flex-col gap-4" @submit.prevent="save">
+            <Card padding="var(--sp-7)">
+                <p :class="cn(LABEL_CLASS, 'mb-4')">Profile</p>
 
-    <div class="flex flex-col space-y-6">
-        <Heading
-            variant="small"
-            title="Profile"
-            description="Update your name and email address"
-        />
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <Input
+                        v-model="form.handle"
+                        label="Handle / gamertag"
+                        name="handle"
+                        required
+                        autocomplete="nickname"
+                        hint="Shown on every build you publish"
+                        :error="form.errors.handle"
+                    />
+                    <Input
+                        v-model="form.discord_username"
+                        label="Discord username"
+                        name="discord_username"
+                        autocomplete="off"
+                        hint="Optional — for build questions"
+                        :error="form.errors.discord_username"
+                    />
+                </div>
 
-        <Form
-            v-bind="ProfileController.update.form()"
-            class="space-y-6"
-            v-slot="{ errors, processing }"
-        >
-            <div class="grid gap-2">
-                <Label for="name">Name</Label>
+                <div class="mt-4">
+                    <Textarea
+                        v-model="form.bio"
+                        label="Bio"
+                        name="bio"
+                        :rows="3"
+                        :maxlength="180"
+                        hint="Shown on your builds"
+                        :error="form.errors.bio"
+                    />
+                </div>
+            </Card>
+
+            <Card padding="var(--sp-7)">
+                <p :class="cn(LABEL_CLASS, 'mb-4')">Email</p>
+
                 <Input
-                    id="name"
-                    class="mt-1 block w-full"
-                    name="name"
-                    :default-value="user.name"
-                    required
-                    autocomplete="name"
-                    placeholder="Full name"
-                />
-                <InputError class="mt-2" :message="errors.name" />
-            </div>
-
-            <div class="grid gap-2">
-                <Label for="email">Email address</Label>
-                <Input
-                    id="email"
+                    v-model="form.email"
+                    label="Email"
                     type="email"
-                    class="mt-1 block w-full"
                     name="email"
-                    :default-value="user.email"
                     required
-                    autocomplete="username"
-                    placeholder="Email address"
+                    autocomplete="email"
+                    hint="Used for sign-in links only"
+                    :error="form.errors.email"
                 />
-                <InputError class="mt-2" :message="errors.email" />
-            </div>
 
-            <div class="flex items-center gap-4">
-                <Button :disabled="processing" data-test="update-profile-button"
-                    >Save</Button
+                <p class="mt-4 text-[13px] leading-[1.5] text-[var(--fg-2)]">
+                    Changing this sends a magic link to the new address. The old
+                    one keeps working until you use it.
+                </p>
+
+                <p
+                    v-if="pendingEmail"
+                    class="mt-4 rounded-[var(--radius-sm)] border border-[var(--border-subtle)] bg-[var(--surface-input)] px-3 py-2.5 font-mono text-[12px] leading-[1.45] break-all text-[var(--gold-400)]"
                 >
-            </div>
-        </Form>
-    </div>
+                    Waiting on confirmation · {{ pendingEmail }}
+                </p>
+            </Card>
 
-    <DeleteUser />
+            <div class="flex items-center gap-3">
+                <Button
+                    type="submit"
+                    variant="primary"
+                    icon="check"
+                    :disabled="form.processing"
+                    data-test="update-profile-button"
+                >
+                    Save changes
+                </Button>
+                <Button
+                    type="button"
+                    variant="ghost"
+                    :disabled="form.processing"
+                    @click="form.reset()"
+                >
+                    Cancel
+                </Button>
+            </div>
+        </form>
+
+        <DeleteUser class="mt-4" :email="profile.email" :counts="buildCounts" />
+    </div>
 </template>

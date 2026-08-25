@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\SavedBuild;
+use App\Models\Build;
 use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\Fixtures\Poe2Seeder;
@@ -34,12 +34,13 @@ it('renders the site og image as a png', function () {
 it('renders a build og image as a png', function () {
     $version = Poe2Seeder::seed();
 
-    $build = SavedBuild::create([
+    $build = Build::create([
         'user_id' => User::factory()->create()->id,
         'game_id' => $version->game_id,
         'game_version_id' => $version->id,
         'name' => 'Spark Stormweaver League Starter',
         'summary' => 'A lightning caster starter.',
+        'visibility' => Build::VISIBILITY_PUBLIC,
         'build' => ['class' => 'Witch', 'ascendancy' => 'Infernalist', 'level' => 90, 'skills' => [['gem' => 'Spark']]],
     ]);
 

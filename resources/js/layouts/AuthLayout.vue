@@ -1,14 +1,19 @@
 <script setup lang="ts">
 import AuthLayout from '@/layouts/auth/AuthSimpleLayout.vue';
 
-const { title = '', description = '' } = defineProps<{
+const {
+    eyebrow = '',
+    title = '',
+    description = '',
+} = defineProps<{
+    eyebrow?: string;
     title?: string;
     description?: string;
 }>();
 </script>
 
 <template>
-    <AuthLayout :title="title" :description="description">
+    <AuthLayout :eyebrow="eyebrow" :title="title" :description="description">
         <slot />
     </AuthLayout>
 </template>

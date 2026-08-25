@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/build-your-build-design-system-04a0c5dd-88a3-4408-ab80-e177382bccdb/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/build-your-build-design-system-04a0c5dd-88a3-4408-ab80-e177382bccdb/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/build-your-build-design-system-04a0c5dd-88a3-4408-ab80-e177382bccdb/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/build-your-build-design-system-04a0c5dd-88a3-4408-ab80-e177382bccdb/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/build-your-build-design-system-04a0c5dd-88a3-4408-ab80-e177382bccdb/tokens/effects.css">
+  <link rel="stylesheet" href="_ds/build-your-build-design-system-04a0c5dd-88a3-4408-ab80-e177382bccdb/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/build-your-build-design-system-04a0c5dd-88a3-4408-ab80-e177382bccdb/tokens/base.css">
+  <link rel="stylesheet" href="_ds/build-your-build-design-system-04a0c5dd-88a3-4408-ab80-e177382bccdb/styles.css">
+  <script>window.BYB_ICON_BASE="_ds/build-your-build-design-system-04a0c5dd-88a3-4408-ab80-e177382bccdb/assets/icons";</script>
+  <script src="_ds/build-your-build-design-system-04a0c5dd-88a3-4408-ab80-e177382bccdb/_ds_bundle.js"></script>
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--surface-page);color:var(--fg-1);font:var(--type-body);-webkit-font-smoothing:antialiased}
+    a{color:var(--text-link);text-decoration:none}
+    a:hover{color:var(--text-link-hover)}
+    textarea.byb-area{width:100%;background:var(--surface-input);color:var(--fg-1);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:10px 12px;font:var(--type-body);resize:vertical;box-shadow:var(--shadow-inset-well)}
+    textarea.byb-area:focus{outline:2px solid var(--focus-ring);outline-offset:2px;border-color:var(--border-accent)}
+    ::placeholder{color:var(--fg-3)}
+  </style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--surface-page);display:flex;flex-direction:column">
+
+  <sc-if value="{{ showChrome }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <header style="position:sticky;top:0;z-index:30;height:var(--layout-topbar);display:flex;align-items:center;gap:var(--sp-7);padding:0 var(--sp-7);background:var(--overlay-glass);backdrop-filter:var(--blur-glass);border-bottom:1px solid var(--border-subtle)">
+        <div onClick="{{ goLanding }}" style="display:flex;align-items:center;gap:8px;cursor:pointer">
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:var(--radius-sm);background:var(--teal-400);color:var(--fg-inverse);font:700 13px/1 var(--font-display);letter-spacing:-.02em">BYB</span>
+          <span style="font:700 16px/1 var(--font-display);letter-spacing:var(--track-display);color:var(--fg-1)">BUILD<span style="color:var(--teal-400)">/</span>YOUR<span style="color:var(--teal-400)">/</span>BUILD</span>
+        </div>
+        <nav style="display:flex;gap:var(--sp-6);align-items:center;white-space:nowrap;flex:0 0 auto">
+          <span onClick="{{ goHub }}" style="font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:{{ navBuilds }};cursor:pointer">Builds</span>
+          <sc-if value="{{ signedIn }}">
+            <span onClick="{{ goMine }}" style="font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:{{ navMine }};cursor:pointer">My builds</span>
+          </sc-if>
+          <span onClick="{{ openConnect }}" style="font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-muted);cursor:pointer">Docs</span>
+        </nav>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:var(--sp-4);min-width:0;flex:1 1 auto;justify-content:flex-end">
+          <div style="flex:0 1 200px;min-width:96px">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" size="sm" icon="search" placeholder="Search builds" dc-props="{{ searchProps }}" hint-size="100%,30px"></x-import>
+          </div>
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" size="sm" variant="secondary" icon="plug-zap" onClick="{{ openConnect }}" hint-size="130px,30px">Connect MCP</x-import>
+          <sc-if value="{{ signedOut }}">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" size="sm" variant="primary" onClick="{{ goLogin }}" hint-size="80px,30px">Sign in</x-import>
+          </sc-if>
+          <sc-if value="{{ signedIn }}">
+            <div style="display:flex;align-items:center;gap:var(--sp-3)">
+              <span onClick="{{ goSettings }}" style="display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px;border:1px solid var(--border-subtle);border-radius:var(--radius-sm);cursor:pointer;font:var(--type-mono-s);color:var(--fg-2);white-space:nowrap;flex:0 0 auto" style-hover="border-color:var(--border-strong);color:var(--fg-1)">
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Icon" name="user" size="{{ n13 }}" hint-size="13px,13px"></x-import>{{ handle }}
+              </span>
+              <span onClick="{{ signOut }}" style="font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--text-faint);cursor:pointer;white-space:nowrap;flex:0 0 auto" style-hover="color:var(--fg-2)">Sign out</span>
+            </div>
+          </sc-if>
+        </div>
+      </header>
+
+      <div style="display:flex;gap:var(--sp-3);padding:var(--sp-4) var(--sp-7);border-bottom:1px solid var(--border-subtle);background:var(--surface-sunken);overflow-x:auto">
+        <sc-for list="{{ gameStrip }}" as="g" hint-placeholder-count="5">
+          <div onClick="{{ g.go }}" style="display:flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:var(--radius-sm);cursor:pointer;white-space:nowrap;background:{{ g.bg }};border:1px solid {{ g.bd }};color:{{ g.fg }}">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Icon" name="{{ g.icon }}" size="{{ n14 }}" hint-size="14px,14px"></x-import>
+            <span style="font:var(--type-body-s)">{{ g.name }}</span>
+            <span style="font:var(--type-mono-s);font-size:10px;color:var(--text-faint)">{{ g.tail }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ LANDING ============ -->
+  <sc-if value="{{ isLanding }}" hint-placeholder-val="{{ true }}">
+    <main style="flex:1">
+      <section style="border-bottom:1px solid var(--border-subtle);background-color:var(--surface-page);background-image:var(--texture-grid);background-size:var(--texture-grid-size)">
+        <div style="max-width:var(--layout-max);margin:0 auto;padding:var(--sp-12) var(--sp-7) var(--sp-11)">
+          <div class="byb-label" style="color:var(--teal-400)">MCP server · Claude &amp; ChatGPT</div>
+          <h1 style="font:var(--type-display-xl);letter-spacing:var(--track-display);color:var(--fg-1);margin:var(--sp-6) 0 0;max-width:920px;text-wrap:pretty">Theorycraft with your assistant, publish for everyone else.</h1>
+          <p style="font:var(--type-body-l);color:var(--text-muted);max-width:600px;margin:var(--sp-6) 0 0;text-wrap:pretty">Connect the MCP server, describe what you want to play, and get a build back with real numbers. Browsing is free and needs no account — you sign in when you want to publish.</p>
+          <div style="display:flex;gap:var(--sp-4);margin-top:var(--sp-8);align-items:center">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="primary" size="lg" icon="plug-zap" onClick="{{ openConnect }}" hint-size="190px,46px">Connect the server</x-import>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="ghost" size="lg" iconRight="chevron-right" onClick="{{ goHub }}" hint-size="160px,46px">Browse PoE 2 builds</x-import>
+          </div>
+          <div style="display:flex;gap:var(--sp-8);margin-top:var(--sp-11);flex-wrap:wrap">
+            <sc-for list="{{ heroStats }}" as="s" hint-placeholder-count="4">
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.StatBlock" dc-props="{{ s }}" hint-size="120px,52px"></x-import>
+            </sc-for>
+          </div>
+        </div>
+      </section>
+
+      <section style="max-width:var(--layout-max);margin:0 auto;padding:var(--sp-11) var(--sp-7) 0">
+        <div class="byb-label">How it works</div>
+        <h2 style="font:var(--type-h1);letter-spacing:var(--track-display);color:var(--fg-1);margin:var(--sp-4) 0 var(--sp-8)">Three steps, then it is just conversation.</h2>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5)">
+          <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="var(--sp-7)" hint-size="100%,180px">
+              <div style="display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:var(--radius-xs);background:var(--surface-accent-soft);color:var(--teal-400);font:var(--type-mono-s)">{{ s.n }}</div>
+              <div style="font:var(--type-h3);color:var(--fg-1);margin:var(--sp-5) 0 var(--sp-3)">{{ s.title }}</div>
+              <div style="font:var(--type-body-s);color:var(--text-muted);text-wrap:pretty">{{ s.body }}</div>
+            </x-import>
+          </sc-for>
+        </div>
+      </section>
+
+      <section style="max-width:var(--layout-max);margin:0 auto;padding:var(--sp-11) var(--sp-7) 0">
+        <div style="display:grid;grid-template-columns:1fr 380px;gap:var(--sp-9);align-items:start">
+          <div>
+            <div class="byb-label">In your assistant</div>
+            <h2 style="font:var(--type-h1);letter-spacing:var(--track-display);color:var(--fg-1);margin:var(--sp-4) 0 var(--sp-7)">Ask in plain language, get numbers back.</h2>
+            <div style="display:flex;flex-direction:column;gap:var(--sp-4)">
+              <sc-for list="{{ convo }}" as="m" hint-placeholder-count="4">
+                <div style="align-self:{{ m.side }};max-width:{{ m.max }};background:{{ m.bg }};border:1px solid {{ m.bd }};border-radius:var(--radius-md);padding:var(--sp-5)">
+                  <div class="byb-label" style="color:{{ m.who }};margin-bottom:var(--sp-3)">{{ m.role }}</div>
+                  <div style="font:var(--type-body);color:var(--fg-1);text-wrap:pretty">{{ m.text }}</div>
+                  <sc-if value="{{ m.meta }}">
+                    <div style="font:var(--type-mono-s);color:var(--text-faint);margin-top:var(--sp-4);padding-top:var(--sp-4);border-top:1px solid var(--border-hairline)">{{ m.meta }}</div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="var(--sp-7)" hint-size="100%,420px">
+            <div class="byb-label" style="margin-bottom:var(--sp-4)">Connect it</div>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Tabs" size="sm" tabs="{{ clientTabs }}" value="{{ client }}" onChange="{{ setClient }}" hint-size="100%,34px"></x-import>
+            <ol style="margin:var(--sp-6) 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:var(--sp-5)">
+              <sc-for list="{{ connectSteps }}" as="s" hint-placeholder-count="4">
+                <li style="display:flex;gap:var(--sp-4)">
+                  <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;flex:0 0 auto;border-radius:var(--radius-xs);background:var(--surface-accent-soft);color:var(--teal-400);font:var(--type-mono-s);font-size:11px">{{ s.n }}</span>
+                  <div>
+                    <div style="font:var(--type-strong);color:var(--fg-1)">{{ s.title }}</div>
+                    <div style="font:var(--type-body-s);color:var(--text-muted);margin-top:2px;text-wrap:pretty">{{ s.body }}</div>
+                  </div>
+                </li>
+              </sc-for>
+            </ol>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.CodeBlock" filename="poe2 server url" code="{{ mcpUrl }}" style="{{ mt16 }}" hint-size="100%,70px"></x-import>
+          </x-import>
+        </div>
+      </section>
+
+      <section style="max-width:var(--layout-max);margin:0 auto;padding:var(--sp-11) var(--sp-7) 0">
+        <div class="byb-label">Games</div>
+        <h2 style="font:var(--type-h1);letter-spacing:var(--track-display);color:var(--fg-1);margin:var(--sp-4) 0 var(--sp-8)">One game live, four in the queue.</h2>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5)">
+          <sc-for list="{{ gameCards }}" as="g" hint-placeholder-count="5">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" interactive="{{ true }}" accentEdge="{{ g.edge }}" padding="var(--sp-7)" onClick="{{ g.go }}" hint-size="100%,170px">
+              <div style="display:flex;align-items:center;gap:var(--sp-4)">
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:var(--radius-sm);background:var(--ink-750);border:1px solid var(--border-subtle);color:{{ g.edge }}">
+                  <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Icon" name="{{ g.icon }}" size="{{ n20 }}" hint-size="20px,20px"></x-import>
+                </span>
+                <div style="flex:1">
+                  <div style="font:var(--type-h3);color:var(--fg-1)">{{ g.name }}</div>
+                  <div style="font:var(--type-mono-s);color:var(--text-faint)">{{ g.meta }}</div>
+                </div>
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Badge" dc-props="{{ g.badge }}" hint-size="70px,20px"></x-import>
+              </div>
+              <div style="font:var(--type-body-s);color:var(--text-muted);margin-top:var(--sp-5);text-wrap:pretty">{{ g.blurb }}</div>
+            </x-import>
+          </sc-for>
+        </div>
+      </section>
+
+      <section style="max-width:var(--layout-max);margin:0 auto;padding:var(--sp-11) var(--sp-7) 0">
+        <div class="byb-label">Questions</div>
+        <h2 style="font:var(--type-h1);letter-spacing:var(--track-display);color:var(--fg-1);margin:var(--sp-4) 0 var(--sp-8)">Before you connect it.</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-5) var(--sp-8);max-width:1000px">
+          <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="4">
+            <div style="padding-top:var(--sp-5);border-top:1px solid var(--border-subtle)">
+              <div style="font:var(--type-strong);color:var(--fg-1);margin-bottom:6px">{{ f.q }}</div>
+              <div style="font:var(--type-body-s);color:var(--text-muted);text-wrap:pretty">{{ f.a }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </main>
+  </sc-if>
+
+  <!-- ============ LOGIN ============ -->
+  <sc-if value="{{ isAuth }}">
+    <main style="flex:1;display:flex;align-items:center;justify-content:center;padding:var(--sp-9) var(--sp-7);background-color:var(--surface-page);background-image:var(--texture-grid);background-size:var(--texture-grid-size)">
+      <div style="width:100%;max-width:420px">
+        <div onClick="{{ goLanding }}" style="display:flex;align-items:center;gap:8px;cursor:pointer;justify-content:center;margin-bottom:var(--sp-8)">
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:var(--radius-sm);background:var(--teal-400);color:var(--fg-inverse);font:700 15px/1 var(--font-display);letter-spacing:-.02em">BYB</span>
+          <span style="font:700 18px/1 var(--font-display);letter-spacing:var(--track-display);color:var(--fg-1)">BUILD<span style="color:var(--teal-400)">/</span>YOUR<span style="color:var(--teal-400)">/</span>BUILD</span>
+        </div>
+
+        <sc-if value="{{ isLogin }}">
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="var(--sp-8)" hint-size="100%,300px">
+            <div class="byb-label" style="color:var(--teal-400)">Sign in</div>
+            <h1 style="font:var(--type-h1);letter-spacing:var(--track-display);color:var(--fg-1);margin:var(--sp-4) 0 var(--sp-3)">No password. We send a link.</h1>
+            <p style="font:var(--type-body-s);color:var(--text-muted);margin:0 0 var(--sp-7)">Enter your email and we send a one-time link. It expires in 15 minutes and signs in one device.</p>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" dc-props="{{ emailProps }}" hint-size="100%,38px"></x-import>
+            <div style="margin-top:var(--sp-6)">
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="primary" size="lg" fullWidth="{{ true }}" onClick="{{ sendLink }}" hint-size="100%,46px">Send magic link</x-import>
+            </div>
+            <div style="font:var(--type-body-s);color:var(--text-faint);margin-top:var(--sp-6);text-align:center;text-wrap:pretty">Browsing builds needs no account. Signing in lets you publish and edit your own.</div>
+          </x-import>
+        </sc-if>
+
+        <sc-if value="{{ isSent }}">
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="var(--sp-8)" hint-size="100%,300px">
+            <div class="byb-label" style="color:var(--teal-400)">Check your inbox</div>
+            <h1 style="font:var(--type-h1);letter-spacing:var(--track-display);color:var(--fg-1);margin:var(--sp-4) 0 var(--sp-3)">Link sent.</h1>
+            <p style="font:var(--type-body-s);color:var(--text-muted);margin:0">We sent a sign-in link to</p>
+            <div style="font:var(--type-mono);color:var(--fg-1);background:var(--surface-input);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:10px 12px;margin:var(--sp-4) 0 var(--sp-6);word-break:break-all">{{ sentTo }}</div>
+            <div style="display:flex;flex-direction:column;gap:var(--sp-4)">
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="primary" fullWidth="{{ true }}" icon="check" onClick="{{ openLink }}" hint-size="100%,38px">Open the link (demo)</x-import>
+              <div style="display:flex;gap:var(--sp-4)">
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="secondary" fullWidth="{{ true }}" onClick="{{ sendLink }}" hint-size="100%,38px">Resend</x-import>
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="ghost" fullWidth="{{ true }}" onClick="{{ goLogin }}" hint-size="100%,38px">Change email</x-import>
+              </div>
+            </div>
+            <div style="font:var(--type-mono-s);color:var(--text-faint);margin-top:var(--sp-6);text-align:center">Expires in 15:00 · one use</div>
+          </x-import>
+        </sc-if>
+
+        <sc-if value="{{ isVerify }}">
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="var(--sp-8)" hint-size="100%,220px">
+            <div class="byb-label" style="color:var(--teal-400)">Verifying</div>
+            <h1 style="font:var(--type-h1);letter-spacing:var(--track-display);color:var(--fg-1);margin:var(--sp-4) 0 var(--sp-3)">Signing you in.</h1>
+            <p style="font:var(--type-body-s);color:var(--text-muted);margin:0 0 var(--sp-7)">Checking the token and loading your builds. This takes a second.</p>
+            <div style="height:4px;border-radius:2px;background:var(--ink-700);overflow:hidden">
+              <div style="height:100%;width:{{ verifyPct }};background:var(--teal-400);transition:width 240ms var(--ease-out)"></div>
+            </div>
+            <div style="font:var(--type-mono-s);color:var(--text-faint);margin-top:var(--sp-5)">token byb_ml_••••••••4c2a</div>
+          </x-import>
+        </sc-if>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ GAME HUB (PoE 2) ============ -->
+  <sc-if value="{{ isHub }}">
+    <main style="flex:1;max-width:var(--layout-max);margin:0 auto;padding:var(--sp-9) var(--sp-7) 0;width:100%">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-8);padding:var(--sp-8);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);background-color:var(--surface-card);background-image:var(--texture-grid);background-size:var(--texture-grid-size);margin-bottom:var(--sp-9)">
+        <div>
+          <div class="byb-label" style="color:var(--teal-400)">Get started</div>
+          <h2 style="font:var(--type-h1);letter-spacing:var(--track-display);color:var(--fg-1);margin:var(--sp-4) 0;text-wrap:pretty">Theorycraft Path of Exile 2 builds from your assistant</h2>
+          <p style="font:var(--type-body);color:var(--text-muted);margin:0">Add the server to Claude or ChatGPT, then ask for a build. It reads the current 0.5.2 data and writes back here when you publish.</p>
+          <div style="font:var(--type-body-s);color:var(--text-faint);margin-top:var(--sp-6);text-wrap:pretty">One URL, no install, no config file. The server is hosted — you point your client at it.</div>
+          <div style="display:flex;gap:var(--sp-3);margin-top:var(--sp-7)">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="primary" icon="plug-zap" onClick="{{ openConnect }}" hint-size="150px,38px">Connect MCP</x-import>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="ghost" iconRight="external-link" hint-size="120px,38px">Setup docs</x-import>
+          </div>
+        </div>
+        <div>
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Tabs" size="sm" tabs="{{ clientTabs }}" value="{{ client }}" onChange="{{ setClient }}" hint-size="100%,34px"></x-import>
+          <ol style="margin:var(--sp-6) 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:var(--sp-5)">
+            <sc-for list="{{ connectSteps }}" as="s" hint-placeholder-count="4">
+              <li style="display:flex;gap:var(--sp-4)">
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;flex:0 0 auto;border-radius:var(--radius-xs);background:var(--surface-accent-soft);color:var(--teal-400);font:var(--type-mono-s);font-size:11px">{{ s.n }}</span>
+                <div>
+                  <div style="font:var(--type-strong);color:var(--fg-1)">{{ s.title }}</div>
+                  <div style="font:var(--type-body-s);color:var(--text-muted);margin-top:2px;text-wrap:pretty">{{ s.body }}</div>
+                </div>
+              </li>
+            </sc-for>
+          </ol>
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.CodeBlock" filename="poe2 server url" code="{{ mcpUrl }}" style="{{ mt16 }}" hint-size="100%,70px"></x-import>
+        </div>
+      </div>
+
+      <sc-if value="{{ signedIn }}">
+        <section style="margin-bottom:var(--sp-9)">
+          <div style="display:flex;align-items:flex-end;gap:var(--sp-5);margin-bottom:var(--sp-5)">
+            <div>
+              <div class="byb-label" style="color:var(--teal-400)">Your builds here</div>
+              <h2 style="font:var(--type-h2);letter-spacing:var(--track-display);color:var(--fg-1);margin-top:6px">{{ handle }} · Path of Exile 2</h2>
+            </div>
+            <div style="margin-left:auto;display:flex;gap:var(--sp-3)">
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" size="sm" variant="ghost" iconRight="chevron-right" onClick="{{ goMine }}" hint-size="110px,30px">All my builds</x-import>
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" size="sm" variant="accent" icon="plus" onClick="{{ toastPublish }}" hint-size="130px,30px">Publish build</x-import>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5)">
+            <sc-for list="{{ myPoeCards }}" as="b" hint-placeholder-count="3">
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.BuildCard" dc-props="{{ b }}" hint-size="100%,200px"></x-import>
+            </sc-for>
+          </div>
+        </section>
+      </sc-if>
+
+      <div style="display:flex;align-items:flex-end;gap:var(--sp-5);margin-bottom:var(--sp-6)">
+        <div>
+          <div class="byb-label">Published builds</div>
+          <h2 style="font:var(--type-h1);letter-spacing:var(--track-display);color:var(--fg-1);margin-top:6px">Path of Exile 2</h2>
+        </div>
+        <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Badge" tone="info" style="{{ badgeNudge }}" hint-size="60px,20px">0.5.2</x-import>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:var(--sp-3)">
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Select" size="sm" dc-props="{{ sortProps }}" hint-size="150px,30px"></x-import>
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.IconButton" size="sm" icon="layout-grid" label="Grid view" active="{{ isGrid }}" onClick="{{ setGrid }}" hint-size="30px,30px"></x-import>
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.IconButton" size="sm" icon="list" label="List view" active="{{ isList }}" onClick="{{ setList }}" hint-size="30px,30px"></x-import>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:var(--sp-8);align-items:flex-start">
+        <aside style="width:var(--layout-rail);flex:0 0 auto">
+          <div style="padding-bottom:var(--sp-6);margin-bottom:var(--sp-6);border-bottom:1px solid var(--border-hairline)">
+            <div class="byb-label" style="margin-bottom:var(--sp-4)">Class</div>
+            <div style="display:flex;flex-direction:column;gap:var(--sp-3)">
+              <sc-for list="{{ classFilters }}" as="c" hint-placeholder-count="6">
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Checkbox" dc-props="{{ c }}" hint-size="100%,22px"></x-import>
+              </sc-for>
+            </div>
+          </div>
+          <div style="padding-bottom:var(--sp-6);margin-bottom:var(--sp-6);border-bottom:1px solid var(--border-hairline)">
+            <div class="byb-label" style="margin-bottom:var(--sp-4)">Ascendancy</div>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Select" size="sm" fullWidth="{{ true }}" options="{{ ascOptions }}" hint-size="100%,30px"></x-import>
+          </div>
+          <div style="padding-bottom:var(--sp-6);margin-bottom:var(--sp-6);border-bottom:1px solid var(--border-hairline)">
+            <div class="byb-label" style="margin-bottom:var(--sp-4)">Game stage</div>
+            <div style="display:flex;flex-direction:column;gap:var(--sp-3)">
+              <sc-for list="{{ stageFilters }}" as="s" hint-placeholder-count="5">
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Radio" dc-props="{{ s }}" hint-size="100%,22px"></x-import>
+              </sc-for>
+            </div>
+          </div>
+          <div style="padding-bottom:var(--sp-6);margin-bottom:var(--sp-6);border-bottom:1px solid var(--border-hairline)">
+            <div class="byb-label" style="margin-bottom:var(--sp-4)">Budget</div>
+            <div style="display:flex;gap:var(--sp-3)">
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" size="sm" placeholder="Min div" hint-size="96px,30px"></x-import>
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" size="sm" placeholder="Max div" hint-size="96px,30px"></x-import>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-4)">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Switch" label="Current patch only" checked="{{ currentPatch }}" onChange="{{ togglePatch }}" hint-size="100%,22px"></x-import>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Switch" label="Hardcore viable" checked="{{ hardcore }}" onChange="{{ toggleHardcore }}" hint-size="100%,22px"></x-import>
+          </div>
+        </aside>
+
+        <section style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:var(--sp-3);margin-bottom:var(--sp-5);flex-wrap:wrap">
+            <span style="font:var(--type-mono-s);color:var(--text-faint);margin-right:4px">{{ resultCount }} results</span>
+            <sc-for list="{{ activeTags }}" as="t" hint-placeholder-count="0">
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Tag" dc-props="{{ t }}" hint-size="90px,22px">{{ t.text }}</x-import>
+            </sc-for>
+          </div>
+          <div style="display:grid;grid-template-columns:{{ gridCols }};gap:var(--sp-5)">
+            <sc-for list="{{ hubCards }}" as="b" hint-placeholder-count="6">
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.BuildCard" dc-props="{{ b }}" hint-size="100%,200px"></x-import>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ WAITLIST (other games) ============ -->
+  <sc-if value="{{ isWaitlist }}">
+    <main style="flex:1;max-width:var(--layout-max);margin:0 auto;padding:var(--sp-9) var(--sp-7) 0;width:100%">
+      <div style="max-width:760px">
+        <div class="byb-label" style="color:var(--mag-400)">Not live yet</div>
+        <h1 style="font:var(--type-display-l);letter-spacing:var(--track-display);color:var(--fg-1);margin:var(--sp-5) 0 var(--sp-5)">{{ waitGame.name }}</h1>
+        <p style="font:var(--type-body-l);color:var(--text-muted);margin:0;text-wrap:pretty">The MCP server does not read {{ waitGame.short }} data yet. Vote and we will tell you the day it does — the games with the most votes get built first.</p>
+        <div style="display:flex;gap:var(--sp-8);margin:var(--sp-8) 0">
+          <sc-for list="{{ waitStats }}" as="s" hint-placeholder-count="3">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.StatBlock" dc-props="{{ s }}" hint-size="110px,52px"></x-import>
+          </sc-for>
+        </div>
+        <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="var(--sp-7)" hint-size="100%,160px">
+          <div class="byb-label" style="margin-bottom:var(--sp-5)">Vote for this game</div>
+          <div style="display:flex;gap:var(--sp-4);align-items:flex-end">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" dc-props="{{ waitEmailProps }}" hint-size="280px,38px"></x-import>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="accent" icon="plus" onClick="{{ castVote }}" hint-size="120px,38px">Cast vote</x-import>
+          </div>
+          <div style="font:var(--type-body-s);color:var(--text-faint);margin-top:var(--sp-5)">One email, one vote per game. We use it for the launch notice and nothing else.</div>
+        </x-import>
+        <div style="margin-top:var(--sp-9)">
+          <div class="byb-label" style="margin-bottom:var(--sp-5)">Queue</div>
+          <sc-for list="{{ queue }}" as="q" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:var(--sp-5);padding:var(--sp-4) 0;border-top:1px solid var(--border-hairline)">
+              <span style="font:var(--type-mono-s);color:var(--text-faint);width:24px">{{ q.rank }}</span>
+              <span onClick="{{ q.go }}" style="font:var(--type-strong);color:var(--fg-1);flex:1;cursor:pointer">{{ q.name }}</span>
+              <div style="width:160px;height:6px;border-radius:3px;background:var(--ink-700);overflow:hidden">
+                <div style="height:100%;width:{{ q.pct }};background:{{ q.color }}"></div>
+              </div>
+              <span style="font:var(--type-mono-s);color:var(--fg-2);width:70px;text-align:right">{{ q.votes }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ MY BUILDS ============ -->
+  <sc-if value="{{ isMine }}">
+    <main style="flex:1;max-width:var(--layout-max);margin:0 auto;padding:var(--sp-9) var(--sp-7) 0;width:100%">
+      <div style="display:flex;align-items:flex-end;gap:var(--sp-5);margin-bottom:var(--sp-8)">
+        <div>
+          <div class="byb-label" style="color:var(--teal-400)">Signed in as {{ handle }}</div>
+          <h1 style="font:var(--type-display-m);letter-spacing:var(--track-display);color:var(--fg-1);margin-top:var(--sp-4)">My builds</h1>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:var(--sp-3)">
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" size="sm" variant="secondary" icon="settings" onClick="{{ goSettings }}" hint-size="120px,30px">Settings</x-import>
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" size="sm" variant="accent" icon="plus" onClick="{{ toastPublish }}" hint-size="130px,30px">Publish build</x-import>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:var(--sp-8);margin-bottom:var(--sp-9);padding-bottom:var(--sp-7);border-bottom:1px solid var(--border-subtle)">
+        <sc-for list="{{ mineStats }}" as="s" hint-placeholder-count="4">
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.StatBlock" dc-props="{{ s }}" hint-size="120px,52px"></x-import>
+        </sc-for>
+      </div>
+
+      <sc-for list="{{ mineGroups }}" as="g" hint-placeholder-count="2">
+        <section style="margin-bottom:var(--sp-9)">
+          <div style="display:flex;align-items:center;gap:var(--sp-4);margin-bottom:var(--sp-5)">
+            <span style="color:{{ g.color }};display:inline-flex">
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Icon" name="{{ g.icon }}" size="{{ n20 }}" hint-size="20px,20px"></x-import>
+            </span>
+            <h2 style="font:var(--type-h2);letter-spacing:var(--track-display);color:var(--fg-1);margin:0">{{ g.name }}</h2>
+            <span style="font:var(--type-mono-s);color:var(--text-faint)">{{ g.meta }}</span>
+            <span onClick="{{ g.go }}" style="margin-left:auto;font:var(--type-label);letter-spacing:var(--track-label);text-transform:uppercase;color:var(--teal-400);cursor:pointer">Open hub</span>
+          </div>
+          <sc-if value="{{ g.empty }}">
+            <div style="border:1px dashed var(--border-subtle);border-radius:var(--radius-md);padding:var(--sp-8);text-align:center">
+              <div style="font:var(--type-body);color:var(--text-muted)">Nothing published for {{ g.short }} yet.</div>
+              <div style="font:var(--type-body-s);color:var(--text-faint);margin-top:6px">Not supported by the server yet — vote to move it up the queue.</div>
+            </div>
+          </sc-if>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-5)">
+            <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="0">
+              <div style="display:flex;align-items:center;gap:var(--sp-6);padding:var(--sp-5);border:1px solid {{ r.border }};border-top:2px solid {{ r.edge }};border-radius:var(--radius-md);background:var(--surface-card);box-shadow:var(--shadow-1)">
+                <div style="flex:1;min-width:0">
+                  <div style="display:flex;align-items:center;gap:var(--sp-3);margin-bottom:6px">
+                    <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Badge" dc-props="{{ r.statusBadge }}" hint-size="70px,20px"></x-import>
+                    <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Tag" dot="{{ r.edge }}" hint-size="80px,22px">{{ r.stage }}</x-import>
+                    <span style="font:var(--type-mono-s);color:var(--text-faint)">{{ r.patch }}</span>
+                  </div>
+                  <div onClick="{{ r.open }}" style="font:var(--type-h3);color:var(--fg-1);cursor:pointer">{{ r.title }}</div>
+                  <div style="font:var(--type-body-s);color:var(--text-muted);margin-top:2px"><span style="color:var(--text-accent)">{{ r.cls }}</span> / {{ r.asc }} · updated {{ r.updated }}</div>
+                </div>
+                <div style="display:flex;gap:var(--sp-8);align-items:center">
+                  <sc-for list="{{ r.stats }}" as="s" hint-placeholder-count="0">
+                    <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.StatBlock" dc-props="{{ s }}" hint-size="80px,44px"></x-import>
+                  </sc-for>
+                </div>
+                <div style="display:flex;gap:var(--sp-3);width:190px;justify-content:flex-end">
+                  <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" size="sm" variant="secondary" icon="eye" onClick="{{ r.open }}" hint-size="80px,30px">View</x-import>
+                  <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" size="sm" variant="primary" icon="sliders-horizontal" onClick="{{ r.edit }}" hint-size="80px,30px">Edit</x-import>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </sc-for>
+    </main>
+  </sc-if>
+
+  <!-- ============ BUILD VIEW ============ -->
+  <sc-if value="{{ isBuild }}">
+    <main style="flex:1;max-width:var(--layout-max);margin:0 auto;padding:var(--sp-7) var(--sp-7) 0;width:100%">
+      <div onClick="{{ goHub }}" style="display:inline-flex;align-items:center;gap:6px;font:var(--type-body-s);color:var(--text-muted);cursor:pointer;margin-bottom:var(--sp-6)">
+        <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Icon" name="chevron-right" size="{{ n14 }}" style="{{ flip180 }}" hint-size="14px,14px"></x-import>All Path of Exile 2 builds
+      </div>
+
+      <div style="position:relative;border-radius:var(--radius-lg);border:1px solid var(--border-subtle);overflow:hidden;padding:var(--sp-8);background-color:var(--surface-card);background-image:var(--texture-grid);background-size:var(--texture-grid-size)">
+        <span style="position:absolute;left:0;right:0;top:0;height:2px;background:{{ stageColor }}"></span>
+        <div style="display:flex;align-items:flex-start;gap:var(--sp-7)">
+          <div style="flex:1">
+            <div style="display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap">
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Badge" tone="gold" solid="{{ true }}" hint-size="70px,20px">{{ build.tier }} tier</x-import>
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Tag" dot="{{ stageColor }}" hint-size="90px,22px">{{ build.stage }}</x-import>
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Badge" tone="info" hint-size="60px,20px">{{ build.patch }}</x-import>
+              <sc-if value="{{ isDraft }}">
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Badge" tone="magenta" icon="triangle-alert" hint-size="70px,20px">Draft — only you can see this</x-import>
+              </sc-if>
+            </div>
+            <h1 style="font:var(--type-display-m);letter-spacing:var(--track-display);color:var(--fg-1);margin:var(--sp-5) 0 var(--sp-3)">{{ build.title }}</h1>
+            <div style="display:flex;align-items:center;gap:8px;font:var(--type-body-s);color:var(--text-muted);flex-wrap:wrap">
+              <span style="color:var(--text-accent)">{{ build.cls }}</span><span style="color:var(--ink-500)">/</span><span>{{ build.asc }}</span>
+              <span style="color:var(--ink-500)">·</span>
+              <span style="display:inline-flex;align-items:center;gap:5px"><x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Icon" name="user" size="{{ n12 }}" hint-size="12px,12px"></x-import>{{ build.author }}</span>
+              <span style="color:var(--ink-500)">·</span>
+              <span style="font:var(--type-mono-s);color:var(--text-faint)">updated {{ build.updated }}</span>
+            </div>
+            <p style="font:var(--type-body-l);color:var(--text-muted);margin:var(--sp-6) 0 0;max-width:620px;text-wrap:pretty">{{ build.summary }}</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-3);width:190px">
+            <sc-if value="{{ isOwner }}">
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="primary" icon="sliders-horizontal" fullWidth="{{ true }}" onClick="{{ goEdit }}" hint-size="100%,38px">Edit build</x-import>
+            </sc-if>
+            <sc-if value="{{ notOwner }}">
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="primary" icon="flame" fullWidth="{{ true }}" onClick="{{ endorse }}" hint-size="100%,38px">Endorse</x-import>
+            </sc-if>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="secondary" icon="bookmark" fullWidth="{{ true }}" onClick="{{ save }}" hint-size="100%,38px">Save</x-import>
+            <div style="display:flex;gap:var(--sp-3)">
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.IconButton" icon="share-2" label="Share" style="{{ flex1 }}" hint-size="100%,38px"></x-import>
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.IconButton" icon="download" label="Export" style="{{ flex1 }}" hint-size="100%,38px"></x-import>
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.IconButton" icon="ellipsis" label="More" style="{{ flex1 }}" hint-size="100%,38px"></x-import>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:var(--sp-10);margin-top:var(--sp-8);padding-top:var(--sp-6);border-top:1px solid var(--border-hairline);flex-wrap:wrap">
+          <sc-for list="{{ buildStats }}" as="s" hint-placeholder-count="5">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.StatBlock" dc-props="{{ s }}" hint-size="100px,52px"></x-import>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="margin-top:var(--sp-8)">
+        <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Tabs" tabs="{{ viewTabs }}" value="{{ tab }}" onChange="{{ setTab }}" hint-size="100%,40px"></x-import>
+      </div>
+
+      <div style="display:flex;gap:var(--sp-7);margin-top:var(--sp-7);align-items:flex-start">
+        <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--sp-5)">
+
+          <sc-if value="{{ tabOverview }}">
+            <div style="display:flex;flex-direction:column;gap:var(--sp-5)">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-5)">
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" hint-size="100%,240px">
+                  <div class="byb-label" style="margin-bottom:var(--sp-5)">Offence</div>
+                  <div style="display:flex;flex-direction:column">
+                    <sc-for list="{{ offenceRows }}" as="o" hint-placeholder-count="6">
+                      <div style="display:flex;align-items:baseline;gap:var(--sp-4);padding:7px 0;border-bottom:1px solid var(--border-hairline)">
+                        <span style="font:var(--type-body-s);color:var(--text-muted);flex:1">{{ o.k }}</span>
+                        <span style="font:var(--type-mono);color:var(--fg-1)">{{ o.v }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </x-import>
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" hint-size="100%,240px">
+                  <div class="byb-label" style="margin-bottom:var(--sp-5)">Defence</div>
+                  <div style="display:flex;flex-direction:column">
+                    <sc-for list="{{ defenceRows }}" as="d" hint-placeholder-count="6">
+                      <div style="display:flex;align-items:baseline;gap:var(--sp-4);padding:7px 0;border-bottom:1px solid var(--border-hairline)">
+                        <span style="font:var(--type-body-s);color:var(--text-muted);flex:1">{{ d.k }}</span>
+                        <span style="font:var(--type-mono);color:var(--fg-1)">{{ d.v }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </x-import>
+              </div>
+
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" hint-size="100%,150px">
+                <div style="display:flex;align-items:center;margin-bottom:var(--sp-5)">
+                  <div class="byb-label">Resistances</div>
+                  <span style="margin-left:auto;font:var(--type-mono-s);color:var(--text-faint)">cap 75%</span>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-6)">
+                  <sc-for list="{{ resBars }}" as="r" hint-placeholder-count="4">
+                    <div>
+                      <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px">
+                        <span class="byb-label" style="color:var(--text-faint)">{{ r.k }}</span>
+                        <span style="margin-left:auto;font:var(--type-mono-s);color:{{ r.vc }}">{{ r.v }}</span>
+                      </div>
+                      <div style="height:6px;border-radius:3px;background:var(--ink-700);overflow:hidden">
+                        <div style="height:100%;width:{{ r.pct }};background:{{ r.color }}"></div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </x-import>
+
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" hint-size="100%,190px">
+                <div class="byb-label" style="margin-bottom:var(--sp-5)">How it plays</div>
+                <div style="display:flex;flex-direction:column;gap:var(--sp-4)">
+                  <sc-for list="{{ plays }}" as="p" hint-placeholder-count="3">
+                    <div style="display:flex;gap:var(--sp-4);font:var(--type-body);color:var(--text-muted);text-wrap:pretty">
+                      <span style="width:3px;flex:0 0 auto;border-radius:2px;background:var(--ink-600)"></span>{{ p.t }}
+                    </div>
+                  </sc-for>
+                </div>
+              </x-import>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-5)">
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" hint-size="100%,190px">
+                  <div class="byb-label" style="margin-bottom:var(--sp-5)">Works because</div>
+                  <div style="display:flex;flex-direction:column;gap:var(--sp-4)">
+                    <sc-for list="{{ strengths }}" as="s" hint-placeholder-count="3">
+                      <div style="display:flex;gap:var(--sp-4);font:var(--type-body-s);color:var(--text-muted);text-wrap:pretty">
+                        <span style="color:var(--teal-400);display:inline-flex;margin-top:2px"><x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Icon" name="check" size="{{ n14 }}" hint-size="14px,14px"></x-import></span>{{ s.t }}
+                      </div>
+                    </sc-for>
+                  </div>
+                </x-import>
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" hint-size="100%,190px">
+                  <div class="byb-label" style="margin-bottom:var(--sp-5)">Watch out for</div>
+                  <div style="display:flex;flex-direction:column;gap:var(--sp-4)">
+                    <sc-for list="{{ watch }}" as="w" hint-placeholder-count="3">
+                      <div style="display:flex;gap:var(--sp-4);font:var(--type-body-s);color:var(--text-muted);text-wrap:pretty">
+                        <span style="color:var(--gold-400);display:inline-flex;margin-top:2px"><x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Icon" name="triangle-alert" size="{{ n14 }}" hint-size="14px,14px"></x-import></span>{{ w.t }}
+                      </div>
+                    </sc-for>
+                  </div>
+                </x-import>
+              </div>
+
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" hint-size="100%,200px">
+                <div class="byb-label" style="margin-bottom:var(--sp-4)">Leveling milestones</div>
+                <div style="display:flex;flex-direction:column;gap:var(--sp-4)">
+                  <sc-for list="{{ build.milestones }}" as="m" hint-placeholder-count="4">
+                    <div style="display:flex;gap:var(--sp-5);font:var(--type-body-s);color:var(--text-muted)">
+                      <span style="font:var(--type-mono);color:var(--teal-400);width:34px">{{ m.lvl }}</span>{{ m.text }}
+                    </div>
+                  </sc-for>
+                </div>
+              </x-import>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ tabSkills }}">
+            <div style="display:flex;flex-direction:column;gap:var(--sp-5)">
+              <sc-for list="{{ skillPanels }}" as="sk" hint-placeholder-count="4">
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="0" hint-size="100%,220px">
+                  <div style="display:flex;align-items:flex-start;gap:var(--sp-4);padding:var(--sp-5);border-bottom:1px solid var(--border-hairline)">
+                    <span style="width:34px;height:34px;flex:0 0 auto;border-radius:var(--radius-xs);border:1px solid var(--border-subtle);background:var(--ink-750);display:flex;align-items:center;justify-content:center">
+                      <span style="width:10px;height:10px;border-radius:2px;background:{{ sk.color }}"></span>
+                    </span>
+                    <div style="flex:1;min-width:0">
+                      <div style="display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap">
+                        <span style="font:var(--type-h3);color:var(--fg-1)">{{ sk.name }}</span>
+                        <sc-for list="{{ sk.tags }}" as="t" hint-placeholder-count="3">
+                          <span style="font:var(--type-label);letter-spacing:var(--track-label);color:var(--text-faint);border:1px solid var(--border-subtle);border-radius:var(--radius-xs);padding:2px 6px">{{ t.t }}</span>
+                        </sc-for>
+                      </div>
+                      <div style="font:var(--type-mono-s);color:var(--text-faint);margin-top:4px">{{ sk.stat }}</div>
+                    </div>
+                    <div style="text-align:right">
+                      <div style="font:var(--type-mono-s);color:var(--fg-2)">{{ sk.meta }}</div>
+                      <div style="font:var(--type-mono-s);color:var(--text-faint);margin-top:2px">{{ sk.role }}</div>
+                    </div>
+                  </div>
+                  <div style="padding:var(--sp-5)">
+                    <div style="display:flex;align-items:center;margin-bottom:var(--sp-4)">
+                      <div class="byb-label">Support gems</div>
+                      <span style="margin-left:auto;font:var(--type-mono-s);color:var(--text-faint)">{{ sk.count }}</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3)">
+                      <sc-for list="{{ sk.supports }}" as="g" hint-placeholder-count="4">
+                        <div style="display:flex;align-items:center;gap:var(--sp-4);padding:var(--sp-3) var(--sp-4);background:var(--ink-750);border:1px solid var(--border-hairline);border-radius:var(--radius-sm)">
+                          <span style="width:6px;height:6px;flex:0 0 auto;border-radius:999px;background:{{ sk.color }}"></span>
+                          <div style="min-width:0">
+                            <div style="font:var(--type-strong);color:var(--fg-1)">{{ g.n }}</div>
+                            <div style="font:var(--type-mono-s);color:var(--text-faint)">{{ g.e }}</div>
+                          </div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </x-import>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ tabGear }}">
+            <div style="display:flex;flex-direction:column;gap:var(--sp-5)">
+              <div style="display:flex;align-items:center;gap:var(--sp-4)">
+                <div class="byb-label">Equipped</div>
+                <span style="font:var(--type-mono-s);color:var(--text-faint)">{{ socketSummary }}</span>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-4)">
+                <sc-for list="{{ gearCells }}" as="g" hint-placeholder-count="10">
+                  <div style="grid-column:{{ g.col }};grid-row:{{ g.row }};display:flex;flex-direction:column;gap:var(--sp-3);padding:var(--sp-4);background:var(--surface-card);border:1px solid var(--border-subtle);border-radius:var(--radius-md);box-shadow:var(--shadow-1)">
+                    <div style="display:flex;align-items:baseline;gap:var(--sp-3)">
+                      <span class="byb-label" style="color:var(--text-faint)">{{ g.slot }}</span>
+                      <span style="margin-left:auto;font:var(--type-mono-s);color:{{ g.rc }}">{{ g.rarity }}</span>
+                    </div>
+                    <div style="font:var(--type-strong);color:{{ g.rc }};text-wrap:pretty">{{ g.item }}</div>
+                    <div style="display:flex;flex-direction:column;gap:3px">
+                      <sc-for list="{{ g.mods }}" as="m" hint-placeholder-count="2">
+                        <div style="font:var(--type-mono-s);color:var(--text-muted)">{{ m.m }}</div>
+                      </sc-for>
+                    </div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:auto">
+                      <sc-for list="{{ g.sockets }}" as="k" hint-placeholder-count="0">
+                        <span style="font:var(--type-label);letter-spacing:var(--track-label);padding:3px 7px;border-radius:var(--radius-xs);border:{{ k.border }};background:{{ k.bg }};color:{{ k.color }}">{{ k.text }}</span>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-5)">
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" hint-size="100%,150px">
+                  <div class="byb-label" style="margin-bottom:var(--sp-4)">Charms</div>
+                  <div style="display:flex;flex-direction:column;gap:var(--sp-3)">
+                    <sc-for list="{{ charms }}" as="c" hint-placeholder-count="3">
+                      <div style="display:flex;align-items:center;gap:var(--sp-4);padding:var(--sp-3) var(--sp-4);background:var(--ink-750);border:1px solid var(--border-hairline);border-radius:var(--radius-sm)">
+                        <span style="font:var(--type-strong);color:var(--fg-1);flex:1">{{ c.name }}</span>
+                        <span style="font:var(--type-mono-s);color:var(--text-faint)">{{ c.note }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </x-import>
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" hint-size="100%,150px">
+                  <div class="byb-label" style="margin-bottom:var(--sp-4)">Flasks</div>
+                  <div style="display:flex;flex-direction:column;gap:var(--sp-3)">
+                    <sc-for list="{{ flasks }}" as="fl" hint-placeholder-count="2">
+                      <div style="display:flex;align-items:center;gap:var(--sp-4);padding:var(--sp-3) var(--sp-4);background:var(--ink-750);border:1px solid var(--border-hairline);border-radius:var(--radius-sm)">
+                        <span style="font:var(--type-strong);color:var(--fg-1);flex:1">{{ fl.name }}</span>
+                        <span style="font:var(--type-mono-s);color:var(--text-faint)">{{ fl.note }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </x-import>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ tabTree }}">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" hint-size="100%,560px">
+              <div style="display:flex;align-items:center;gap:var(--sp-5);margin-bottom:var(--sp-5)">
+                <div>
+                  <div class="byb-label">Passive tree</div>
+                  <div style="font:var(--type-mono);color:var(--fg-1);margin-top:4px">{{ pointsSpent }} / {{ pointBudget }} points</div>
+                </div>
+                <div style="margin-left:auto;font:var(--type-body-s);color:var(--text-faint);text-align:right;max-width:280px">Click a node to inspect it. Allocation is editable in edit mode.</div>
+              </div>
+              <div style="border:1px solid var(--border-hairline);border-radius:var(--radius-md);background:var(--surface-sunken);padding:var(--sp-4)">
+                <div style="position:relative;width:min(100%,520px);aspect-ratio:1;margin:0 auto">
+                  <svg viewBox="-500 -500 1000 1000" style="display:block;width:100%;height:100%">
+                    <sc-for list="{{ treeEdges }}" as="e" hint-placeholder-count="0">
+                      <line x1="{{ e.x1 }}" y1="{{ e.y1 }}" x2="{{ e.x2 }}" y2="{{ e.y2 }}" stroke="{{ e.stroke }}" stroke-width="{{ e.w }}"></line>
+                    </sc-for>
+                    <sc-for list="{{ treeNodes }}" as="n" hint-placeholder-count="0">
+                      <circle cx="{{ n.x }}" cy="{{ n.y }}" r="{{ n.r }}" fill="{{ n.fill }}" stroke="{{ n.stroke }}" stroke-width="{{ n.sw }}" onClick="{{ n.click }}" style="cursor:pointer"></circle>
+                    </sc-for>
+                  </svg>
+                  <sc-for list="{{ treeLabels }}" as="l" hint-placeholder-count="0">
+                    <div style="position:absolute;left:{{ l.lx }};top:{{ l.ly }};transform:translate(-50%,-100%);white-space:nowrap;pointer-events:none;font:var(--type-label);letter-spacing:var(--track-label);color:{{ l.tc }}">{{ l.label }}</div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:var(--sp-5);margin-top:var(--sp-5);padding-top:var(--sp-5);border-top:1px solid var(--border-hairline)">
+                <div style="flex:1">
+                  <div style="font:var(--type-strong);color:var(--fg-1)">{{ picked.name }}</div>
+                  <div style="font:var(--type-mono-s);color:var(--text-muted);margin-top:2px">{{ picked.stat }}</div>
+                </div>
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Badge" dc-props="{{ picked.badge }}" hint-size="90px,20px"></x-import>
+              </div>
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.CodeBlock" filename="passive-tree.txt" code="{{ build.tree }}" style="{{ mt16 }}" hint-size="100%,90px"></x-import>
+            </x-import>
+          </sc-if>
+
+          <sc-if value="{{ tabNotes }}">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" hint-size="100%,180px">
+              <div class="byb-label" style="margin-bottom:var(--sp-4)">Notes</div>
+              <div style="font:var(--type-body);color:var(--text-muted);white-space:pre-wrap;text-wrap:pretty">{{ build.notes }}</div>
+            </x-import>
+          </sc-if>
+        </div>
+
+        <sc-if value="{{ showSide }}" hint-placeholder-val="{{ true }}">
+        <div style="width:280px;flex:0 0 auto;display:flex;flex-direction:column;gap:var(--sp-5)">
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" hint-size="100%,130px">
+            <div class="byb-label" style="margin-bottom:var(--sp-4)">Generated with</div>
+            <div style="display:flex;align-items:center;gap:var(--sp-3);font:var(--type-body-s);color:var(--text-muted)">
+              <span style="color:var(--teal-400);display:inline-flex"><x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Icon" name="plug-zap" size="{{ n16 }}" hint-size="16px,16px"></x-import></span>Build Your Build MCP · PoE 2
+            </div>
+            <div style="font:var(--type-mono-s);color:var(--text-faint);margin-top:var(--sp-4)">byb://poe2/build/{{ build.id }}</div>
+            <div style="font:var(--type-body-s);color:var(--text-faint);margin-top:var(--sp-4);text-wrap:pretty">Numbers are simulated by the publisher, not by us.</div>
+          </x-import>
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" hint-size="100%,180px">
+            <div class="byb-label" style="margin-bottom:var(--sp-4)">Similar builds</div>
+            <div style="display:flex;flex-direction:column;gap:var(--sp-4)">
+              <sc-for list="{{ similar }}" as="b" hint-placeholder-count="3">
+                <div style="display:flex;flex-direction:column;gap:2px">
+                  <span style="font:var(--type-strong);color:var(--fg-1)">{{ b.title }}</span>
+                  <span style="font:var(--type-mono-s);color:var(--text-faint)">{{ b.meta }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </x-import>
+        </div>
+        </sc-if>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ BUILD EDIT ============ -->
+  <sc-if value="{{ isEdit }}">
+    <main style="flex:1;width:100%">
+      <div style="position:sticky;top:var(--layout-topbar);z-index:20;background:var(--overlay-glass);backdrop-filter:var(--blur-glass);border-bottom:1px solid var(--border-subtle)">
+        <div style="max-width:960px;margin:0 auto;padding:var(--sp-5) var(--sp-7);display:flex;align-items:center;gap:var(--sp-5)">
+          <div style="flex:1;min-width:0">
+            <div class="byb-label" style="color:var(--teal-400)">Editing</div>
+            <div style="font:var(--type-h3);color:var(--fg-1);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ draft.title }}</div>
+          </div>
+          <span style="font:var(--type-mono-s);color:{{ dirtyColor }}">{{ dirtyLabel }}</span>
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="ghost" onClick="{{ cancelEdit }}" hint-size="90px,38px">Cancel</x-import>
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="primary" icon="check" onClick="{{ saveEdit }}" hint-size="140px,38px">Save changes</x-import>
+        </div>
+      </div>
+
+      <div style="max-width:960px;margin:0 auto;padding:var(--sp-8) var(--sp-7) 0;display:flex;flex-direction:column;gap:var(--sp-5)">
+        <div style="display:flex;align-items:flex-start;gap:var(--sp-4);padding:var(--sp-5);border:1px solid var(--border-subtle);border-left:2px solid var(--teal-400);border-radius:var(--radius-sm);background:var(--surface-accent-soft)">
+          <span style="color:var(--teal-400);display:inline-flex;margin-top:2px"><x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Icon" name="sparkles" size="{{ n16 }}" hint-size="16px,16px"></x-import></span>
+          <div style="font:var(--type-body-s);color:var(--fg-2);text-wrap:pretty">Your assistant filled most of this in. Check the numbers before it goes live — anything you change here overrides the generated values.</div>
+        </div>
+
+        <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="var(--sp-7)" hint-size="100%,260px">
+          <div class="byb-label" style="margin-bottom:var(--sp-5)">Identity</div>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-5)">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" dc-props="{{ f.title }}" hint-size="100%,60px"></x-import>
+            <div>
+              <div class="byb-label" style="margin-bottom:8px">Summary</div>
+              <textarea class="byb-area" rows="3" value="{{ draft.summary }}" onChange="{{ onSummary }}"></textarea>
+              <div style="font:var(--type-mono-s);color:var(--text-faint);margin-top:6px">{{ summaryCount }} / 240 · two sentences max</div>
+            </div>
+          </div>
+        </x-import>
+
+        <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="var(--sp-7)" hint-size="100%,160px">
+          <div class="byb-label" style="margin-bottom:var(--sp-5)">Classification</div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:var(--sp-5)">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Select" dc-props="{{ f.cls }}" hint-size="100%,60px"></x-import>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Select" dc-props="{{ f.asc }}" hint-size="100%,60px"></x-import>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Select" dc-props="{{ f.stage }}" hint-size="100%,60px"></x-import>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Select" dc-props="{{ f.tier }}" hint-size="100%,60px"></x-import>
+          </div>
+        </x-import>
+
+        <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="var(--sp-7)" hint-size="100%,160px">
+          <div class="byb-label" style="margin-bottom:var(--sp-5)">Stats</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-5)">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" dc-props="{{ f.dps }}" hint-size="100%,76px"></x-import>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" dc-props="{{ f.ehp }}" hint-size="100%,76px"></x-import>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" dc-props="{{ f.cost }}" hint-size="100%,76px"></x-import>
+          </div>
+        </x-import>
+
+        <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="var(--sp-7)" hint-size="100%,260px">
+          <div style="display:flex;align-items:center;margin-bottom:var(--sp-5)">
+            <div class="byb-label">Skills and support gems</div>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" size="sm" variant="ghost" icon="plus" onClick="{{ addSkill }}" style="{{ mlAuto }}" hint-size="90px,30px">Add skill</x-import>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-4)">
+            <sc-for list="{{ skillFields }}" as="s" hint-placeholder-count="4">
+              <div style="padding:var(--sp-5);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);background:var(--ink-750);display:flex;flex-direction:column;gap:var(--sp-3)">
+                <div style="display:flex;align-items:center;gap:var(--sp-3)">
+                  <span class="byb-label" style="color:var(--text-faint);flex:1">{{ s.head }}</span>
+                  <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.IconButton" size="sm" icon="x" label="Remove skill" onClick="{{ s.remove }}" hint-size="30px,30px"></x-import>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 70px 110px;gap:var(--sp-3)">
+                  <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" size="sm" dc-props="{{ s.name }}" hint-size="100%,30px"></x-import>
+                  <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" size="sm" dc-props="{{ s.role }}" hint-size="100%,30px"></x-import>
+                  <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" size="sm" dc-props="{{ s.level }}" hint-size="100%,30px"></x-import>
+                  <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" size="sm" dc-props="{{ s.cost }}" hint-size="100%,30px"></x-import>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3)">
+                  <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" size="sm" dc-props="{{ s.tags }}" hint-size="100%,30px"></x-import>
+                  <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" size="sm" dc-props="{{ s.stat }}" hint-size="100%,30px"></x-import>
+                </div>
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" size="sm" dc-props="{{ s.supports }}" hint-size="100%,30px"></x-import>
+              </div>
+            </sc-for>
+          </div>
+        </x-import>
+
+        <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="var(--sp-7)" hint-size="100%,260px">
+          <div style="display:flex;align-items:center;margin-bottom:var(--sp-5)">
+            <div class="byb-label">Gear and runes</div>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" size="sm" variant="ghost" icon="plus" onClick="{{ addGear }}" style="{{ mlAuto }}" hint-size="90px,30px">Add slot</x-import>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-4)">
+            <sc-for list="{{ gearFields }}" as="g" hint-placeholder-count="4">
+              <div style="padding:var(--sp-5);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);background:var(--ink-750);display:flex;flex-direction:column;gap:var(--sp-3)">
+                <div style="display:flex;align-items:center;gap:var(--sp-3)">
+                  <span class="byb-label" style="color:var(--text-faint);flex:1">{{ g.head }}</span>
+                  <span style="font:var(--type-mono-s);color:var(--text-faint)">{{ g.sockets }}</span>
+                  <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.IconButton" size="sm" icon="x" label="Remove slot" onClick="{{ g.remove }}" hint-size="30px,30px"></x-import>
+                </div>
+                <div style="display:grid;grid-template-columns:140px 1fr 120px;gap:var(--sp-3)">
+                  <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" size="sm" dc-props="{{ g.slot }}" hint-size="100%,30px"></x-import>
+                  <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" size="sm" dc-props="{{ g.item }}" hint-size="100%,30px"></x-import>
+                  <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Select" size="sm" dc-props="{{ g.rarity }}" hint-size="100%,30px"></x-import>
+                </div>
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" size="sm" dc-props="{{ g.mods }}" hint-size="100%,30px"></x-import>
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" size="sm" dc-props="{{ g.runes }}" hint-size="100%,30px"></x-import>
+              </div>
+            </sc-for>
+          </div>
+        </x-import>
+
+        <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="var(--sp-7)" hint-size="100%,600px">
+          <div style="display:flex;align-items:center;gap:var(--sp-5);margin-bottom:var(--sp-5)">
+            <div>
+              <div class="byb-label">Passive tree</div>
+              <div style="font:var(--type-mono);color:{{ pointsColor }};margin-top:4px">{{ pointsSpent }} / {{ pointBudget }} points</div>
+            </div>
+            <div style="margin-left:auto;display:flex;gap:var(--sp-3);align-items:center">
+              <span style="font:var(--type-body-s);color:var(--text-faint)">Click to allocate. Only nodes touching your tree can be taken.</span>
+              <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" size="sm" variant="secondary" onClick="{{ resetTree }}" hint-size="80px,30px">Reset</x-import>
+            </div>
+          </div>
+          <div style="border:1px solid var(--border-hairline);border-radius:var(--radius-md);background:var(--surface-sunken);padding:var(--sp-5)">
+            <div style="position:relative;width:min(100%,560px);aspect-ratio:1;margin:0 auto">
+              <svg viewBox="-500 -500 1000 1000" style="display:block;width:100%;height:100%">
+                <sc-for list="{{ treeEdges }}" as="e" hint-placeholder-count="0">
+                  <line x1="{{ e.x1 }}" y1="{{ e.y1 }}" x2="{{ e.x2 }}" y2="{{ e.y2 }}" stroke="{{ e.stroke }}" stroke-width="{{ e.w }}"></line>
+                </sc-for>
+                <sc-for list="{{ treeNodesEdit }}" as="n" hint-placeholder-count="0">
+                  <circle cx="{{ n.x }}" cy="{{ n.y }}" r="{{ n.r }}" fill="{{ n.fill }}" stroke="{{ n.stroke }}" stroke-width="{{ n.sw }}" onClick="{{ n.click }}" style="cursor:pointer"></circle>
+                </sc-for>
+              </svg>
+              <sc-for list="{{ treeLabels }}" as="l" hint-placeholder-count="0">
+                <div style="position:absolute;left:{{ l.lx }};top:{{ l.ly }};transform:translate(-50%,-100%);white-space:nowrap;pointer-events:none;font:var(--type-label);letter-spacing:var(--track-label);color:{{ l.tc }}">{{ l.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--sp-5);margin-top:var(--sp-5)">
+            <div style="flex:1">
+              <div style="font:var(--type-strong);color:var(--fg-1)">{{ picked.name }}</div>
+              <div style="font:var(--type-mono-s);color:var(--text-muted);margin-top:2px">{{ picked.stat }}</div>
+            </div>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Badge" dc-props="{{ picked.badge }}" hint-size="90px,20px"></x-import>
+          </div>
+          <div style="margin-top:var(--sp-5)">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" dc-props="{{ f.tree }}" hint-size="100%,76px"></x-import>
+          </div>
+        </x-import>
+
+        <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="var(--sp-7)" hint-size="100%,300px">
+          <div class="byb-label" style="margin-bottom:var(--sp-5)">Notes and milestones</div>
+          <textarea class="byb-area" rows="4" value="{{ draft.notes }}" onChange="{{ onNotes }}"></textarea>
+          <div style="display:flex;align-items:center;margin:var(--sp-6) 0 var(--sp-4)">
+            <div class="byb-label">Leveling milestones</div>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" size="sm" variant="ghost" icon="plus" onClick="{{ addMilestone }}" style="{{ mlAuto }}" hint-size="110px,30px">Add milestone</x-import>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-3)">
+            <sc-for list="{{ milestoneFields }}" as="m" hint-placeholder-count="4">
+              <div style="display:grid;grid-template-columns:80px 1fr 30px;gap:var(--sp-3);align-items:center">
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" size="sm" dc-props="{{ m.lvl }}" hint-size="100%,30px"></x-import>
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" size="sm" dc-props="{{ m.text }}" hint-size="100%,30px"></x-import>
+                <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.IconButton" size="sm" icon="x" label="Remove milestone" onClick="{{ m.remove }}" hint-size="30px,30px"></x-import>
+              </div>
+            </sc-for>
+          </div>
+        </x-import>
+
+        <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="var(--sp-7)" hint-size="100%,200px">
+          <div class="byb-label" style="margin-bottom:var(--sp-5)">Visibility</div>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-4);margin-bottom:var(--sp-6)">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Radio" name="vis" label="Draft — only you can open it" checked="{{ visDraft }}" onChange="{{ setDraftVis }}" hint-size="100%,22px"></x-import>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Radio" name="vis" label="Public — listed on the PoE 2 hub" checked="{{ visPublic }}" onChange="{{ setPublicVis }}" hint-size="100%,22px"></x-import>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:var(--sp-3);padding-top:var(--sp-5);border-top:1px solid var(--border-hairline)">
+            <sc-for list="{{ preflight }}" as="p" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:var(--sp-3);font:var(--type-body-s);color:{{ p.color }}">
+                <span style="display:inline-flex"><x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Icon" name="{{ p.icon }}" size="{{ n14 }}" hint-size="14px,14px"></x-import></span>{{ p.text }}
+              </div>
+            </sc-for>
+          </div>
+        </x-import>
+
+        <div style="display:flex;gap:var(--sp-4);padding:var(--sp-7) 0 0;border-top:1px solid var(--border-subtle);align-items:center">
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="primary" icon="check" onClick="{{ saveEdit }}" hint-size="140px,38px">Save changes</x-import>
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="ghost" onClick="{{ cancelEdit }}" hint-size="90px,38px">Cancel</x-import>
+          <span style="margin-left:auto;font:var(--type-mono-s);color:var(--text-faint)">byb://poe2/build/{{ draft.id }}</span>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <!-- ============ SETTINGS ============ -->
+  <sc-if value="{{ isSettings }}">
+    <main style="flex:1;max-width:760px;margin:0 auto;padding:var(--sp-9) var(--sp-7) 0;width:100%">
+      <div class="byb-label" style="color:var(--teal-400)">Account</div>
+      <h1 style="font:var(--type-display-m);letter-spacing:var(--track-display);color:var(--fg-1);margin:var(--sp-4) 0 var(--sp-8)">Settings</h1>
+
+      <div style="display:flex;flex-direction:column;gap:var(--sp-5)">
+        <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="var(--sp-7)" hint-size="100%,320px">
+          <div class="byb-label" style="margin-bottom:var(--sp-5)">Profile</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-5)">
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" dc-props="{{ sf.handle }}" hint-size="100%,76px"></x-import>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" dc-props="{{ sf.discord }}" hint-size="100%,76px"></x-import>
+          </div>
+          <div style="margin-top:var(--sp-5)">
+            <div class="byb-label" style="margin-bottom:8px">Bio</div>
+            <textarea class="byb-area" rows="3" value="{{ settings.bio }}" onChange="{{ onBio }}"></textarea>
+            <div style="font:var(--type-mono-s);color:var(--text-faint);margin-top:6px">{{ bioCount }} / 180 · shown on your builds</div>
+          </div>
+        </x-import>
+
+        <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Card" padding="var(--sp-7)" hint-size="100%,220px">
+          <div class="byb-label" style="margin-bottom:var(--sp-5)">Email</div>
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Input" dc-props="{{ sf.email }}" hint-size="100%,76px"></x-import>
+          <div style="font:var(--type-body-s);color:var(--text-muted);margin-top:var(--sp-5);text-wrap:pretty">Changing this sends a magic link to the new address. The old one keeps working until you use it.</div>
+        </x-import>
+
+        <div style="display:flex;gap:var(--sp-4);align-items:center">
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="primary" icon="check" onClick="{{ saveSettings }}" hint-size="130px,38px">Save changes</x-import>
+          <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="ghost" onClick="{{ goMine }}" hint-size="90px,38px">Cancel</x-import>
+        </div>
+
+        <div style="margin-top:var(--sp-8);padding:var(--sp-7);border:1px solid var(--red-600);border-radius:var(--radius-md);background:var(--surface-card)">
+          <div class="byb-label" style="color:var(--red-400);margin-bottom:var(--sp-4)">Danger zone</div>
+          <div style="display:flex;align-items:center;gap:var(--sp-7)">
+            <div style="flex:1;font:var(--type-body-s);color:var(--text-muted);text-wrap:pretty">Deleting the account removes your drafts and unlists your published builds. Endorsements other players left are lost.</div>
+            <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Button" variant="danger" onClick="{{ openDelete }}" hint-size="150px,38px">Delete account</x-import>
+          </div>
+        </div>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ showChrome }}">
+    <footer style="margin-top:var(--sp-12);border-top:1px solid var(--border-subtle);padding:var(--sp-8) var(--sp-7);display:flex;gap:var(--sp-8);align-items:flex-start;max-width:var(--layout-max);margin-left:auto;margin-right:auto;width:100%">
+      <div style="flex:1">
+        <div style="font:700 14px/1 var(--font-display);letter-spacing:var(--track-display);color:var(--fg-1)">BUILD<span style="color:var(--teal-400)">/</span>YOUR<span style="color:var(--teal-400)">/</span>BUILD</div>
+        <div style="font:var(--type-body-s);color:var(--text-faint);margin-top:8px;max-width:320px">Build data is community-published. Numbers are simulated by the publisher, not by us.</div>
+      </div>
+      <div style="width:150px">
+        <div class="byb-label" style="margin-bottom:10px">Games</div>
+        <sc-for list="{{ footerGames }}" as="g" hint-placeholder-count="5">
+          <div onClick="{{ g.go }}" style="font:var(--type-body-s);color:var(--text-muted);margin-bottom:6px;cursor:pointer">{{ g.name }}</div>
+        </sc-for>
+      </div>
+      <div style="width:150px">
+        <div class="byb-label" style="margin-bottom:10px">Toolkit</div>
+        <div style="font:var(--type-body-s);color:var(--text-muted);margin-bottom:6px">MCP server</div>
+        <div style="font:var(--type-body-s);color:var(--text-muted);margin-bottom:6px">Publishing rules</div>
+        <div style="font:var(--type-body-s);color:var(--text-muted);margin-bottom:6px">Changelog</div>
+      </div>
+      <div style="width:150px">
+        <div class="byb-label" style="margin-bottom:10px">Community</div>
+        <div style="font:var(--type-body-s);color:var(--text-muted);margin-bottom:6px">Discord</div>
+        <div style="font:var(--type-body-s);color:var(--text-muted);margin-bottom:6px">Report a build</div>
+        <div style="font:var(--type-body-s);color:var(--text-muted);margin-bottom:6px">Contact</div>
+      </div>
+    </footer>
+  </sc-if>
+
+  <sc-if value="{{ connectOpen }}">
+    <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Dialog" open="{{ true }}" eyebrow="MCP server" title="Connect Build Your Build" width="{{ n560 }}" onClose="{{ closeConnect }}" footer="{{ connectFooter }}" hint-size="100%,100%">
+      <div style="font:var(--type-body);color:var(--text-muted);margin-bottom:var(--sp-5)">Add it in your client settings. Pick the client you use.</div>
+      <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Tabs" size="sm" tabs="{{ clientTabs }}" value="{{ client }}" onChange="{{ setClient }}" hint-size="100%,34px"></x-import>
+      <ol style="margin:var(--sp-6) 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:var(--sp-5)">
+        <sc-for list="{{ connectSteps }}" as="s" hint-placeholder-count="4">
+          <li style="display:flex;gap:var(--sp-4)">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;flex:0 0 auto;border-radius:var(--radius-xs);background:var(--surface-accent-soft);color:var(--teal-400);font:var(--type-mono-s);font-size:11px">{{ s.n }}</span>
+            <div>
+              <div style="font:var(--type-strong);color:var(--fg-1)">{{ s.title }}</div>
+              <div style="font:var(--type-body-s);color:var(--text-muted);margin-top:2px;text-wrap:pretty">{{ s.body }}</div>
+            </div>
+          </li>
+        </sc-for>
+      </ol>
+      <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.CodeBlock" filename="poe2 server url" code="{{ mcpUrl }}" style="{{ mt16 }}" hint-size="100%,70px"></x-import>
+    </x-import>
+  </sc-if>
+
+  <sc-if value="{{ deleteOpen }}">
+    <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Dialog" open="{{ true }}" eyebrow="Danger zone" title="Delete this account?" width="{{ n460 }}" onClose="{{ closeDelete }}" footer="{{ deleteFooter }}" hint-size="100%,100%">
+      <div style="font:var(--type-body);color:var(--text-muted)">This unlists 3 published builds and deletes 2 drafts. It cannot be undone.</div>
+      <div style="font:var(--type-mono-s);color:var(--text-faint);margin-top:var(--sp-5)">{{ settings.email }}</div>
+    </x-import>
+  </sc-if>
+
+  <sc-if value="{{ toast }}">
+    <div style="position:fixed;right:var(--sp-7);bottom:var(--sp-7);z-index:60;width:340px">
+      <x-import component-from-global-scope="BuildYourBuildDesignSystem_04a0c5.Toast" dc-props="{{ toast }}" hint-size="100%,70px">{{ toast.body }}</x-import>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startRoute&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;landing&quot;,&quot;login&quot;,&quot;hub&quot;,&quot;build&quot;,&quot;edit&quot;,&quot;mine&quot;,&quot;settings&quot;,&quot;waitlist&quot;],&quot;default&quot;:&quot;landing&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;startSignedIn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;pointBudget&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:123,&quot;min&quot;:40,&quot;max&quot;:140,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Passive tree&quot;}}">
+const GAMES=[
+ {id:'poe2',name:'Path of Exile 2',short:'PoE 2',patch:'0.5.2',builds:12480,icon:'flame',color:'var(--teal-400)',live:true,votes:0,
+  blurb:'Live on 0.5.2. Classes, ascendancies, gear bases and the passive tree are read straight from the current patch.'},
+ {id:'le',name:'Last Epoch',short:'LE',patch:'1.3',icon:'clock',color:'var(--blue-400)',live:false,votes:3140,blurb:'Skill-tree data is mapped. Waiting on the item affix tables before it goes live.'},
+ {id:'d4',name:'Diablo IV',short:'D4',patch:'S9',icon:'skull',color:'var(--red-400)',live:false,votes:2260,blurb:'Season rotation makes the numbers move fast. Next in line after Last Epoch.'},
+ {id:'wow',name:'World of Warcraft',short:'WoW',patch:'11.2',icon:'crown',color:'var(--mag-400)',live:false,votes:840,blurb:'Talent loadouts and sim integration. The biggest job on the list.'}];
+
+const CLASSES=[
+ {name:'Witch',count:3120,asc:['Infernalist','Blood Mage','Lich']},
+ {name:'Ranger',count:2480,asc:['Deadeye','Pathfinder']},
+ {name:'Warrior',count:2190,asc:['Titan','Warbringer']},
+ {name:'Monk',count:1840,asc:['Invoker','Acolyte of Chayula']},
+ {name:'Mercenary',count:1560,asc:['Witchhunter','Gemling Legionnaire']},
+ {name:'Sorceress',count:1290,asc:['Stormweaver','Chronomancer']}];
+
+const STAGES=['Leveling','Mapping','Endgame','Bossing'];
+const STAGE_COLOR=s=>'var(--stage-'+(s==='Bossing'?'boss':s.toLowerCase())+')';
+
+const HUB_BUILDS=[
+ {id:1,title:'Cold Snap Infernalist',author:'brackish',cls:'Witch',asc:'Infernalist',stage:'Endgame',tier:'S',patch:'0.5.2',endorsements:1204,updated:'2d ago',cost:'12',dps:'4.1M',ehp:'18.9k',
+  stats:[{label:'DPS',value:'4.1',unit:'M',trend:'up'},{label:'EHP',value:'18.9k'}]},
+ {id:3,title:'Lightning Arrow Deadeye',author:'vaelen',cls:'Ranger',asc:'Deadeye',stage:'Mapping',tier:'S',patch:'0.5.2',endorsements:2410,updated:'1d ago',cost:'22',
+  stats:[{label:'DPS',value:'2.6',unit:'M',trend:'up'},{label:'EHP',value:'9.4k',trend:'down'}]},
+ {id:2,title:'Two-hand Titan Slam',author:'grimsby',cls:'Warrior',asc:'Titan',stage:'Leveling',tier:'A',patch:'0.5.2',endorsements:318,updated:'6h ago',cost:'4',
+  stats:[{label:'DPS',value:'820',unit:'k'},{label:'EHP',value:'11.2k'}]},
+ {id:4,title:'Chronomancer Cast on Freeze',author:'nyxx',cls:'Sorceress',asc:'Chronomancer',stage:'Endgame',tier:'A',patch:'0.5.2',endorsements:874,updated:'4d ago',cost:'40',
+  stats:[{label:'DPS',value:'3.3',unit:'M'},{label:'EHP',value:'21.0k'}]},
+ {id:5,title:'Invoker Tempest Flurry',author:'kaido',cls:'Monk',asc:'Invoker',stage:'Bossing',tier:'B',patch:'0.5.1',endorsements:502,updated:'9d ago',cost:'18',
+  stats:[{label:'DPS',value:'5.8',unit:'M'},{label:'EHP',value:'7.8k',trend:'down'}]},
+ {id:6,title:'Witchhunter Galvanic Shards',author:'orrin',cls:'Mercenary',asc:'Witchhunter',stage:'Mapping',tier:'B',patch:'0.5.2',endorsements:266,updated:'3d ago',cost:'7',
+  stats:[{label:'DPS',value:'1.4',unit:'M'},{label:'EHP',value:'13.6k'}]}];
+
+const BUILD={
+ id:1,title:'Cold Snap Infernalist',author:'brackish',cls:'Witch',asc:'Infernalist',stage:'Endgame',tier:'S',patch:'0.5.2',
+ endorsements:1204,updated:'2d ago',visibility:'Public',dps:'4.1M',ehp:'18.9k',cost:'12',
+ summary:'Freeze-locks packs with Cold Snap, then detonates them. Scales off spell damage and freeze buildup, so it stays cheap until you chase +levels.',
+ offence:[['Hit DPS','4.1M'],['Crit chance','62%'],['Crit damage','+340%'],['Cast speed','2.14/s'],['Freeze buildup','12.4k'],['Area of effect','+68%']],
+ defence:[['Life','2,940'],['Energy shield','8,110'],['Armour','640'],['Evasion','1,120'],['Block','18%'],['ES recharge','1.2k/s']],
+ res:[['Fire',75],['Cold',76],['Lightning',75],['Chaos',24]],
+ plays:['Drop Frost Wall into the pack, Cold Snap the wall, and the shatter chain does the clear.',
+        'Flame Wall is only there to ignite — do not try to scale it.',
+        'Against a boss, hold Cold Snap until freeze buildup is past half or you waste the window.'],
+ strengths:['Freeze carries the defence — frozen packs deal no damage','Cheap at 12 div, the sceptre is the only real purchase','Scales smoothly with +levels once you have currency'],
+ watch:['Ignores chill-immune rares — swap to Flame Wall single target','Energy shield recharge stops the moment you take a hit','Untested above tier 15 with juiced modifiers'],
+ skills:[
+  {name:'Cold Snap',role:'Main damage',color:'var(--blue-400)',level:'20',quality:'20',cost:'38 mana',tags:['Cold','Spell','AoE'],
+   stat:'4.1M hit · 12.4k freeze buildup · 1.9s cooldown',
+   supports:[['Controlled Destruction','+35% spell damage, no crit'],['Concentrated Effect','+45% area damage, -25% area'],['Inspiration','-25% cost, +crit'],['Ice Bite','Frenzy charge on freeze'],['Considered Casting','+30% damage while stationary']]},
+  {name:'Frost Wall',role:'Setup',color:'var(--blue-400)',level:'18',quality:'0',cost:'22 mana',tags:['Cold','Spell','Duration'],
+   stat:'Two walls up at once · 4.2s duration',
+   supports:[['Magnified Effect','+40% area of effect'],['Persistence','+50% skill duration'],['Second Wind','+1 use, faster recharge']]},
+  {name:'Flame Wall',role:'Ignite proc',color:'var(--gold-400)',level:'16',quality:'0',cost:'18 mana',tags:['Fire','Spell','Duration'],
+   stat:'Ignites for 210k over 4s',
+   supports:[['Fire Infusion','+30% fire damage'],['Scorch','Applies -15% fire resistance']]},
+  {name:'Grim Feast',role:'Defence',color:'var(--teal-400)',level:'20',quality:'0',cost:'30 spirit',tags:['Persistent','Spirit'],
+   stat:'+8.1k overcapped energy shield',
+   supports:[['Clarity','+18% mana regeneration'],['Enduring Focus','Overcap decays 40% slower']]}],
+ gear:[
+  {slot:'Weapon',item:'Chill of Corruption',rarity:'Unique',col:'1',row:'1',mods:['+2 to level of cold skills','58% spell damage'],runes:['Glacial Rune','']},
+  {slot:'Helmet',item:'Visor of the Deep',rarity:'Rare',col:'2',row:'1',mods:['+412 energy shield','+38% cold resistance'],runes:['Soul Core of Tacati']},
+  {slot:'Offhand',item:'Frozen Focus',rarity:'Rare',col:'3',row:'1',mods:['+240 energy shield','+2.1% ES recharge'],runes:['']},
+  {slot:'Gloves',item:'Grasp of the Frozen',rarity:'Rare',col:'1',row:'2',mods:['+18% cast speed','+41 intelligence'],runes:['Iron Rune']},
+  {slot:'Body armour',item:'Sacrificial Garb',rarity:'Unique',col:'2',row:'2',mods:['12% spell damage','+1 to all skill levels','Chaos damage per second'],runes:['Body Rune','']},
+  {slot:'Boots',item:'Stormstride',rarity:'Rare',col:'3',row:'2',mods:['30% movement speed','+312 energy shield'],runes:['Iron Rune']},
+  {slot:'Amulet',item:'Crafted — cold cluster',rarity:'Rare',col:'1',row:'3',mods:['+30 intelligence','+40% total resistance'],runes:[]},
+  {slot:'Belt',item:'Thawing Girdle',rarity:'Rare',col:'3',row:'3',mods:['+188 life','+2 charm slots'],runes:[]},
+  {slot:'Ring 1',item:'Crafted — resistance',rarity:'Rare',col:'1',row:'4',mods:['+36% fire resistance','+62 mana'],runes:[]},
+  {slot:'Ring 2',item:'Crafted — resistance',rarity:'Rare',col:'2',row:'4',mods:['+34% lightning resistance','+8% cast speed'],runes:[]}],
+ charms:[{name:'Thawing Charm',note:'Freeze removal'},{name:'Stone Charm',note:'Stun removal'},{name:'Golden Charm',note:'+18% rarity on kill'}],
+ flasks:[{name:'Ruby Life Flask',note:'+38% instant recovery'},{name:'Sapphire Mana Flask',note:'Charges on crit'}],
+ milestones:[{lvl:'12',text:'Pick up Cold Snap, buy any wand'},{lvl:'38',text:'Second ascendancy, cap cold res'},{lvl:'70',text:'Swap to sceptre, start mapping'},{lvl:'92',text:'Full tree, tier 15 maps'}],
+ notes:'Leave the second ascendancy point until you have capped resistances — the extra freeze buildup does nothing if you die to a stray phys hit.\n\nSwap to the cheap two-wand setup while levelling; the sceptre only pays off past level 70.',
+ tree:'AAAABgUB_9x0dGVzdC1zdHJpbmctZm9yLXBhc3NpdmUtdHJlZQ=='};
+
+const HUB_BODIES={
+ 2:{summary:'Slow, heavy, forgiving. Carries a fresh character to the endgame on a white two-hander.',
+  notes:'Written as a first character. Everything here is buyable from a vendor.',
+  offence:[['Hit DPS','820k'],['Slam radius','+55%'],['Crit chance','18%'],['Crit damage','+160%'],['Attack speed','0.92/s'],['Stun buildup','+120%']],
+  defence:[['Life','3,910'],['Energy shield','0'],['Armour','6,240'],['Evasion','210'],['Block','42%'],['Life regen','280/s']],
+  res:[['Fire',75],['Cold',75],['Lightning',75],['Chaos',-8]],
+  plays:['Walk in, slam, and let armour and block do the work.','Hold the slam until two or three monsters are inside the radius.','Chaos damage goes straight through the build — leave those maps alone.'],
+  strengths:['Cheapest viable build in the list at 4 divine','Armour and block make levelling almost failure-proof','Stun buildup handles rares without extra investment'],
+  watch:['0.92 attacks per second feels bad if you like speed','Chaos resistance is negative and stays that way','820k dps is the floor of the endgame, not the middle'],
+  skills:[{name:'Sunder',role:'Main damage',color:'var(--red-400)',level:'20',quality:'20',cost:'12 mana',tags:['Attack','Physical','AoE'],stat:'820k per slam · 2.1s windup',
+    supports:[['Brutality','+40% physical damage, no elemental'],['Heavy Swing','+25% damage, slower'],['Fist of War','+80% on the first hit']]},
+   {name:'Warcry',role:'Setup',color:'var(--gold-400)',level:'16',quality:'0',cost:'0',tags:['Warcry','Buff'],stat:'+38% damage for 6s',supports:[['Second Wind','+1 use, faster recharge']]}],
+  gear:[{slot:'Weapon',item:'Any two-hand mace',rarity:'Normal',col:'1',row:'1',mods:['+180 physical damage'],runes:['Iron Rune','']},
+   {slot:'Body armour',item:'Vendor plate',rarity:'Magic',col:'2',row:'1',mods:['+420 armour'],runes:['']},
+   {slot:'Boots',item:'Vendor boots',rarity:'Magic',col:'3',row:'1',mods:['20% movement speed'],runes:[]}],
+  milestones:[{lvl:'8',text:'Sunder from the act 1 vendor'},{lvl:'33',text:'Titan ascendancy, first armour node'},{lvl:'65',text:'Cap resistances, start mapping'}]},
+ 3:{summary:'The clear-speed benchmark. Fragile above tier 14 unless you buy resistances.',
+  notes:'The bow is the entire budget. Do not buy anything else until it is 22 divine well spent.',
+  offence:[['Hit DPS','2.6M'],['Arrows','7'],['Crit chance','78%'],['Crit damage','+410%'],['Attack speed','3.10/s'],['Shock chance','62%']],
+  defence:[['Life','2,240'],['Energy shield','0'],['Armour','180'],['Evasion','9,410'],['Block','0%'],['Life regen','110/s']],
+  res:[['Fire',75],['Cold',75],['Lightning',75],['Chaos',-22]],
+  plays:['Stay at the edge of the screen and let the arrow spread clear the pack.','Never stop moving — evasion only works while you are not being hit.','Shock adds a third of the damage, so lead with it on rares.'],
+  strengths:['Fastest clear in the list by a wide margin','Shock scaling comes free from the tree','Works on any map layout'],
+  watch:['2,240 life and no armour — one phys hit kills','Chaos resistance is -22%','Fragile above tier 14 unless you buy resistances'],
+  skills:[{name:'Lightning Arrow',role:'Main damage',color:'var(--blue-400)',level:'20',quality:'20',cost:'14 mana',tags:['Attack','Lightning','Projectile'],stat:'2.6M across 7 arrows',
+    supports:[['Lightning Infusion','+30% lightning damage'],['Primal Armament','+2 projectiles'],['Martial Tempo','+18% attack speed'],['Corrupting Cry','Shock on hit']]},
+   {name:'Blink',role:'Movement',color:'var(--teal-400)',level:'12',quality:'0',cost:'20 spirit',tags:['Movement','Spirit'],stat:'2 charges · 3.4s recharge',supports:[['Second Wind','+1 use, faster recharge']]}],
+  gear:[{slot:'Weapon',item:'Widowhail',rarity:'Unique',col:'1',row:'1',mods:['+280% quiver modifiers'],runes:['Glacial Rune','']},
+   {slot:'Offhand',item:'Crafted quiver',rarity:'Rare',col:'3',row:'1',mods:['+38% projectile damage','+2 arrows'],runes:[]},
+   {slot:'Body armour',item:'Evasion chest',rarity:'Rare',col:'2',row:'1',mods:['+1,840 evasion','+42% cold resistance'],runes:['Body Rune']},
+   {slot:'Boots',item:'Crafted — movement',rarity:'Rare',col:'3',row:'2',mods:['35% movement speed'],runes:['Iron Rune']}],
+  milestones:[{lvl:'16',text:'Lightning Arrow, any bow'},{lvl:'40',text:'Deadeye ascendancy, projectile nodes'},{lvl:'75',text:'Buy Widowhail and a crafted quiver'}]},
+ 4:{summary:'Recovers cooldowns to keep a permanent freeze window open. Needs a specific timepiece.',
+  notes:'The whole build is the timepiece. Without it this is a worse Cold Snap build.',
+  offence:[['Hit DPS','3.3M'],['Freeze window','4.2s'],['Crit chance','54%'],['Crit damage','+300%'],['Cast speed','2.80/s'],['Cooldown recovery','+180%']],
+  defence:[['Life','2,120'],['Energy shield','12,480'],['Armour','340'],['Evasion','740'],['Block','24%'],['ES recharge','2.1k/s']],
+  res:[['Fire',75],['Cold',75],['Lightning',75],['Chaos',36]],
+  plays:['Open with the freeze, then hold the window open with cooldown recovery.','Energy shield is the health pool — never let recharge break.','Bosses that cannot be frozen are a hard no for this build.'],
+  strengths:['21k effective pool is the deepest in the list','Freeze window means most fights deal no damage back','Chaos resistance at 36% is unusual for a caster'],
+  watch:['40 divine — the most expensive build listed','Dead without the specific timepiece','Freeze-immune bosses shut it off entirely'],
+  skills:[{name:'Cast on Freeze',role:'Trigger',color:'var(--blue-400)',level:'20',quality:'20',cost:'0',tags:['Trigger','Meta'],stat:'Fires every 0.9s at full buildup',
+    supports:[['Energy Retention','+35% energy gained'],['Impetus','+40% trigger damage']]},
+   {name:'Comet',role:'Main damage',color:'var(--blue-400)',level:'20',quality:'20',cost:'triggered',tags:['Cold','Spell','AoE'],stat:'3.3M per comet',
+    supports:[['Controlled Destruction','+35% spell damage, no crit'],['Concentrated Effect','+45% area damage, -25% area'],['Ice Bite','Frenzy charge on freeze']]}],
+  gear:[{slot:'Weapon',item:'Chronomancer sceptre',rarity:'Rare',col:'1',row:'1',mods:['+2 to cold skills','+62% spell damage'],runes:['Glacial Rune','']},
+   {slot:'Amulet',item:'The Frozen Hour',rarity:'Unique',col:'1',row:'3',mods:['+80% cooldown recovery'],runes:[]},
+   {slot:'Body armour',item:'ES chest',rarity:'Rare',col:'2',row:'1',mods:['+1,240 energy shield','+38% chaos resistance'],runes:['Body Rune','']}],
+  milestones:[{lvl:'20',text:'Comet and Frost Bomb, any wand'},{lvl:'44',text:'Chronomancer ascendancy'},{lvl:'88',text:'Buy the timepiece, swap to Cast on Freeze'}]},
+ 5:{summary:'Highest single-target in the sample, thinnest defences. Untested on 0.5.2.',
+  notes:'Numbers were recorded on 0.5.1. The combo timing changed — check it before you trust the dps.',
+  offence:[['Hit DPS','5.8M'],['Combo hits','6'],['Crit chance','82%'],['Crit damage','+460%'],['Attack speed','4.20/s'],['Power charges','5']],
+  defence:[['Life','1,940'],['Energy shield','2,180'],['Armour','260'],['Evasion','4,120'],['Block','18%'],['ES recharge','480/s']],
+  res:[['Fire',75],['Cold',75],['Lightning',75],['Chaos',-14]],
+  plays:['Build the combo on trash, spend it on the boss.','Every defensive layer is thin — the plan is to kill it first.','Recheck the combo timing on 0.5.2 before committing currency.'],
+  strengths:['5.8M single-target, the highest in the list','Power charge generation needs no gear support','Cheap at 18 divine for the damage'],
+  watch:['7.8k effective pool — the lowest listed','Untested on 0.5.2','Chaos resistance is negative'],
+  skills:[{name:'Tempest Flurry',role:'Main damage',color:'var(--teal-400)',level:'20',quality:'20',cost:'9 mana',tags:['Attack','Lightning','Melee'],stat:'5.8M over a 6-hit combo',
+    supports:[['Martial Tempo','+18% attack speed'],['Close Combat','+40% damage at melee range'],['Rising Tempest','+8% damage per combo hit'],['Inspiration','-25% cost, +crit']]},
+   {name:'Charged Staff',role:'Buff',color:'var(--blue-400)',level:'20',quality:'0',cost:'40 spirit',tags:['Persistent','Lightning'],stat:'+62% lightning damage at 5 charges',supports:[['Persistence','+50% skill duration']]}],
+  gear:[{slot:'Weapon',item:'Crafted quarterstaff',rarity:'Rare',col:'1',row:'1',mods:['+240 lightning damage','+22% attack speed'],runes:['Iron Rune','']},
+   {slot:'Body armour',item:'Hybrid chest',rarity:'Rare',col:'2',row:'1',mods:['+610 evasion','+340 energy shield'],runes:['Body Rune']},
+   {slot:'Gloves',item:'Crafted — attack speed',rarity:'Rare',col:'1',row:'2',mods:['+14% attack speed'],runes:['']}],
+  milestones:[{lvl:'14',text:'Tempest Flurry, any quarterstaff'},{lvl:'36',text:'Invoker ascendancy'},{lvl:'80',text:'Charged Staff online, start bossing'}]},
+ 6:{summary:'Crossbow generalist. Good league-start pick before you know your currency.',
+  notes:'Nothing here is expensive. It is a build to hold you until you decide what you actually want.',
+  offence:[['Hit DPS','1.4M'],['Shards per shot','8'],['Crit chance','44%'],['Crit damage','+240%'],['Reload speed','1.10/s'],['Shock chance','30%']],
+  defence:[['Life','3,120'],['Energy shield','0'],['Armour','2,840'],['Evasion','1,640'],['Block','12%'],['Life regen','240/s']],
+  res:[['Fire',75],['Cold',75],['Lightning',75],['Chaos',18]],
+  plays:['Load shards, fire into the pack, reload behind cover.','Armour and life carry the defence — this is not an evasion build.','Swap ammo for single target instead of buying gear.'],
+  strengths:['Every resistance capped on 7 divine of gear','Armour and 3.1k life make it hard to kill','Ammo swapping covers every map type'],
+  watch:['1.4M dps is slow on tier 15 rares','Reload timing punishes greedy play','No scaling ceiling — it stays a league-start build'],
+  skills:[{name:'Galvanic Shards',role:'Main damage',color:'var(--blue-400)',level:'20',quality:'20',cost:'8 mana',tags:['Attack','Lightning','Projectile'],stat:'1.4M across 8 shards',
+    supports:[['Lightning Infusion','+30% lightning damage'],['Primal Armament','+2 projectiles'],['Inspiration','-25% cost, +crit']]},
+   {name:'Armour Piercing Rounds',role:'Single target',color:'var(--fg-3)',level:'18',quality:'0',cost:'12 mana',tags:['Attack','Physical'],stat:'-30% enemy armour',supports:[['Brutality','+40% physical damage, no elemental']]}],
+  gear:[{slot:'Weapon',item:'Crafted crossbow',rarity:'Rare',col:'1',row:'1',mods:['+180 lightning damage','+18% reload speed'],runes:['Iron Rune','']},
+   {slot:'Body armour',item:'Armour chest',rarity:'Rare',col:'2',row:'1',mods:['+680 armour','+188 life'],runes:['Body Rune']},
+   {slot:'Belt',item:'Crafted — life',rarity:'Rare',col:'3',row:'3',mods:['+164 life','+38% fire resistance'],runes:[]}],
+  milestones:[{lvl:'10',text:'Galvanic Shards, starter crossbow'},{lvl:'35',text:'Witchhunter ascendancy'},{lvl:'70',text:'Cap resistances, craft the crossbow'}]}};
+
+const DRAFT_BODIES={
+ 7:{cost:'18',visibility:'Draft',summary:'Stacks corpses with Unearth, then detonates the pile on a boss. Life cost is brutal until you get the leech mastery.',
+  notes:'Do not take this into juiced maps yet — the recovery is untested with heavy phys damage on the ground.',
+  offence:[['Hit DPS','3.8M'],['Corpses per cast','3'],['Crit chance','48%'],['Crit damage','+280%'],['Cast speed','1.72/s'],['Area of effect','+42%']],
+  defence:[['Life','4,180'],['Energy shield','0'],['Armour','1,940'],['Evasion','880'],['Block','0%'],['Life leech','410/s']],
+  res:[['Fire',75],['Cold',75],['Lightning',68],['Chaos',12]],
+  plays:['Unearth twice into the pack, then detonate the pile — one cast clears a screen.',
+   'On a boss, drop corpses behind you and detonate at range; the explosion radius is bigger than it looks.',
+   'Leech is the whole recovery plan, so never fight without something to hit.'],
+  strengths:['Highest single-target of the drafts at 3.8M','Corpse generation does not care about the patch','Life pool is deep enough for tier 12 without investment'],
+  watch:['Lightning resistance is 7% short of cap','No energy shield and no block — leech or die','Chaos resistance at 12% is a real problem in maps'],
+  skills:[{name:'Detonate Dead',role:'Main damage',color:'var(--gold-400)',level:'20',quality:'20',cost:'44 mana',tags:['Fire','Spell','AoE'],stat:'3.8M on a full corpse pile',
+    supports:[['Elemental Focus','+40% elemental damage, no ailments'],['Concentrated Effect','+45% area damage, -25% area'],['Fire Infusion','+30% fire damage']]},
+   {name:'Unearth',role:'Corpse generation',color:'var(--fg-3)',level:'18',quality:'0',cost:'16 mana',tags:['Physical','Spell'],stat:'3 corpses per cast',
+    supports:[['Ancestral Urgency','+22% cast speed'],['Second Wind','+1 use, faster recharge']]}],
+  gear:[{slot:'Weapon',item:'Crafted — fire sceptre',rarity:'Rare',col:'1',row:'1',mods:['+58% spell damage','+2 to fire skills'],runes:['','']},
+   {slot:'Body armour',item:'Bloodbound Vestments',rarity:'Rare',col:'2',row:'1',mods:['+318 life','+22% life recovery'],runes:['Body Rune']},
+   {slot:'Boots',item:'Crafted — movement',rarity:'Rare',col:'3',row:'1',mods:['25% movement speed'],runes:['']}],
+  milestones:[{lvl:'24',text:'Unearth online, buy any sceptre'},{lvl:'45',text:'Blood Mage ascendancy, life leech mastery'},{lvl:'78',text:'Swap to the crafted sceptre'}]},
+ 8:{cost:'3',summary:'A league-start Arc setup that clears on one button. Cheap, safe, and slow to kill anything with real health.',
+  notes:'Written for the first week of a league. Replace it once you can afford a real wand.',
+  offence:[['Hit DPS','640k'],['Chain hops','4'],['Crit chance','22%'],['Crit damage','+190%'],['Cast speed','2.40/s'],['Shock chance','38%']],
+  defence:[['Life','1,860'],['Energy shield','3,240'],['Armour','120'],['Evasion','640'],['Block','0%'],['ES recharge','620/s']],
+  res:[['Fire',52],['Cold',48],['Lightning',75],['Chaos',0]],
+  plays:['Cast Arc at the front of the pack and let the chains do the clearing.',
+   'Frost Bomb first on anything with a health bar — the exposure is most of the single-target.',
+   'Resistances come before damage for the whole first week.'],
+  strengths:['Runs on 3 divine of vendor gear','One button, no setup, no gear dependencies','Shock adds damage the sim does not count'],
+  watch:['Resistances are uncapped everywhere but lightning','640k dps stalls hard on rare monsters','Meant to be replaced by level 62, not scaled'],
+  skills:[{name:'Arc',role:'Main damage',color:'var(--blue-400)',level:'16',quality:'0',cost:'20 mana',tags:['Lightning','Spell','Chaining'],stat:'640k per chain hop',
+    supports:[['Lightning Infusion','+30% lightning damage'],['Inspiration','-25% cost, +crit']]},
+   {name:'Frost Bomb',role:'Exposure',color:'var(--teal-400)',level:'12',quality:'0',cost:'14 mana',tags:['Cold','Spell'],stat:'-20% enemy cold resistance',supports:[['Persistence','+50% skill duration']]}],
+  gear:[{slot:'Weapon',item:'Any wand',rarity:'Magic',col:'1',row:'1',mods:['+38% lightning damage'],runes:['']},
+   {slot:'Body armour',item:'Vendor chest',rarity:'Magic',col:'2',row:'1',mods:['+124 energy shield'],runes:['']},
+   {slot:'Boots',item:'Vendor boots',rarity:'Magic',col:'3',row:'1',mods:['20% movement speed'],runes:[]}],
+  milestones:[{lvl:'12',text:'Arc from the act 1 vendor'},{lvl:'30',text:'Stormweaver ascendancy'},{lvl:'62',text:'Cap resistances, then reroll into a real build'}]}};
+
+const OWN_BODIES={
+ 9:{cost:'14',summary:'Poison Concoction with no weapon at all. Throws flasks, scales off flask charges, and never worries about a bow drop.',
+  notes:'Charge sustain is everything. If you run out of flask charges the build simply stops working.',
+  offence:[['Hit DPS','1.9M'],['Poison stacks','24'],['Crit chance','36%'],['Crit damage','+210%'],['Throw speed','3.40/s'],['Charge gain','+140%']],
+  defence:[['Life','3,480'],['Energy shield','0'],['Armour','420'],['Evasion','5,220'],['Block','0%'],['Flask recovery','620/s']],
+  res:[['Fire',75],['Cold',75],['Lightning',75],['Chaos',24]],
+  plays:['Throw into the pack and keep moving — poison finishes what the hit starts.','Flask charges are the resource; kill trash to keep them up.','Against a boss, stack poison first and stop throwing when it is capped.'],
+  strengths:['No weapon requirement — the build is unaffected by drops','Poison damage ignores most damage mitigation','3.4k life with 5.2k evasion is comfortable for mapping'],
+  watch:['Dead the moment flask charges run out','Poison ramp is slow against anything that dies fast','Chaos-resistant bosses cut the damage in half'],
+  skills:[{name:'Poison Concoction',role:'Main damage',color:'var(--teal-400)',level:'20',quality:'20',cost:'1 flask charge',tags:['Attack','Chaos','Projectile'],stat:'1.9M with 24 poison stacks',
+    supports:[['Corrosion','+35% poison damage'],['Primal Armament','+2 projectiles'],['Martial Tempo','+18% throw speed']]},
+   {name:'Blink',role:'Movement',color:'var(--blue-400)',level:'14',quality:'0',cost:'20 spirit',tags:['Movement','Spirit'],stat:'2 charges · 3.4s recharge',supports:[['Second Wind','+1 use, faster recharge']]}],
+  gear:[{slot:'Body armour',item:'Evasion chest',rarity:'Rare',col:'2',row:'1',mods:['+1,420 evasion','+164 life'],runes:['Body Rune','']},
+   {slot:'Gloves',item:'Crafted — chaos damage',rarity:'Rare',col:'1',row:'2',mods:['+28% chaos damage'],runes:['Iron Rune']},
+   {slot:'Belt',item:'Crafted — flask charges',rarity:'Rare',col:'3',row:'3',mods:['+42% flask charges gained'],runes:[]}],
+  milestones:[{lvl:'18',text:'Poison Concoction, drop the bow'},{lvl:'42',text:'Pathfinder ascendancy, charge nodes'},{lvl:'74',text:'Craft the charge belt, start mapping'}]},
+ 10:{cost:'9',summary:'Two totems do the killing while you stand behind them. Slow, safe, and completely patch-proof.',
+  notes:'Recorded on 0.5.1 and never re-tested. The totem placement speed changed since.',
+  offence:[['Hit DPS','910k'],['Totems','2'],['Crit chance','12%'],['Crit damage','+140%'],['Totem placement','0.68s'],['Stun buildup','+80%']],
+  defence:[['Life','5,240'],['Energy shield','0'],['Armour','8,120'],['Evasion','160'],['Block','48%'],['Life regen','520/s']],
+  res:[['Fire',75],['Cold',75],['Lightning',75],['Chaos',6]],
+  plays:['Place both totems on the pack and hold your ground behind them.','Totems taunt, so the damage goes into them and not you.','Reposition early — a totem that finishes its duration is dps you did not get.'],
+  strengths:['22.6k effective pool, the tankiest build listed','Damage happens while you are safe behind cover','Nothing about it depends on the patch'],
+  watch:['910k dps is slow everywhere','Untested on 0.5.2','Totem placement changed since the numbers were recorded'],
+  skills:[{name:'Ancestral Warrior Totem',role:'Main damage',color:'var(--gold-400)',level:'20',quality:'20',cost:'34 mana',tags:['Totem','Physical','Melee'],stat:'910k across 2 totems',
+    supports:[['Brutality','+40% physical damage, no elemental'],['Heavy Swing','+25% damage, slower'],['Second Wind','+1 use, faster recharge']]},
+   {name:'Warcry',role:'Setup',color:'var(--red-400)',level:'18',quality:'0',cost:'0',tags:['Warcry','Buff'],stat:'+38% totem damage for 6s',supports:[['Persistence','+50% skill duration']]}],
+  gear:[{slot:'Weapon',item:'Crafted mace',rarity:'Rare',col:'1',row:'1',mods:['+210 physical damage','+2 to totem skills'],runes:['Iron Rune','']},
+   {slot:'Body armour',item:'Heavy plate',rarity:'Rare',col:'2',row:'1',mods:['+920 armour','+218 life'],runes:['Body Rune']},
+   {slot:'Boots',item:'Crafted — life',rarity:'Rare',col:'3',row:'2',mods:['+142 life','20% movement speed'],runes:[]}],
+  milestones:[{lvl:'22',text:'First totem, any mace'},{lvl:'38',text:'Warbringer ascendancy'},{lvl:'68',text:'Second totem, cap resistances'}]}};
+
+const BODIES=Object.assign({},HUB_BODIES,OWN_BODIES,DRAFT_BODIES);
+
+const MINE=[
+ {id:7,title:'Blood Mage Detonate Dead',stage:'Bossing',tier:'A',patch:'0.5.2',cls:'Witch',asc:'Blood Mage',updated:'20m ago',status:'Draft',stats:[{label:'DPS',value:'3.8',unit:'M'},{label:'EHP',value:'14.1k'}]},
+ {id:8,title:'Stormweaver Arc league start',stage:'Leveling',tier:'B',patch:'0.5.2',cls:'Sorceress',asc:'Stormweaver',updated:'2h ago',status:'Draft',stats:[{label:'DPS',value:'640',unit:'k'},{label:'EHP',value:'8.9k'}]},
+ {id:1,title:'Cold Snap Infernalist',stage:'Endgame',tier:'S',patch:'0.5.2',cls:'Witch',asc:'Infernalist',updated:'2d ago',status:'Public',stats:[{label:'DPS',value:'4.1',unit:'M'},{label:'EHP',value:'18.9k'}]},
+ {id:9,title:'Pathfinder Poison Concoction',stage:'Mapping',tier:'A',patch:'0.5.2',cls:'Ranger',asc:'Pathfinder',updated:'11d ago',status:'Public',stats:[{label:'DPS',value:'1.9',unit:'M'},{label:'EHP',value:'12.4k'}]},
+ {id:10,title:'Warbringer Totem carry',stage:'Mapping',tier:'C',patch:'0.5.1',cls:'Warrior',asc:'Warbringer',updated:'1mo ago',status:'Public',stats:[{label:'DPS',value:'910',unit:'k'},{label:'EHP',value:'22.6k'}]}];
+
+const MCP_URL='https://buildyourbuild.com/mcp/poe2';
+
+const CONNECT_STEPS={
+ claude:[['Open Settings','Click your name in the bottom left, then Settings.'],
+   ['Go to Connectors','Pick Connectors in the sidebar, then Add custom connector.'],
+   ['Paste the server URL','Name it Build Your Build and paste the URL below.'],
+   ['Click Connect','Approve the tools when Claude asks. That is it.']],
+ chatgpt:[['Open Settings','Click your avatar, then Settings.'],
+   ['Turn on developer mode','Connectors, then Advanced, then Developer mode.'],
+   ['Add the server','Connectors, then Create, and paste the URL below.'],
+   ['Click Connect','Approve the tools when ChatGPT asks. That is it.']]};
+
+const BRANCHES=[
+ {k:'cold',a:-90,color:'var(--blue-400)',minor:'+10% cold damage',
+  notables:[['FRIGID WAKE','+18% cold damage, 12% freeze buildup'],['DEEP FREEZE','Freeze lasts 25% longer'],['ABSOLUTE ZERO','Freeze threshold no longer diminishes']]},
+ {k:'life',a:35,color:'var(--red-400)',minor:'+6% maximum life',
+  notables:[['BULWARK','+12% maximum life'],['IRON REFLEXES','+20% armour, evasion becomes armour'],['UNYIELDING','Cannot be stunned while an enemy is frozen']]},
+ {k:'tempo',a:145,color:'var(--teal-400)',minor:'+4% cast speed',
+  notables:[['QUICKSTEP','+8% movement speed'],['CAST TEMPO','+15% cast speed'],['TIME DILATION','Skills gain one extra cooldown use']]}];
+
+function buildTree(){
+  const nodes=[{id:'root',x:0,y:0,kind:'root',name:'Class start',stat:'Witch — Intelligence tree'}];
+  const edges=[];
+  BRANCHES.forEach(b=>{
+    const rad=d=>d*Math.PI/180;
+    for(let r=1;r<=7;r++){
+      const dist=r*62, ang=rad(b.a+(r%2?4:-4));
+      const kind=r===7?'keystone':(r===3||r===5?'notable':'minor');
+      const ni=r===3?0:r===5?1:2;
+      const nm=kind==='minor'?null:b.notables[ni];
+      nodes.push({id:b.k+'-s'+r,x:Math.round(Math.cos(ang)*dist),y:Math.round(Math.sin(ang)*dist),kind:kind,
+        name:nm?nm[0]:'Minor passive',stat:nm?nm[1]:b.minor,color:b.color});
+      edges.push([r===1?'root':b.k+'-s'+(r-1),b.k+'-s'+r]);
+      if(r===2||r===4||r===6){
+        [-1,1].forEach((sgn,i)=>{
+          const sa=rad(b.a+sgn*21), sd=dist+30;
+          nodes.push({id:b.k+'-p'+r+i,x:Math.round(Math.cos(sa)*sd),y:Math.round(Math.sin(sa)*sd),kind:'minor',
+            name:'Minor passive',stat:b.minor,color:b.color});
+          edges.push([b.k+'-s'+r,b.k+'-p'+r+i]);
+        });
+      }
+    }
+  });
+  return {nodes:nodes,edges:edges};
+}
+
+const TREE=buildTree();
+const ADJ=(()=>{const m={};TREE.edges.forEach(([a,b])=>{(m[a]=m[a]||[]).push(b);(m[b]=m[b]||[]).push(a);});return m;})();
+const START_ALLOC=['root','cold-s1','cold-s2','cold-p20','cold-p21','cold-s3','cold-s4','cold-s5','life-s1','life-s2','life-p20','tempo-s1','tempo-s2','tempo-s3'];
+
+class Component extends DCLogic {
+  state={
+    route:this.props.startRoute||'landing',
+    signedIn:!!this.props.startSignedIn,
+    email:'', sentTo:'', verifyPct:'12%',
+    game:'poe2', waitId:'le', client:'claude',
+    tab:'overview', view:'grid',
+    classes:[], stage:'Any', currentPatch:true, hardcore:false, sort:'Most endorsed',
+    build:JSON.parse(JSON.stringify(BUILD)),
+    draft:null,
+    alloc:START_ALLOC.slice(), pickedId:'cold-s5',
+    settings:{handle:'brackish',email:'brackish@fastmail.com',discord:'brackish#4417',bio:'Cold and freeze builds, mostly. I publish what I actually play, not what sims best.'},
+    connectOpen:false, deleteOpen:false, toast:null, voteEmail:''
+  };
+
+  go=r=>{this.setState({route:r},()=>window.scrollTo(0,0));};
+  flash=(tone,title,body)=>{
+    clearTimeout(this._t);
+    this.setState({toast:{tone:tone,title:title,body:body}});
+    this._t=setTimeout(()=>this.setState({toast:null}),3600);
+  };
+  componentWillUnmount(){clearTimeout(this._t);clearTimeout(this._v);}
+
+  sendLink=()=>{
+    const e=(this.state.email||'').trim();
+    if(!e||e.indexOf('@')<0){this.flash('danger','Check the address','That does not look like an email.');return;}
+    this.setState({sentTo:e,route:'sent'},()=>window.scrollTo(0,0));
+  };
+  openLink=()=>{
+    this.setState({route:'verify',verifyPct:'12%'});
+    setTimeout(()=>this.setState({verifyPct:'100%'}),260);
+    this._v=setTimeout(()=>{
+      this.setState({signedIn:true,route:'mine'},()=>window.scrollTo(0,0));
+      this.flash('success','Signed in','Your drafts are on this page.');
+    },1200);
+  };
+
+  buildFromRow=(row,opts)=>{
+    const b=JSON.parse(JSON.stringify(BUILD));
+    Object.assign(b,{id:row.id,title:row.title,cls:row.cls,asc:row.asc,stage:row.stage,tier:row.tier,patch:row.patch,updated:row.updated});
+    if(row.author)b.author=row.author;
+    if(row.cost)b.cost=row.cost;
+    if(row.endorsements!=null)b.endorsements=row.endorsements;
+    if(row.stats&&row.stats.length>1){b.dps=row.stats[0].value+(row.stats[0].unit||'');b.ehp=row.stats[1].value;}
+    const ov=BODIES[row.id];if(ov)Object.assign(b,JSON.parse(JSON.stringify(ov)));
+    Object.assign(b,opts||{});
+    if(b.visibility==='Draft')b.endorsements=0;
+    return b;
+  };
+
+  startEdit=id=>{
+    const m=MINE.find(x=>x.id===id);
+    const b=m?this.buildFromRow(Object.assign({},m,{author:this.state.settings.handle}),{visibility:m.status})
+            :JSON.parse(JSON.stringify(BUILD));
+    this.setState({draft:b,build:JSON.parse(JSON.stringify(b)),route:'edit',_clean:JSON.stringify(b)},()=>window.scrollTo(0,0));
+  };
+  setD=(k,v)=>this.setState(s=>({draft:Object.assign({},s.draft,{[k]:v})}));
+  setRow=(list,i,k,v)=>this.setState(s=>{
+    const arr=s.draft[list].slice();arr[i]=Object.assign({},arr[i],{[k]:v});
+    return {draft:Object.assign({},s.draft,{[list]:arr})};
+  });
+  setCsv=(list,i,k,v)=>this.setRow(list,i,k,v.split(',').map(t=>t.trim()).filter(Boolean));
+  setSupports=(i,v)=>{
+    const prev=this.state.draft.skills[i].supports||[];
+    const next=v.split(',').map(t=>t.trim()).filter(Boolean).map(n=>{
+      const hit=prev.find(p=>p[0]===n);return [n,hit?hit[1]:'Effect not recorded'];});
+    this.setRow('skills',i,'supports',next);
+  };
+  setSockets=(i,v)=>this.setRow('gear',i,'runes',v.split(',').map(t=>t.trim()));
+  addRow=(list,row)=>this.setState(s=>({draft:Object.assign({},s.draft,{[list]:s.draft[list].concat([row])})}));
+  delRow=(list,i)=>this.setState(s=>({draft:Object.assign({},s.draft,{[list]:s.draft[list].filter((_,j)=>j!==i)})}));
+
+  toggleNode=id=>{
+    if(id==='root')return;
+    const has=this.state.alloc.indexOf(id)>=0;
+    if(has){
+      const kids=(ADJ[id]||[]).filter(n=>this.state.alloc.indexOf(n)>=0);
+      if(kids.length>1){this.flash('warning','Would orphan a branch','Remove the nodes past it first.');return;}
+      this.setState(s=>({alloc:s.alloc.filter(x=>x!==id),pickedId:id}));
+    }else{
+      const touching=(ADJ[id]||[]).some(n=>this.state.alloc.indexOf(n)>=0);
+      if(!touching){this.flash('warning','Not connected','Take a node next to your tree first.');return;}
+      this.setState(s=>({alloc:s.alloc.concat([id]),pickedId:id}));
+    }
+  };
+
+  nodeVisual(n,editable){
+    const on=this.state.alloc.indexOf(n.id)>=0;
+    const near=!on&&(ADJ[n.id]||[]).some(x=>this.state.alloc.indexOf(x)>=0);
+    const sel=this.state.pickedId===n.id;
+    const r=n.kind==='root'?18:n.kind==='keystone'?15:n.kind==='notable'?11:7;
+    return {
+      x:n.x,y:n.y,r:r,
+      fill:on?(n.kind==='minor'?'var(--teal-500)':'var(--teal-400)'):'var(--ink-800)',
+      stroke:sel?'var(--fg-1)':on?'var(--teal-300)':near?'var(--teal-600)':'var(--ink-500)',
+      sw:sel?2:n.kind==='minor'?1:2,
+      lx:((n.x+500)/10)+'%',
+      ly:((n.y-r-8+500)/10)+'%',
+      tc:on?'var(--teal-300)':'var(--fg-3)',
+      label:n.kind==='keystone'||n.kind==='notable'?n.name:'',
+      cursor:editable?'pointer':'default',
+      click:editable?()=>this.toggleNode(n.id):()=>this.setState({pickedId:n.id})
+    };
+  }
+
+  renderVals(){
+    const s=this.state, budget=this.props.pointBudget||123;
+    const game=GAMES[0], wait=GAMES.find(g=>g.id===s.waitId)||GAMES[1];
+    const r=s.route, signed=s.signedIn;
+    const nodeById={};TREE.nodes.forEach(n=>nodeById[n.id]=n);
+    const picked=nodeById[s.pickedId]||nodeById['root'];
+    const pickedOn=s.alloc.indexOf(picked.id)>=0;
+
+    const list=HUB_BUILDS.filter(b=>(!s.classes.length||s.classes.indexOf(b.cls)>=0)&&(s.stage==='Any'||b.stage===s.stage)&&(!s.currentPatch||b.patch==='0.5.2'));
+    const card=b=>({title:b.title,author:b.author,className:b.cls,ascendancy:b.asc,stage:b.stage,tier:b.tier,patch:b.patch,
+      stats:b.stats,endorsements:b.endorsements.toLocaleString(),updated:b.updated,
+      onClick:()=>{this.setState({build:this.buildFromRow(b,{visibility:'Public'})},()=>window.scrollTo(0,0));this.go('build');}});
+
+    const mineRow=b=>({title:b.title,stage:b.stage,patch:b.patch,cls:b.cls,asc:b.asc,updated:b.updated,
+      edge:STAGE_COLOR(b.stage),border:b.status==='Draft'?'var(--border-strong)':'var(--border-subtle)',
+      statusBadge:{tone:b.status==='Draft'?'magenta':'accent',children:b.status==='Draft'?'Draft':'Public'},
+      stats:b.stats,
+      open:()=>{this.setState({build:this.buildFromRow(Object.assign({},b,{author:s.settings.handle}),{visibility:b.status})},()=>window.scrollTo(0,0));this.go('build');},
+      edit:()=>this.startEdit(b.id)});
+
+    const drafts=MINE.filter(b=>b.status==='Draft'), pubs=MINE.filter(b=>b.status!=='Draft');
+    const mineGroups=[
+      {name:'Path of Exile 2',short:'PoE 2',icon:'flame',color:'var(--teal-400)',meta:drafts.length+' drafts · '+pubs.length+' published · 0.5.2',
+       rows:drafts.concat(pubs).map(mineRow),empty:false,go:()=>this.go('hub')},
+      {name:'Last Epoch',short:'LE',icon:'clock',color:'var(--blue-400)',meta:'not supported yet',rows:[],empty:true,
+       go:()=>{this.setState({waitId:'le'});this.go('waitlist');}}
+    ];
+
+    const inp=(label,key,extra)=>Object.assign({label:label,value:s.draft?String(s.draft[key]):'',fullWidth:true,
+      onChange:e=>this.setD(key,e.target.value)},extra||{});
+    const sel=(label,key,options)=>({label:label,value:s.draft?s.draft[key]:'',options:options,fullWidth:true,
+      onChange:e=>this.setD(key,e.target.value)});
+    const clsObj=CLASSES.find(c=>c.name===(s.draft&&s.draft.cls))||CLASSES[0];
+
+    const editable=r==='edit';
+    const treeSrc=TREE.nodes.map(n=>Object.assign({id:n.id},this.nodeVisual(n,false)));
+    const treeEdit=TREE.nodes.map(n=>Object.assign({id:n.id},this.nodeVisual(n,true)));
+    const treeEdges=TREE.edges.map(([a,b],i)=>{
+      const A=nodeById[a],B=nodeById[b],both=s.alloc.indexOf(a)>=0&&s.alloc.indexOf(b)>=0;
+      return {key:i,x1:A.x,y1:A.y,x2:B.x,y2:B.y,stroke:both?'var(--teal-600)':'#232C38',w:both?3:2};
+    });
+
+    const votesTotal=GAMES.filter(g=>!g.live).reduce((a,g)=>a+g.votes,0);
+
+    return {
+      n12:12,n13:13,n14:14,n16:16,n20:20,n460:460,n560:560,
+      flip180:{transform:'rotate(180deg)'},flex1:{flex:1},mt16:{marginTop:'var(--sp-5)'},
+      mlAuto:{marginLeft:'auto'},badgeNudge:{marginBottom:6},
+      showChrome:r!=='login'&&r!=='sent'&&r!=='verify',
+      isLanding:r==='landing',isAuth:r==='login'||r==='sent'||r==='verify',isLogin:r==='login',isSent:r==='sent',isVerify:r==='verify',
+      isHub:r==='hub',isWaitlist:r==='waitlist',isMine:r==='mine',isBuild:r==='build',isEdit:r==='edit'&&!!s.draft,isSettings:r==='settings',
+      signedIn:signed,signedOut:!signed,handle:s.settings.handle,settings:s.settings,
+      navBuilds:r==='hub'?'var(--teal-400)':'var(--text-muted)',
+      navMine:r==='mine'?'var(--teal-400)':'var(--text-muted)',
+      mcpUrl:MCP_URL,verifyPct:s.verifyPct,sentTo:s.sentTo,
+      clientTabs:[{value:'claude',label:'Claude'},{value:'chatgpt',label:'ChatGPT'}],
+      client:s.client,setClient:v=>this.setState({client:v}),
+      clientName:s.client==='claude'?'Claude':'ChatGPT',
+      connectSteps:CONNECT_STEPS[s.client].map((st,i)=>({n:String(i+1),title:st[0],body:st[1]})),
+
+      goLanding:()=>this.go('landing'),goHub:()=>{this.setState({game:'poe2'});this.go('hub');},
+      goLogin:()=>this.go('login'),goMine:()=>this.go(signed?'mine':'login'),goSettings:()=>this.go(signed?'settings':'login'),
+      goEdit:()=>this.startEdit(s.build.id),
+      signOut:()=>{this.setState({signedIn:false});this.go('landing');this.flash('info','Signed out','You can still browse every published build.');},
+      openConnect:()=>this.setState({connectOpen:true}),closeConnect:()=>this.setState({connectOpen:false}),
+      openDelete:()=>this.setState({deleteOpen:true}),closeDelete:()=>this.setState({deleteOpen:false}),
+      connectOpen:s.connectOpen,deleteOpen:s.deleteOpen,toast:s.toast,
+      connectFooter:React.createElement(window.BuildYourBuildDesignSystem_04a0c5.Button,{variant:'primary',icon:'copy',onClick:()=>{this.setState({connectOpen:false});this.flash('success','URL copied','Paste it into '+(s.client==='claude'?'Claude':'ChatGPT')+' and approve the tools.');}},'Copy server URL'),
+      deleteFooter:React.createElement('div',{style:{display:'flex',gap:8}},
+        React.createElement(window.BuildYourBuildDesignSystem_04a0c5.Button,{variant:'ghost',onClick:()=>this.setState({deleteOpen:false})},'Keep it'),
+        React.createElement(window.BuildYourBuildDesignSystem_04a0c5.Button,{variant:'danger',onClick:()=>{this.setState({deleteOpen:false,signedIn:false});this.go('landing');this.flash('danger','Account deleted','Nothing here is really gone — this is a prototype.');}},'Delete account')),
+
+      searchProps:{placeholder:'Search builds',icon:'search',size:'sm',fullWidth:true},
+      emailProps:{label:'Email',value:s.email,placeholder:'you@example.com',fullWidth:true,type:'email',onChange:e=>this.setState({email:e.target.value})},
+      sendLink:this.sendLink,openLink:this.openLink,
+
+      heroStats:[{label:'Builds published',value:'31,255'},{label:'Games live',value:'1',unit:'/5'},{label:'PoE 2 patch',value:'0.5.2'},{label:'Data refresh',value:'hourly'}],
+      steps:[{n:'1',title:'Add the server',body:'Paste the server URL into Claude or ChatGPT settings.'},
+             {n:'2',title:'Approve the tools',body:'Confirm the connector and the build tools appear.'},
+             {n:'3',title:'Ask, then publish',body:'Ask for a build, then publish it to this hub.'}],
+      convo:[
+        {role:'You',who:'var(--fg-3)',side:'flex-start',max:'80%',bg:'var(--ink-750)',bd:'var(--border-hairline)',text:'Cold witch that can clear tier 15 maps for under 15 divine. I hate builds that die to one phys hit.',meta:''},
+        {role:'Assistant',who:'var(--teal-400)',side:'flex-end',max:'88%',bg:'var(--surface-card)',bd:'var(--border-subtle)',text:'Cold Snap Infernalist fits. It freeze-locks packs and detonates them, and it holds 18.9k EHP at level 92 — enough for tier 15 without buying anything exotic.',meta:'4.1M dps · 18.9k ehp · 12 div · 0.5.2'},
+        {role:'You',who:'var(--fg-3)',side:'flex-start',max:'80%',bg:'var(--ink-750)',bd:'var(--border-hairline)',text:'Publish it under my handle.',meta:''},
+        {role:'Assistant',who:'var(--teal-400)',side:'flex-end',max:'88%',bg:'var(--surface-card)',bd:'var(--border-subtle)',text:'Published as a draft. Check the numbers, set it public, and it lands on the PoE 2 hub.',meta:'byb://poe2/build/1 · draft'}],
+      gameCards:GAMES.map(g=>({name:g.name,icon:g.icon,edge:g.color,blurb:g.blurb,
+        meta:g.live?g.patch+' · '+g.builds.toLocaleString()+' builds':g.patch+' · '+g.votes.toLocaleString()+' votes',
+        badge:{tone:g.live?'accent':'neutral',children:g.live?'Live':'Queued'},
+        go:()=>{if(g.live){this.go('hub');}else{this.setState({waitId:g.id});this.go('waitlist');}}})),
+      faqs:[
+        {q:'Do I need an account to read builds?',a:'No. Every published build is public. You sign in only to publish or edit your own.'},
+        {q:'Where do the numbers come from?',a:'The publisher simulates them and the server records what was submitted. We do not re-simulate, and we show the patch each build was tested on.'},
+        {q:'Which clients work?',a:'Anything that speaks MCP. Claude and ChatGPT are the two we test against every release.'},
+        {q:'Is there a URL per game?',a:'Yes. Each game has its own endpoint — buildyourbuild.com/mcp/poe2 today, one more per game as they go live.'},
+        {q:'What happens on a new patch?',a:'Builds keep their tested patch string and get an "untested" flag until the author updates them.'}],
+      footerGames:GAMES.map(g=>({name:g.name,go:()=>{if(g.live){this.go('hub');}else{this.setState({waitId:g.id});this.go('waitlist');}}})),
+
+      gameStrip:GAMES.map(g=>{
+        const on=(r==='hub'&&g.live)||(r==='waitlist'&&g.id===s.waitId);
+        return {name:g.name,icon:g.icon,tail:g.live?g.patch:'soon',
+          bg:on?'var(--surface-accent-soft)':'transparent',bd:on?'var(--border-accent)':'transparent',
+          fg:on?'var(--teal-400)':'var(--text-muted)',
+          go:()=>{if(g.live){this.go('hub');}else{this.setState({waitId:g.id});this.go('waitlist');}}};
+      }),
+
+      myPoeCards:MINE.slice(0,3).map(b=>({title:b.title,author:s.settings.handle,className:b.cls,ascendancy:b.asc,stage:b.stage,tier:b.tier,patch:b.patch,stats:b.stats,updated:b.updated,endorsements:b.status==='Draft'?'draft':'listed',onClick:()=>this.startEdit(b.id)})),
+      classFilters:CLASSES.map(c=>({label:c.name,count:c.count,checked:s.classes.indexOf(c.name)>=0,
+        onChange:()=>this.setState(st=>({classes:st.classes.indexOf(c.name)>=0?st.classes.filter(x=>x!==c.name):st.classes.concat([c.name])}))})),
+      ascOptions:['Any ascendancy'].concat(CLASSES.reduce((a,c)=>a.concat(c.asc),[])),
+      stageFilters:[{name:'stage',label:'Any stage',checked:s.stage==='Any',onChange:()=>this.setState({stage:'Any'})}].concat(
+        STAGES.map(st=>({name:'stage',label:st,checked:s.stage===st,onChange:()=>this.setState({stage:st})}))),
+      currentPatch:s.currentPatch,hardcore:s.hardcore,
+      togglePatch:()=>this.setState({currentPatch:!s.currentPatch}),toggleHardcore:()=>this.setState({hardcore:!s.hardcore}),
+      sortProps:{value:s.sort,options:['Most endorsed','Newest','Best DPS','Cheapest'],onChange:e=>this.setState({sort:e.target.value})},
+      isGrid:s.view==='grid',isList:s.view==='list',setGrid:()=>this.setState({view:'grid'}),setList:()=>this.setState({view:'list'}),
+      gridCols:s.view==='grid'?'1fr 1fr':'1fr',
+      resultCount:list.length,
+      activeTags:s.classes.map(c=>({text:c,onRemove:()=>this.setState({classes:s.classes.filter(x=>x!==c)})}))
+        .concat(s.stage!=='Any'?[{text:s.stage,dot:STAGE_COLOR(s.stage),onRemove:()=>this.setState({stage:'Any'})}]:[])
+        .concat(s.currentPatch?[{text:'Patch 0.5.2',onRemove:()=>this.setState({currentPatch:false})}]:[]),
+      hubCards:list.map(card),
+      toastPublish:()=>this.flash('info','Publish from your assistant','Ask the MCP server to publish, then check the draft here.'),
+
+      waitGame:wait,
+      waitStats:[{label:'Votes',value:wait.votes.toLocaleString(),icon:'users'},{label:'Queue position',value:String(GAMES.filter(g=>!g.live).sort((a,b)=>b.votes-a.votes).findIndex(g=>g.id===wait.id)+1)},{label:'Latest patch',value:wait.patch}],
+      waitEmailProps:{label:'Email',value:s.voteEmail,placeholder:'you@example.com',onChange:e=>this.setState({voteEmail:e.target.value}),style:{width:280}},
+      castVote:()=>{const e=(s.voteEmail||'').trim();if(!e||e.indexOf('@')<0){this.flash('danger','Check the address','That does not look like an email.');return;}this.setState({voteEmail:''});this.flash('success','Vote counted',wait.name+' moves up. We email you the day it goes live.');},
+      queue:GAMES.filter(g=>!g.live).sort((a,b)=>b.votes-a.votes).map((g,i)=>({rank:String(i+1).padStart(2,'0'),name:g.name,votes:g.votes.toLocaleString(),
+        pct:Math.round(g.votes/votesTotal*160)+'%',color:g.color,go:()=>{this.setState({waitId:g.id});this.go('waitlist');}})),
+
+      mineStats:[{label:'Published',value:String(pubs.length)},{label:'Drafts',value:String(drafts.length),tone:'var(--mag-400)'},{label:'Endorsements',value:'1,731',icon:'flame',tone:'var(--teal-400)'},{label:'Since',value:'Mar 2026'}],
+      mineGroups:mineGroups,
+
+      build:s.build,buildStats:[
+        {label:'DPS',value:s.build.dps,trend:'up'},{label:'EHP',value:s.build.ehp},
+        {label:'Cost',value:s.build.cost,unit:'div'},
+        {label:'Tier',value:s.build.tier,tone:'var(--tier-'+s.build.tier.toLowerCase()+')'},
+        s.build.visibility==='Draft'
+          ?{label:'Endorsements',value:'—',icon:'flame',tone:'var(--fg-3)'}
+          :{label:'Endorsements',value:(s.build.endorsements||0).toLocaleString(),icon:'flame',tone:'var(--teal-400)'}],
+      stageColor:STAGE_COLOR(s.build.stage),
+      isDraft:s.build.visibility==='Draft',
+      isOwner:signed&&s.build.author===s.settings.handle,
+      notOwner:!(signed&&s.build.author===s.settings.handle),
+      endorse:()=>this.flash('success','Endorsed','Thanks — this bumps it up the list.'),
+      save:()=>this.flash('info','Saved','It is in your saved list.'),
+      viewTabs:[{value:'overview',label:'Overview',icon:'gauge'},{value:'skills',label:'Skills',icon:'swords',count:s.build.skills.length},
+        {value:'gear',label:'Gear',icon:'shield'},
+        {value:'tree',label:'Passives',count:s.alloc.length-1},{value:'notes',label:'Notes',icon:'book-open'}],
+      tab:s.tab,setTab:v=>this.setState({tab:v}),
+      showSide:s.tab==='overview'||s.tab==='notes',
+      tabOverview:s.tab==='overview',tabSkills:s.tab==='skills',tabGear:s.tab==='gear',tabTree:s.tab==='tree',tabNotes:s.tab==='notes',
+      offenceRows:(s.build.offence||[]).map(p=>({k:p[0],v:p[1]})),
+      defenceRows:(s.build.defence||[]).map(p=>({k:p[0],v:p[1]})),
+      resBars:(s.build.res||[]).map(p=>({k:p[0],v:p[1]+'%',pct:Math.max(0,Math.min(100,Math.round(p[1]/75*100)))+'%',
+        color:p[1]>=75?'var(--teal-400)':'var(--red-400)',vc:p[1]>=75?'var(--fg-1)':'var(--red-400)'})),
+      plays:(s.build.plays||[]).map(t=>({t:t})),
+      strengths:(s.build.strengths||[]).map(t=>({t:t})),
+      watch:(s.build.watch||[]).map(t=>({t:t})),
+      mainSkill:s.build.skills[0],
+      skillPanels:s.build.skills.map(sk=>({name:sk.name,role:sk.role,color:sk.color,stat:sk.stat,
+        tags:sk.tags.map(t=>({t:t})),meta:'lvl '+sk.level+' / '+sk.quality+'% · '+sk.cost,
+        supports:sk.supports.map(x=>({n:x[0],e:x[1]})),count:sk.supports.length===1?'1 support':sk.supports.length+' supports'})),
+      gearCells:s.build.gear.map(g=>({slot:g.slot,item:g.item,rarity:g.rarity,col:g.col,row:g.row,
+        rc:g.rarity==='Unique'?'var(--gold-400)':g.rarity==='Rare'?'var(--blue-400)':'var(--fg-2)',
+        mods:g.mods.map(m=>({m:m})),
+        sockets:(g.runes||[]).map(rn=>({text:rn||'empty socket',
+          border:rn?'1px solid var(--border-strong)':'1px dashed var(--ink-500)',
+          color:rn?'var(--fg-2)':'var(--text-faint)',bg:rn?'var(--ink-750)':'transparent'}))})),
+      socketSummary:(()=>{const all=s.build.gear.reduce((a,g)=>a.concat(g.runes||[]),[]);return all.filter(Boolean).length+' of '+all.length+(all.length===1?' rune socket filled':' rune sockets filled');})(),
+      charms:s.build.charms||[],flasks:s.build.flasks||[],
+      similar:HUB_BUILDS.filter(b=>b.id!==s.build.id).slice(0,3).map(b=>({title:b.title,meta:b.cls+' · '+b.tier+' tier · '+b.endorsements.toLocaleString()+' endorsements'})),
+
+      pointsSpent:s.alloc.length-1,pointBudget:budget,
+      pointsColor:s.alloc.length-1>budget?'var(--red-400)':'var(--fg-1)',
+      treeEdges:treeEdges,treeNodes:treeSrc,treeNodesEdit:treeEdit,
+      treeLabels:treeSrc.filter(n=>n.label),
+      picked:{name:picked.name,stat:picked.stat,badge:{tone:pickedOn?'accent':'neutral',children:pickedOn?'Allocated':'Not taken'}},
+      resetTree:()=>this.setState({alloc:START_ALLOC.slice()}),
+
+      draft:s.draft||{title:'',summary:'',notes:'',id:''},
+      dirtyLabel:s.draft&&JSON.stringify(s.draft)!==s._clean?'unsaved changes':'no changes',
+      dirtyColor:s.draft&&JSON.stringify(s.draft)!==s._clean?'var(--gold-400)':'var(--text-faint)',
+      summaryCount:s.draft?s.draft.summary.length:0,
+      onSummary:e=>this.setD('summary',e.target.value),
+      onNotes:e=>this.setD('notes',e.target.value),
+      f:{
+        title:inp('Build title','title'),
+        dps:inp('DPS','dps',{hint:'As your sim reports it'}),
+        ehp:inp('EHP','ehp',{hint:'Effective hit pool at 92'}),
+        cost:inp('Cost in divine','cost',{hint:'Excluding levelling gear'}),
+        tree:inp('Passive tree import string','tree',{hint:'Pastes into the in-game planner'}),
+        cls:sel('Class','cls',CLASSES.map(c=>c.name)),
+        asc:sel('Ascendancy','asc',clsObj.asc),
+        stage:sel('Game stage','stage',STAGES),
+        tier:sel('Tier','tier',['S','A','B','C'])
+      },
+      skillFields:(s.draft?s.draft.skills:[]).map((sk,i)=>({
+        head:sk.name||'New skill',
+        name:{value:sk.name,size:'sm',fullWidth:true,placeholder:'Skill gem',onChange:e=>this.setRow('skills',i,'name',e.target.value)},
+        role:{value:sk.role,size:'sm',fullWidth:true,placeholder:'Role',onChange:e=>this.setRow('skills',i,'role',e.target.value)},
+        level:{value:sk.level||'',size:'sm',fullWidth:true,placeholder:'Lvl',onChange:e=>this.setRow('skills',i,'level',e.target.value)},
+        cost:{value:sk.cost||'',size:'sm',fullWidth:true,placeholder:'Cost',onChange:e=>this.setRow('skills',i,'cost',e.target.value)},
+        tags:{value:(sk.tags||[]).join(', '),size:'sm',fullWidth:true,placeholder:'Tags — comma separated',onChange:e=>this.setCsv('skills',i,'tags',e.target.value)},
+        supports:{value:(sk.supports||[]).map(x=>x[0]).join(', '),size:'sm',fullWidth:true,placeholder:'Support gems — comma separated',onChange:e=>this.setSupports(i,e.target.value)},
+        stat:{value:sk.stat||'',size:'sm',fullWidth:true,placeholder:'Reported numbers',onChange:e=>this.setRow('skills',i,'stat',e.target.value)},
+        remove:()=>this.delRow('skills',i)})),
+      gearFields:(s.draft?s.draft.gear:[]).map((g,i)=>({
+        head:g.slot||'New slot',
+        sockets:((g.runes||[]).length===1?'1 socket · ':(g.runes||[]).length+' sockets · ')+(g.runes||[]).filter(Boolean).length+' filled',
+        slot:{value:g.slot,size:'sm',fullWidth:true,placeholder:'Slot',onChange:e=>this.setRow('gear',i,'slot',e.target.value)},
+        item:{value:g.item,size:'sm',fullWidth:true,placeholder:'Item',onChange:e=>this.setRow('gear',i,'item',e.target.value)},
+        rarity:{value:g.rarity||'Rare',size:'sm',fullWidth:true,options:['Normal','Magic','Rare','Unique'],onChange:e=>this.setRow('gear',i,'rarity',e.target.value)},
+        mods:{value:(g.mods||[]).join(', '),size:'sm',fullWidth:true,placeholder:'Key modifiers — comma separated',onChange:e=>this.setCsv('gear',i,'mods',e.target.value)},
+        runes:{value:(g.runes||[]).join(', '),size:'sm',fullWidth:true,placeholder:'Runes — comma separated, blank entry for an empty socket',onChange:e=>this.setSockets(i,e.target.value)},
+        remove:()=>this.delRow('gear',i)})),
+      milestoneFields:(s.draft?s.draft.milestones:[]).map((m,i)=>({
+        lvl:{value:m.lvl,size:'sm',fullWidth:true,placeholder:'Lvl',onChange:e=>this.setRow('milestones',i,'lvl',e.target.value)},
+        text:{value:m.text,size:'sm',fullWidth:true,placeholder:'What changes',onChange:e=>this.setRow('milestones',i,'text',e.target.value)},
+        remove:()=>this.delRow('milestones',i)})),
+      addSkill:()=>this.addRow('skills',{name:'',role:'',color:'var(--fg-3)',level:'1',quality:'0',cost:'',tags:[],supports:[],stat:''}),
+      addGear:()=>this.addRow('gear',{slot:'',item:'',rarity:'Rare',col:'auto',row:'auto',mods:[],runes:[]}),
+      addMilestone:()=>this.addRow('milestones',{lvl:'',text:''}),
+      visDraft:s.draft&&s.draft.visibility==='Draft',visPublic:!(s.draft&&s.draft.visibility==='Draft'),
+      setDraftVis:()=>this.setD('visibility','Draft'),setPublicVis:()=>this.setD('visibility','Public'),
+      preflight:[
+        {icon:'check',color:'var(--teal-400)',text:'Stats present for DPS, EHP and cost'},
+        {icon:(s.draft&&s.draft.gear.every(g=>g.item))?'check':'triangle-alert',color:(s.draft&&s.draft.gear.every(g=>g.item))?'var(--teal-400)':'var(--gold-400)',text:'Gear list complete'},
+        {icon:(s.alloc.length-1)<=budget?'check':'triangle-alert',color:(s.alloc.length-1)<=budget?'var(--teal-400)':'var(--red-400)',text:(s.alloc.length-1)+' passives allocated, budget '+budget},
+        {icon:'info',color:'var(--fg-3)',text:'Tested on 0.5.2 — the current patch'}],
+      saveEdit:()=>{this.setState(st=>({build:Object.assign({},st.build,st.draft),_clean:JSON.stringify(st.draft)}));this.go('build');this.flash('success','Saved',(s.draft&&s.draft.visibility==='Draft')?'Still a draft — only you can open it.':'Live on the PoE 2 hub.');},
+      cancelEdit:()=>{this.setState({draft:null});this.go('build');},
+
+      sf:{
+        handle:{label:'Handle / gamertag',value:s.settings.handle,fullWidth:true,hint:'Shown on every build you publish',onChange:e=>this.setState(st=>({settings:Object.assign({},st.settings,{handle:e.target.value})}))},
+        discord:{label:'Discord username',value:s.settings.discord,fullWidth:true,hint:'Optional — for build questions',onChange:e=>this.setState(st=>({settings:Object.assign({},st.settings,{discord:e.target.value})}))},
+        email:{label:'Email',value:s.settings.email,fullWidth:true,type:'email',hint:'Used for sign-in links only',onChange:e=>this.setState(st=>({settings:Object.assign({},st.settings,{email:e.target.value})}))}
+      },
+      bioCount:s.settings.bio.length,
+      onBio:e=>this.setState(st=>({settings:Object.assign({},st.settings,{bio:e.target.value})})),
+      saveSettings:()=>this.flash('success','Settings saved','Your handle updates on every build.')
+    };
+  }
+}
+</script>
+</body>
+</html>

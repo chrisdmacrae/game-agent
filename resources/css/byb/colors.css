@@ -1,0 +1,66 @@
+:root{
+/* --- base neutrals: cold slate, near-black --- */
+--ink-950:#080A0E;--ink-900:#0E1116;--ink-800:#131820;--ink-750:#171D26;--ink-700:#1C232D;--ink-600:#242D3A;--ink-500:#2F3A49;--ink-400:#41505F;
+--fg-1:#EDF2F7;--fg-2:#A2B1C2;--fg-3:#6C7C8F;--fg-inverse:#0A0D11;
+
+/* --- primary: arcane teal --- */
+--teal-100:#C8F7EC;--teal-300:#6FEDD6;--teal-400:#2DE1C2;--teal-500:#12BFA2;--teal-600:#0A8E79;--teal-900:#06342E;
+
+/* --- accent: rune magenta --- */
+--mag-100:#FFD3E2;--mag-400:#FF4D8D;--mag-500:#E0206B;--mag-900:#3D0A20;
+
+/* --- support --- */
+--gold-400:#FFC857;--gold-600:#B98A21;--gold-900:#372709;
+--red-400:#FF5A5F;--red-600:#C22C31;--red-900:#3A1013;
+--blue-400:#5AA9FF;--blue-900:#0C2440;
+--violet-400:#9C7BFF;
+
+/* --- semantic surfaces --- */
+--surface-page:var(--ink-900);
+--surface-sunken:var(--ink-950);
+--surface-card:var(--ink-800);
+--surface-card-hover:var(--ink-750);
+--surface-raised:var(--ink-700);
+--surface-input:var(--ink-950);
+--surface-overlay:rgba(8,10,14,.78);
+--surface-accent-soft:rgba(45,225,194,.10);
+--surface-accent-soft-hover:rgba(45,225,194,.16);
+
+/* --- semantic text --- */
+--text-body:var(--fg-1);
+--text-muted:var(--fg-2);
+--text-faint:var(--fg-3);
+--text-accent:var(--teal-400);
+--text-on-accent:var(--fg-inverse);
+--text-link:var(--teal-400);
+--text-link-hover:var(--teal-300);
+
+/* --- semantic lines --- */
+--border-hairline:rgba(237,242,247,.08);
+--border-subtle:var(--ink-700);
+--border-strong:var(--ink-500);
+--border-accent:var(--teal-500);
+--focus-ring:var(--teal-400);
+
+/* --- semantic intent --- */
+--intent-primary:var(--teal-400);
+--intent-primary-hover:var(--teal-300);
+--intent-primary-press:var(--teal-500);
+--intent-accent:var(--mag-400);
+--intent-success:var(--teal-400);
+--intent-warning:var(--gold-400);
+--intent-danger:var(--red-400);
+--intent-info:var(--blue-400);
+
+/* --- domain: game-stage taxonomy (used on build cards + filters) --- */
+--stage-leveling:var(--teal-400);
+--stage-mapping:var(--blue-400);
+--stage-endgame:var(--mag-400);
+--stage-boss:var(--gold-400);
+
+/* --- domain: build tier ladder --- */
+--tier-s:var(--gold-400);
+--tier-a:var(--teal-400);
+--tier-b:var(--blue-400);
+--tier-c:var(--fg-3);
+}

@@ -1,0 +1,23 @@
+:root{
+/* Outer shadows are near-black and tight — the UI sits on dark slate, so depth
+   comes from a 1px top highlight plus a low, wide drop. */
+--shadow-1:0 1px 0 rgba(237,242,247,.04) inset,0 1px 2px rgba(0,0,0,.5);
+--shadow-2:0 1px 0 rgba(237,242,247,.05) inset,0 4px 14px rgba(0,0,0,.45);
+--shadow-3:0 18px 48px rgba(0,0,0,.6);
+--shadow-inset-well:inset 0 1px 3px rgba(0,0,0,.6);
+
+/* accent glows — used only on primary CTAs and active nav, never on cards */
+--glow-teal:0 0 0 1px rgba(45,225,194,.35),0 6px 20px rgba(45,225,194,.18);
+--glow-mag:0 0 0 1px rgba(255,77,141,.35),0 6px 20px rgba(255,77,141,.18);
+
+/* protection gradient for text over imagery */
+--scrim-bottom:linear-gradient(to top,rgba(8,10,14,.96) 0%,rgba(8,10,14,.72) 42%,rgba(8,10,14,0) 100%); /* @kind other */
+--scrim-left:linear-gradient(to right,rgba(8,10,14,.94),rgba(8,10,14,0)); /* @kind other */
+
+/* hairline grid texture used on hero + empty states */
+--texture-grid:linear-gradient(rgba(237,242,247,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(237,242,247,.045) 1px,transparent 1px); /* @kind other */
+--texture-grid-size:32px 32px; /* @kind other */
+
+--blur-glass:saturate(140%) blur(14px); /* @kind other */
+--overlay-glass:rgba(19,24,32,.72); /* @kind color */
+}

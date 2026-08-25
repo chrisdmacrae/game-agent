@@ -33,7 +33,13 @@ class ValidateBuildTool extends Tool
             'skills' => $schema->array()->items(
                 $schema->object([
                     'gem' => $schema->string()->description('Active/spirit skill gem name.')->required(),
-                    'supports' => $schema->array()->items($schema->string())->description('Support gem names socketed into this skill.'),
+                    'supports' => $schema->array()->items($schema->anyOf([
+                        $schema->string()->description('Support gem name.'),
+                        $schema->object([
+                            'name' => $schema->string()->required(),
+                            'effect' => $schema->string()->description('What this support does for this skill.'),
+                        ]),
+                    ]))->description('Support gems socketed into this skill: a name, or {name, effect}.'),
                 ]),
             )->description('All skill setups in the build.')->required(),
             'spirit_available' => $schema->integer()->description('Total spirit available (campaign base is 100; gear/tree can add more).'),
@@ -42,6 +48,7 @@ class ValidateBuildTool extends Tool
                 'notables' => $schema->array()->items($schema->string())->description('Notable names taken.'),
                 'ascendancy_nodes' => $schema->array()->items($schema->string())->description('Ascendancy passive names taken (must belong to the build\'s ascendancy).'),
                 'points_used' => $schema->integer()->description('Total passive points spent.'),
+                'import_string' => $schema->string()->description('The passive tree export string from the in-game planner. Only set this if the user pasted one; never invent it.'),
                 'node_ids' => $schema->array()->items($schema->integer())->description('Exact allocated passive node ids (from search_passives node_id values). Optional but recommended: enables rendering the allocation on the build page tree.'),
                 'granted_nodes' => $schema->array()->items(
                     $schema->object([
@@ -59,6 +66,7 @@ class ValidateBuildTool extends Tool
                     'name' => $schema->string()->description('Unique item name (validated), or a label for rares.'),
                     'base' => $schema->string()->description('Base type, e.g. "Stellar Amulet".'),
                     'mods' => $schema->array()->items($schema->string())->description('Desired affixes for rare gear.'),
+                    'runes' => $schema->array()->max(8)->items($schema->string()->nullable())->description('One entry per rune socket, in socket order; null for an empty socket.'),
                     'instill' => $schema->object([
                         'notable' => $schema->string()->required(),
                         'emotions' => $schema->array()->items($schema->string())->description('The three distilled emotions used.'),

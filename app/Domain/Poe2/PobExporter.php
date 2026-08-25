@@ -2,13 +2,14 @@
 
 namespace App\Domain\Poe2;
 
+use App\Domain\Builds\BuildPayload;
+use App\Models\Build;
 use App\Models\Poe2\Ascendancy;
 use App\Models\Poe2\CharacterClass;
 use App\Models\Poe2\ItemBase;
 use App\Models\Poe2\ItemMod;
 use App\Models\Poe2\PassiveNode;
 use App\Models\Poe2\UniqueItem;
-use App\Models\SavedBuild;
 
 /**
  * Exports a saved build as a Path of Building (PoE2 fork) import code:
@@ -20,12 +21,12 @@ class PobExporter
 {
     public function __construct(protected Poe2Context $context) {}
 
-    public function code(SavedBuild $build): string
+    public function code(Build $build): string
     {
         return rtrim(strtr(base64_encode(gzcompress($this->xml($build), 9)), '+/', '-_'), '=');
     }
 
-    public function xml(SavedBuild $build): string
+    public function xml(Build $build): string
     {
         $definition = $build->build;
         $versionId = $build->game_version_id ?? $this->context->versionId();
@@ -92,7 +93,7 @@ class PobExporter
             $xml->writeAttribute('enabled', 'true');
             $xml->writeAttribute('label', '');
 
-            foreach (array_merge([$setup['gem'] ?? null], $setup['supports'] ?? []) as $gemName) {
+            foreach (array_merge([$setup['gem'] ?? null], BuildPayload::supportNames($setup)) as $gemName) {
                 if ($gemName === null) {
                     continue;
                 }
@@ -390,7 +391,7 @@ class PobExporter
         );
     }
 
-    protected function treeVersion(SavedBuild $build): string
+    protected function treeVersion(Build $build): string
     {
         $version = $build->gameVersion?->version ?? $this->context->version()->version;
 

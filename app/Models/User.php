@@ -6,6 +6,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -16,6 +17,9 @@ use Laravel\Passport\HasApiTokens;
 /**
  * @property int $id
  * @property string $name
+ * @property string|null $handle
+ * @property string|null $discord_username
+ * @property string|null $bio
  * @property string $email
  * @property Carbon|null $email_verified_at
  * @property string|null $password
@@ -23,7 +27,7 @@ use Laravel\Passport\HasApiTokens;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['name', 'email'])]
+#[Fillable(['name', 'handle', 'discord_username', 'bio', 'email'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements OAuthenticatable
 {
@@ -43,9 +47,21 @@ class User extends Authenticatable implements OAuthenticatable
         ];
     }
 
-    /** @return HasMany<SavedBuild, $this> */
-    public function savedBuilds(): HasMany
+    /** @return HasMany<Build, $this> */
+    public function builds(): HasMany
     {
-        return $this->hasMany(SavedBuild::class);
+        return $this->hasMany(Build::class);
+    }
+
+    /** @return HasMany<Endorsement, $this> */
+    public function endorsements(): HasMany
+    {
+        return $this->hasMany(Endorsement::class);
+    }
+
+    /** @return BelongsToMany<Build, $this> */
+    public function bookmarkedBuilds(): BelongsToMany
+    {
+        return $this->belongsToMany(Build::class, 'build_bookmarks')->withTimestamps();
     }
 }

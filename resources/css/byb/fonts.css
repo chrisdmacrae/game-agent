@@ -1,0 +1,6 @@
+/* Variable TTFs vendored from Google Fonts (OFL). No brand font files were supplied
+   with the brief — these are the chosen stand-ins; swap the src urls if you get real files. */
+@font-face{font-family:"Bricolage Grotesque";src:url("/fonts/byb/BricolageGrotesque.ttf") format("truetype-variations");font-weight:200 800;font-display:swap}
+@font-face{font-family:"Public Sans";src:url("/fonts/byb/PublicSans.ttf") format("truetype-variations");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Public Sans";src:url("/fonts/byb/PublicSans-Italic.ttf") format("truetype-variations");font-weight:100 900;font-style:italic;font-display:swap}
+@font-face{font-family:"Azeret Mono";src:url("/fonts/byb/AzeretMono.ttf") format("truetype-variations");font-weight:100 900;font-display:swap}

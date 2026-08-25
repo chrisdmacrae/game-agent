@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Game;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -42,9 +44,55 @@ class HandleInertiaRequests extends Middleware
                 'url' => $request->url(),
             ],
             'auth' => [
-                'user' => $request->user(),
+                'user' => $this->user($request->user()),
             ],
+            'games' => fn () => $this->games(),
+            'mcpUrl' => route('mcp.poe2'),
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+        ];
+    }
+
+    /**
+     * The topbar game switcher. Every page needs it, so it stays deliberately
+     * small: presentation columns only, in display order.
+     *
+     * @return list<array<string, mixed>>
+     */
+    protected function games(): array
+    {
+        return Game::query()
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get(['slug', 'name', 'short_name', 'is_live', 'accent', 'icon'])
+            ->map(fn (Game $game) => [
+                'slug' => $game->slug,
+                'name' => $game->name,
+                'short_name' => $game->short_name ?? $game->name,
+                'is_live' => $game->is_live,
+                'accent' => $game->accent,
+                'icon' => $game->icon,
+                'url' => route('games.show', $game->slug),
+            ])
+            ->all();
+    }
+
+    /**
+     * The signed-in user, trimmed to what the shell renders.
+     *
+     * @return array<string, mixed>|null
+     */
+    protected function user(mixed $user): ?array
+    {
+        if (! $user instanceof User) {
+            return null;
+        }
+
+        return [
+            'id' => $user->id,
+            'name' => $user->name,
+            'handle' => $user->handle,
+            'email' => $user->email,
+            'email_verified_at' => $user->email_verified_at?->toIso8601String(),
         ];
     }
 }

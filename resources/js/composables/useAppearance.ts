@@ -10,24 +10,19 @@ export type UseAppearanceReturn = {
     updateAppearance: (value: Appearance) => void;
 };
 
+/**
+ * Build Your Build ships a single dark slate theme. The appearance preference is
+ * still stored so the settings screen keeps working, but the applied theme is
+ * always dark.
+ */
 export function updateTheme(value: Appearance): void {
+    void value;
+
     if (typeof window === 'undefined') {
         return;
     }
 
-    if (value === 'system') {
-        const mediaQueryList = window.matchMedia(
-            '(prefers-color-scheme: dark)',
-        );
-        const systemTheme = mediaQueryList.matches ? 'dark' : 'light';
-
-        document.documentElement.classList.toggle(
-            'dark',
-            systemTheme === 'dark',
-        );
-    } else {
-        document.documentElement.classList.toggle('dark', value === 'dark');
-    }
+    document.documentElement.classList.add('dark');
 }
 
 const setCookie = (name: string, value: string, days = 365) => {
@@ -54,14 +49,6 @@ const getStoredAppearance = () => {
     }
 
     return localStorage.getItem('appearance') as Appearance | null;
-};
-
-const prefersDark = (): boolean => {
-    if (typeof window === 'undefined') {
-        return false;
-    }
-
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
 };
 
 const handleSystemThemeChange = () => {
@@ -96,13 +83,8 @@ export function useAppearance(): UseAppearanceReturn {
         }
     });
 
-    const resolvedAppearance = computed<ResolvedAppearance>(() => {
-        if (appearance.value === 'system') {
-            return prefersDark() ? 'dark' : 'light';
-        }
-
-        return appearance.value;
-    });
+    // The applied theme is always dark, whatever the stored preference says...
+    const resolvedAppearance = computed<ResolvedAppearance>(() => 'dark');
 
     function updateAppearance(value: Appearance) {
         appearance.value = value;

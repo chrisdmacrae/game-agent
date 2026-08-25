@@ -4,7 +4,7 @@ use App\Domain\Poe2\PobExporter;
 use App\Mcp\Servers\Poe2Server;
 use App\Mcp\Tools\Poe2\GetBuildTool;
 use App\Mcp\Tools\Poe2\SaveBuildTool;
-use App\Models\SavedBuild;
+use App\Models\Build;
 use App\Models\User;
 use Tests\Fixtures\Poe2Seeder;
 
@@ -12,7 +12,7 @@ beforeEach(function () {
     Poe2Seeder::seed();
 });
 
-function savePobTestBuild(): SavedBuild
+function savePobTestBuild(): Build
 {
     Poe2Server::actingAs(User::factory()->create())->tool(SaveBuildTool::class, [
         'name' => 'Spark Starter',
@@ -35,7 +35,7 @@ function savePobTestBuild(): SavedBuild
         ],
     ])->assertOk();
 
-    return SavedBuild::sole();
+    return Build::sole();
 }
 
 test('the pob code decodes to importable build xml', function () {
@@ -79,7 +79,7 @@ test('the pob endpoint serves the code', function () {
 test('save_build returns a pob code', function () {
     savePobTestBuild();
 
-    Poe2Server::tool(GetBuildTool::class, ['id' => SavedBuild::sole()->public_id])
+    Poe2Server::tool(GetBuildTool::class, ['id' => Build::sole()->public_id])
         ->assertOk()
         ->assertSee('pob_code');
 });
@@ -99,7 +99,7 @@ test('loose rare mods materialize into concrete affix lines', function () {
         ],
     ])->assertOk();
 
-    $xml = app(PobExporter::class)->xml(SavedBuild::sole());
+    $xml = app(PobExporter::class)->xml(Build::sole());
 
     // No-number line resolved to the best tier at item level 80, midpoint value.
     expect($xml)->toContain('12.5% increased Cast Speed')

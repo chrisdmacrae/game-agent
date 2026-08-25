@@ -3,7 +3,7 @@
 use App\Domain\Poe2\BuildPlannerExporter;
 use App\Mcp\Servers\Poe2Server;
 use App\Mcp\Tools\Poe2\SaveBuildTool;
-use App\Models\SavedBuild;
+use App\Models\Build;
 use App\Models\User;
 use Tests\Fixtures\Poe2Seeder;
 
@@ -11,7 +11,7 @@ beforeEach(function () {
     Poe2Seeder::seed();
 });
 
-function savePlannerTestBuild(): SavedBuild
+function savePlannerTestBuild(): Build
 {
     Poe2Server::actingAs(User::factory()->create())->tool(SaveBuildTool::class, [
         'name' => 'Spark Starter',
@@ -29,7 +29,7 @@ function savePlannerTestBuild(): SavedBuild
         ],
     ])->assertOk();
 
-    return SavedBuild::sole();
+    return Build::sole();
 }
 
 test('the build planner export maps nodes to ggg passive ids', function () {

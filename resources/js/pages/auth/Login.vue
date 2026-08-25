@@ -1,71 +1,58 @@
 <script setup lang="ts">
 import { Form } from '@inertiajs/vue3';
-import InputError from '@/components/InputError.vue';
+import Button from '@/components/byb/Button.vue';
+import Input from '@/components/byb/Input.vue';
 import SeoHead from '@/components/SeoHead.vue';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Spinner } from '@/components/ui/spinner';
 import { store } from '@/routes/login-link';
 
+/**
+ * Magic link request (scope §3.3, state 1). A malformed address comes back as
+ * a danger toast flashed by the controller, not as an inline redirect; the
+ * inline error below only carries the "link expired" case from consume().
+ */
 defineOptions({
     layout: {
-        title: 'Sign in',
+        eyebrow: 'Sign in',
+        title: 'No password. We send a link.',
         description:
-            "Enter your email and we'll send you a magic sign-in link. No password needed — new accounts are created automatically.",
+            'Enter your email and we send a one-time link. It expires in 15 minutes and signs in one device.',
     },
 });
-
-defineProps<{
-    status?: string;
-}>();
 </script>
 
 <template>
     <SeoHead title="Sign in" noindex />
 
-    <div
-        v-if="status"
-        class="mb-4 text-center text-sm font-medium text-green-600"
-    >
-        {{ status }}
-    </div>
+    <Form v-bind="store.form()" v-slot="{ errors, processing }">
+        <Input
+            label="Email"
+            type="email"
+            name="email"
+            required
+            autofocus
+            autocomplete="email"
+            placeholder="you@example.com"
+            :error="errors.email"
+        />
 
-    <Form
-        v-bind="store.form()"
-        v-slot="{ errors, processing }"
-        class="flex flex-col gap-6"
-    >
-        <div class="grid gap-6">
-            <div class="grid gap-2">
-                <Label for="email">Email address</Label>
-                <Input
-                    id="email"
-                    type="email"
-                    name="email"
-                    required
-                    autofocus
-                    :tabindex="1"
-                    autocomplete="email"
-                    placeholder="email@example.com"
-                />
-                <InputError :message="errors.email" />
-            </div>
-
+        <div class="mt-5">
             <Button
                 type="submit"
-                class="mt-4 w-full"
-                :tabindex="2"
+                size="lg"
+                variant="primary"
+                full-width
                 :disabled="processing"
                 data-test="login-button"
             >
-                <Spinner v-if="processing" />
-                Email me a sign-in link
+                Send magic link
             </Button>
         </div>
 
-        <div class="text-center text-sm text-muted-foreground">
-            The link signs you in instantly and expires after 15 minutes.
-        </div>
+        <p
+            class="mt-5 text-center text-[13px] leading-[1.5] text-pretty text-[var(--fg-3)]"
+        >
+            Browsing builds needs no account. Signing in lets you publish and
+            edit your own.
+        </p>
     </Form>
 </template>

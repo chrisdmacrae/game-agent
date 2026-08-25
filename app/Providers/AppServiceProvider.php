@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Laravel\Passport\Passport;
 
 class AppServiceProvider extends ServiceProvider
@@ -29,6 +30,12 @@ class AppServiceProvider extends ServiceProvider
         $this->configureDefaults();
 
         RateLimiter::for('mcp', fn (Request $request) => Limit::perMinute(120)->by($request->ip()));
+
+        // Waitlist votes are cast by email without an account, so throttle on
+        // the address and the IP together.
+        RateLimiter::for('game-vote', fn (Request $request) => Limit::perMinute(5)->by(
+            Str::transliterate(Str::lower((string) $request->input('email')).'|'.$request->ip()),
+        ));
 
         Passport::authorizationView('mcp.authorize');
     }

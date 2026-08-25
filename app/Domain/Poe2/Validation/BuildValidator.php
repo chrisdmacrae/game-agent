@@ -2,6 +2,7 @@
 
 namespace App\Domain\Poe2\Validation;
 
+use App\Domain\Builds\BuildPayload;
 use App\Domain\Poe2\Poe2Context;
 use App\Domain\Poe2\TreeGraph;
 use App\Models\Poe2\Ascendancy;
@@ -45,6 +46,7 @@ class BuildValidator
         $this->checkGear($build);
         $this->checkPassives($build);
         $this->checkDefences($build);
+        $this->checkMilestones($build);
 
         return [
             'valid' => $this->violations === [],
@@ -52,6 +54,16 @@ class BuildValidator
             'warnings' => $this->warnings,
             'suggestions' => $this->suggestions,
         ];
+    }
+
+    /**
+     * The passive points a character has at a level: roughly one per level
+     * plus ~24 from quest rewards and books. Shared with the publish
+     * pre-flight checklist.
+     */
+    public static function passivePointBudget(int $level): int
+    {
+        return min($level - 1, 99) + 24;
     }
 
     /** @param array<string, mixed> $build */
@@ -111,7 +123,8 @@ class BuildValidator
                 $this->warnings[] = "\"{$gem->name}\" is not currently obtainable (unreleased).";
             }
 
-            $supports = $setup['supports'] ?? [];
+            // Supports may arrive as names or as {name, effect} objects.
+            $supports = BuildPayload::supportNames($setup);
 
             if (count($supports) > 5) {
                 $this->violations[] = "\"{$label}\" has ".count($supports).' support gems; the maximum is 5 (2 by default, up to 5 with Jeweller\'s Orbs).';
@@ -290,8 +303,7 @@ class BuildValidator
         $pointsUsed = $passives['points_used'] ?? ($nodeIds !== [] ? count($nodeIds) : null);
 
         if ($level !== null && $pointsUsed !== null) {
-            // Heuristic: roughly 1 point per level plus ~24 from quests/books.
-            $budget = min((int) $level - 1, 99) + 24;
+            $budget = self::passivePointBudget((int) $level);
 
             if ($pointsUsed > $budget) {
                 $this->warnings[] = "Passive points used ({$pointsUsed}) likely exceeds the budget at level {$level} (~{$budget} incl. quest rewards).";
@@ -413,6 +425,8 @@ class BuildValidator
                 }
             }
 
+            $this->checkRunes($slot, $item['runes'] ?? []);
+
             if (isset($item['instill']) && $slot !== 'amulet') {
                 $this->violations[] = "Gear in slot \"{$slot}\" has an instill — only amulets can be instilled.";
             }
@@ -465,6 +479,55 @@ class BuildValidator
                 if ($node === null || $node->kind !== 'jewel_socket') {
                     $this->violations[] = "Jewel \"{$jewel['name']}\" socket_node_id {$socket} is not a jewel socket on the tree.";
                 }
+            }
+        }
+    }
+
+    /**
+     * Rune socket sanity. Sockets are cut into weapons and armour, never into
+     * jewellery, and no base carries a long row of them. These stay warnings:
+     * socket counts are gear-dependent and the build page renders empty
+     * sockets happily either way.
+     *
+     * @param  array<int, string|null>  $runes
+     */
+    protected function checkRunes(string $slot, array $runes): void
+    {
+        if ($runes === []) {
+            return;
+        }
+
+        $filled = array_values(array_filter($runes, fn (mixed $rune) => is_string($rune) && trim($rune) !== ''));
+
+        if ($filled === []) {
+            return;
+        }
+
+        if (in_array($slot, ['amulet', 'ring1', 'ring2', 'belt'], true)) {
+            $this->warnings[] = "Gear in slot \"{$slot}\" lists runes, but jewellery has no rune sockets — runes go in weapons and armour.";
+        }
+
+        if (count($runes) > 4) {
+            $this->warnings[] = "Gear in slot \"{$slot}\" lists ".count($runes).' rune sockets; that is more than any item base offers — check the socket count.';
+        }
+    }
+
+    /**
+     * @param  array<string, mixed>  $build
+     */
+    protected function checkMilestones(array $build): void
+    {
+        $level = $build['level'] ?? null;
+
+        if ($level === null) {
+            return;
+        }
+
+        foreach ($build['milestones'] ?? [] as $milestone) {
+            $milestoneLevel = $milestone['level'] ?? null;
+
+            if (is_numeric($milestoneLevel) && (int) $milestoneLevel > (int) $level) {
+                $this->warnings[] = "Leveling milestone at level {$milestoneLevel} is past the build's target level {$level}.";
             }
         }
     }

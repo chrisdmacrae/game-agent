@@ -3,7 +3,7 @@
 use App\Mcp\Servers\Poe2Server;
 use App\Mcp\Tools\Poe2\GetBuildTool;
 use App\Mcp\Tools\Poe2\SaveBuildTool;
-use App\Models\SavedBuild;
+use App\Models\Build;
 use App\Models\User;
 use Tests\Fixtures\Poe2Seeder;
 
@@ -26,9 +26,9 @@ test('save_build stores the build and returns a shareable url', function () {
     ])
         ->assertOk()
         ->assertSee('"url"')
-        ->assertSee('builds');
+        ->assertSee('poe2');
 
-    $build = SavedBuild::sole();
+    $build = Build::sole();
 
     expect($build->public_id)->toHaveLength(12)
         ->and($build->name)->toBe('Spark Starter')
@@ -47,7 +47,7 @@ test('save_build stores validation violations for a flawed build', function () {
         ],
     ])->assertOk();
 
-    expect(SavedBuild::sole()->validation['valid'])->toBeFalse();
+    expect(Build::sole()->validation['valid'])->toBeFalse();
 });
 
 test('get_build returns a saved build by public id', function () {
@@ -56,7 +56,7 @@ test('get_build returns a saved build by public id', function () {
         'build' => ['skills' => [['gem' => 'Spark']]],
     ])->assertOk();
 
-    Poe2Server::tool(GetBuildTool::class, ['id' => SavedBuild::sole()->public_id])
+    Poe2Server::tool(GetBuildTool::class, ['id' => Build::sole()->public_id])
         ->assertOk()
         ->assertSee('Spark Starter');
 
@@ -76,9 +76,9 @@ test('the build page renders with escaped markdown guide and hover entities', fu
         ],
     ])->assertOk();
 
-    $build = SavedBuild::sole();
+    $build = Build::sole();
 
-    $response = $this->get("/builds/{$build->public_id}")->assertOk();
+    $response = $this->get($build->url())->assertOk();
 
     $page = $response->inertiaPage();
 
@@ -112,7 +112,7 @@ test('save_build associates the build with the signed-in user', function () {
         'build' => ['skills' => [['gem' => 'Spark']]],
     ])->assertOk();
 
-    expect(SavedBuild::sole()->user_id)->toBe($user->id);
+    expect(Build::sole()->user_id)->toBe($user->id);
 });
 
 test('save_build without an authenticated user returns an error', function () {
@@ -121,7 +121,7 @@ test('save_build without an authenticated user returns an error', function () {
         'build' => ['skills' => [['gem' => 'Spark']]],
     ])->assertHasErrors();
 
-    expect(SavedBuild::count())->toBe(0);
+    expect(Build::count())->toBe(0);
 });
 
 test('save_build with an id updates the existing build in place', function () {
@@ -132,7 +132,7 @@ test('save_build with an id updates the existing build in place', function () {
         'build' => ['skills' => [['gem' => 'Spark']]],
     ])->assertOk();
 
-    $build = SavedBuild::sole();
+    $build = Build::sole();
 
     Poe2Server::actingAs($user)->tool(SaveBuildTool::class, [
         'id' => $build->public_id,
@@ -141,10 +141,11 @@ test('save_build with an id updates the existing build in place', function () {
         'build' => ['skills' => [['gem' => 'Spark', 'supports' => ['Pierce']]]],
     ])->assertOk()->assertSee($build->public_id);
 
-    expect(SavedBuild::count())->toBe(1)
+    expect(Build::count())->toBe(1)
         ->and($build->refresh()->name)->toBe('Second Draft')
         ->and($build->summary)->toBe('Now with pierce.')
-        ->and($build->build['skills'][0]['supports'])->toBe(['Pierce']);
+        // Supports are normalised to objects on save.
+        ->and($build->build['skills'][0]['supports'])->toBe([['name' => 'Pierce', 'effect' => null]]);
 });
 
 test('save_build cannot update another users build', function () {
@@ -155,7 +156,7 @@ test('save_build cannot update another users build', function () {
         'build' => ['skills' => [['gem' => 'Spark']]],
     ])->assertOk();
 
-    $build = SavedBuild::sole();
+    $build = Build::sole();
 
     Poe2Server::actingAs(User::factory()->create())->tool(SaveBuildTool::class, [
         'id' => $build->public_id,
@@ -163,6 +164,6 @@ test('save_build cannot update another users build', function () {
         'build' => ['skills' => [['gem' => 'Spark']]],
     ])->assertHasErrors();
 
-    expect(SavedBuild::count())->toBe(1)
+    expect(Build::count())->toBe(1)
         ->and($build->refresh()->name)->toBe('Owned Build');
 });
