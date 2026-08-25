@@ -10,6 +10,6 @@ Before planning or editing, find the row whose globs match the file's path and r
 | resources/js/**/*.vue | .ai/rules/js.md |
 | app/Models/Build.php | .ai/rules/models.md |
 | app/Http/Requests/BuildUpdateRequest.php | .ai/rules/requests.md |
-| routes/** | .ai/rules/routes.md |
+| routes/**, routes/ai.php | .ai/rules/routes.md |
 | app/Domain/Seo/** | .ai/rules/seo.md |
 | app/Domain/Poe2/Validation/BuildRules.php | .ai/rules/validation.md |

@@ -41,7 +41,7 @@ class SaveBuildTool extends Tool
         $user = $request->user();
 
         if ($user === null) {
-            return Response::error('Saving builds requires the authenticated MCP endpoint. Connect to '.route('mcp.poe2.user').' and sign in.');
+            return Response::error('Saving builds requires signing in. Reconnect to '.route('mcp.poe2').' and complete the OAuth login when prompted.');
         }
 
         $validated = $request->validate(array_merge([

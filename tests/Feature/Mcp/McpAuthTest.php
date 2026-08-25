@@ -3,7 +3,8 @@
 use App\Models\LoginLink;
 use App\Models\User;
 use Laravel\Passport\Client;
-use Laravel\Passport\Passport;
+use League\OAuth2\Server\ResourceServer;
+use Psr\Http\Message\ServerRequestInterface;
 use Tests\Fixtures\Poe2Seeder;
 
 beforeEach(function () {
@@ -44,19 +45,40 @@ test('the public endpoint does not expose save_build', function () {
         ->and($names)->toContain('get_meta_context', 'validate_build', 'get_build');
 });
 
-test('the authenticated endpoint rejects requests without a token', function () {
-    $this->postJson('/mcp/poe2/user', [
-        'jsonrpc' => '2.0',
-        'id' => 1,
-        'method' => 'tools/list',
-        'params' => [],
-    ])->assertUnauthorized();
+/**
+ * MCP clients complete the OAuth flow via the well-known discovery routes even
+ * when they were configured with the main endpoint URL, then send their token
+ * there. The token must actually authenticate them, or they end up silently
+ * stuck with the read-only toolset.
+ */
+test('the main endpoint exposes save_build when the request carries a valid bearer token', function () {
+    $user = User::factory()->create();
+    $client = Client::factory()->create();
+
+    // Stand in for a verified access token: the real ResourceServer would
+    // decode the JWT and hand these attributes to Passport's token guard.
+    $server = Mockery::mock(ResourceServer::class);
+    $server->shouldReceive('validateAuthenticatedRequest')->andReturnUsing(
+        fn (ServerRequestInterface $request) => $request
+            ->withAttribute('oauth_client_id', $client->getKey())
+            ->withAttribute('oauth_user_id', (string) $user->getKey())
+            ->withAttribute('oauth_scopes', ['mcp:use'])
+    );
+    app()->instance(ResourceServer::class, $server);
+
+    test()->withServerVariables(['HTTP_AUTHORIZATION' => 'Bearer valid-token']);
+
+    expect(mcpToolNames('/mcp/poe2'))->toContain('save_build');
 });
 
-test('the authenticated endpoint exposes save_build to a signed-in user', function () {
-    Passport::actingAs(User::factory()->create());
-
-    expect(mcpToolNames('/mcp/poe2/user'))->toContain('save_build');
+test('the main endpoint rejects an invalid bearer token instead of downgrading to read-only', function () {
+    $this->withHeader('Authorization', 'Bearer expired-or-garbage')
+        ->postJson('/mcp/poe2', [
+            'jsonrpc' => '2.0',
+            'id' => 1,
+            'method' => 'tools/list',
+            'params' => [],
+        ])->assertUnauthorized();
 });
 
 /**
