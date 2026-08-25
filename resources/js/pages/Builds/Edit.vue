@@ -23,7 +23,7 @@ const supported = computed(() => props.game.slug === 'poe2');
 
 <template>
     <div>
-        <SeoHead :title="`Edit ${build.name}`" noindex />
+        <SeoHead />
 
         <Poe2BuildEdit v-if="supported" v-bind="props" />
         <p v-else class="py-16 text-[15px] text-[var(--fg-2)]">

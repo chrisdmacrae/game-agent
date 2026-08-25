@@ -73,7 +73,7 @@ function classLine(build: HubBuild): string {
 
 <template>
     <div>
-        <SeoHead title="My builds" noindex />
+        <SeoHead />
 
         <div class="py-10">
             <div class="mb-8 flex flex-wrap items-end gap-4">

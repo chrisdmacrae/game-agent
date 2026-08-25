@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Domain\Builds\BuildHubQuery;
 use App\Domain\Builds\BuildStage;
 use App\Domain\Builds\GameReference;
+use App\Domain\Seo\PageMeta;
 use App\Models\Build;
 use App\Models\Game;
 use Illuminate\Http\Request;
@@ -40,6 +41,11 @@ class GameHubController extends Controller
             ->get();
 
         return Inertia::render('Games/Hub', [
+            new PageMeta(
+                title: "{$game->name} builds",
+                description: $game->description ?? "Published {$game->name} builds, filterable by class, ascendancy, stage and budget.",
+                ogImage: route('og-image'),
+            ),
             'game' => $this->gameProps($game),
             'patch' => $version?->version,
             'builds' => BuildHubQuery::cards($builds),
@@ -81,6 +87,11 @@ class GameHubController extends Controller
         $position = $queue->search(fn (Game $queued) => $queued->id === $game->id);
 
         return Inertia::render('Games/Waitlist', [
+            new PageMeta(
+                title: "{$game->name} is not live yet",
+                description: "{$game->name} is not wired up yet. Vote to move it up the queue and get told when it lands.",
+                ogImage: route('og-image'),
+            ),
             'game' => $this->gameProps($game),
             'votes' => $game->votes()->count(),
             'queuePosition' => $position === false ? null : $position + 1,

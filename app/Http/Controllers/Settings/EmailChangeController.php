@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\Domain\Seo\PageMeta;
 use App\Http\Controllers\Controller;
 use App\Models\PendingEmailChange;
 use App\Models\User;
@@ -23,6 +24,7 @@ class EmailChangeController extends Controller
     public function show(string $token): Response
     {
         return Inertia::render('auth/Verify', [
+            new PageMeta(title: 'Confirming your new email', noindex: true),
             'token' => $token,
             'action' => route('profile.email.confirm.store', $token),
             'title' => 'Confirming your new email',

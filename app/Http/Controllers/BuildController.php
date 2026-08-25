@@ -10,6 +10,7 @@ use App\Domain\Poe2\BuildPlannerExporter;
 use App\Domain\Poe2\PobExporter;
 use App\Domain\Poe2\Validation\BuildValidator;
 use App\Domain\Seo\OgImageRenderer;
+use App\Domain\Seo\PageMeta;
 use App\Http\Requests\BuildUpdateRequest;
 use App\Models\Build;
 use App\Models\BuildBookmark;
@@ -28,6 +29,31 @@ use Inertia\Response;
 
 class BuildController extends Controller
 {
+    /**
+     * The build page's meta description: the author's summary when there is
+     * one, otherwise the build's identity stated plainly.
+     */
+    protected function buildDescription(Build $build, Game $game): string
+    {
+        if (is_string($build->summary) && $build->summary !== '') {
+            return $build->summary;
+        }
+
+        $definition = is_array($build->build) ? $build->build : [];
+
+        $identity = array_filter([
+            implode(' · ', array_filter([
+                $definition['class'] ?? null,
+                $definition['ascendancy'] ?? null,
+            ])),
+            isset($definition['level']) ? 'level '.$definition['level'] : null,
+        ]);
+
+        return $identity === []
+            ? "A build for {$game->name}."
+            : implode(', ', $identity)." build for {$game->name}.";
+    }
+
     /**
      * Drafts are visible to their owner only; everything else is public.
      */
@@ -122,6 +148,14 @@ class BuildController extends Controller
         $enriched = $enricher->enrich($build, $guideHtml);
 
         return Inertia::render('Builds/Show', [
+            new PageMeta(
+                title: $build->name,
+                description: $this->buildDescription($build, $game),
+                ogType: 'article',
+                ogImage: route('builds.og-image', $build->public_id),
+                // A draft is only visible to its author, so keep it out of the index.
+                noindex: $build->visibility !== Build::VISIBILITY_PUBLIC,
+            ),
             'build' => [
                 'id' => $build->public_id,
                 'name' => $build->name,
@@ -167,6 +201,7 @@ class BuildController extends Controller
         $build = $this->ownedBuild($request, $game, $publicId);
 
         return Inertia::render('Builds/Edit', [
+            new PageMeta(title: "Edit {$build->name}", noindex: true),
             'game' => [
                 'slug' => $game->slug,
                 'name' => $game->name,

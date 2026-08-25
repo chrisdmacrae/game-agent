@@ -21,7 +21,8 @@ defineOptions({
 </script>
 
 <template>
-    <SeoHead title="Sign in" noindex />
+    <!-- Title, description and card come from FortifyServiceProvider's PageMeta. -->
+    <SeoHead />
 
     <Form v-bind="store.form()" v-slot="{ errors, processing }">
         <Input

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Domain\Seo\PageMeta;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -38,6 +39,11 @@ class FortifyServiceProvider extends ServiceProvider
     private function configureViews(): void
     {
         Fortify::loginView(fn (Request $request) => Inertia::render('auth/Login', [
+            new PageMeta(
+                title: 'Sign in',
+                description: 'Sign in with an emailed link. No password, no account needed to browse builds.',
+                ogImage: route('og-image'),
+            ),
             'status' => $request->session()->get('status'),
         ]));
     }

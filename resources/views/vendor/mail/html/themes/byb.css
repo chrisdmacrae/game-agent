@@ -1,0 +1,319 @@
+/*
+ * Build Your Build markdown mail theme.
+ *
+ * Based on Laravel's default theme. Email clients are unreliable with dark
+ * backgrounds, so the mail is light: cold slate ink on white, with the brand
+ * carried by the teal button, the teal rules and the wordmark in the header.
+ * Teal-400 (#2DE1C2) fails contrast on white, so links use teal-600 (#0A8E79)
+ * and the button keeps teal-400 with near-black text on top.
+ */
+
+/* Base */
+
+body,
+body *:not(html):not(style):not(br):not(tr):not(code) {
+    box-sizing: border-box;
+    font-family:
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+        sans-serif;
+    position: relative;
+}
+
+body {
+    -webkit-text-size-adjust: none;
+    background-color: #ffffff;
+    color: #3c4757;
+    height: 100%;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+}
+
+p,
+ul,
+ol,
+blockquote {
+    line-height: 1.5;
+    text-align: start;
+}
+
+a {
+    color: #0a8e79;
+}
+
+a img {
+    border: none;
+}
+
+/* Typography */
+
+h1 {
+    color: #0e1116;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-top: 0;
+    text-align: start;
+}
+
+h2 {
+    color: #0e1116;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 0;
+    text-align: start;
+}
+
+h3 {
+    color: #0e1116;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 0;
+    text-align: left;
+}
+
+p {
+    font-size: 15px;
+    line-height: 1.6em;
+    margin-top: 0;
+    text-align: left;
+}
+
+p.sub {
+    font-size: 12px;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* Layout */
+
+.wrapper {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.content {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/* Header */
+
+.header {
+    padding: 28px 0 20px;
+    text-align: center;
+}
+
+.header a {
+    color: #0e1116;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+}
+
+/* The `/` separators in the type-only wordmark. */
+.wordmark-sep {
+    color: #0a8e79;
+    font-weight: 700;
+}
+
+/* Body */
+
+.body {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    background-color: #f4f6f8;
+    border-bottom: 1px solid #f4f6f8;
+    border-top: 1px solid #f4f6f8;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.inner-body {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 570px;
+    background-color: #ffffff;
+    border-color: #dde3ea;
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 1px;
+    margin: 0 auto;
+    padding: 0;
+    width: 570px;
+}
+
+.inner-body a {
+    word-break: break-all;
+}
+
+/* The rule above is for pasted URLs, not for the call to action. */
+.inner-body a.button {
+    word-break: normal;
+}
+
+/* Subcopy */
+
+.subcopy {
+    border-top: 1px solid #dde3ea;
+    margin-top: 25px;
+    padding-top: 25px;
+}
+
+.subcopy p {
+    color: #6c7c8f;
+    font-size: 13px;
+}
+
+/* Footer */
+
+.footer {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 570px;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    width: 570px;
+}
+
+.footer p {
+    color: #6c7c8f;
+    font-size: 12px;
+    text-align: center;
+}
+
+.footer a {
+    color: #6c7c8f;
+    text-decoration: underline;
+}
+
+/* Tables */
+
+.table table {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    margin: 30px auto;
+    width: 100%;
+}
+
+.table th {
+    border-bottom: 1px solid #dde3ea;
+    margin: 0;
+    padding-bottom: 8px;
+}
+
+.table td {
+    color: #3c4757;
+    font-size: 15px;
+    line-height: 18px;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.content-cell {
+    max-width: 100vw;
+    padding: 32px;
+}
+
+/* Buttons */
+
+.action {
+    -premailer-cellpadding: 0;
+    -premailer-cellspacing: 0;
+    -premailer-width: 100%;
+    margin: 28px auto;
+    padding: 0;
+    text-align: center;
+    width: 100%;
+    float: unset;
+}
+
+.button {
+    -webkit-text-size-adjust: none;
+    border-radius: 6px;
+    color: #0a0d11;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 700;
+    overflow: hidden;
+    text-decoration: none;
+}
+
+.button-blue,
+.button-primary {
+    background-color: #2de1c2;
+    border-bottom: 10px solid #2de1c2;
+    border-left: 20px solid #2de1c2;
+    border-right: 20px solid #2de1c2;
+    border-top: 10px solid #2de1c2;
+    color: #0a0d11;
+}
+
+.button-green,
+.button-success {
+    background-color: #12bfa2;
+    border-bottom: 10px solid #12bfa2;
+    border-left: 20px solid #12bfa2;
+    border-right: 20px solid #12bfa2;
+    border-top: 10px solid #12bfa2;
+    color: #0a0d11;
+}
+
+.button-red,
+.button-error {
+    background-color: #e5484d;
+    border-bottom: 10px solid #e5484d;
+    border-left: 20px solid #e5484d;
+    border-right: 20px solid #e5484d;
+    border-top: 10px solid #e5484d;
+    color: #ffffff;
+}
+
+/* Panels */
+
+.panel {
+    border-left: #2de1c2 solid 4px;
+    margin: 21px 0;
+}
+
+.panel-content {
+    background-color: #f4f6f8;
+    color: #3c4757;
+    padding: 16px;
+}
+
+.panel-content p {
+    color: #3c4757;
+}
+
+.panel-item {
+    padding: 0;
+}
+
+.panel-item p:last-of-type {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+/* Utilities */
+
+.break-all {
+    word-break: break-all;
+}

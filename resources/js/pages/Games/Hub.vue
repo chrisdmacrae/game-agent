@@ -267,13 +267,8 @@ const railSection =
 
 <template>
     <div>
-        <SeoHead
-            :title="`${game.name} builds`"
-            :description="
-                game.description ??
-                `Published ${game.name} builds, filterable by class, ascendancy, stage and budget.`
-            "
-        />
+        <!-- Title, description and card come from GameHubController's PageMeta. -->
+        <SeoHead />
 
         <div class="py-10">
             <Card variant="grid" padding="var(--sp-8)" class="mb-10">

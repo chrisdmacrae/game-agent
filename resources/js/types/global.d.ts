@@ -17,7 +17,14 @@ declare module '@inertiajs/core' {
     export interface InertiaConfig {
         sharedPageProps: {
             name: string;
-            seo: { url: string };
+            seo: {
+                url: string;
+                title: string | null;
+                description: string | null;
+                ogType: 'website' | 'article';
+                ogImage: string | null;
+                noindex: boolean;
+            };
             auth: Auth;
             sidebarOpen: boolean;
             [key: string]: unknown;

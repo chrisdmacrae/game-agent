@@ -2,9 +2,16 @@
 import { Head, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
+/**
+ * Every page's head tags.
+ *
+ * Public pages get their meta from the controller (App\Domain\Seo\PageMeta),
+ * shared as the `seo` prop; anything passed here overrides it, which is how
+ * private pages declare a title and opt out of indexing.
+ */
 const props = withDefaults(
     defineProps<{
-        title: string;
+        title?: string;
         description?: string;
         canonical?: string;
         ogType?: 'website' | 'article';
@@ -12,23 +19,38 @@ const props = withDefaults(
         noindex?: boolean;
     }>(),
     {
+        title: undefined,
         description: undefined,
         canonical: undefined,
-        ogType: 'website',
+        ogType: undefined,
         ogImage: undefined,
-        noindex: false,
+        noindex: undefined,
     },
 );
 
 const page = usePage();
 
-const canonicalUrl = computed(() => props.canonical ?? page.props.seo.url);
+const seo = computed(() => page.props.seo);
+
+const title = computed(() => props.title ?? seo.value.title ?? page.props.name);
+
+const description = computed(
+    () => props.description ?? seo.value.description ?? undefined,
+);
+
+const ogType = computed(() => props.ogType ?? seo.value.ogType ?? 'website');
+
+const noindex = computed(() => props.noindex ?? seo.value.noindex ?? false);
+
+const canonicalUrl = computed(() => props.canonical ?? seo.value.url);
 
 // Crawlers expect absolute og:image URLs; resolve relative paths (e.g. from
 // Wayfinder) against the canonical URL's origin.
-const ogImageUrl = computed(() =>
-    props.ogImage ? new URL(props.ogImage, page.props.seo.url).href : null,
-);
+const ogImageUrl = computed(() => {
+    const image = props.ogImage ?? seo.value.ogImage;
+
+    return image ? new URL(image, seo.value.url).href : null;
+});
 </script>
 
 <template>

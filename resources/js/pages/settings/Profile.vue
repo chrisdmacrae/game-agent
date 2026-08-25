@@ -49,7 +49,7 @@ function save(): void {
 </script>
 
 <template>
-    <SeoHead title="Settings" noindex />
+    <SeoHead />
 
     <div class="flex flex-col gap-4">
         <form class="flex flex-col gap-4" @submit.prevent="save">

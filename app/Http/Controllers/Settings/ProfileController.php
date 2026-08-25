@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\Domain\Seo\PageMeta;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
 use App\Mail\EmailChangeMail;
@@ -27,6 +28,7 @@ class ProfileController extends Controller
         $user = $request->user();
 
         return Inertia::render('settings/Profile', [
+            new PageMeta(title: 'Settings', noindex: true),
             'mustVerifyEmail' => $user instanceof MustVerifyEmail,
             'status' => $request->session()->get('status'),
             'profile' => [

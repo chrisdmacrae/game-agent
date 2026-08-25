@@ -15,7 +15,6 @@ import Tag from '@/components/byb/Tag.vue';
 import Tooltip from '@/components/byb/Tooltip.vue';
 import SeoHead from '@/components/SeoHead.vue';
 import { cn } from '@/lib/utils';
-import { ogImage } from '@/routes';
 import type { HubGame } from '@/types/hub';
 
 /**
@@ -186,11 +185,8 @@ const headingClass =
 </script>
 
 <template>
-    <SeoHead
-        title="Build Your Build — theorycraft with your assistant, publish for everyone else"
-        description="An MCP server that connects Claude or ChatGPT to real Path of Exile 2 game data. Ask for a build, get numbers back, and publish it for everyone else."
-        :og-image="ogImage.url()"
-    />
+    <!-- Title, description and card come from HomeController's PageMeta. -->
+    <SeoHead />
 
     <div class="pb-16">
         <!-- Hero -->

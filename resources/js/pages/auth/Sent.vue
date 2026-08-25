@@ -23,7 +23,7 @@ defineProps<{
 </script>
 
 <template>
-    <SeoHead title="Check your inbox" noindex />
+    <SeoHead />
 
     <div>
         <p class="text-[13px] leading-[1.5] text-[var(--fg-2)]">

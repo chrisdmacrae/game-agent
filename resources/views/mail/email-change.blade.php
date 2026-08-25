@@ -1,14 +1,15 @@
 <x-mail::message>
-# Confirm your new email
+# Confirm your new email address
 
-Someone asked to move a {{ config('app.name') }} account to this address. Confirm it below. This link can only be used once and expires in 15 minutes.
+Someone moved a {{ config('app.name') }} account to this address.
 
 <x-mail::button :url="$url">
 Confirm this address
 </x-mail::button>
 
-Until you confirm, the old address keeps working. If you didn't request this, you can safely ignore this email.
+This link confirms the change once and expires in 15 minutes. The old address keeps signing you in until you use it. If you didn't request it, ignore this email.
 
-Thanks,<br>
-{{ config('app.name') }}
+<x-slot:subcopy>
+If the button does not work, paste this into your browser: <span class="break-all">[{{ $url }}]({{ $url }})</span>
+</x-slot:subcopy>
 </x-mail::message>

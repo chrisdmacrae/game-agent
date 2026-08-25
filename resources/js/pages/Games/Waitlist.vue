@@ -57,10 +57,8 @@ function barWidth(votes: number): string {
 
 <template>
     <div>
-        <SeoHead
-            :title="`${game.name} — not live yet`"
-            :description="`${game.name} is not wired up yet. Vote to move it up the queue.`"
-        />
+        <!-- Title, description and card come from GameHubController's PageMeta. -->
+        <SeoHead />
 
         <div class="max-w-[760px] py-10">
             <p :class="cn(LABEL_CLASS, 'text-[var(--mag-400)]')">

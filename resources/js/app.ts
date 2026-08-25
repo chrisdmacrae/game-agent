@@ -5,10 +5,12 @@ import SiteLayout from '@/layouts/byb/SiteLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { initializeFlashToast } from '@/lib/flashToast';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Build Your Build';
 
 createInertiaApp({
-    title: (title) => (title ? `${title} - ${appName}` : appName),
+    // Every page title reads "X — Build Your Build".
+    title: (title) =>
+        title && title !== appName ? `${title} — ${appName}` : appName,
     layout: (name) => {
         switch (true) {
             case name.startsWith('auth/'):

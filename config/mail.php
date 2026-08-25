@@ -112,7 +112,28 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
+        'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Build Your Build')),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Markdown Mail Settings
+    |--------------------------------------------------------------------------
+    |
+    | Markdown mailables render through the "byb" theme and the component
+    | overrides in resources/views/vendor/mail. The theme carries the brand:
+    | teal button, teal links, the type-only wordmark in the header.
+    |
+    */
+
+    'markdown' => [
+
+        'theme' => 'byb',
+
+        'paths' => [
+            resource_path('views/vendor/mail'),
+        ],
+
     ],
 
 ];

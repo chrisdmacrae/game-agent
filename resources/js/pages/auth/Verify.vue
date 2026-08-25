@@ -43,7 +43,7 @@ onBeforeUnmount(() => timers.forEach((timer) => clearTimeout(timer)));
 </script>
 
 <template>
-    <SeoHead title="Verifying" noindex />
+    <SeoHead />
 
     <div>
         <p :class="cn(LABEL_CLASS, 'text-[var(--teal-400)]')">Verifying</p>

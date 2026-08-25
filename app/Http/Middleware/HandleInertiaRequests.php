@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Domain\Seo\PageMeta;
 use App\Models\Game;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -40,9 +41,9 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'name' => config('app.name'),
-            'seo' => [
-                'url' => $request->url(),
-            ],
+            // The default bag: canonical URL only. A controller that passes a
+            // PageMeta into Inertia::render() replaces this with the real meta.
+            'seo' => PageMeta::shared($request->url()),
             'auth' => [
                 'user' => $this->user($request->user()),
             ],

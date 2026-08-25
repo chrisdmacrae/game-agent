@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Builds\BuildHubQuery;
+use App\Domain\Seo\PageMeta;
 use App\Models\Build;
 use App\Models\Game;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class MyBuildsController extends Controller
             ->get();
 
         return Inertia::render('MyBuilds', [
+            new PageMeta(title: 'My builds', noindex: true),
             'groups' => $this->groups($builds),
             'stats' => [
                 'published' => $builds->where('visibility', Build::VISIBILITY_PUBLIC)->count(),

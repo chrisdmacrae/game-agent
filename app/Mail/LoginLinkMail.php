@@ -14,10 +14,14 @@ class LoginLinkMail extends Mailable
 
     public function __construct(public string $url) {}
 
+    /**
+     * The subject is fixed copy, not the app name: the sender name already
+     * carries the brand, and an unset APP_NAME must never leak into an inbox.
+     */
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your sign-in link for '.config('app.name'),
+            subject: 'Your sign-in link',
         );
     }
 

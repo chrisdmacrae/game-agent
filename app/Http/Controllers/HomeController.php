@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Games\ModelDocRepository;
 use App\Domain\Poe2\Queries\MetaQuery;
+use App\Domain\Seo\PageMeta;
 use App\Mcp\Servers\Poe2Server;
 use App\Models\Build;
 use App\Models\Game;
@@ -25,6 +26,11 @@ class HomeController extends Controller
         }
 
         return Inertia::render('Welcome', [
+            new PageMeta(
+                title: 'Theorycraft with your assistant, publish for everyone else',
+                description: 'An MCP server that connects Claude or ChatGPT to real Path of Exile 2 game data. Ask for a build, get numbers back, and publish it for everyone else.',
+                ogImage: route('og-image'),
+            ),
             'meta' => $meta,
             'mcpUrl' => route('mcp.poe2'),
             'gameCards' => $this->gameCards(),

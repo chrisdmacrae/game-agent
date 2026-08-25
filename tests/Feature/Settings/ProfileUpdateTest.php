@@ -129,6 +129,28 @@ class ProfileUpdateTest extends TestCase
             ->assertInertia(fn ($page) => $page->where('pendingEmail', 'new@example.com'));
     }
 
+    public function test_the_confirmation_email_is_branded_not_laravel_branded()
+    {
+        $url = route('profile.email.confirm', 'a-plain-token');
+
+        $mail = new EmailChangeMail($url);
+
+        // Fixed copy: the subject must never render whatever APP_NAME happens to be.
+        $this->assertSame('Confirm your new email address', $mail->envelope()->subject);
+
+        $html = $mail->render();
+        $text = preg_replace('/\s+/', ' ', strip_tags($html));
+
+        $this->assertStringContainsString('BUILD/YOUR/BUILD', $text);
+        $this->assertStringContainsString('Confirm your new email address', $text);
+        $this->assertStringContainsString('This link confirms the change once and expires in 15 minutes.', $text);
+        $this->assertStringNotContainsString('All rights reserved', $text);
+
+        $this->assertStringContainsString('href="'.$url.'"', $html);
+        $this->assertStringContainsString('#2de1c2', $html);
+        $this->assertStringNotContainsString('laravel.com', $html);
+    }
+
     public function test_the_confirmation_link_only_swaps_the_email_on_the_post()
     {
         $user = User::factory()->create(['email' => 'old@example.com']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Domain\Seo\PageMeta;
 use App\Http\Controllers\Controller;
 use App\Mail\LoginLinkMail;
 use App\Models\LoginLink;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 /**
  * Passwordless sign-in, in the three states scope §3.3 describes: request,
@@ -75,6 +77,7 @@ class LoginLinkController extends Controller
         }
 
         return Inertia::render('auth/Sent', [
+            new PageMeta(title: 'Check your inbox', noindex: true),
             'email' => $email,
             'status' => $request->session()->get('status'),
         ]);
@@ -88,6 +91,7 @@ class LoginLinkController extends Controller
     public function verify(string $token): Response
     {
         return Inertia::render('auth/Verify', [
+            new PageMeta(title: 'Verifying', noindex: true),
             'token' => $token,
             'action' => route('login.verify.store', $token),
         ]);
@@ -97,7 +101,7 @@ class LoginLinkController extends Controller
      * Sign in via an emailed link. Clicking the link proves ownership of the
      * email address, so the account is created and verified on first use.
      */
-    public function consume(Request $request, string $token): RedirectResponse
+    public function consume(Request $request, string $token): RedirectResponse|SymfonyResponse
     {
         $link = LoginLink::findValidByToken($token);
 
@@ -108,6 +112,10 @@ class LoginLinkController extends Controller
         }
 
         $link->markConsumed();
+
+        // Resolve the post-login destination before the session is touched.
+        // This is what redirect()->intended() would have pulled.
+        $intended = $request->session()->pull('url.intended', route('my-builds'));
 
         $user = User::firstOrCreate(
             ['email' => $link->email],
@@ -126,9 +134,16 @@ class LoginLinkController extends Controller
         $request->session()->regenerate();
         $request->session()->forget(self::SESSION_EMAIL);
 
+        // Flash data lives in the session, so it survives the extra request the
+        // browser makes for the location visit below and fires on the next page.
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Signed in.')]);
 
-        return redirect()->intended(route('my-builds'));
+        // This route is only ever reached from the auth/Verify page, which posts
+        // over XHR. The intended destination is not always an Inertia page --
+        // Passport's /oauth/authorize consent screen renders Blade -- and an XHR
+        // that follows a redirect into plain HTML dead-ends. A location response
+        // makes the browser perform a real visit, which works for both.
+        return Inertia::location($intended);
     }
 
     /**
