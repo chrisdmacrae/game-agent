@@ -182,6 +182,7 @@ class Poe2Seeder
             'kind' => 'small',
             'stats' => ['+5 to Intelligence'],
             'connections' => ['1001'],
+            'raw' => ['id' => 'witch_arcane_path1'],
         ]);
 
         PassiveNode::create([
@@ -191,6 +192,7 @@ class Poe2Seeder
             'kind' => 'keystone',
             'stats' => ['Maximum Life becomes 1', 'Immune to Chaos Damage'],
             'connections' => [],
+            'raw' => ['id' => 'keystone_chaos_inoculation'],
         ]);
 
         PassiveNode::create([
@@ -263,6 +265,7 @@ class Poe2Seeder
             'ascendancy_key' => 'Witch1',
             'stats' => ['Gain Infernal Flame'],
             'connections' => [],
+            'raw' => ['id' => 'AscendancyWitch1Notable1'],
         ]);
 
         ItemBase::create([

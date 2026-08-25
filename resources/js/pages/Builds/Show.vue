@@ -4,6 +4,7 @@ import GearScreen, { type GearViewItem } from '@/components/GearScreen.vue';
 import PassiveTreeView from '@/components/PassiveTreeView.vue';
 import { computed, ref } from 'vue';
 import { home } from '@/routes';
+import { buildFile } from '@/routes/builds';
 
 interface SkillSetup {
     gem: string;
@@ -210,12 +211,21 @@ function spriteStyle(entity: Entity): Record<string, string> | null {
                 </div>
                 <h1 class="text-3xl font-bold tracking-tight text-white">{{ build.name }}</h1>
                 <p v-if="build.summary" class="mt-2 text-lg text-zinc-400">{{ build.summary }}</p>
-                <button
-                    class="mt-4 rounded-md border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-sm text-zinc-200 transition hover:bg-zinc-800"
-                    @click="copyPobCode"
-                >
-                    {{ pobCopied ? 'Copied! Paste in PoB → Import from code' : 'Copy Path of Building code' }}
-                </button>
+                <div class="mt-4 flex flex-wrap items-center gap-2">
+                    <button
+                        class="rounded-md border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-sm text-zinc-200 transition hover:bg-zinc-800"
+                        @click="copyPobCode"
+                    >
+                        {{ pobCopied ? 'Copied! Paste in PoB → Import from code' : 'Copy Path of Building code' }}
+                    </button>
+                    <a
+                        :href="buildFile.url(build.id)"
+                        class="rounded-md border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-sm text-zinc-200 transition hover:bg-zinc-800"
+                        title="Drop into Documents/My Games/Path of Exile 2/BuildPlanner, then open it from the in-game passive tree's Build Planner menu"
+                    >
+                        Download .build file (in-game planner)
+                    </a>
+                </div>
             </header>
 
             <!-- Validation banner -->

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Poe2\BuildPageEnricher;
+use App\Domain\Poe2\BuildPlannerExporter;
 use App\Domain\Poe2\PobExporter;
 use App\Models\Poe2\Ascendancy;
 use App\Models\SavedBuild;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -21,6 +23,16 @@ class BuildController extends Controller
             'id' => $build->public_id,
             'code' => $exporter->code($build),
             'note' => 'Paste into Path of Building (PoE2 fork) via Import/Export Build -> Import from code. Experimental: gem levels default to 20 and rare items import as plain text.',
+        ]);
+    }
+
+    public function buildFile(string $publicId, BuildPlannerExporter $exporter): HttpResponse
+    {
+        $build = SavedBuild::where('public_id', $publicId)->firstOrFail();
+
+        return response($exporter->json($build), 200, [
+            'Content-Type' => 'application/json',
+            'Content-Disposition' => 'attachment; filename="'.$exporter->filename($build).'"',
         ]);
     }
 
