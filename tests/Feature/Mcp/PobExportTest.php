@@ -5,6 +5,7 @@ use App\Mcp\Servers\Poe2Server;
 use App\Mcp\Tools\Poe2\GetBuildTool;
 use App\Mcp\Tools\Poe2\SaveBuildTool;
 use App\Models\SavedBuild;
+use App\Models\User;
 use Tests\Fixtures\Poe2Seeder;
 
 beforeEach(function () {
@@ -13,7 +14,7 @@ beforeEach(function () {
 
 function savePobTestBuild(): SavedBuild
 {
-    Poe2Server::tool(SaveBuildTool::class, [
+    Poe2Server::actingAs(User::factory()->create())->tool(SaveBuildTool::class, [
         'name' => 'Spark Starter',
         'build' => [
             'class' => 'Witch',
@@ -84,7 +85,7 @@ test('save_build returns a pob code', function () {
 });
 
 test('loose rare mods materialize into concrete affix lines', function () {
-    Poe2Server::tool(SaveBuildTool::class, [
+    Poe2Server::actingAs(User::factory()->create())->tool(SaveBuildTool::class, [
         'name' => 'Materialize Test',
         'build' => [
             'class' => 'Witch',

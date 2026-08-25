@@ -4,8 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
+/**
+ * @property int $id
+ * @property int|null $user_id
+ * @property int $game_id
+ * @property int|null $game_version_id
+ * @property string $public_id
+ * @property string $name
+ * @property string|null $summary
+ * @property string|null $guide_markdown
+ * @property array<string, mixed> $build
+ * @property array<string, mixed>|null $validation
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ */
 class SavedBuild extends Model
 {
     protected $table = 'builds';
@@ -27,11 +42,19 @@ class SavedBuild extends Model
         });
     }
 
+    /** @return BelongsTo<User, $this> */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /** @return BelongsTo<Game, $this> */
     public function game(): BelongsTo
     {
         return $this->belongsTo(Game::class);
     }
 
+    /** @return BelongsTo<GameVersion, $this> */
     public function gameVersion(): BelongsTo
     {
         return $this->belongsTo(GameVersion::class);

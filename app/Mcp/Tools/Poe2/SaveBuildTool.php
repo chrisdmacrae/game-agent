@@ -8,6 +8,7 @@ use App\Domain\Poe2\Validation\BuildRules;
 use App\Domain\Poe2\Validation\BuildValidator;
 use App\Models\SavedBuild;
 use Illuminate\Contracts\JsonSchema\JsonSchema;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Mcp\Request;
 use Laravel\Mcp\Response;
 use Laravel\Mcp\Server\Tool;
@@ -18,11 +19,26 @@ class SaveBuildTool extends Tool
 {
     protected string $name = 'save_build';
 
-    protected string $description = 'Save a finished build and get a permanent shareable web page URL for it. Give the returned URL to the user — the page shows the build (skills, supports, passives, defenses) plus your guide text. Validate the build first with validate_build and fix violations; the validation result is stored and displayed on the page. Include a thorough guide_markdown: it is the main content readers see.';
+    protected string $description = 'Save a finished build to the logged-in user\'s account and get a permanent shareable web page URL for it. Pass the id of a previously saved build to update it in place instead of creating a new page. Give the returned URL to the user — the page shows the build (skills, supports, passives, defenses) plus your guide text. Validate the build first with validate_build and fix violations; the validation result is stored and displayed on the page. Include a thorough guide_markdown: it is the main content readers see.';
+
+    /**
+     * Only available on the authenticated MCP endpoint: saved builds belong to a user.
+     */
+    public function shouldRegister(): bool
+    {
+        return Auth::check();
+    }
 
     public function handle(Request $request, Poe2Context $context, BuildValidator $validator, PobExporter $exporter): Response
     {
+        $user = $request->user();
+
+        if ($user === null) {
+            return Response::error('Saving builds requires the authenticated MCP endpoint. Connect to '.route('mcp.poe2.user').' and sign in.');
+        }
+
         $validated = $request->validate(array_merge([
+            'id' => 'nullable|string|max:32',
             'name' => 'required|string|max:120',
             'summary' => 'nullable|string|max:500',
             'guide_markdown' => 'nullable|string|max:30000',
@@ -30,7 +46,7 @@ class SaveBuildTool extends Tool
 
         $version = $context->version();
 
-        $build = SavedBuild::create([
+        $attributes = [
             'game_id' => $version->game_id,
             'game_version_id' => $version->id,
             'name' => $validated['name'],
@@ -38,20 +54,36 @@ class SaveBuildTool extends Tool
             'guide_markdown' => $validated['guide_markdown'] ?? null,
             'build' => $validated['build'],
             'validation' => $validator->validate($validated['build']),
-        ]);
+        ];
+
+        if (isset($validated['id'])) {
+            $build = SavedBuild::query()
+                ->where('public_id', $validated['id'])
+                ->where('user_id', $user->getAuthIdentifier())
+                ->first();
+
+            if ($build === null) {
+                return Response::error("No build with id '{$validated['id']}' belongs to the signed-in user. Omit id to save a new build.");
+            }
+
+            $build->update($attributes);
+        } else {
+            $build = SavedBuild::create($attributes + ['user_id' => $user->getAuthIdentifier()]);
+        }
 
         return Response::json([
             'id' => $build->public_id,
             'url' => $build->url(),
             'validation' => $build->validation,
             'pob_code' => $exporter->code($build),
-            'note' => 'Share the url with the user. The pob_code imports into Path of Building (PoE2 fork). The build was validated automatically; if violations are listed, fix them and save again (saving again creates a new page).',
+            'note' => 'Share the url with the user. The pob_code imports into Path of Building (PoE2 fork). The build was validated automatically; if violations are listed, fix them and save again with this id to update the same page.',
         ]);
     }
 
     public function schema(JsonSchema $schema): array
     {
         return [
+            'id' => $schema->string()->description('The id of a previously saved build to update in place (from an earlier save_build response). Omit to save a new build.'),
             'name' => $schema->string()->description('Build title, e.g. "The Untouchable Bell — Ab Aeterno Roll-Caster".')->required(),
             'summary' => $schema->string()->description('One-or-two sentence description shown under the title.'),
             'guide_markdown' => $schema->string()->description('The full build guide as markdown: concept, why the pieces fit, gear priorities, leveling notes. This is the main page content.'),

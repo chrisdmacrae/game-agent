@@ -23,24 +23,38 @@ const VERSION_URL = 'https://repoe-fork.github.io/poe2/version.txt';
 
 function arg(name, fallback = null) {
     const index = process.argv.indexOf(`--${name}`);
+
     return index !== -1 && process.argv[index + 1] ? process.argv[index + 1] : fallback;
 }
 
 async function loadManifest(source) {
     if (/^https?:\/\//.test(source)) {
         const response = await fetch(source);
-        if (!response.ok) throw new Error(`Failed to download manifest (HTTP ${response.status})`);
+
+        if (!response.ok) {
+throw new Error(`Failed to download manifest (HTTP ${response.status})`);
+}
+
         return response.json();
     }
+
     return JSON.parse(readFileSync(source, 'utf8'));
 }
 
 async function resolvePatch(explicit) {
-    if (explicit) return explicit;
+    if (explicit) {
+return explicit;
+}
+
     const response = await fetch(VERSION_URL);
-    if (!response.ok) throw new Error(`Could not auto-detect the PoE2 client version; pass --patch <version>`);
+
+    if (!response.ok) {
+throw new Error(`Could not auto-detect the PoE2 client version; pass --patch <version>`);
+}
+
     const version = (await response.text()).trim();
     console.log(`Auto-detected PoE2 client version ${version} (from repoe-fork)`);
+
     return version;
 }
 
@@ -82,7 +96,10 @@ const icons = manifest.icons ?? {};
 // Defensive: junk art paths in the game data would abort pathofexile-dat.
 const entries = Object.entries(icons).filter(([, dds]) => /^Art\/.+\.dds$/i.test(dds));
 const skipped = Object.keys(icons).length - entries.length;
-if (skipped > 0) console.warn(`Skipping ${skipped} invalid art path(s) from the manifest.`);
+
+if (skipped > 0) {
+console.warn(`Skipping ${skipped} invalid art path(s) from the manifest.`);
+}
 
 if (entries.length === 0) {
     console.error('Manifest contains no icons.');
@@ -116,6 +133,7 @@ const missing = [];
 
 for (const [key, dds] of entries) {
     const file = produced.get(dds);
+
     if (file) {
         renameSync(path.join(filesDir, file), path.join(outDir, `${key}.png`));
         copied++;
@@ -130,7 +148,10 @@ console.log(`\nDone: ${copied}/${entries.length} icons written to ${outDir}`);
 
 if (missing.length > 0) {
     console.warn(`Missing (not found in game files): ${missing.length}`);
-    for (const dds of missing.slice(0, 10)) console.warn(`  - ${dds}`);
+
+    for (const dds of missing.slice(0, 10)) {
+console.warn(`  - ${dds}`);
+}
 }
 
 console.log('\nNext: copy the folder into the app so the files live at public/games/poe2/icons/*.png');

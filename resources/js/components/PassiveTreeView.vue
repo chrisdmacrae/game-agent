@@ -40,7 +40,11 @@ const failed = ref(false);
 onMounted(async () => {
     try {
         const response = await fetch(props.treeUrl);
-        if (!response.ok) throw new Error(String(response.status));
+
+        if (!response.ok) {
+            throw new Error(String(response.status));
+        }
+
         tree.value = await response.json();
         resetView();
     } catch {
@@ -50,27 +54,54 @@ onMounted(async () => {
 
 // The main tree, plus only the chosen ascendancy's cluster.
 const visibleNodes = computed(() =>
-    (tree.value?.nodes ?? []).filter((node) => !node.a || node.a === props.ascendancyKey),
+    (tree.value?.nodes ?? []).filter(
+        (node) => !node.a || node.a === props.ascendancyKey,
+    ),
 );
 
-const visibleIds = computed(() => new Set(visibleNodes.value.map((node) => node.id)));
+const visibleIds = computed(
+    () => new Set(visibleNodes.value.map((node) => node.id)),
+);
 
 const visibleEdges = computed(() =>
-    (tree.value?.edges ?? []).filter(([a, b]) => visibleIds.value.has(a) && visibleIds.value.has(b)),
+    (tree.value?.edges ?? []).filter(
+        ([a, b]) => visibleIds.value.has(a) && visibleIds.value.has(b),
+    ),
 );
 
 const highlightedIds = computed(() => {
-    if (!tree.value) return new Set<number>();
+    if (!tree.value) {
+        return new Set<number>();
+    }
 
     const ids = new Set<number>([...props.nodeIds, ...props.ascendancyPathIds]);
-    const names = new Set(props.highlightNames.map((name) => name.toLowerCase()));
-    const ascNames = new Set(props.ascendancyNodes.map((name) => name.toLowerCase()));
+    const names = new Set(
+        props.highlightNames.map((name) => name.toLowerCase()),
+    );
+    const ascNames = new Set(
+        props.ascendancyNodes.map((name) => name.toLowerCase()),
+    );
 
     for (const node of visibleNodes.value) {
-        if (node.n && !node.a && names.has(node.n.toLowerCase())) ids.add(node.id);
-        if (node.n && node.a && ascNames.has(node.n.toLowerCase())) ids.add(node.id);
-        if (node.k === 'ascstart' && node.a === props.ascendancyKey) ids.add(node.id);
-        if (node.k === 'start' && props.className && (node.ci ?? []).some((i) => tree.value!.classes[i] === props.className)) {
+        if (node.n && !node.a && names.has(node.n.toLowerCase())) {
+            ids.add(node.id);
+        }
+
+        if (node.n && node.a && ascNames.has(node.n.toLowerCase())) {
+            ids.add(node.id);
+        }
+
+        if (node.k === 'ascstart' && node.a === props.ascendancyKey) {
+            ids.add(node.id);
+        }
+
+        if (
+            node.k === 'start' &&
+            props.className &&
+            (node.ci ?? []).some(
+                (i) => tree.value!.classes[i] === props.className,
+            )
+        ) {
             ids.add(node.id);
         }
     }
@@ -82,7 +113,11 @@ const grantedSet = computed(() => new Set(props.grantedIds));
 
 const nodeById = computed(() => {
     const map = new Map<number, TreeNode>();
-    for (const node of tree.value?.nodes ?? []) map.set(node.id, node);
+
+    for (const node of tree.value?.nodes ?? []) {
+        map.set(node.id, node);
+    }
+
     return map;
 });
 
@@ -90,18 +125,28 @@ const nodeById = computed(() => {
 // class starts; the export stores clusters far outside the tree. Translate the
 // visible cluster so its start lands on the class-start centroid.
 const ascendancyOffset = computed(() => {
-    if (!tree.value || !props.ascendancyKey) return null;
+    if (!tree.value || !props.ascendancyKey) {
+        return null;
+    }
 
     const starts = tree.value.nodes.filter((node) => node.k === 'start');
-    if (!starts.length) return null;
+
+    if (!starts.length) {
+        return null;
+    }
 
     const center = {
         x: starts.reduce((sum, node) => sum + node.x, 0) / starts.length,
         y: starts.reduce((sum, node) => sum + node.y, 0) / starts.length,
     };
 
-    const cluster = tree.value.nodes.filter((node) => node.a === props.ascendancyKey);
-    if (!cluster.length) return null;
+    const cluster = tree.value.nodes.filter(
+        (node) => node.a === props.ascendancyKey,
+    );
+
+    if (!cluster.length) {
+        return null;
+    }
 
     const anchor = cluster.find((node) => node.k === 'ascstart') ?? cluster[0];
 
@@ -109,19 +154,31 @@ const ascendancyOffset = computed(() => {
 });
 
 function displayX(node: TreeNode | undefined): number {
-    if (!node) return 0;
-    return node.a && ascendancyOffset.value ? node.x + ascendancyOffset.value.dx : node.x;
+    if (!node) {
+        return 0;
+    }
+
+    return node.a && ascendancyOffset.value
+        ? node.x + ascendancyOffset.value.dx
+        : node.x;
 }
 
 function displayY(node: TreeNode | undefined): number {
-    if (!node) return 0;
-    return node.a && ascendancyOffset.value ? node.y + ascendancyOffset.value.dy : node.y;
+    if (!node) {
+        return 0;
+    }
+
+    return node.a && ascendancyOffset.value
+        ? node.y + ascendancyOffset.value.dy
+        : node.y;
 }
 
 // Edges between two allocated nodes are highlighted (visible pathing when a
 // full node_ids allocation was saved).
 const highlightedEdges = computed(() =>
-    visibleEdges.value.filter(([a, b]) => highlightedIds.value.has(a) && highlightedIds.value.has(b)),
+    visibleEdges.value.filter(
+        ([a, b]) => highlightedIds.value.has(a) && highlightedIds.value.has(b),
+    ),
 );
 
 const padding = 1500;
@@ -129,10 +186,16 @@ const padding = 1500;
 const viewBox = ref({ x: 0, y: 0, w: 0, h: 0 });
 const initialViewBox = ref({ x: 0, y: 0, w: 0, h: 0 });
 
-const viewBoxAttr = computed(() => `${viewBox.value.x} ${viewBox.value.y} ${viewBox.value.w} ${viewBox.value.h}`);
+const viewBoxAttr = computed(
+    () =>
+        `${viewBox.value.x} ${viewBox.value.y} ${viewBox.value.w} ${viewBox.value.h}`,
+);
 
 function resetView() {
-    if (!tree.value) return;
+    if (!tree.value) {
+        return;
+    }
+
     const { min_x, min_y, max_x, max_y } = tree.value.bounds;
     initialViewBox.value = {
         x: min_x - padding,
@@ -150,13 +213,19 @@ let dragging = false;
 let last = { x: 0, y: 0 };
 
 function onWheel(event: WheelEvent) {
-    if (!svgEl.value) return;
+    if (!svgEl.value) {
+        return;
+    }
+
     const factor = event.deltaY > 0 ? 1.15 : 1 / 1.15;
     const rect = svgEl.value.getBoundingClientRect();
     const px = (event.clientX - rect.left) / rect.width;
     const py = (event.clientY - rect.top) / rect.height;
     const { x, y, w, h } = viewBox.value;
-    const newW = Math.min(Math.max(w * factor, initialViewBox.value.w / 20), initialViewBox.value.w * 1.5);
+    const newW = Math.min(
+        Math.max(w * factor, initialViewBox.value.w / 20),
+        initialViewBox.value.w * 1.5,
+    );
     const newH = (newW / w) * h;
     viewBox.value = {
         x: x + (w - newW) * px,
@@ -174,7 +243,10 @@ function onPointerDown(event: PointerEvent) {
 }
 
 function onPointerMove(event: PointerEvent) {
-    if (!dragging || !svgEl.value) return;
+    if (!dragging || !svgEl.value) {
+        return;
+    }
+
     const rect = svgEl.value.getBoundingClientRect();
     const scale = viewBox.value.w / rect.width;
     viewBox.value.x -= (event.clientX - last.x) * scale;
@@ -192,19 +264,26 @@ const popupStyle = ref<Record<string, string>>({});
 
 function onOver(event: MouseEvent) {
     const target = (event.target as Element).closest<SVGElement>('[data-node]');
+
     if (!target || !container.value) {
         hoveredNode.value = null;
+
         return;
     }
 
     const node = nodeById.value.get(Number(target.dataset.node)) ?? null;
+
     if (!node || (!node.n && !node.st?.length)) {
         hoveredNode.value = null;
+
         return;
     }
 
     const rect = container.value.getBoundingClientRect();
-    const x = Math.min(Math.max(8, event.clientX - rect.left + 14), rect.width - 288);
+    const x = Math.min(
+        Math.max(8, event.clientX - rect.left + 14),
+        rect.width - 288,
+    );
     const y = Math.min(event.clientY - rect.top + 14, rect.height - 120);
 
     popupStyle.value = { left: `${x}px`, top: `${y}px` };
@@ -236,15 +315,24 @@ const radii: Record<TreeNode['k'], number> = {
 // Icon box = the node circle's diameter (tracking highlight scale), clipped
 // to circle(50%) so the art fills the circle exactly.
 function iconSize(node: TreeNode): number {
-    const lit = highlightedIds.value.has(node.id) || grantedSet.value.has(node.id);
+    const lit =
+        highlightedIds.value.has(node.id) || grantedSet.value.has(node.id);
+
     return radii[node.k] * 2 * (lit ? 1.35 : 1);
 }
 </script>
 
 <template>
-    <div ref="container" class="relative overflow-hidden rounded-lg border border-zinc-800 bg-zinc-950">
-        <p v-if="failed" class="p-6 text-sm text-zinc-500">Passive tree data is unavailable.</p>
-        <p v-else-if="!tree" class="p-6 text-sm text-zinc-500">Loading passive tree…</p>
+    <div
+        ref="container"
+        class="relative overflow-hidden rounded-lg border border-zinc-800 bg-zinc-950"
+    >
+        <p v-if="failed" class="p-6 text-sm text-zinc-500">
+            Passive tree data is unavailable.
+        </p>
+        <p v-else-if="!tree" class="p-6 text-sm text-zinc-500">
+            Loading passive tree…
+        </p>
         <template v-else>
             <svg
                 ref="svgEl"
@@ -282,14 +370,48 @@ function iconSize(node: TreeNode): number {
                     stroke-linecap="round"
                 />
                 <!-- Nodes -->
-                <g v-for="node in visibleNodes" :key="node.id" :data-node="node.id" :class="node.n || node.st ? 'cursor-help' : ''">
+                <g
+                    v-for="node in visibleNodes"
+                    :key="node.id"
+                    :data-node="node.id"
+                    :class="node.n || node.st ? 'cursor-help' : ''"
+                >
                     <circle
                         :cx="displayX(node)"
                         :cy="displayY(node)"
-                        :r="radii[node.k] * (highlightedIds.has(node.id) || grantedSet.has(node.id) ? 1.35 : 1)"
-                        :fill="grantedSet.has(node.id) ? '#8b5cf6' : highlightedIds.has(node.id) ? '#f59e0b' : node.k === 'small' ? '#3f3f46' : '#18181b'"
-                        :stroke="grantedSet.has(node.id) ? '#c4b5fd' : highlightedIds.has(node.id) ? '#fbbf24' : node.k === 'keystone' || node.k === 'start' || node.k === 'ascstart' ? '#71717a' : '#3f3f46'"
-                        :stroke-width="grantedSet.has(node.id) || highlightedIds.has(node.id) ? 30 : 12"
+                        :r="
+                            radii[node.k] *
+                            (highlightedIds.has(node.id) ||
+                            grantedSet.has(node.id)
+                                ? 1.35
+                                : 1)
+                        "
+                        :fill="
+                            grantedSet.has(node.id)
+                                ? '#8b5cf6'
+                                : highlightedIds.has(node.id)
+                                  ? '#f59e0b'
+                                  : node.k === 'small'
+                                    ? '#3f3f46'
+                                    : '#18181b'
+                        "
+                        :stroke="
+                            grantedSet.has(node.id)
+                                ? '#c4b5fd'
+                                : highlightedIds.has(node.id)
+                                  ? '#fbbf24'
+                                  : node.k === 'keystone' ||
+                                      node.k === 'start' ||
+                                      node.k === 'ascstart'
+                                    ? '#71717a'
+                                    : '#3f3f46'
+                        "
+                        :stroke-width="
+                            grantedSet.has(node.id) ||
+                            highlightedIds.has(node.id)
+                                ? 30
+                                : 12
+                        "
                     />
                     <!-- Sprite icon, clipped to the node circle -->
                     <svg
@@ -300,9 +422,18 @@ function iconSize(node: TreeNode): number {
                         :height="iconSize(node)"
                         :viewBox="`${node.s[0]} ${node.s[1]} ${node.s[2]} ${node.s[3]}`"
                         style="pointer-events: none; clip-path: circle(50%)"
-                        :opacity="highlightedIds.has(node.id) || grantedSet.has(node.id) ? 1 : 0.55"
+                        :opacity="
+                            highlightedIds.has(node.id) ||
+                            grantedSet.has(node.id)
+                                ? 1
+                                : 0.55
+                        "
                     >
-                        <image :href="spriteUrl" :width="tree.sheet.w" :height="tree.sheet.h" />
+                        <image
+                            :href="spriteUrl"
+                            :width="tree.sheet.w"
+                            :height="tree.sheet.h"
+                        />
                     </svg>
                 </g>
             </svg>
@@ -312,7 +443,14 @@ function iconSize(node: TreeNode): number {
             >
                 Reset view
             </button>
-            <p class="absolute bottom-3 left-3 text-xs text-zinc-600">Scroll to zoom · drag to pan · hover nodes for details<span v-if="grantedIds.length"> · <span class="text-violet-400">purple</span> = granted (jewel/instill)</span></p>
+            <p class="absolute bottom-3 left-3 text-xs text-zinc-600">
+                Scroll to zoom · drag to pan · hover nodes for details<span
+                    v-if="grantedIds.length"
+                >
+                    · <span class="text-violet-400">purple</span> = granted
+                    (jewel/instill)</span
+                >
+            </p>
 
             <!-- Node popup -->
             <div
@@ -324,10 +462,22 @@ function iconSize(node: TreeNode): number {
                     {{ hoveredNode.n ?? kindLabels[hoveredNode.k] }}
                 </p>
                 <p class="text-xs text-zinc-500">
-                    {{ kindLabels[hoveredNode.k] }}<template v-if="hoveredNode.a"> · {{ ascendancyName ?? "Ascendancy" }}</template>
+                    {{ kindLabels[hoveredNode.k]
+                    }}<template v-if="hoveredNode.a">
+                        · {{ ascendancyName ?? 'Ascendancy' }}</template
+                    >
                 </p>
-                <ul v-if="hoveredNode.st?.length" class="mt-1.5 space-y-0.5 text-sm text-sky-200/80">
-                    <li v-for="stat in hoveredNode.st" :key="stat" class="whitespace-pre-line">{{ stat }}</li>
+                <ul
+                    v-if="hoveredNode.st?.length"
+                    class="mt-1.5 space-y-0.5 text-sm text-sky-200/80"
+                >
+                    <li
+                        v-for="stat in hoveredNode.st"
+                        :key="stat"
+                        class="whitespace-pre-line"
+                    >
+                        {{ stat }}
+                    </li>
                 </ul>
             </div>
         </template>

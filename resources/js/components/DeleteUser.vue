@@ -4,7 +4,6 @@ import { useTemplateRef } from 'vue';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
-import PasswordInput from '@/components/PasswordInput.vue';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -16,9 +15,10 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-const passwordInput = useTemplateRef('passwordInput');
+const emailInput = useTemplateRef('emailInput');
 </script>
 
 <template>
@@ -47,7 +47,7 @@ const passwordInput = useTemplateRef('passwordInput');
                     <Form
                         v-bind="ProfileController.destroy.form()"
                         reset-on-success
-                        @error="() => passwordInput?.focus()"
+                        @error="() => emailInput?.$el?.focus()"
                         :options="{
                             preserveScroll: true,
                         }"
@@ -62,23 +62,24 @@ const passwordInput = useTemplateRef('passwordInput');
                             <DialogDescription>
                                 Once your account is deleted, all of its
                                 resources and data will also be permanently
-                                deleted. Please enter your password to confirm
-                                you would like to permanently delete your
-                                account.
+                                deleted. Please enter your email address to
+                                confirm you would like to permanently delete
+                                your account.
                             </DialogDescription>
                         </DialogHeader>
 
                         <div class="grid gap-2">
-                            <Label for="password" class="sr-only"
-                                >Password</Label
+                            <Label for="delete-confirm-email" class="sr-only"
+                                >Email address</Label
                             >
-                            <PasswordInput
-                                id="password"
-                                name="password"
-                                ref="passwordInput"
-                                placeholder="Password"
+                            <Input
+                                id="delete-confirm-email"
+                                type="email"
+                                name="email"
+                                ref="emailInput"
+                                placeholder="Email address"
                             />
-                            <InputError :message="errors.password" />
+                            <InputError :message="errors.email" />
                         </div>
 
                         <DialogFooter class="gap-2">

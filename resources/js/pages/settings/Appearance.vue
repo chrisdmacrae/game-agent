@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
 import AppearanceTabs from '@/components/AppearanceTabs.vue';
 import Heading from '@/components/Heading.vue';
+import SeoHead from '@/components/SeoHead.vue';
 import { edit } from '@/routes/appearance';
 
 defineOptions({
@@ -17,7 +17,7 @@ defineOptions({
 </script>
 
 <template>
-    <Head title="Appearance settings" />
+    <SeoHead title="Appearance settings" noindex />
 
     <h1 class="sr-only">Appearance settings</h1>
 

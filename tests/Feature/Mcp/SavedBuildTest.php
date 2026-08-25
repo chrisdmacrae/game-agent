@@ -4,6 +4,7 @@ use App\Mcp\Servers\Poe2Server;
 use App\Mcp\Tools\Poe2\GetBuildTool;
 use App\Mcp\Tools\Poe2\SaveBuildTool;
 use App\Models\SavedBuild;
+use App\Models\User;
 use Tests\Fixtures\Poe2Seeder;
 
 beforeEach(function () {
@@ -11,7 +12,7 @@ beforeEach(function () {
 });
 
 test('save_build stores the build and returns a shareable url', function () {
-    Poe2Server::tool(SaveBuildTool::class, [
+    Poe2Server::actingAs(User::factory()->create())->tool(SaveBuildTool::class, [
         'name' => 'Spark Starter',
         'summary' => 'A budget-friendly lightning caster.',
         'guide_markdown' => "## Concept\n\nRoll and **zap**.",
@@ -36,7 +37,7 @@ test('save_build stores the build and returns a shareable url', function () {
 });
 
 test('save_build stores validation violations for a flawed build', function () {
-    Poe2Server::tool(SaveBuildTool::class, [
+    Poe2Server::actingAs(User::factory()->create())->tool(SaveBuildTool::class, [
         'name' => 'Broken Build',
         'build' => [
             'skills' => [
@@ -50,7 +51,7 @@ test('save_build stores validation violations for a flawed build', function () {
 });
 
 test('get_build returns a saved build by public id', function () {
-    Poe2Server::tool(SaveBuildTool::class, [
+    Poe2Server::actingAs(User::factory()->create())->tool(SaveBuildTool::class, [
         'name' => 'Spark Starter',
         'build' => ['skills' => [['gem' => 'Spark']]],
     ])->assertOk();
@@ -64,7 +65,7 @@ test('get_build returns a saved build by public id', function () {
 });
 
 test('the build page renders with escaped markdown guide and hover entities', function () {
-    Poe2Server::tool(SaveBuildTool::class, [
+    Poe2Server::actingAs(User::factory()->create())->tool(SaveBuildTool::class, [
         'name' => 'Spark Starter',
         'guide_markdown' => "## Concept\n\n<script>alert(1)</script> Roll and zap with Spark. Grab Astramentis and the Chaos Inoculation keystone.",
         'build' => [
@@ -101,4 +102,67 @@ test('the build page renders with escaped markdown guide and hover entities', fu
 
 test('unknown build ids 404', function () {
     $this->get('/builds/doesnotexist1')->assertNotFound();
+});
+
+test('save_build associates the build with the signed-in user', function () {
+    $user = User::factory()->create();
+
+    Poe2Server::actingAs($user)->tool(SaveBuildTool::class, [
+        'name' => 'Owned Build',
+        'build' => ['skills' => [['gem' => 'Spark']]],
+    ])->assertOk();
+
+    expect(SavedBuild::sole()->user_id)->toBe($user->id);
+});
+
+test('save_build without an authenticated user returns an error', function () {
+    Poe2Server::tool(SaveBuildTool::class, [
+        'name' => 'Anonymous Build',
+        'build' => ['skills' => [['gem' => 'Spark']]],
+    ])->assertHasErrors();
+
+    expect(SavedBuild::count())->toBe(0);
+});
+
+test('save_build with an id updates the existing build in place', function () {
+    $user = User::factory()->create();
+
+    Poe2Server::actingAs($user)->tool(SaveBuildTool::class, [
+        'name' => 'First Draft',
+        'build' => ['skills' => [['gem' => 'Spark']]],
+    ])->assertOk();
+
+    $build = SavedBuild::sole();
+
+    Poe2Server::actingAs($user)->tool(SaveBuildTool::class, [
+        'id' => $build->public_id,
+        'name' => 'Second Draft',
+        'summary' => 'Now with pierce.',
+        'build' => ['skills' => [['gem' => 'Spark', 'supports' => ['Pierce']]]],
+    ])->assertOk()->assertSee($build->public_id);
+
+    expect(SavedBuild::count())->toBe(1)
+        ->and($build->refresh()->name)->toBe('Second Draft')
+        ->and($build->summary)->toBe('Now with pierce.')
+        ->and($build->build['skills'][0]['supports'])->toBe(['Pierce']);
+});
+
+test('save_build cannot update another users build', function () {
+    $owner = User::factory()->create();
+
+    Poe2Server::actingAs($owner)->tool(SaveBuildTool::class, [
+        'name' => 'Owned Build',
+        'build' => ['skills' => [['gem' => 'Spark']]],
+    ])->assertOk();
+
+    $build = SavedBuild::sole();
+
+    Poe2Server::actingAs(User::factory()->create())->tool(SaveBuildTool::class, [
+        'id' => $build->public_id,
+        'name' => 'Hijacked',
+        'build' => ['skills' => [['gem' => 'Spark']]],
+    ])->assertHasErrors();
+
+    expect(SavedBuild::count())->toBe(1)
+        ->and($build->refresh()->name)->toBe('Owned Build');
 });

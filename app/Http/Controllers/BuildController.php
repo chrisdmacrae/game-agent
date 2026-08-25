@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Domain\Poe2\BuildPageEnricher;
 use App\Domain\Poe2\BuildPlannerExporter;
 use App\Domain\Poe2\PobExporter;
+use App\Domain\Seo\OgImageRenderer;
 use App\Models\Poe2\Ascendancy;
 use App\Models\SavedBuild;
 use Illuminate\Http\JsonResponse;
@@ -33,6 +34,39 @@ class BuildController extends Controller
         return response($exporter->json($build), 200, [
             'Content-Type' => 'application/json',
             'Content-Disposition' => 'attachment; filename="'.$exporter->filename($build).'"',
+        ]);
+    }
+
+    public function ogImage(string $publicId, OgImageRenderer $renderer): HttpResponse
+    {
+        $build = SavedBuild::where('public_id', $publicId)->firstOrFail();
+
+        $definition = $build->build;
+        $identity = implode(' · ', array_filter([$definition['class'] ?? null, $definition['ascendancy'] ?? null]));
+        $level = $definition['level'] ?? null;
+        $tier = $definition['content_tier'] ?? null;
+
+        $seoIdentity = implode(', ', array_filter([
+            $identity !== '' ? $identity : null,
+            $level ? "level {$level}" : null,
+        ]));
+
+        $subtitle = $build->summary
+            ?? ($seoIdentity !== '' ? "{$seoIdentity} build for Path of Exile 2." : 'A build for Path of Exile 2.');
+
+        $badges = array_values(array_filter([
+            $identity !== '' ? $identity : null,
+            $level ? "Level {$level}" : null,
+            $tier ? ucwords(str_replace('_', ' ', $tier)) : null,
+            $build->gameVersion?->version ? "Patch {$build->gameVersion->version}" : null,
+        ]));
+
+        $png = $renderer->render('PoE2 Theorycrafter', $build->name ?? 'Untitled build', $subtitle, $badges);
+
+        return response($png, 200, [
+            'Content-Type' => 'image/png',
+            'Cache-Control' => 'public, max-age=86400',
+            'ETag' => '"'.md5($build->public_id.'|'.$build->updated_at?->timestamp).'"',
         ]);
     }
 

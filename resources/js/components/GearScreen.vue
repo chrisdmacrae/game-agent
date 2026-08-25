@@ -48,11 +48,17 @@ const cardStyle = ref<Record<string, string>>({});
 const container = ref<HTMLDivElement | null>(null);
 
 function onEnter(item: GearViewItem | undefined, event: MouseEvent) {
-    if (!item || !container.value) return;
+    if (!item || !container.value) {
+        return;
+    }
+
     const rect = container.value.getBoundingClientRect();
     const target = (event.currentTarget as HTMLElement).getBoundingClientRect();
     const x = Math.min(Math.max(8, target.left - rect.left), rect.width - 300);
-    cardStyle.value = { left: `${x}px`, top: `${target.bottom - rect.top + 6}px` };
+    cardStyle.value = {
+        left: `${x}px`,
+        top: `${target.bottom - rect.top + 6}px`,
+    };
     hovered.value = item;
 }
 
@@ -69,7 +75,11 @@ function onLeave() {
                 :key="cell.slot"
                 :style="{ gridArea: cell.area }"
                 class="flex min-h-24 flex-col items-center justify-center rounded-lg border p-2 text-center"
-                :class="slots[cell.slot] ? `bg-zinc-900/70 ${rarityStyles[slots[cell.slot].rarity]?.border ?? 'border-zinc-700'} cursor-help` : 'border-dashed border-zinc-800 bg-zinc-950'"
+                :class="
+                    slots[cell.slot]
+                        ? `bg-zinc-900/70 ${rarityStyles[slots[cell.slot].rarity]?.border ?? 'border-zinc-700'} cursor-help`
+                        : 'border-dashed border-zinc-800 bg-zinc-950'
+                "
                 @mouseenter="onEnter(slots[cell.slot], $event)"
                 @mouseleave="onLeave"
             >
@@ -83,11 +93,26 @@ function onLeave() {
                     <span
                         v-else
                         class="flex h-10 w-10 items-center justify-center rounded border border-zinc-700 text-lg font-bold text-zinc-500"
-                    >{{ (slots[cell.slot].name ?? cell.label).charAt(0) }}</span>
-                    <p class="mt-1 line-clamp-2 text-xs leading-tight font-medium" :class="rarityStyles[slots[cell.slot].rarity]?.name">
-                        {{ slots[cell.slot].name ?? slots[cell.slot].base ?? cell.label }}
+                        >{{
+                            (slots[cell.slot].name ?? cell.label).charAt(0)
+                        }}</span
+                    >
+                    <p
+                        class="mt-1 line-clamp-2 text-xs leading-tight font-medium"
+                        :class="rarityStyles[slots[cell.slot].rarity]?.name"
+                    >
+                        {{
+                            slots[cell.slot].name ??
+                            slots[cell.slot].base ??
+                            cell.label
+                        }}
                     </p>
-                    <p v-if="slots[cell.slot].instill" class="text-[10px] text-violet-400">instilled</p>
+                    <p
+                        v-if="slots[cell.slot].instill"
+                        class="text-[10px] text-violet-400"
+                    >
+                        instilled
+                    </p>
                 </template>
                 <template v-else>
                     <p class="text-xs text-zinc-700">{{ cell.label }}</p>
@@ -96,18 +121,36 @@ function onLeave() {
         </div>
 
         <!-- Weapon swap + jewels row -->
-        <div v-if="swapLayout.some((cell) => slots[cell.slot]) || jewels.length" class="mt-2 flex flex-wrap gap-2">
+        <div
+            v-if="swapLayout.some((cell) => slots[cell.slot]) || jewels.length"
+            class="mt-2 flex flex-wrap gap-2"
+        >
             <div
                 v-for="cell in swapLayout.filter((c) => slots[c.slot])"
                 :key="cell.slot"
                 class="flex min-w-28 cursor-help flex-col items-center rounded-lg border bg-zinc-900/70 p-2 text-center"
-                :class="rarityStyles[slots[cell.slot].rarity]?.border ?? 'border-zinc-700'"
+                :class="
+                    rarityStyles[slots[cell.slot].rarity]?.border ??
+                    'border-zinc-700'
+                "
                 @mouseenter="onEnter(slots[cell.slot], $event)"
                 @mouseleave="onLeave"
             >
-                <img v-if="slots[cell.slot].icon" :src="slots[cell.slot].icon!" :alt="cell.label" class="max-h-12 object-contain" />
-                <p class="mt-1 text-xs font-medium" :class="rarityStyles[slots[cell.slot].rarity]?.name">
-                    {{ slots[cell.slot].name ?? slots[cell.slot].base ?? cell.label }}
+                <img
+                    v-if="slots[cell.slot].icon"
+                    :src="slots[cell.slot].icon!"
+                    :alt="cell.label"
+                    class="max-h-12 object-contain"
+                />
+                <p
+                    class="mt-1 text-xs font-medium"
+                    :class="rarityStyles[slots[cell.slot].rarity]?.name"
+                >
+                    {{
+                        slots[cell.slot].name ??
+                        slots[cell.slot].base ??
+                        cell.label
+                    }}
                 </p>
                 <p class="text-[10px] text-zinc-600">{{ cell.label }}</p>
             </div>
@@ -119,8 +162,18 @@ function onLeave() {
                 @mouseenter="onEnter(jewel, $event)"
                 @mouseleave="onLeave"
             >
-                <img v-if="jewel.icon" :src="jewel.icon!" :alt="jewel.name ?? 'Jewel'" class="max-h-12 object-contain" />
-                <p class="mt-1 text-xs font-medium" :class="rarityStyles[jewel.rarity]?.name">{{ jewel.name }}</p>
+                <img
+                    v-if="jewel.icon"
+                    :src="jewel.icon!"
+                    :alt="jewel.name ?? 'Jewel'"
+                    class="max-h-12 object-contain"
+                />
+                <p
+                    class="mt-1 text-xs font-medium"
+                    :class="rarityStyles[jewel.rarity]?.name"
+                >
+                    {{ jewel.name }}
+                </p>
                 <p class="text-[10px] text-zinc-600">Jewel</p>
             </div>
         </div>
@@ -131,17 +184,39 @@ function onLeave() {
             class="pointer-events-none absolute z-10 w-[290px] rounded-lg border border-zinc-700 bg-zinc-900 p-3 shadow-xl shadow-black/50"
             :style="cardStyle"
         >
-            <p class="font-semibold" :class="rarityStyles[hovered.rarity]?.name">{{ hovered.name ?? hovered.base }}</p>
-            <p v-if="hovered.name && hovered.base" class="text-xs text-zinc-500">{{ hovered.base }}</p>
-            <ul v-if="hovered.implicits.length" class="mt-1.5 border-b border-zinc-800 pb-1.5 text-sm text-zinc-400">
-                <li v-for="implicit in hovered.implicits" :key="implicit">{{ implicit }}</li>
+            <p
+                class="font-semibold"
+                :class="rarityStyles[hovered.rarity]?.name"
+            >
+                {{ hovered.name ?? hovered.base }}
+            </p>
+            <p
+                v-if="hovered.name && hovered.base"
+                class="text-xs text-zinc-500"
+            >
+                {{ hovered.base }}
+            </p>
+            <ul
+                v-if="hovered.implicits.length"
+                class="mt-1.5 border-b border-zinc-800 pb-1.5 text-sm text-zinc-400"
+            >
+                <li v-for="implicit in hovered.implicits" :key="implicit">
+                    {{ implicit }}
+                </li>
             </ul>
-            <ul v-if="hovered.mods.length" class="mt-1.5 space-y-0.5 text-sm text-sky-200/80">
+            <ul
+                v-if="hovered.mods.length"
+                class="mt-1.5 space-y-0.5 text-sm text-sky-200/80"
+            >
                 <li v-for="mod in hovered.mods" :key="mod">{{ mod }}</li>
             </ul>
             <p v-if="hovered.instill" class="mt-1.5 text-sm text-violet-300">
                 Instilled: {{ hovered.instill.notable }}
-                <span v-if="hovered.instill.emotions?.length" class="text-zinc-500">({{ hovered.instill.emotions.join(' + ') }})</span>
+                <span
+                    v-if="hovered.instill.emotions?.length"
+                    class="text-zinc-500"
+                    >({{ hovered.instill.emotions.join(' + ') }})</span
+                >
             </p>
         </div>
     </div>
