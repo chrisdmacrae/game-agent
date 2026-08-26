@@ -48,7 +48,15 @@ class HandleInertiaRequests extends Middleware
                 'user' => $this->user($request->user()),
             ],
             'games' => fn () => $this->games(),
+            // `mcpUrl` is the legacy single-endpoint prop, kept because the
+            // shell falls back to it; `mcpUrls` is the real per-game map, since
+            // an endpoint path is not derivable from a game slug (diablo-4 =>
+            // /mcp/d4).
             'mcpUrl' => route('mcp.poe2'),
+            'mcpUrls' => [
+                'poe2' => route('mcp.poe2'),
+                'diablo-4' => route('mcp.d4'),
+            ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }

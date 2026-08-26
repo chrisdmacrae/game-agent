@@ -1,6 +1,5 @@
 <?php
 
-use App\Domain\D4\Import\D4DataSource;
 use App\Domain\D4\Import\D4Importer;
 use App\Models\D4\Affix;
 use App\Models\D4\Aspect;
@@ -12,6 +11,7 @@ use App\Models\D4\Skill;
 use App\Models\D4\UniqueItem;
 use App\Models\Game;
 use App\Models\GameVersion;
+use Tests\Fixtures\D4Seeder;
 
 /**
  * The fixture tree mirrors the d4data repo layout with a referentially intact
@@ -19,11 +19,7 @@ use App\Models\GameVersion;
  */
 function d4Importer(): D4Importer
 {
-    return new D4Importer(new D4DataSource(
-        fromGit: false,
-        treePath: base_path('tests/Fixtures/d4data'),
-        fingerprintOverride: 'fixturecommitsha',
-    ));
+    return D4Seeder::importer();
 }
 
 /** @var array<string, int> */

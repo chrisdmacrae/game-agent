@@ -56,7 +56,9 @@ const handle = computed(
     () => (user.value?.handle as string | undefined) ?? user.value?.name ?? '',
 );
 
-const mcpUrl = computed(() => gameMcpUrl(page.props.mcpUrl, props.game.slug));
+const mcpUrl = computed(() =>
+    gameMcpUrl(page.props.mcpUrl, props.game.slug, page.props.mcpUrls),
+);
 
 const publishOpen = ref(false);
 

@@ -38,6 +38,7 @@ const mcpUrl = computed(() =>
     gameMcpUrl(
         page.props.mcpUrl,
         props.groups.find((group) => group.game.is_live)?.game.slug ?? 'poe2',
+        page.props.mcpUrls,
     ),
 );
 

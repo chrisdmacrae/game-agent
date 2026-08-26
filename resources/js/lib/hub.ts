@@ -83,10 +83,24 @@ export function buildCardProps(build: HubBuild) {
 }
 
 /**
- * The per-game MCP endpoint, derived from the shared `mcpUrl` so the origin
+ * The per-game MCP endpoint. Prefers the shared `mcpUrls` map, because an
+ * endpoint path is not derivable from a game slug (diablo-4 lives at /mcp/d4);
+ * falls back to rewriting the legacy single `mcpUrl` so the origin still
  * matches whatever the app is served from.
  */
-export function gameMcpUrl(shared: unknown, slug: string): string {
+export function gameMcpUrl(
+    shared: unknown,
+    slug: string,
+    urls?: unknown,
+): string {
+    if (urls && typeof urls === 'object') {
+        const mapped = (urls as Record<string, unknown>)[slug];
+
+        if (typeof mapped === 'string' && mapped !== '') {
+            return mapped;
+        }
+    }
+
     return typeof shared === 'string' && shared !== ''
         ? shared.replace(/\/mcp\/[^/]+$/, `/mcp/${slug}`)
         : `/mcp/${slug}`;
