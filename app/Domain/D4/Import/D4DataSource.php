@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use RuntimeException;
 use Symfony\Component\Process\Process;
+use Throwable;
 
 /**
  * Materialises the DiabloTools/d4data source tree on disk so the importer can
@@ -285,7 +286,21 @@ class D4DataSource
 
         if (is_string($disk) && $disk !== '') {
             $path = is_string($url) && $url !== '' ? $url : 'd4data/latest.tar.gz';
-            $contents = Storage::disk($disk)->get($path);
+
+            // Rebuild the disk with throw enabled: the default s3 disk swallows
+            // Flysystem errors (auth, endpoint, path style) and returns null,
+            // which is indistinguishable from a genuinely missing object.
+            try {
+                $contents = Storage::build(array_merge(
+                    config("filesystems.disks.{$disk}", []),
+                    ['throw' => true],
+                ))->get($path);
+            } catch (Throwable $exception) {
+                throw new RuntimeException(
+                    "Failed to read the d4data artifact [{$path}] from the [{$disk}] disk: {$exception->getMessage()}",
+                    previous: $exception,
+                );
+            }
 
             if ($contents === null) {
                 throw new RuntimeException("The d4data artifact [{$path}] is missing from the [{$disk}] disk.");

@@ -68,10 +68,16 @@ jobs:
           import json
           import os
 
+          # The tarball is built with --exclude-vcs, so the manifest must skip
+          # the same files or extraction fails its integrity check.
+          VCS_FILES = {'.gitignore', '.gitattributes', '.gitmodules', '.cvsignore'}
+
           files = {}
           for dirpath, dirnames, filenames in os.walk('tree'):
               dirnames[:] = [d for d in dirnames if d != '.git']
               for name in filenames:
+                  if name in VCS_FILES:
+                      continue
                   full = os.path.join(dirpath, name)
                   digest = hashlib.sha256()
                   with open(full, 'rb') as handle:
