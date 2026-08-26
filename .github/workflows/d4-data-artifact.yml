@@ -56,25 +56,42 @@ jobs:
           echo "build_version=$build_version" >> "$GITHUB_OUTPUT"
 
       - name: Build manifest.json
+        env:
+          COMMIT: ${{ steps.source.outputs.commit }}
+          BUILD_VERSION: ${{ steps.source.outputs.build_version }}
+        # One python process hashes the whole tree; a shasum-per-file shell loop
+        # takes over an hour on the ~50k files this checkout contains.
         run: |
-          cd tree
-          {
-            printf '{\n'
-            printf '  "commit": "%s",\n' '${{ steps.source.outputs.commit }}'
-            printf '  "buildVersion": "%s",\n' '${{ steps.source.outputs.build_version }}'
-            printf '  "generatedAt": "%s",\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            printf '  "files": {\n'
-            first=1
-            find . -type f -not -path './.git/*' -print0 | sort -z | while IFS= read -r -d '' file; do
-              path="${file#./}"
-              sha="$(shasum -a 256 "$file" | cut -d' ' -f1)"
-              if [ "$first" -eq 1 ]; then first=0; else printf ',\n'; fi
-              printf '    "%s": "%s"' "$path" "$sha"
-            done
-            printf '\n  }\n}\n'
-          } > ../manifest.json
-          mv ../manifest.json manifest.json
-          python3 -c 'import json,sys; json.load(open("manifest.json"))'
+          python3 - <<'PY'
+          import datetime
+          import hashlib
+          import json
+          import os
+
+          files = {}
+          for dirpath, dirnames, filenames in os.walk('tree'):
+              dirnames[:] = [d for d in dirnames if d != '.git']
+              for name in filenames:
+                  full = os.path.join(dirpath, name)
+                  digest = hashlib.sha256()
+                  with open(full, 'rb') as handle:
+                      for chunk in iter(lambda: handle.read(1 << 20), b''):
+                          digest.update(chunk)
+                  files[os.path.relpath(full, 'tree')] = digest.hexdigest()
+
+          manifest = {
+              'commit': os.environ['COMMIT'],
+              'buildVersion': os.environ['BUILD_VERSION'],
+              'generatedAt': datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
+              'files': dict(sorted(files.items())),
+          }
+
+          # Written after the walk so the manifest never lists itself.
+          with open('tree/manifest.json', 'w') as handle:
+              json.dump(manifest, handle, indent=2)
+
+          print(f'hashed {len(files)} files')
+          PY
 
       - name: Create tarball
         run: tar --exclude-vcs -czf d4data.tar.gz -C tree .
