@@ -1,0 +1,139 @@
+{
+ "__fileName__": "base/meta/ParagonNode/Generic_Gate.pgn",
+ "__snoID__": 994337,
+ "__type__": "ParagonNodeDefinition",
+ "__typeHash__": 694569815,
+ "hIcon": 0,
+ "hIconMask": 3778111510,
+ "unk_7714b98": 0,
+ "eRarityOverride": 0,
+ "snoPassivePower": null,
+ "ptAttributes": [
+  {
+   "__type__": "AttributeSpecifier",
+   "__typeHash__": 3218190286,
+   "eAttribute": 9,
+   "__eAttribute_name__": "Strength_Core",
+   "dwID": 0,
+   "nParam": -1,
+   "szAttributeFormula": {
+    "value": "",
+    "compiled": ""
+   },
+   "gbidFormula": {
+    "__raw__": 1119971867,
+    "__type__": "DT_GBID",
+    "__typeHash__": 1028170061,
+    "group": 22,
+    "name": "ParagonNodeCoreStat_Normal"
+   },
+   "szFlatAttribLevelFormula": {
+    "value": "0",
+    "compiled": "BgAAAAAAAAAAAAAA"
+   }
+  },
+  {
+   "__type__": "AttributeSpecifier",
+   "__typeHash__": 3218190286,
+   "eAttribute": 10,
+   "__eAttribute_name__": "Intelligence_Core",
+   "dwID": 0,
+   "nParam": -1,
+   "szAttributeFormula": {
+    "value": "",
+    "compiled": ""
+   },
+   "gbidFormula": {
+    "__raw__": 1119971867,
+    "__type__": "DT_GBID",
+    "__typeHash__": 1028170061,
+    "group": 22,
+    "name": "ParagonNodeCoreStat_Normal"
+   },
+   "szFlatAttribLevelFormula": {
+    "value": "0",
+    "compiled": "BgAAAAAAAAAAAAAA"
+   }
+  },
+  {
+   "__type__": "AttributeSpecifier",
+   "__typeHash__": 3218190286,
+   "eAttribute": 11,
+   "__eAttribute_name__": "Willpower_Core",
+   "dwID": 0,
+   "nParam": -1,
+   "szAttributeFormula": {
+    "value": "",
+    "compiled": ""
+   },
+   "gbidFormula": {
+    "__raw__": 1119971867,
+    "__type__": "DT_GBID",
+    "__typeHash__": 1028170061,
+    "group": 22,
+    "name": "ParagonNodeCoreStat_Normal"
+   },
+   "szFlatAttribLevelFormula": {
+    "value": "0",
+    "compiled": "BgAAAAAAAAAAAAAA"
+   }
+  },
+  {
+   "__type__": "AttributeSpecifier",
+   "__typeHash__": 3218190286,
+   "eAttribute": 12,
+   "__eAttribute_name__": "Dexterity_Core",
+   "dwID": 0,
+   "nParam": -1,
+   "szAttributeFormula": {
+    "value": "",
+    "compiled": ""
+   },
+   "gbidFormula": {
+    "__raw__": 1119971867,
+    "__type__": "DT_GBID",
+    "__typeHash__": 1028170061,
+    "group": 22,
+    "name": "ParagonNodeCoreStat_Normal"
+   },
+   "szFlatAttribLevelFormula": {
+    "value": "0",
+    "compiled": "BgAAAAAAAAAAAAAA"
+   }
+  }
+ ],
+ "ptBonusAttributeIndices": [],
+ "arThresholdSelector": [],
+ "bHasSocket": false,
+ "bIsGate": true,
+ "arSkillTags": [
+  {
+   "__raw__": 510015620,
+   "__type__": "DT_GBID",
+   "__typeHash__": 1028170061,
+   "group": 56,
+   "name": "Search_Strength"
+  },
+  {
+   "__raw__": 1834748264,
+   "__type__": "DT_GBID",
+   "__typeHash__": 1028170061,
+   "group": 56,
+   "name": "Search_Intelligence"
+  },
+  {
+   "__raw__": 3639228442,
+   "__type__": "DT_GBID",
+   "__typeHash__": 1028170061,
+   "group": 56,
+   "name": "Search_Willpower"
+  },
+  {
+   "__raw__": 809827735,
+   "__type__": "DT_GBID",
+   "__typeHash__": 1028170061,
+   "group": 56,
+   "name": "Search_DEXTERITY"
+  }
+ ]
+}

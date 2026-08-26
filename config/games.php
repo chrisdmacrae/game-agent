@@ -25,4 +25,24 @@ return [
 
         'user_agent' => env('GAMES_USER_AGENT', 'game-agent-theorycrafter/0.1 (contact: admin@localhost)'),
     ],
+
+    'diablo-4' => [
+        'name' => 'Diablo IV',
+
+        // Datamined game files published as JSON by the DiabloTools/d4data project.
+        // Only cloned directly in development; production reads the dist artifact.
+        'repo_url' => env('D4_DATA_REPO_URL', 'https://github.com/DiabloTools/d4data.git'),
+        'repo_ref' => env('D4_DATA_REPO_REF', 'master'),
+
+        // Slim tarball + manifest.json built weekly by the d4-data-artifact CI
+        // workflow. Either a signed/public URL or a Laravel filesystem disk.
+        'dist_url' => env('D4_DATA_DIST_URL'),
+        'dist_disk' => env('D4_DATA_DIST_DISK'),
+
+        // Maxroll's compiled game data, used only to cross-check which content
+        // is live versus unreleased/PTR.
+        'maxroll_data_url' => env('D4_MAXROLL_DATA_URL', 'https://assets-ng.maxroll.gg/d4-tools/game/data.min.json'),
+
+        'user_agent' => env('GAMES_USER_AGENT', 'game-agent-theorycrafter/0.1 (contact: admin@localhost)'),
+    ],
 ];

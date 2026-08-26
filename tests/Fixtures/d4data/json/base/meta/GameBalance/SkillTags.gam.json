@@ -1,0 +1,4608 @@
+{
+  "__fileName__": "base/meta/GameBalance/SkillTags.gam",
+  "__snoID__": 1024995,
+  "__type__": "GameBalanceDefinition",
+  "__typeHash__": 1317228073,
+  "eGameBalanceType": 56,
+  "bIgnoreOnLoad": false,
+  "ptData": [
+    {
+      "__type__": "SkillTag_Table",
+      "__typeHash__": 136631170,
+      "dwType": 136631170,
+      "tEntries": [
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Keyword_Chill_Frozen",
+            "gbid": null,
+            "szNameGBIDHash": 2616760579
+          },
+          "dwTypes": 2,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Keyword_Berserk",
+            "gbid": null,
+            "szNameGBIDHash": 484629810
+          },
+          "dwTypes": 6,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": true,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Keyword_Weaken",
+            "gbid": null,
+            "szNameGBIDHash": 3438919839
+          },
+          "dwTypes": 6,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Keyword_Resource_Pickup",
+            "gbid": null,
+            "szNameGBIDHash": 1382655799
+          },
+          "dwTypes": 6,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Skill_Cold",
+            "gbid": null,
+            "szNameGBIDHash": 3828402880
+          },
+          "dwTypes": 5,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Skill_Lightning",
+            "gbid": null,
+            "szNameGBIDHash": 332737186
+          },
+          "dwTypes": 5,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Skill_Primary_Core",
+            "gbid": null,
+            "szNameGBIDHash": 2834424330
+          },
+          "dwTypes": 1,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": true,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 3047367406
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 3047367406
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 3047367406
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 3047367406
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 3047367406
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 3047367406
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 3047367406
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 3047367406
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 3047367406
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 3047367406
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 3047367406
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 3047367406
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 3047367406
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 3047367406
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 3047367406
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 3047367406
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Skill_Channeled",
+            "gbid": null,
+            "szNameGBIDHash": 1323527456
+          },
+          "dwTypes": 5,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": -2,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Skill_Martial",
+            "gbid": null,
+            "szNameGBIDHash": 116596264
+          },
+          "dwTypes": 5,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_Copy_Core",
+            "gbid": null,
+            "szNameGBIDHash": 2579369720
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_Critical",
+            "gbid": null,
+            "szNameGBIDHash": 2892145024
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_Damage",
+            "gbid": null,
+            "szNameGBIDHash": 3567369300
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_Lightning",
+            "gbid": null,
+            "szNameGBIDHash": 1302406649
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_MovementSpeed",
+            "gbid": null,
+            "szNameGBIDHash": 820673489
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_AttackSpeed",
+            "gbid": null,
+            "szNameGBIDHash": 4254627262
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_Life",
+            "gbid": null,
+            "szNameGBIDHash": 2543478997
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_Armor",
+            "gbid": null,
+            "szNameGBIDHash": 2317714646
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_Willpower",
+            "gbid": null,
+            "szNameGBIDHash": 3639228442
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_Strength",
+            "gbid": null,
+            "szNameGBIDHash": 510015620
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_Intelligence",
+            "gbid": null,
+            "szNameGBIDHash": 1834748264
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_DEXTERITY",
+            "gbid": null,
+            "szNameGBIDHash": 809827735
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_Cold",
+            "gbid": null,
+            "szNameGBIDHash": 2543162295
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_Fire",
+            "gbid": null,
+            "szNameGBIDHash": 2543263771
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_Resistance",
+            "gbid": null,
+            "szNameGBIDHash": 2788607590
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_Physical",
+            "gbid": null,
+            "szNameGBIDHash": 3476325106
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_Burn",
+            "gbid": null,
+            "szNameGBIDHash": 2543133100
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Keyword_Earthquake",
+            "gbid": null,
+            "szNameGBIDHash": 2433342479
+          },
+          "dwTypes": 6,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Tag_IronShrapnel",
+            "gbid": null,
+            "szNameGBIDHash": 1856696848
+          },
+          "dwTypes": 1,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": true,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Tag_DustDevils",
+            "gbid": null,
+            "szNameGBIDHash": 3759085154
+          },
+          "dwTypes": 1,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": true,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Keyword_DustDevils",
+            "gbid": null,
+            "szNameGBIDHash": 2295126507
+          },
+          "dwTypes": 6,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_Elite",
+            "gbid": null,
+            "szNameGBIDHash": 2322238504
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_Bleed",
+            "gbid": null,
+            "szNameGBIDHash": 2318675889
+          },
+          "dwTypes": 5,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": true,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_ResourceMana",
+            "gbid": null,
+            "szNameGBIDHash": 210287674
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Search_ResourceFury",
+            "gbid": null,
+            "szNameGBIDHash": 210058051
+          },
+          "dwTypes": 4,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Damage_Override_Cold",
+            "gbid": null,
+            "szNameGBIDHash": 1187835615
+          },
+          "dwTypes": 8,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": 3,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Damage_Override_Fire",
+            "gbid": null,
+            "szNameGBIDHash": 1187937091
+          },
+          "dwTypes": 8,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": 1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "FILTER_Legendary_Offensive",
+            "gbid": null,
+            "szNameGBIDHash": 3821995300
+          },
+          "dwTypes": 16,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "FILTER_Build_Barb_RequiresBerserk",
+            "gbid": null,
+            "szNameGBIDHash": 2652359656
+          },
+          "dwTypes": 16,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "FILTER_Flex_Barb_SteelGrasp",
+            "gbid": null,
+            "szNameGBIDHash": 2389387331
+          },
+          "dwTypes": 16,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Skill_Chain",
+            "gbid": null,
+            "szNameGBIDHash": 1782980193
+          },
+          "dwTypes": 5,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Raid_Legendaries",
+            "gbid": null,
+            "szNameGBIDHash": 3115988066
+          },
+          "dwTypes": 0,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Archetype_Barbarian_Berserker_Signature",
+            "gbid": null,
+            "szNameGBIDHash": 535985467
+          },
+          "dwTypes": 0,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Archetype_Barbarian_Slayer_Signature",
+            "gbid": null,
+            "szNameGBIDHash": 610312358
+          },
+          "dwTypes": 0,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Skill_Whirlwind",
+            "gbid": null,
+            "szNameGBIDHash": 3651693558
+          },
+          "dwTypes": 1,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": true,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        },
+        {
+          "__type__": "SkillTag",
+          "__typeHash__": 3267106107,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Keyword_IronShrapnel",
+            "gbid": null,
+            "szNameGBIDHash": 1038597081
+          },
+          "dwTypes": 6,
+          "ePlayerClass": -1,
+          "eDamageTypeOverride": -1,
+          "bIsPrimary": false,
+          "unk_8f923f0": false,
+          "nDisplayPriority": 0,
+          "unk_9b1b238": false,
+          "arSkillTreeIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ],
+          "arCategoryIcons": [
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            },
+            {
+              "__type__": "UIImageHandleReference",
+              "__typeHash__": 1797021084,
+              "hImageHandle": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "ptPostprocessed": "0"
+}

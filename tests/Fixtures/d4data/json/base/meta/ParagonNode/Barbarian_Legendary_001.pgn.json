@@ -1,0 +1,47 @@
+{
+ "__fileName__": "base/meta/ParagonNode/Barbarian_Legendary_001.pgn",
+ "__snoID__": 671213,
+ "__type__": "ParagonNodeDefinition",
+ "__typeHash__": 694569815,
+ "hIcon": 0,
+ "hIconMask": 599956464,
+ "unk_7714b98": 0,
+ "eRarityOverride": 4,
+ "snoPassivePower": {
+  "__raw__": 655773,
+  "__group__": 29,
+  "__type__": "DT_SNO",
+  "__typeHash__": 2764331143,
+  "__targetFileName__": "base/meta/Power/Paragon_Barb_Legendary_001.pow",
+  "groupName": "Power",
+  "name": "Paragon_Barb_Legendary_001"
+ },
+ "ptAttributes": [],
+ "ptBonusAttributeIndices": [],
+ "arThresholdSelector": [],
+ "bHasSocket": false,
+ "bIsGate": false,
+ "arSkillTags": [
+  {
+   "__raw__": 2295126507,
+   "__type__": "DT_GBID",
+   "__typeHash__": 1028170061,
+   "group": 56,
+   "name": "Keyword_DustDevils"
+  },
+  {
+   "__raw__": 2433342479,
+   "__type__": "DT_GBID",
+   "__typeHash__": 1028170061,
+   "group": 56,
+   "name": "Keyword_Earthquake"
+  },
+  {
+   "__raw__": 3567369300,
+   "__type__": "DT_GBID",
+   "__typeHash__": 1028170061,
+   "group": 56,
+   "name": "Search_Damage"
+  }
+ ]
+}

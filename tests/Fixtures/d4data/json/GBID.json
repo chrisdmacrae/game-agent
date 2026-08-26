@@ -1,0 +1,851 @@
+{
+  "18": {
+    "1186933627": [
+      "Legendary"
+    ],
+    "3016347731": [
+      "Crit_Chance"
+    ]
+  },
+  "22": {
+    "343139285": [
+      "ParagonNodeHPMaxBonus_RareMajor"
+    ],
+    "379537727": [
+      "ParagonGlyphAdditive_Rare_StatMain"
+    ],
+    "1119971867": [
+      "ParagonNodeCoreStat_Normal"
+    ],
+    "2680576132": [
+      "ParagonNodeArmorBonus_RareMinor"
+    ],
+    "2751884728": [
+      "AffixSkillRankSingle1.33x"
+    ],
+    "3610222434": [
+      "AffixCritChance"
+    ],
+    "3649544705": [
+      "TemperedAffix_9%"
+    ]
+  },
+  "43": {
+    "37441501": [
+      "Sorc_Unlock_IceBlades"
+    ],
+    "60205447": [
+      "Barb_Mod_DeathBlow_Upgrade1"
+    ],
+    "60205448": [
+      "Barb_Mod_DeathBlow_Upgrade2"
+    ],
+    "60205449": [
+      "Barb_Mod_DeathBlow_Upgrade3"
+    ],
+    "60205450": [
+      "Barb_Mod_DeathBlow_Upgrade4"
+    ],
+    "60205495": [
+      "Barb_Mod_DeathBlow_UpgradeA"
+    ],
+    "60205496": [
+      "Barb_Mod_DeathBlow_UpgradeB"
+    ],
+    "60205497": [
+      "Barb_Mod_DeathBlow_UpgradeC"
+    ],
+    "152048996": [
+      "Barb_Unlock_DoubleSwing"
+    ],
+    "182178915": [
+      "Barb_Unlock_GroundStomp"
+    ],
+    "268807323": [
+      "Barb_Unlock_DeathBlow"
+    ],
+    "429187097": [
+      "Barb_Mod_IronMaelstrom_Upgrade1"
+    ],
+    "429187098": [
+      "Barb_Mod_IronMaelstrom_Upgrade2"
+    ],
+    "429187099": [
+      "Barb_Mod_IronMaelstrom_Upgrade3"
+    ],
+    "429187100": [
+      "Barb_Mod_IronMaelstrom_Upgrade4"
+    ],
+    "429187145": [
+      "Barb_Mod_IronMaelstrom_UpgradeA"
+    ],
+    "429187146": [
+      "Barb_Mod_IronMaelstrom_UpgradeB"
+    ],
+    "429187147": [
+      "Barb_Mod_IronMaelstrom_UpgradeC"
+    ],
+    "483711471": [
+      "Barb_Mod_Leap_Upgrade1"
+    ],
+    "483711472": [
+      "Barb_Mod_Leap_Upgrade2"
+    ],
+    "483711473": [
+      "Barb_Mod_Leap_Upgrade3"
+    ],
+    "483711474": [
+      "Barb_Mod_Leap_Upgrade4"
+    ],
+    "483711519": [
+      "Barb_Mod_Leap_UpgradeA"
+    ],
+    "483711520": [
+      "Barb_Mod_Leap_UpgradeB"
+    ],
+    "483711521": [
+      "Barb_Mod_Leap_UpgradeC"
+    ],
+    "534783909": [
+      "Barb_Mod_WarCry_Upgrade1"
+    ],
+    "534783910": [
+      "Barb_Mod_WarCry_Upgrade2"
+    ],
+    "534783911": [
+      "Barb_Mod_WarCry_Upgrade3"
+    ],
+    "534783912": [
+      "Barb_Mod_WarCry_Upgrade4"
+    ],
+    "534783957": [
+      "Barb_Mod_WarCry_UpgradeA"
+    ],
+    "534783958": [
+      "Barb_Mod_WarCry_UpgradeB"
+    ],
+    "534783959": [
+      "Barb_Mod_WarCry_UpgradeC"
+    ],
+    "586796392": [
+      "Barb_Unlock_CalloftheAncients"
+    ],
+    "615657640": [
+      "Sorc_Unlock_ChainLightning"
+    ],
+    "698014711": [
+      "Sorc_Unlock_IceShards"
+    ],
+    "795264433": [
+      "Barb_Unlock_RallyingCry"
+    ],
+    "843603181": [
+      "Barb_Unlock_IronMaelstrom"
+    ],
+    "878313183": [
+      "Sorc_Unlock_ArcLash"
+    ],
+    "908388720": [
+      "Barb_Mod_DoubleSwing_Upgrade1"
+    ],
+    "908388721": [
+      "Barb_Mod_DoubleSwing_Upgrade2"
+    ],
+    "908388722": [
+      "Barb_Mod_DoubleSwing_Upgrade3"
+    ],
+    "908388723": [
+      "Barb_Mod_DoubleSwing_Upgrade4"
+    ],
+    "908388768": [
+      "Barb_Mod_DoubleSwing_UpgradeA"
+    ],
+    "908388769": [
+      "Barb_Mod_DoubleSwing_UpgradeB"
+    ],
+    "908388770": [
+      "Barb_Mod_DoubleSwing_UpgradeC"
+    ],
+    "1129607904": [
+      "Sorc_Unlock_LightningSpear"
+    ],
+    "1196287200": [
+      "Sorc_Unlock_DeepFreeze"
+    ],
+    "1250752335": [
+      "Barb_Mod_GroundStomp_Upgrade1"
+    ],
+    "1250752336": [
+      "Barb_Mod_GroundStomp_Upgrade2"
+    ],
+    "1250752337": [
+      "Barb_Mod_GroundStomp_Upgrade3"
+    ],
+    "1250752338": [
+      "Barb_Mod_GroundStomp_Upgrade4"
+    ],
+    "1250752383": [
+      "Barb_Mod_GroundStomp_UpgradeA"
+    ],
+    "1250752384": [
+      "Barb_Mod_GroundStomp_UpgradeB"
+    ],
+    "1250752385": [
+      "Barb_Mod_GroundStomp_UpgradeC"
+    ],
+    "1388319988": [
+      "Barb_Mod_CalloftheAncients_Upgrade1"
+    ],
+    "1388319989": [
+      "Barb_Mod_CalloftheAncients_Upgrade2"
+    ],
+    "1388319990": [
+      "Barb_Mod_CalloftheAncients_Upgrade3"
+    ],
+    "1388319991": [
+      "Barb_Mod_CalloftheAncients_Upgrade4"
+    ],
+    "1388320036": [
+      "Barb_Mod_CalloftheAncients_UpgradeA"
+    ],
+    "1388320037": [
+      "Barb_Mod_CalloftheAncients_UpgradeB"
+    ],
+    "1388320038": [
+      "Barb_Mod_CalloftheAncients_UpgradeC"
+    ],
+    "1416224592": [
+      "Barb_Mod_PrimalAxe_Upgrade1"
+    ],
+    "1416224593": [
+      "Barb_Mod_PrimalAxe_Upgrade2"
+    ],
+    "1416224594": [
+      "Barb_Mod_PrimalAxe_Upgrade3"
+    ],
+    "1416224595": [
+      "Barb_Mod_PrimalAxe_Upgrade4"
+    ],
+    "1416224640": [
+      "Barb_Mod_PrimalAxe_UpgradeA"
+    ],
+    "1416224641": [
+      "Barb_Mod_PrimalAxe_UpgradeB"
+    ],
+    "1416224642": [
+      "Barb_Mod_PrimalAxe_UpgradeC"
+    ],
+    "1418910539": [
+      "Barb_Unlock_Charge"
+    ],
+    "1466442822": [
+      "Sorc_Unlock_Familiar"
+    ],
+    "1479491677": [
+      "Barb_Mod_RallyingCry_Upgrade1"
+    ],
+    "1479491678": [
+      "Barb_Mod_RallyingCry_Upgrade2"
+    ],
+    "1479491679": [
+      "Barb_Mod_RallyingCry_Upgrade3"
+    ],
+    "1479491680": [
+      "Barb_Mod_RallyingCry_Upgrade4"
+    ],
+    "1479491725": [
+      "Barb_Mod_RallyingCry_UpgradeA"
+    ],
+    "1479491726": [
+      "Barb_Mod_RallyingCry_UpgradeB"
+    ],
+    "1479491727": [
+      "Barb_Mod_RallyingCry_UpgradeC"
+    ],
+    "1548315967": [
+      "Barb_Unlock_Frenzy"
+    ],
+    "1641263482": [
+      "Barb_Mod_IronSkin_Upgrade1"
+    ],
+    "1641263483": [
+      "Barb_Mod_IronSkin_Upgrade2"
+    ],
+    "1641263484": [
+      "Barb_Mod_IronSkin_Upgrade3"
+    ],
+    "1641263485": [
+      "Barb_Mod_IronSkin_Upgrade4"
+    ],
+    "1641263530": [
+      "Barb_Mod_IronSkin_UpgradeA"
+    ],
+    "1641263531": [
+      "Barb_Mod_IronSkin_UpgradeB"
+    ],
+    "1641263532": [
+      "Barb_Mod_IronSkin_UpgradeC"
+    ],
+    "1688920907": [
+      "Sorc_Mod_ArcLash_Upgrade1"
+    ],
+    "1688920908": [
+      "Sorc_Mod_ArcLash_Upgrade2"
+    ],
+    "1688920909": [
+      "Sorc_Mod_ArcLash_Upgrade3"
+    ],
+    "1688920955": [
+      "Sorc_Mod_ArcLash_UpgradeA"
+    ],
+    "1688920956": [
+      "Sorc_Mod_ArcLash_UpgradeB"
+    ],
+    "1688920957": [
+      "Sorc_Mod_ArcLash_UpgradeC"
+    ],
+    "1886308782": [
+      "Barb_Unlock_IronSkin"
+    ],
+    "1951366704": [
+      "Sorc_Unlock_Teleport"
+    ],
+    "1961681707": [
+      "Barb_Mod_Frenzy_Upgrade1"
+    ],
+    "1961681708": [
+      "Barb_Mod_Frenzy_Upgrade2"
+    ],
+    "1961681709": [
+      "Barb_Mod_Frenzy_Upgrade3"
+    ],
+    "1961681710": [
+      "Barb_Mod_Frenzy_Upgrade4"
+    ],
+    "1961681755": [
+      "Barb_Mod_Frenzy_UpgradeA"
+    ],
+    "1961681756": [
+      "Barb_Mod_Frenzy_UpgradeB"
+    ],
+    "1961681757": [
+      "Barb_Mod_Frenzy_UpgradeC"
+    ],
+    "1995026303": [
+      "Sorc_Unlock_FlameShield"
+    ],
+    "2139175659": [
+      "Barb_Mod_Bash_Upgrade1"
+    ],
+    "2139175660": [
+      "Barb_Mod_Bash_Upgrade2"
+    ],
+    "2139175661": [
+      "Barb_Mod_Bash_Upgrade3"
+    ],
+    "2139175662": [
+      "Barb_Mod_Bash_Upgrade4"
+    ],
+    "2139175707": [
+      "Barb_Mod_Bash_UpgradeA"
+    ],
+    "2139175708": [
+      "Barb_Mod_Bash_UpgradeB"
+    ],
+    "2139175709": [
+      "Barb_Mod_Bash_UpgradeC"
+    ],
+    "2193911929": [
+      "Barb_Unlock_WarCry"
+    ],
+    "2213818879": [
+      "Barb_Unlock_Bash"
+    ],
+    "2213974029": [
+      "Barb_Unlock_Flay"
+    ],
+    "2214150499": [
+      "Barb_Unlock_Kick"
+    ],
+    "2214182019": [
+      "Barb_Unlock_Leap"
+    ],
+    "2214398058": [
+      "Barb_Unlock_Rend"
+    ],
+    "2278021839": [
+      "Barb_Mod_Kick_Upgrade1"
+    ],
+    "2278021840": [
+      "Barb_Mod_Kick_Upgrade2"
+    ],
+    "2278021841": [
+      "Barb_Mod_Kick_Upgrade3"
+    ],
+    "2278021842": [
+      "Barb_Mod_Kick_Upgrade4"
+    ],
+    "2278021887": [
+      "Barb_Mod_Kick_UpgradeA"
+    ],
+    "2278021888": [
+      "Barb_Mod_Kick_UpgradeB"
+    ],
+    "2278021889": [
+      "Barb_Mod_Kick_UpgradeC"
+    ],
+    "2278784245": [
+      "Sorc_Unlock_UnstableCurrents"
+    ],
+    "2298194456": [
+      "Barb_Unlock_Rupture"
+    ],
+    "2318458551": [
+      "Barb_Mod_Charge_Upgrade1"
+    ],
+    "2318458552": [
+      "Barb_Mod_Charge_Upgrade2"
+    ],
+    "2318458553": [
+      "Barb_Mod_Charge_Upgrade3"
+    ],
+    "2318458554": [
+      "Barb_Mod_Charge_Upgrade4"
+    ],
+    "2318458599": [
+      "Barb_Mod_Charge_UpgradeA"
+    ],
+    "2318458600": [
+      "Barb_Mod_Charge_UpgradeB"
+    ],
+    "2318458601": [
+      "Barb_Mod_Charge_UpgradeC"
+    ],
+    "2336714419": [
+      "Sorc_Unlock_ChargedBolts"
+    ],
+    "2377139909": [
+      "Barb_Mod_Whirlwind_Upgrade1"
+    ],
+    "2377139910": [
+      "Barb_Mod_Whirlwind_Upgrade2"
+    ],
+    "2377139911": [
+      "Barb_Mod_Whirlwind_Upgrade3"
+    ],
+    "2377139912": [
+      "Barb_Mod_Whirlwind_Upgrade4"
+    ],
+    "2377139957": [
+      "Barb_Mod_Whirlwind_UpgradeA"
+    ],
+    "2377139958": [
+      "Barb_Mod_Whirlwind_UpgradeB"
+    ],
+    "2377139959": [
+      "Barb_Mod_Whirlwind_UpgradeC"
+    ],
+    "2386917814": [
+      "Barb_Mod_Rend_Upgrade1"
+    ],
+    "2386917815": [
+      "Barb_Mod_Rend_Upgrade2"
+    ],
+    "2386917816": [
+      "Barb_Mod_Rend_Upgrade3"
+    ],
+    "2386917817": [
+      "Barb_Mod_Rend_Upgrade4"
+    ],
+    "2386917862": [
+      "Barb_Mod_Rend_UpgradeA"
+    ],
+    "2386917863": [
+      "Barb_Mod_Rend_UpgradeB"
+    ],
+    "2386917864": [
+      "Barb_Mod_Rend_UpgradeC"
+    ],
+    "2454484515": [
+      "Sorc_Unlock_Incinerate"
+    ],
+    "2466905330": [
+      "Sorc_Unlock_Inferno"
+    ],
+    "2489309023": [
+      "Barb_Unlock_WeaponThrow"
+    ],
+    "2733338739": [
+      "Sorc_Unlock_IceArmor"
+    ],
+    "2795571296": [
+      "Sorc_Unlock_FrostBolt"
+    ],
+    "2796002851": [
+      "Sorc_Unlock_FrostNova"
+    ],
+    "2845064665": [
+      "Sorc_Unlock_Hydra"
+    ],
+    "2857783106": [
+      "Sorc_Unlock_Spark"
+    ],
+    "2881257124": [
+      "Barb_Mod_Rupture_Upgrade1"
+    ],
+    "2881257125": [
+      "Barb_Mod_Rupture_Upgrade2"
+    ],
+    "2881257126": [
+      "Barb_Mod_Rupture_Upgrade3"
+    ],
+    "2881257127": [
+      "Barb_Mod_Rupture_Upgrade4"
+    ],
+    "2881257172": [
+      "Barb_Mod_Rupture_UpgradeA"
+    ],
+    "2881257173": [
+      "Barb_Mod_Rupture_UpgradeB"
+    ],
+    "2881257174": [
+      "Barb_Mod_Rupture_UpgradeC"
+    ],
+    "3052161656": [
+      "Sorc_Unlock_FrozenOrb"
+    ],
+    "3088191900": [
+      "Barb_Mod_ChallengingShout_Upgrade1"
+    ],
+    "3088191901": [
+      "Barb_Mod_ChallengingShout_Upgrade2"
+    ],
+    "3088191902": [
+      "Barb_Mod_ChallengingShout_Upgrade3"
+    ],
+    "3088191903": [
+      "Barb_Mod_ChallengingShout_Upgrade4"
+    ],
+    "3088191948": [
+      "Barb_Mod_ChallengingShout_UpgradeA"
+    ],
+    "3088191949": [
+      "Barb_Mod_ChallengingShout_UpgradeB"
+    ],
+    "3088191950": [
+      "Barb_Mod_ChallengingShout_UpgradeC"
+    ],
+    "3130120080": [
+      "Barb_Unlock_ChallengingShout"
+    ],
+    "3147909305": [
+      "Barb_Mod_Flay_Upgrade1"
+    ],
+    "3147909306": [
+      "Barb_Mod_Flay_Upgrade2"
+    ],
+    "3147909307": [
+      "Barb_Mod_Flay_Upgrade3"
+    ],
+    "3147909308": [
+      "Barb_Mod_Flay_Upgrade4"
+    ],
+    "3147909353": [
+      "Barb_Mod_Flay_UpgradeA"
+    ],
+    "3147909354": [
+      "Barb_Mod_Flay_UpgradeB"
+    ],
+    "3147909355": [
+      "Barb_Mod_Flay_UpgradeC"
+    ],
+    "3169022739": [
+      "Barb_Mod_LungingStrike_Upgrade1"
+    ],
+    "3169022740": [
+      "Barb_Mod_LungingStrike_Upgrade2"
+    ],
+    "3169022741": [
+      "Barb_Mod_LungingStrike_Upgrade3"
+    ],
+    "3169022742": [
+      "Barb_Mod_LungingStrike_Upgrade4"
+    ],
+    "3169022787": [
+      "Barb_Mod_LungingStrike_UpgradeA"
+    ],
+    "3169022788": [
+      "Barb_Mod_LungingStrike_UpgradeB"
+    ],
+    "3169022789": [
+      "Barb_Mod_LungingStrike_UpgradeC"
+    ],
+    "3261487374": [
+      "Barb_Mod_WrathoftheBerserker_Upgrade1"
+    ],
+    "3261487375": [
+      "Barb_Mod_WrathoftheBerserker_Upgrade2"
+    ],
+    "3261487376": [
+      "Barb_Mod_WrathoftheBerserker_Upgrade3"
+    ],
+    "3261487377": [
+      "Barb_Mod_WrathoftheBerserker_Upgrade4"
+    ],
+    "3261487424": [
+      "Barb_Mod_WrathoftheBerserker_UpgradeC"
+    ],
+    "3280219356": [
+      "Barb_Mod_WrathoftheBerserker_FuryScaling"
+    ],
+    "3314430953": [
+      "Barb_Mod_WrathoftheBerserker_ResourceGeneration"
+    ],
+    "3398817538": [
+      "Sorc_Unlock_Fireball"
+    ],
+    "3398832792": [
+      "Sorc_Unlock_FireBolt"
+    ],
+    "3399572215": [
+      "Sorc_Unlock_Firewall"
+    ],
+    "3407308454": [
+      "Barb_Unlock_HammeroftheAncients"
+    ],
+    "3625588171": [
+      "Barb_Mod_WeaponThrow_Upgrade1"
+    ],
+    "3625588172": [
+      "Barb_Mod_WeaponThrow_Upgrade2"
+    ],
+    "3625588173": [
+      "Barb_Mod_WeaponThrow_Upgrade3"
+    ],
+    "3625588174": [
+      "Barb_Mod_WeaponThrow_Upgrade4"
+    ],
+    "3625588219": [
+      "Barb_Mod_WeaponThrow_UpgradeA"
+    ],
+    "3625588220": [
+      "Barb_Mod_WeaponThrow_UpgradeB"
+    ],
+    "3625588221": [
+      "Barb_Mod_WeaponThrow_UpgradeC"
+    ],
+    "3633291447": [
+      "Barb_Unlock_Upheaval"
+    ],
+    "3694605380": [
+      "Barb_Unlock_PrimalAxe"
+    ],
+    "3716348953": [
+      "Barb_Unlock_Whirlwind"
+    ],
+    "3718883264": [
+      "Sorc_Unlock_BallLightning"
+    ],
+    "3772831986": [
+      "Barb_Mod_HammerOfTheAncients_Upgrade1"
+    ],
+    "3772831987": [
+      "Barb_Mod_HammerOfTheAncients_Upgrade2"
+    ],
+    "3772831988": [
+      "Barb_Mod_HammerOfTheAncients_Upgrade3"
+    ],
+    "3772831989": [
+      "Barb_Mod_HammerOfTheAncients_Upgrade4"
+    ],
+    "3772832034": [
+      "Barb_Mod_HammerOfTheAncients_UpgradeA"
+    ],
+    "3772832035": [
+      "Barb_Mod_HammerOfTheAncients_UpgradeB"
+    ],
+    "3772832036": [
+      "Barb_Mod_HammerOfTheAncients_UpgradeC"
+    ],
+    "3854202690": [
+      "Barb_Unlock_WrathoftheBerserker"
+    ],
+    "3865340685": [
+      "Sorc_Unlock_Meteor"
+    ],
+    "3914882727": [
+      "Barb_Unlock_LungingStrike"
+    ],
+    "3976722563": [
+      "Sorc_Unlock_Blizzard"
+    ],
+    "4063593123": [
+      "Barb_Mod_Upheaval_Upgrade1"
+    ],
+    "4063593124": [
+      "Barb_Mod_Upheaval_Upgrade2"
+    ],
+    "4063593125": [
+      "Barb_Mod_Upheaval_Upgrade3"
+    ],
+    "4063593126": [
+      "Barb_Mod_Upheaval_Upgrade4"
+    ],
+    "4063593171": [
+      "Barb_Mod_Upheaval_UpgradeA"
+    ],
+    "4063593172": [
+      "Barb_Mod_Upheaval_UpgradeB"
+    ],
+    "4063593173": [
+      "Barb_Mod_Upheaval_UpgradeC"
+    ]
+  },
+  "47": {
+    "3631355": [
+      "base"
+    ]
+  },
+  "56": {
+    "116596264": [
+      "Skill_Martial"
+    ],
+    "210058051": [
+      "Search_ResourceFury"
+    ],
+    "210287674": [
+      "Search_ResourceMana"
+    ],
+    "332737186": [
+      "Skill_Lightning"
+    ],
+    "484629810": [
+      "Keyword_Berserk"
+    ],
+    "510015620": [
+      "Search_Strength"
+    ],
+    "535985467": [
+      "Archetype_Barbarian_Berserker_Signature"
+    ],
+    "610312358": [
+      "Archetype_Barbarian_Slayer_Signature"
+    ],
+    "809827735": [
+      "Search_DEXTERITY"
+    ],
+    "820673489": [
+      "Search_MovementSpeed"
+    ],
+    "1038597081": [
+      "Keyword_IronShrapnel"
+    ],
+    "1187835615": [
+      "Damage_Override_Cold"
+    ],
+    "1187937091": [
+      "Damage_Override_Fire"
+    ],
+    "1302406649": [
+      "Search_Lightning"
+    ],
+    "1323527456": [
+      "Skill_Channeled"
+    ],
+    "1382655799": [
+      "Keyword_Resource_Pickup"
+    ],
+    "1782980193": [
+      "Skill_Chain"
+    ],
+    "1834748264": [
+      "Search_Intelligence"
+    ],
+    "1856696848": [
+      "Tag_IronShrapnel"
+    ],
+    "2295126507": [
+      "Keyword_DustDevils"
+    ],
+    "2317714646": [
+      "Search_Armor"
+    ],
+    "2318675889": [
+      "Search_Bleed"
+    ],
+    "2322238504": [
+      "Search_Elite"
+    ],
+    "2389387331": [
+      "FILTER_Flex_Barb_SteelGrasp"
+    ],
+    "2433342479": [
+      "Keyword_Earthquake"
+    ],
+    "2543133100": [
+      "Search_Burn"
+    ],
+    "2543162295": [
+      "Search_Cold"
+    ],
+    "2543263771": [
+      "Search_Fire"
+    ],
+    "2543478997": [
+      "Search_Life"
+    ],
+    "2579369720": [
+      "Search_Copy_Core"
+    ],
+    "2616760579": [
+      "Keyword_Chill_Frozen"
+    ],
+    "2652359656": [
+      "FILTER_Build_Barb_RequiresBerserk"
+    ],
+    "2788607590": [
+      "Search_Resistance"
+    ],
+    "2834424330": [
+      "Skill_Primary_Core"
+    ],
+    "2892145024": [
+      "Search_Critical"
+    ],
+    "3115988066": [
+      "Raid_Legendaries"
+    ],
+    "3438919839": [
+      "Keyword_Weaken"
+    ],
+    "3476325106": [
+      "Search_Physical"
+    ],
+    "3567369300": [
+      "Search_Damage"
+    ],
+    "3639228442": [
+      "Search_Willpower"
+    ],
+    "3651693558": [
+      "Skill_Whirlwind"
+    ],
+    "3759085154": [
+      "Tag_DustDevils"
+    ],
+    "3821995300": [
+      "FILTER_Legendary_Offensive"
+    ],
+    "3828402880": [
+      "Skill_Cold"
+    ],
+    "4254627262": [
+      "Search_AttackSpeed"
+    ]
+  },
+  "122": {
+    "3290255242": [
+      "AndarielUniques"
+    ]
+  }
+}

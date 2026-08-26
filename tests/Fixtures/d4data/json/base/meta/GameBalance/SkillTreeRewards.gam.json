@@ -1,0 +1,5593 @@
+{
+  "__fileName__": "base/meta/GameBalance/SkillTreeRewards.gam",
+  "__snoID__": 547685,
+  "__type__": "GameBalanceDefinition",
+  "__typeHash__": 1317228073,
+  "eGameBalanceType": 43,
+  "bIgnoreOnLoad": false,
+  "ptData": [
+    {
+      "__type__": "SkillTreeReward_Table",
+      "__typeHash__": 1827228827,
+      "dwType": 1827228827,
+      "tEntries": [
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_WeaponThrow",
+            "gbid": null,
+            "szNameGBIDHash": 2489309023
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 1611316,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/X1_Barbarian_WeaponThrow.pow",
+            "groupName": "Power",
+            "name": "X1_Barbarian_WeaponThrow"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WeaponThrow_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 3625588219
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 1611316,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/X1_Barbarian_WeaponThrow.pow",
+            "groupName": "Power",
+            "name": "X1_Barbarian_WeaponThrow"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WeaponThrow_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 3625588220
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 1611316,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/X1_Barbarian_WeaponThrow.pow",
+            "groupName": "Power",
+            "name": "X1_Barbarian_WeaponThrow"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WeaponThrow_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 3625588221
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 1611316,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/X1_Barbarian_WeaponThrow.pow",
+            "groupName": "Power",
+            "name": "X1_Barbarian_WeaponThrow"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WeaponThrow_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 3625588171
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 1611316,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/X1_Barbarian_WeaponThrow.pow",
+            "groupName": "Power",
+            "name": "X1_Barbarian_WeaponThrow"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WeaponThrow_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 3625588172
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 1611316,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/X1_Barbarian_WeaponThrow.pow",
+            "groupName": "Power",
+            "name": "X1_Barbarian_WeaponThrow"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WeaponThrow_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 3625588173
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 1611316,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/X1_Barbarian_WeaponThrow.pow",
+            "groupName": "Power",
+            "name": "X1_Barbarian_WeaponThrow"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WeaponThrow_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 3625588174
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 1611316,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/X1_Barbarian_WeaponThrow.pow",
+            "groupName": "Power",
+            "name": "X1_Barbarian_WeaponThrow"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Bash_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 2139175707
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 200765,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Bash.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Bash"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Bash_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 2139175708
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 200765,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Bash.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Bash"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Bash_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 2139175709
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 200765,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Bash.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Bash"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Bash_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 2139175659
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 200765,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Bash.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Bash"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Bash_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 2139175660
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 200765,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Bash.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Bash"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Bash_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 2139175661
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 200765,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Bash.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Bash"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Bash_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 2139175662
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 200765,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Bash.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Bash"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Flay_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 3147909353
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 210431,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Maim.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Maim"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Flay_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 3147909354
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 210431,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Maim.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Maim"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Flay_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 3147909355
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 210431,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Maim.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Maim"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Flay_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 3147909305
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 210431,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Maim.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Maim"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Flay_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 3147909306
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 210431,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Maim.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Maim"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Flay_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 3147909307
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 210431,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Maim.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Maim"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Flay_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 3147909308
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 210431,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Maim.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Maim"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Frenzy_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 1961681755
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 210919,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Frenzy.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Frenzy"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Frenzy_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 1961681756
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 210919,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Frenzy.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Frenzy"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Frenzy_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 1961681757
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 210919,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Frenzy.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Frenzy"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Frenzy_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 1961681707
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 210919,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Frenzy.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Frenzy"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Frenzy_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 1961681708
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 210919,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Frenzy.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Frenzy"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Frenzy_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 1961681709
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 210919,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Frenzy.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Frenzy"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Frenzy_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 1961681710
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 210919,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Frenzy.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Frenzy"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_LungingStrike_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 3169022787
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 206504,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_LungingStrike.pow",
+            "groupName": "Power",
+            "name": "Barbarian_LungingStrike"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_LungingStrike_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 3169022788
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 206504,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_LungingStrike.pow",
+            "groupName": "Power",
+            "name": "Barbarian_LungingStrike"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_LungingStrike_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 3169022789
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 206504,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_LungingStrike.pow",
+            "groupName": "Power",
+            "name": "Barbarian_LungingStrike"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_LungingStrike_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 3169022739
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 206504,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_LungingStrike.pow",
+            "groupName": "Power",
+            "name": "Barbarian_LungingStrike"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_LungingStrike_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 3169022740
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 206504,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_LungingStrike.pow",
+            "groupName": "Power",
+            "name": "Barbarian_LungingStrike"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_LungingStrike_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 3169022741
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 206504,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_LungingStrike.pow",
+            "groupName": "Power",
+            "name": "Barbarian_LungingStrike"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_LungingStrike_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 3169022742
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 206504,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_LungingStrike.pow",
+            "groupName": "Power",
+            "name": "Barbarian_LungingStrike"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_HammerOfTheAncients_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 3772832034
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 213673,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_HammeroftheAncients.pow",
+            "groupName": "Power",
+            "name": "Barbarian_HammeroftheAncients"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_HammerOfTheAncients_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 3772832035
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 213673,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_HammeroftheAncients.pow",
+            "groupName": "Power",
+            "name": "Barbarian_HammeroftheAncients"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_HammerOfTheAncients_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 3772832036
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 213673,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_HammeroftheAncients.pow",
+            "groupName": "Power",
+            "name": "Barbarian_HammeroftheAncients"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_HammerOfTheAncients_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 3772831986
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 213673,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_HammeroftheAncients.pow",
+            "groupName": "Power",
+            "name": "Barbarian_HammeroftheAncients"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_HammerOfTheAncients_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 3772831987
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 213673,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_HammeroftheAncients.pow",
+            "groupName": "Power",
+            "name": "Barbarian_HammeroftheAncients"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_HammerOfTheAncients_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 3772831988
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 213673,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_HammeroftheAncients.pow",
+            "groupName": "Power",
+            "name": "Barbarian_HammeroftheAncients"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_HammerOfTheAncients_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 3772831989
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 213673,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_HammeroftheAncients.pow",
+            "groupName": "Power",
+            "name": "Barbarian_HammeroftheAncients"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Rend_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 2386917862
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 214786,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Rend.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Rend"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Rend_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 2386917863
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 214786,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Rend.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Rend"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Rend_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 2386917864
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 214786,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Rend.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Rend"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Rend_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 2386917814
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 214786,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Rend.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Rend"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Rend_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 2386917815
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 214786,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Rend.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Rend"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Rend_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 2386917816
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 214786,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Rend.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Rend"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Rend_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 2386917817
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 214786,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Rend.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Rend"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_DoubleSwing_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 908388768
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 208000,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_DoubleSwing.pow",
+            "groupName": "Power",
+            "name": "Barbarian_DoubleSwing"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_DoubleSwing_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 908388769
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 208000,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_DoubleSwing.pow",
+            "groupName": "Power",
+            "name": "Barbarian_DoubleSwing"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_DoubleSwing_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 908388770
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 208000,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_DoubleSwing.pow",
+            "groupName": "Power",
+            "name": "Barbarian_DoubleSwing"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_DoubleSwing_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 908388720
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 208000,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_DoubleSwing.pow",
+            "groupName": "Power",
+            "name": "Barbarian_DoubleSwing"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_DoubleSwing_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 908388721
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 208000,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_DoubleSwing.pow",
+            "groupName": "Power",
+            "name": "Barbarian_DoubleSwing"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_DoubleSwing_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 908388722
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 208000,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_DoubleSwing.pow",
+            "groupName": "Power",
+            "name": "Barbarian_DoubleSwing"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_DoubleSwing_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 908388723
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 208000,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_DoubleSwing.pow",
+            "groupName": "Power",
+            "name": "Barbarian_DoubleSwing"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Upheaval_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 4063593171
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 202484,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Upheaval.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Upheaval"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Upheaval_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 4063593172
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 202484,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Upheaval.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Upheaval"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Upheaval_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 4063593173
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 202484,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Upheaval.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Upheaval"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Upheaval_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 4063593123
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 202484,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Upheaval.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Upheaval"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Upheaval_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 4063593124
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 202484,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Upheaval.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Upheaval"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Upheaval_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 4063593125
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 202484,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Upheaval.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Upheaval"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Upheaval_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 4063593126
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 202484,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Upheaval.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Upheaval"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Whirlwind_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 2377139957
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 206435,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Whirlwind.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Whirlwind"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Whirlwind_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 2377139958
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 206435,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Whirlwind.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Whirlwind"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Whirlwind_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 2377139959
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 206435,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Whirlwind.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Whirlwind"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Whirlwind_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 2377139909
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 206435,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Whirlwind.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Whirlwind"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Whirlwind_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 2377139910
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 206435,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Whirlwind.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Whirlwind"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Whirlwind_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 2377139911
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 206435,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Whirlwind.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Whirlwind"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Whirlwind_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 2377139912
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 206435,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Whirlwind.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Whirlwind"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_GroundStomp_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 1250752383
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 186358,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_GroundStomp.pow",
+            "groupName": "Power",
+            "name": "Barbarian_GroundStomp"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_GroundStomp_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 1250752384
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 186358,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_GroundStomp.pow",
+            "groupName": "Power",
+            "name": "Barbarian_GroundStomp"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_GroundStomp_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 1250752385
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 186358,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_GroundStomp.pow",
+            "groupName": "Power",
+            "name": "Barbarian_GroundStomp"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_GroundStomp_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 1250752335
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 186358,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_GroundStomp.pow",
+            "groupName": "Power",
+            "name": "Barbarian_GroundStomp"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_GroundStomp_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 1250752336
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 186358,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_GroundStomp.pow",
+            "groupName": "Power",
+            "name": "Barbarian_GroundStomp"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_GroundStomp_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 1250752337
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 186358,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_GroundStomp.pow",
+            "groupName": "Power",
+            "name": "Barbarian_GroundStomp"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_GroundStomp_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 1250752338
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 186358,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_GroundStomp.pow",
+            "groupName": "Power",
+            "name": "Barbarian_GroundStomp"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_RallyingCry_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 1479491725
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 211938,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_RallyingCry.pow",
+            "groupName": "Power",
+            "name": "Barbarian_RallyingCry"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_RallyingCry_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 1479491726
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 211938,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_RallyingCry.pow",
+            "groupName": "Power",
+            "name": "Barbarian_RallyingCry"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_RallyingCry_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 1479491727
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 211938,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_RallyingCry.pow",
+            "groupName": "Power",
+            "name": "Barbarian_RallyingCry"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_RallyingCry_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 1479491677
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 211938,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_RallyingCry.pow",
+            "groupName": "Power",
+            "name": "Barbarian_RallyingCry"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_RallyingCry_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 1479491678
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 211938,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_RallyingCry.pow",
+            "groupName": "Power",
+            "name": "Barbarian_RallyingCry"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_RallyingCry_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 1479491679
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 211938,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_RallyingCry.pow",
+            "groupName": "Power",
+            "name": "Barbarian_RallyingCry"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_RallyingCry_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 1479491680
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 211938,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_RallyingCry.pow",
+            "groupName": "Power",
+            "name": "Barbarian_RallyingCry"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_IronMaelstrom_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 429187145
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 217175,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_IronMaelstrom.pow",
+            "groupName": "Power",
+            "name": "Barbarian_IronMaelstrom"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_IronMaelstrom_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 429187146
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 217175,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_IronMaelstrom.pow",
+            "groupName": "Power",
+            "name": "Barbarian_IronMaelstrom"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_IronMaelstrom_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 429187147
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 217175,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_IronMaelstrom.pow",
+            "groupName": "Power",
+            "name": "Barbarian_IronMaelstrom"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_IronMaelstrom_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 429187097
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 217175,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_IronMaelstrom.pow",
+            "groupName": "Power",
+            "name": "Barbarian_IronMaelstrom"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_IronMaelstrom_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 429187098
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 217175,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_IronMaelstrom.pow",
+            "groupName": "Power",
+            "name": "Barbarian_IronMaelstrom"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_IronMaelstrom_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 429187099
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 217175,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_IronMaelstrom.pow",
+            "groupName": "Power",
+            "name": "Barbarian_IronMaelstrom"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_IronMaelstrom_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 429187100
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 217175,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_IronMaelstrom.pow",
+            "groupName": "Power",
+            "name": "Barbarian_IronMaelstrom"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_IronSkin_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 1641263530
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 512222,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_IronSkin.pow",
+            "groupName": "Power",
+            "name": "Barbarian_IronSkin"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_IronSkin_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 1641263531
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 512222,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_IronSkin.pow",
+            "groupName": "Power",
+            "name": "Barbarian_IronSkin"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_IronSkin_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 1641263532
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 512222,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_IronSkin.pow",
+            "groupName": "Power",
+            "name": "Barbarian_IronSkin"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_IronSkin_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 1641263482
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 512222,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_IronSkin.pow",
+            "groupName": "Power",
+            "name": "Barbarian_IronSkin"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_IronSkin_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 1641263483
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 512222,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_IronSkin.pow",
+            "groupName": "Power",
+            "name": "Barbarian_IronSkin"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_IronSkin_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 1641263484
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 512222,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_IronSkin.pow",
+            "groupName": "Power",
+            "name": "Barbarian_IronSkin"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_IronSkin_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 1641263485
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 512222,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_IronSkin.pow",
+            "groupName": "Power",
+            "name": "Barbarian_IronSkin"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_ChallengingShout_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 3088191948
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 375484,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_ChallengingShout.pow",
+            "groupName": "Power",
+            "name": "Barbarian_ChallengingShout"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_ChallengingShout_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 3088191949
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 375484,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_ChallengingShout.pow",
+            "groupName": "Power",
+            "name": "Barbarian_ChallengingShout"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_ChallengingShout_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 3088191950
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 375484,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_ChallengingShout.pow",
+            "groupName": "Power",
+            "name": "Barbarian_ChallengingShout"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_ChallengingShout_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 3088191900
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 375484,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_ChallengingShout.pow",
+            "groupName": "Power",
+            "name": "Barbarian_ChallengingShout"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_ChallengingShout_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 3088191901
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 375484,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_ChallengingShout.pow",
+            "groupName": "Power",
+            "name": "Barbarian_ChallengingShout"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_ChallengingShout_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 3088191902
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 375484,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_ChallengingShout.pow",
+            "groupName": "Power",
+            "name": "Barbarian_ChallengingShout"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_ChallengingShout_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 3088191903
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 375484,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_ChallengingShout.pow",
+            "groupName": "Power",
+            "name": "Barbarian_ChallengingShout"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Kick_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 2278021887
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 199516,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Kick.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Kick"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Kick_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 2278021888
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 199516,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Kick.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Kick"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Kick_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 2278021889
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 199516,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Kick.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Kick"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Kick_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 2278021839
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 199516,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Kick.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Kick"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Kick_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 2278021840
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 199516,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Kick.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Kick"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Kick_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 2278021841
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 199516,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Kick.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Kick"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Kick_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 2278021842
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 199516,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Kick.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Kick"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WarCry_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 534783957
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 184600,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_WarCry.pow",
+            "groupName": "Power",
+            "name": "Barbarian_WarCry"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WarCry_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 534783958
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 184600,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_WarCry.pow",
+            "groupName": "Power",
+            "name": "Barbarian_WarCry"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WarCry_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 534783959
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 184600,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_WarCry.pow",
+            "groupName": "Power",
+            "name": "Barbarian_WarCry"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WarCry_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 534783909
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 184600,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_WarCry.pow",
+            "groupName": "Power",
+            "name": "Barbarian_WarCry"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WarCry_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 534783910
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 184600,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_WarCry.pow",
+            "groupName": "Power",
+            "name": "Barbarian_WarCry"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WarCry_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 534783911
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 184600,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_WarCry.pow",
+            "groupName": "Power",
+            "name": "Barbarian_WarCry"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WarCry_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 534783912
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 184600,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_WarCry.pow",
+            "groupName": "Power",
+            "name": "Barbarian_WarCry"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Leap_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 483711519
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 196545,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Leap.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Leap"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Leap_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 483711520
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 196545,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Leap.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Leap"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Leap_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 483711521
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 196545,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Leap.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Leap"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Leap_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 483711471
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 196545,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Leap.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Leap"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Leap_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 483711472
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 196545,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Leap.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Leap"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Leap_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 483711473
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 196545,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Leap.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Leap"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Leap_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 483711474
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 196545,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Leap.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Leap"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Charge_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 2318458599
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 204662,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Charge.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Charge"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Charge_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 2318458600
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 204662,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Charge.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Charge"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Charge_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 2318458601
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 204662,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Charge.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Charge"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Charge_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 2318458551
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 204662,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Charge.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Charge"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Charge_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 2318458552
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 204662,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Charge.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Charge"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Charge_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 2318458553
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 204662,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Charge.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Charge"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Charge_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 2318458554
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 204662,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Charge.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Charge"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_PrimalAxe_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 1416224640
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 964631,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_SteelGrasp.pow",
+            "groupName": "Power",
+            "name": "Barbarian_SteelGrasp"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_PrimalAxe_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 1416224641
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 964631,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_SteelGrasp.pow",
+            "groupName": "Power",
+            "name": "Barbarian_SteelGrasp"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_PrimalAxe_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 1416224642
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 964631,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_SteelGrasp.pow",
+            "groupName": "Power",
+            "name": "Barbarian_SteelGrasp"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_PrimalAxe_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 1416224592
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 964631,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_SteelGrasp.pow",
+            "groupName": "Power",
+            "name": "Barbarian_SteelGrasp"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_PrimalAxe_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 1416224593
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 964631,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_SteelGrasp.pow",
+            "groupName": "Power",
+            "name": "Barbarian_SteelGrasp"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_PrimalAxe_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 1416224594
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 964631,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_SteelGrasp.pow",
+            "groupName": "Power",
+            "name": "Barbarian_SteelGrasp"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_PrimalAxe_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 1416224595
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 964631,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_SteelGrasp.pow",
+            "groupName": "Power",
+            "name": "Barbarian_SteelGrasp"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_DeathBlow_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 60205495
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 323105,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_DeathBlow.pow",
+            "groupName": "Power",
+            "name": "Barbarian_DeathBlow"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_DeathBlow_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 60205496
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 323105,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_DeathBlow.pow",
+            "groupName": "Power",
+            "name": "Barbarian_DeathBlow"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_DeathBlow_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 60205497
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 323105,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_DeathBlow.pow",
+            "groupName": "Power",
+            "name": "Barbarian_DeathBlow"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_DeathBlow_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 60205447
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 323105,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_DeathBlow.pow",
+            "groupName": "Power",
+            "name": "Barbarian_DeathBlow"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_DeathBlow_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 60205448
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 323105,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_DeathBlow.pow",
+            "groupName": "Power",
+            "name": "Barbarian_DeathBlow"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_DeathBlow_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 60205449
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 323105,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_DeathBlow.pow",
+            "groupName": "Power",
+            "name": "Barbarian_DeathBlow"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_DeathBlow_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 60205450
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 323105,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_DeathBlow.pow",
+            "groupName": "Power",
+            "name": "Barbarian_DeathBlow"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Rupture_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 2881257172
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 215027,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Rupture.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Rupture"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Rupture_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 2881257173
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 215027,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Rupture.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Rupture"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Rupture_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 2881257174
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 215027,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Rupture.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Rupture"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Rupture_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 2881257124
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 215027,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Rupture.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Rupture"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Rupture_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 2881257125
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 215027,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Rupture.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Rupture"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Rupture_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 2881257126
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 215027,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Rupture.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Rupture"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_Rupture_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 2881257127
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 215027,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Rupture.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Rupture"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_Familiar",
+            "gbid": null,
+            "szNameGBIDHash": 1466442822
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 1627075,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/X1_Sorcerer_Familiar.pow",
+            "groupName": "Power",
+            "name": "X1_Sorcerer_Familiar"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Mod_ArcLash_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 1688920909
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 297902,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_ArcLash.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_ArcLash"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Mod_ArcLash_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 1688920908
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 297902,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_ArcLash.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_ArcLash"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Mod_ArcLash_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 1688920907
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 297902,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_ArcLash.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_ArcLash"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Mod_ArcLash_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 1688920955
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 297902,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_ArcLash.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_ArcLash"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Mod_ArcLash_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 1688920956
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 297902,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_ArcLash.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_ArcLash"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Mod_ArcLash_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 1688920957
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 297902,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_ArcLash.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_ArcLash"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_Fireball",
+            "gbid": null,
+            "szNameGBIDHash": 3398817538
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 165023,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_Fireball.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_Fireball"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_Spark",
+            "gbid": null,
+            "szNameGBIDHash": 2857783106
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 143483,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_Spark.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_Spark"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_IceShards",
+            "gbid": null,
+            "szNameGBIDHash": 698014711
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 293195,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_IceShards.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_IceShards"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_ChainLightning",
+            "gbid": null,
+            "szNameGBIDHash": 615657640
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 292757,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_ChainLightning.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_ChainLightning"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_FlameShield",
+            "gbid": null,
+            "szNameGBIDHash": 1995026303
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 167341,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_FlameShield.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_FlameShield"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_FrostNova",
+            "gbid": null,
+            "szNameGBIDHash": 2796002851
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 291215,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_FrostNova.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_FrostNova"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_FireBolt",
+            "gbid": null,
+            "szNameGBIDHash": 3398832792
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 153249,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_FireBolt.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_FireBolt"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_FrostBolt",
+            "gbid": null,
+            "szNameGBIDHash": 2795571296
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 287256,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_FrostBolt.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_FrostBolt"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_FrozenOrb",
+            "gbid": null,
+            "szNameGBIDHash": 3052161656
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 291347,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_FrozenOrb.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_FrozenOrb"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_LightningSpear",
+            "gbid": null,
+            "szNameGBIDHash": 1129607904
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 292074,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_LightningSpear.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_LightningSpear"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_Meteor",
+            "gbid": null,
+            "szNameGBIDHash": 3865340685
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 296998,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_Meteor.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_Meteor"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_Hydra",
+            "gbid": null,
+            "szNameGBIDHash": 2845064665
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 146743,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_Hydra.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_Hydra"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_Teleport",
+            "gbid": null,
+            "szNameGBIDHash": 1951366704
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 288106,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_Teleport.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_Teleport"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_ChargedBolts",
+            "gbid": null,
+            "szNameGBIDHash": 2336714419
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 171937,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_ChargedBolt.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_ChargedBolt"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_IceArmor",
+            "gbid": null,
+            "szNameGBIDHash": 2733338739
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 297039,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_IceArmor.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_IceArmor"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_IceBlades",
+            "gbid": null,
+            "szNameGBIDHash": 37441501
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 291492,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_IceBlades.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_IceBlades"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_ArcLash",
+            "gbid": null,
+            "szNameGBIDHash": 878313183
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 297902,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_ArcLash.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_ArcLash"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_Blizzard",
+            "gbid": null,
+            "szNameGBIDHash": 3976722563
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 291403,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_Blizzard.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_Blizzard"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_Firewall",
+            "gbid": null,
+            "szNameGBIDHash": 3399572215
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 111422,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_Firewall.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_Firewall"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_BallLightning",
+            "gbid": null,
+            "szNameGBIDHash": 3718883264
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 514030,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_BallLightning.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_BallLightning"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_Inferno",
+            "gbid": null,
+            "szNameGBIDHash": 2466905330
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 294198,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_Inferno.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_Inferno"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_UnstableCurrents",
+            "gbid": null,
+            "szNameGBIDHash": 2278784245
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 517417,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_UnstableCurrents.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_UnstableCurrents"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_DeepFreeze",
+            "gbid": null,
+            "szNameGBIDHash": 1196287200
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 291827,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_DeepFreeze.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_DeepFreeze"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_Bash",
+            "gbid": null,
+            "szNameGBIDHash": 2213818879
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 200765,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Bash.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Bash"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_Flay",
+            "gbid": null,
+            "szNameGBIDHash": 2213974029
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 210431,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Maim.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Maim"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_Frenzy",
+            "gbid": null,
+            "szNameGBIDHash": 1548315967
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 210919,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Frenzy.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Frenzy"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_LungingStrike",
+            "gbid": null,
+            "szNameGBIDHash": 3914882727
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 206504,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_LungingStrike.pow",
+            "groupName": "Power",
+            "name": "Barbarian_LungingStrike"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_HammeroftheAncients",
+            "gbid": null,
+            "szNameGBIDHash": 3407308454
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 213673,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_HammeroftheAncients.pow",
+            "groupName": "Power",
+            "name": "Barbarian_HammeroftheAncients"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_Rend",
+            "gbid": null,
+            "szNameGBIDHash": 2214398058
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 214786,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Rend.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Rend"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_DoubleSwing",
+            "gbid": null,
+            "szNameGBIDHash": 152048996
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 208000,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_DoubleSwing.pow",
+            "groupName": "Power",
+            "name": "Barbarian_DoubleSwing"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_Upheaval",
+            "gbid": null,
+            "szNameGBIDHash": 3633291447
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 202484,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Upheaval.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Upheaval"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_Whirlwind",
+            "gbid": null,
+            "szNameGBIDHash": 3716348953
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 206435,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Whirlwind.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Whirlwind"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_GroundStomp",
+            "gbid": null,
+            "szNameGBIDHash": 182178915
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 186358,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_GroundStomp.pow",
+            "groupName": "Power",
+            "name": "Barbarian_GroundStomp"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_RallyingCry",
+            "gbid": null,
+            "szNameGBIDHash": 795264433
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 211938,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_RallyingCry.pow",
+            "groupName": "Power",
+            "name": "Barbarian_RallyingCry"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_IronSkin",
+            "gbid": null,
+            "szNameGBIDHash": 1886308782
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 512222,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_IronSkin.pow",
+            "groupName": "Power",
+            "name": "Barbarian_IronSkin"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_ChallengingShout",
+            "gbid": null,
+            "szNameGBIDHash": 3130120080
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 375484,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_ChallengingShout.pow",
+            "groupName": "Power",
+            "name": "Barbarian_ChallengingShout"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_Kick",
+            "gbid": null,
+            "szNameGBIDHash": 2214150499
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 199516,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Kick.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Kick"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_WarCry",
+            "gbid": null,
+            "szNameGBIDHash": 2193911929
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 184600,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_WarCry.pow",
+            "groupName": "Power",
+            "name": "Barbarian_WarCry"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_Leap",
+            "gbid": null,
+            "szNameGBIDHash": 2214182019
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 196545,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Leap.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Leap"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_Charge",
+            "gbid": null,
+            "szNameGBIDHash": 1418910539
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 204662,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Charge.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Charge"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_PrimalAxe",
+            "gbid": null,
+            "szNameGBIDHash": 3694605380
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 964631,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_SteelGrasp.pow",
+            "groupName": "Power",
+            "name": "Barbarian_SteelGrasp"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_DeathBlow",
+            "gbid": null,
+            "szNameGBIDHash": 268807323
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 323105,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_DeathBlow.pow",
+            "groupName": "Power",
+            "name": "Barbarian_DeathBlow"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_Rupture",
+            "gbid": null,
+            "szNameGBIDHash": 2298194456
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 215027,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_Rupture.pow",
+            "groupName": "Power",
+            "name": "Barbarian_Rupture"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_WrathoftheBerserker",
+            "gbid": null,
+            "szNameGBIDHash": 3854202690
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 211871,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_WrathoftheBerserker.pow",
+            "groupName": "Power",
+            "name": "Barbarian_WrathoftheBerserker"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WrathoftheBerserker_FuryScaling",
+            "gbid": null,
+            "szNameGBIDHash": 3280219356
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 211871,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_WrathoftheBerserker.pow",
+            "groupName": "Power",
+            "name": "Barbarian_WrathoftheBerserker"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WrathoftheBerserker_ResourceGeneration",
+            "gbid": null,
+            "szNameGBIDHash": 3314430953
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 211871,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_WrathoftheBerserker.pow",
+            "groupName": "Power",
+            "name": "Barbarian_WrathoftheBerserker"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WrathoftheBerserker_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 3261487424
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 211871,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_WrathoftheBerserker.pow",
+            "groupName": "Power",
+            "name": "Barbarian_WrathoftheBerserker"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WrathoftheBerserker_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 3261487374
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 211871,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_WrathoftheBerserker.pow",
+            "groupName": "Power",
+            "name": "Barbarian_WrathoftheBerserker"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WrathoftheBerserker_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 3261487375
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 211871,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_WrathoftheBerserker.pow",
+            "groupName": "Power",
+            "name": "Barbarian_WrathoftheBerserker"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WrathoftheBerserker_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 3261487376
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 211871,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_WrathoftheBerserker.pow",
+            "groupName": "Power",
+            "name": "Barbarian_WrathoftheBerserker"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_WrathoftheBerserker_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 3261487377
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 211871,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_WrathoftheBerserker.pow",
+            "groupName": "Power",
+            "name": "Barbarian_WrathoftheBerserker"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_IronMaelstrom",
+            "gbid": null,
+            "szNameGBIDHash": 843603181
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 217175,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_IronMaelstrom.pow",
+            "groupName": "Power",
+            "name": "Barbarian_IronMaelstrom"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Unlock_CalloftheAncients",
+            "gbid": null,
+            "szNameGBIDHash": 586796392
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 309802,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_CalloftheAncients.pow",
+            "groupName": "Power",
+            "name": "Barbarian_CalloftheAncients"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_CalloftheAncients_UpgradeA",
+            "gbid": null,
+            "szNameGBIDHash": 1388320036
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 309802,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_CalloftheAncients.pow",
+            "groupName": "Power",
+            "name": "Barbarian_CalloftheAncients"
+          },
+          "szPowerMod": 2686060809,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_CalloftheAncients_UpgradeB",
+            "gbid": null,
+            "szNameGBIDHash": 1388320037
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 309802,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_CalloftheAncients.pow",
+            "groupName": "Power",
+            "name": "Barbarian_CalloftheAncients"
+          },
+          "szPowerMod": 2686060810,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_CalloftheAncients_UpgradeC",
+            "gbid": null,
+            "szNameGBIDHash": 1388320038
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 309802,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_CalloftheAncients.pow",
+            "groupName": "Power",
+            "name": "Barbarian_CalloftheAncients"
+          },
+          "szPowerMod": 2686060811,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_CalloftheAncients_Upgrade1",
+            "gbid": null,
+            "szNameGBIDHash": 1388319988
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 309802,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_CalloftheAncients.pow",
+            "groupName": "Power",
+            "name": "Barbarian_CalloftheAncients"
+          },
+          "szPowerMod": 2686060761,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_CalloftheAncients_Upgrade2",
+            "gbid": null,
+            "szNameGBIDHash": 1388319989
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 309802,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_CalloftheAncients.pow",
+            "groupName": "Power",
+            "name": "Barbarian_CalloftheAncients"
+          },
+          "szPowerMod": 2686060762,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_CalloftheAncients_Upgrade3",
+            "gbid": null,
+            "szNameGBIDHash": 1388319990
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 309802,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_CalloftheAncients.pow",
+            "groupName": "Power",
+            "name": "Barbarian_CalloftheAncients"
+          },
+          "szPowerMod": 2686060763,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mod_CalloftheAncients_Upgrade4",
+            "gbid": null,
+            "szNameGBIDHash": 1388319991
+          },
+          "eType": 1,
+          "snoPower": {
+            "__raw__": 309802,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Barbarian_CalloftheAncients.pow",
+            "groupName": "Power",
+            "name": "Barbarian_CalloftheAncients"
+          },
+          "szPowerMod": 2686060764,
+          "dwMaxTalentRanks": 3,
+          "unk_94e270e": true,
+          "eShapeShiftForm": -1
+        },
+        {
+          "__type__": "SkillTreeReward",
+          "__typeHash__": 3120951188,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Sorc_Unlock_Incinerate",
+            "gbid": null,
+            "szNameGBIDHash": 2454484515
+          },
+          "eType": 0,
+          "snoPower": {
+            "__raw__": 292737,
+            "__group__": 29,
+            "__type__": "DT_SNO",
+            "__typeHash__": 2764331143,
+            "__targetFileName__": "base/meta/Power/Sorcerer_Incinerate.pow",
+            "groupName": "Power",
+            "name": "Sorcerer_Incinerate"
+          },
+          "szPowerMod": 0,
+          "dwMaxTalentRanks": 15,
+          "unk_94e270e": false,
+          "eShapeShiftForm": -1
+        }
+      ]
+    }
+  ],
+  "ptPostprocessed": "0"
+}

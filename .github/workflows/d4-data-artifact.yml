@@ -1,0 +1,93 @@
+name: d4-data-artifact
+
+# Production never runs git: this job sparse-clones DiabloTools/d4data, builds a
+# slim tarball plus a manifest (commit, buildVersion, sha256 per file) and
+# uploads it to the private S3-compatible bucket the importer reads from.
+
+on:
+  schedule:
+    - cron: '17 5 * * 2' # Tuesdays 05:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  D4DATA_REPO: https://github.com/DiabloTools/d4data.git
+  D4DATA_REF: master
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Sparse clone d4data
+        run: |
+          git clone --depth 1 --filter=blob:none --sparse \
+            --branch "$D4DATA_REF" "$D4DATA_REPO" tree
+          cd tree
+          # Cone mode always keeps root files (CoreTOC_flat.json, GBID.json,
+          # buildVersion.txt), and rejects them as arguments here.
+          git sparse-checkout set \
+            json/base/meta/Power \
+            json/base/meta/PlayerClass \
+            json/base/meta/SkillKit \
+            json/base/meta/GenericSkillTree \
+            json/base/meta/ParagonBoard \
+            json/base/meta/ParagonNode \
+            json/base/meta/ParagonGlyph \
+            json/base/meta/ParagonGlyphAffix \
+            json/base/meta/ParagonThreshold \
+            json/base/meta/Item \
+            json/base/meta/ItemType \
+            json/base/meta/Aspect \
+            json/base/meta/Affix \
+            json/base/meta/GameBalance \
+            json/base/meta/Season \
+            json/enUS_Text/meta/StringList
+
+      - name: Read commit and build version
+        id: source
+        run: |
+          commit="$(git -C tree rev-parse HEAD)"
+          build_version="$(tr -d '[:space:]' < tree/buildVersion.txt)"
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
+          echo "short_sha=${commit:0:7}" >> "$GITHUB_OUTPUT"
+          echo "build_version=$build_version" >> "$GITHUB_OUTPUT"
+
+      - name: Build manifest.json
+        run: |
+          cd tree
+          {
+            printf '{\n'
+            printf '  "commit": "%s",\n' '${{ steps.source.outputs.commit }}'
+            printf '  "buildVersion": "%s",\n' '${{ steps.source.outputs.build_version }}'
+            printf '  "generatedAt": "%s",\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            printf '  "files": {\n'
+            first=1
+            find . -type f -not -path './.git/*' -print0 | sort -z | while IFS= read -r -d '' file; do
+              path="${file#./}"
+              sha="$(shasum -a 256 "$file" | cut -d' ' -f1)"
+              if [ "$first" -eq 1 ]; then first=0; else printf ',\n'; fi
+              printf '    "%s": "%s"' "$path" "$sha"
+            done
+            printf '\n  }\n}\n'
+          } > ../manifest.json
+          mv ../manifest.json manifest.json
+          python3 -c 'import json,sys; json.load(open("manifest.json"))'
+
+      - name: Create tarball
+        run: tar --exclude-vcs -czf d4data.tar.gz -C tree .
+
+      - name: Upload to bucket
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.D4_BUCKET_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.D4_BUCKET_SECRET_ACCESS_KEY }}
+          AWS_EC2_METADATA_DISABLED: 'true'
+          BUCKET: ${{ secrets.D4_BUCKET_NAME }}
+          ENDPOINT: ${{ secrets.D4_BUCKET_ENDPOINT }}
+          VERSIONED_KEY: d4data/${{ steps.source.outputs.build_version }}-${{ steps.source.outputs.short_sha }}.tar.gz
+        run: |
+          aws s3 cp d4data.tar.gz "s3://$BUCKET/$VERSIONED_KEY" --endpoint-url "$ENDPOINT"
+          aws s3 cp d4data.tar.gz "s3://$BUCKET/d4data/latest.tar.gz" --endpoint-url "$ENDPOINT"
+          aws s3 cp tree/manifest.json "s3://$BUCKET/d4data/latest.manifest.json" --endpoint-url "$ENDPOINT"

@@ -1,0 +1,17 @@
+{
+ "__fileName__": "base/meta/ParagonNode/Generic_Socket.pgn",
+ "__snoID__": 681756,
+ "__type__": "ParagonNodeDefinition",
+ "__typeHash__": 694569815,
+ "hIcon": 603228147,
+ "hIconMask": 0,
+ "unk_7714b98": 0,
+ "eRarityOverride": 0,
+ "snoPassivePower": null,
+ "ptAttributes": [],
+ "ptBonusAttributeIndices": [],
+ "arThresholdSelector": [],
+ "bHasSocket": true,
+ "bIsGate": false,
+ "arSkillTags": []
+}

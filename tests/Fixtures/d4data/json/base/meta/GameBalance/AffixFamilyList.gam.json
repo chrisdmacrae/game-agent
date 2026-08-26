@@ -1,0 +1,42 @@
+{
+  "__fileName__": "base/meta/GameBalance/AffixFamilyList.gam",
+  "__snoID__": 214106,
+  "__type__": "GameBalanceDefinition",
+  "__typeHash__": 1317228073,
+  "eGameBalanceType": 18,
+  "bIgnoreOnLoad": false,
+  "ptData": [
+    {
+      "__type__": "AffixFamilyTableEntry_Table",
+      "__typeHash__": 2956565233,
+      "dwType": 2956565233,
+      "tEntries": [
+        {
+          "__type__": "AffixFamilyTableEntry",
+          "__typeHash__": 3735532906,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Crit_Chance",
+            "gbid": null,
+            "szNameGBIDHash": 3016347731
+          },
+          "gbidItemTag": null
+        },
+        {
+          "__type__": "AffixFamilyTableEntry",
+          "__typeHash__": 3735532906,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Legendary",
+            "gbid": null,
+            "szNameGBIDHash": 1186933627
+          },
+          "gbidItemTag": null
+        }
+      ]
+    }
+  ],
+  "ptPostprocessed": "0"
+}

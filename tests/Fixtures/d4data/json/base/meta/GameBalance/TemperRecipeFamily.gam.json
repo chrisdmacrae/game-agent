@@ -1,0 +1,106 @@
+{
+  "__fileName__": "base/meta/GameBalance/TemperRecipeFamily.gam",
+  "__snoID__": 1987075,
+  "__type__": "GameBalanceDefinition",
+  "__typeHash__": 1317228073,
+  "eGameBalanceType": 89,
+  "bIgnoreOnLoad": false,
+  "ptData": [
+    {
+      "__type__": "TemperRecipeFamily_Table",
+      "__typeHash__": 4093997166,
+      "dwType": 4093997166,
+      "tEntries": [
+        {
+          "__type__": "TemperRecipeFamily",
+          "__typeHash__": 1918136615,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Defensive_CDR",
+            "gbid": null,
+            "szNameGBIDHash": 2674346407
+          }
+        },
+        {
+          "__type__": "TemperRecipeFamily",
+          "__typeHash__": 1918136615,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Defensive_Healing",
+            "gbid": null,
+            "szNameGBIDHash": 2985526054
+          }
+        },
+        {
+          "__type__": "TemperRecipeFamily",
+          "__typeHash__": 1918136615,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Defensive_PassiveRanksDefensive",
+            "gbid": null,
+            "szNameGBIDHash": 812234049
+          }
+        },
+        {
+          "__type__": "TemperRecipeFamily",
+          "__typeHash__": 1918136615,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Mobility_Simple",
+            "gbid": null,
+            "szNameGBIDHash": 2666350376
+          }
+        },
+        {
+          "__type__": "TemperRecipeFamily",
+          "__typeHash__": 1918136615,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Offensive_Arsenal",
+            "gbid": null,
+            "szNameGBIDHash": 306363392
+          }
+        },
+        {
+          "__type__": "TemperRecipeFamily",
+          "__typeHash__": 1918136615,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Offensive_Berserking",
+            "gbid": null,
+            "szNameGBIDHash": 3111518598
+          }
+        },
+        {
+          "__type__": "TemperRecipeFamily",
+          "__typeHash__": 1918136615,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Offensive_Slayers",
+            "gbid": null,
+            "szNameGBIDHash": 1822500925
+          }
+        },
+        {
+          "__type__": "TemperRecipeFamily",
+          "__typeHash__": 1918136615,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "Barb_Offensive_Finishers",
+            "gbid": null,
+            "szNameGBIDHash": 785328741
+          }
+        }
+      ]
+    }
+  ],
+  "ptPostprocessed": "0"
+}

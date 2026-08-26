@@ -1,0 +1,265 @@
+{
+  "__fileName__": "base/meta/GameBalance/AttributeFormulas.gam",
+  "__snoID__": 201912,
+  "__type__": "GameBalanceDefinition",
+  "__typeHash__": 1317228073,
+  "eGameBalanceType": 22,
+  "bIgnoreOnLoad": false,
+  "ptData": [
+    {
+      "__type__": "AttributeFormulaEntry_Table",
+      "__typeHash__": 2378676899,
+      "dwType": 2378676899,
+      "tEntries": [
+        {
+          "__type__": "AttributeFormulaEntry",
+          "__typeHash__": 3863771036,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "AffixSkillRankSingle1.33x",
+            "gbid": null,
+            "szNameGBIDHash": 2751884728
+          },
+          "arRanges": [
+            {
+              "__type__": "AttributeFormulaRange",
+              "__typeHash__": 3878713911,
+              "nItemPowerRangeStart": 0,
+              "tValueRange": {
+                "rangeValue1": 1.399999976158142,
+                "rangeValue2": 0
+              },
+              "tFormula": {
+                "value": "1.4",
+                "compiled": "BgAAADMzsz8AAAAA"
+              }
+            },
+            {
+              "__type__": "AttributeFormulaRange",
+              "__typeHash__": 3878713911,
+              "nItemPowerRangeStart": 350,
+              "tValueRange": {
+                "rangeValue1": 2,
+                "rangeValue2": 0
+              },
+              "tFormula": {
+                "value": "RandomInt(2,2)",
+                "compiled": "BgAAAAAAAEAGAAAAAAAAQAEAAAAEAAAAAAAAAA=="
+              }
+            },
+            {
+              "__type__": "AttributeFormulaRange",
+              "__typeHash__": 3878713911,
+              "nItemPowerRangeStart": 750,
+              "tValueRange": {
+                "rangeValue1": 2,
+                "rangeValue2": 1
+              },
+              "tFormula": {
+                "value": "RandomInt(2,3)",
+                "compiled": "BgAAAAAAAEAGAAAAAABAQAEAAAAEAAAAAAAAAA=="
+              }
+            },
+            {
+              "__type__": "AttributeFormulaRange",
+              "__typeHash__": 3878713911,
+              "nItemPowerRangeStart": 800,
+              "tValueRange": {
+                "rangeValue1": 3,
+                "rangeValue2": 1
+              },
+              "tFormula": {
+                "value": "RandomInt(3,4)",
+                "compiled": "BgAAAAAAQEAGAAAAAACAQAEAAAAEAAAAAAAAAA=="
+              }
+            }
+          ]
+        },
+        {
+          "__type__": "AttributeFormulaEntry",
+          "__typeHash__": 3863771036,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "AffixCritChance",
+            "gbid": null,
+            "szNameGBIDHash": 3610222434
+          },
+          "arRanges": [
+            {
+              "__type__": "AttributeFormulaRange",
+              "__typeHash__": 3878713911,
+              "nItemPowerRangeStart": 0,
+              "tValueRange": {
+                "rangeValue1": 0.009999999776482582,
+                "rangeValue2": 99.98999786376953
+              },
+              "tFormula": {
+                "value": "(0.5 + ROUND((2/510)*(IPower()-10))  + (0.5 * RandomInt(1, 3 + ROUND((3/510)*(IPower()-10))))) /  100",
+                "compiled": "BgAAAAAAAD8GAAAAAAAAQAYAAAAAAP9DDgAAAAEAAAAQAAAABgAAAAAAIEEMAAAADQAAAAEAAAApAAAACwAAAAYAAAAAAAA/BgAAAAAAgD8GAAAAAABAQAYAAAAAAEBABgAAAAAA/0MOAAAAAQAAABAAAAAGAAAAAAAgQQwAAAANAAAAAQAAACkAAAALAAAAAQAAAAQAAAANAAAACwAAAAYAAAAAAMhCDgAAAAAAAAA="
+              }
+            },
+            {
+              "__type__": "AttributeFormulaRange",
+              "__typeHash__": 3878713911,
+              "nItemPowerRangeStart": 590,
+              "tValueRange": {
+                "rangeValue1": 0.029999999329447746,
+                "rangeValue2": 99.97000122070312
+              },
+              "tFormula": {
+                "value": "(2.5 + (0.5 * RandomInt(1, 6 + ROUND((3/120)*(IPower()-590))))) /  100",
+                "compiled": "BgAAAAAAIEAGAAAAAAAAPwYAAAAAAIA/BgAAAAAAwEAGAAAAAABAQAYAAAAAAPBCDgAAAAEAAAAQAAAABgAAAACAE0QMAAAADQAAAAEAAAApAAAACwAAAAEAAAAEAAAADQAAAAsAAAAGAAAAAADIQg4AAAAAAAAA"
+              }
+            },
+            {
+              "__type__": "AttributeFormulaRange",
+              "__typeHash__": 3878713911,
+              "nItemPowerRangeStart": 750,
+              "tValueRange": {
+                "rangeValue1": 0.029999999329447746,
+                "rangeValue2": 99.97000122070312
+              },
+              "tFormula": {
+                "value": "(2.5 + (0.5 * RandomInt(1, 11))) /  100",
+                "compiled": "BgAAAAAAIEAGAAAAAAAAPwYAAAAAAIA/BgAAAAAAMEEBAAAABAAAAA0AAAALAAAABgAAAAAAyEIOAAAAAAAAAA=="
+              }
+            }
+          ]
+        },
+        {
+          "__type__": "AttributeFormulaEntry",
+          "__typeHash__": 3863771036,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "ParagonNodeHPMaxBonus_RareMajor",
+            "gbid": null,
+            "szNameGBIDHash": 343139285
+          },
+          "arRanges": [
+            {
+              "__type__": "AttributeFormulaRange",
+              "__typeHash__": 3878713911,
+              "nItemPowerRangeStart": 0,
+              "tValueRange": {
+                "rangeValue1": 0,
+                "rangeValue2": 99999
+              },
+              "tFormula": {
+                "value": "1 * ParagonPowerBudgetMultiplierNodeRareMajorDefensive()",
+                "compiled": "BgAAAAAAgD8BAAAAYgAAAA0AAAAAAAAA"
+              }
+            }
+          ]
+        },
+        {
+          "__type__": "AttributeFormulaEntry",
+          "__typeHash__": 3863771036,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "ParagonNodeCoreStat_Normal",
+            "gbid": null,
+            "szNameGBIDHash": 1119971867
+          },
+          "arRanges": [
+            {
+              "__type__": "AttributeFormulaRange",
+              "__typeHash__": 3878713911,
+              "nItemPowerRangeStart": 0,
+              "tValueRange": {
+                "rangeValue1": 0,
+                "rangeValue2": 99999
+              },
+              "tFormula": {
+                "value": "5",
+                "compiled": "BgAAAAAAoEAAAAAA"
+              }
+            }
+          ]
+        },
+        {
+          "__type__": "AttributeFormulaEntry",
+          "__typeHash__": 3863771036,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "ParagonNodeArmorBonus_RareMinor",
+            "gbid": null,
+            "szNameGBIDHash": 2680576132
+          },
+          "arRanges": [
+            {
+              "__type__": "AttributeFormulaRange",
+              "__typeHash__": 3878713911,
+              "nItemPowerRangeStart": 0,
+              "tValueRange": {
+                "rangeValue1": 0,
+                "rangeValue2": 99999
+              },
+              "tFormula": {
+                "value": "0.5 * ParagonPowerBudgetMultiplierNodeRareMinorDefensive()",
+                "compiled": "BgAAAAAAAD8BAAAAZAAAAA0AAAAAAAAA"
+              }
+            }
+          ]
+        },
+        {
+          "__type__": "AttributeFormulaEntry",
+          "__typeHash__": 3863771036,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "ParagonGlyphAdditive_Rare_StatMain",
+            "gbid": null,
+            "szNameGBIDHash": 379537727
+          },
+          "arRanges": [
+            {
+              "__type__": "AttributeFormulaRange",
+              "__typeHash__": 3878713911,
+              "nItemPowerRangeStart": 0,
+              "tValueRange": {
+                "rangeValue1": 0,
+                "rangeValue2": 99999
+              },
+              "tFormula": {
+                "value": "0.04 * ParagonPowerBudgetMultiplierGlyphStatBonusRare()",
+                "compiled": "BgAAAArXIz0BAAAAXAAAAA0AAAAAAAAA"
+              }
+            }
+          ]
+        },
+        {
+          "__type__": "AttributeFormulaEntry",
+          "__typeHash__": 3863771036,
+          "tHeader": {
+            "__type__": "GBIDHeader",
+            "__typeHash__": 2811181471,
+            "szName": "TemperedAffix_9%",
+            "gbid": null,
+            "szNameGBIDHash": 3649544705
+          },
+          "arRanges": [
+            {
+              "__type__": "AttributeFormulaRange",
+              "__typeHash__": 3878713911,
+              "nItemPowerRangeStart": 0,
+              "tValueRange": {
+                "rangeValue1": 0.05999999865889549,
+                "rangeValue2": 0.029999999329447746
+              },
+              "tFormula": {
+                "value": "(5.9+(0.1*RandomInt(1,31)))/100",
+                "compiled": "BgAAAM3MvEAGAAAAzczMPQYAAAAAAIA/BgAAAAAA+EEBAAAABAAAAA0AAAALAAAABgAAAAAAyEIOAAAAAAAAAA=="
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "ptPostprocessed": "0"
+}

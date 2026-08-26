@@ -1,0 +1,93 @@
+{
+  "__fileName__": "enUS_Text/meta/StringList/AttributeDescriptions.stl",
+  "__snoID__": 4080,
+  "__type__": "StringListDefinition",
+  "__typeHash__": 3672216444,
+  "arStrings": [
+    {
+      "__type__": "StringTableEntry",
+      "__typeHash__": 3844612145,
+      "szLabel": "Crit_Percent_Bonus",
+      "szText": "+[{VALUE}*100|1%|] Critical Strike Chance",
+      "hLabel": 2937594184
+    },
+    {
+      "__type__": "StringTableEntry",
+      "__typeHash__": 3844612145,
+      "szLabel": "Damage_Percent_All_From_Skills",
+      "szText": "+[{VALUE}*100|%|] Damage",
+      "hLabel": 4220837963
+    },
+    {
+      "__type__": "StringTableEntry",
+      "__typeHash__": 3844612145,
+      "szLabel": "Weapon_Speed_Percent_Bonus",
+      "szText": "+[{VALUE} * 100|1%|] Weapon Speed",
+      "hLabel": 2037356336
+    },
+    {
+      "__type__": "StringTableEntry",
+      "__typeHash__": 3844612145,
+      "szLabel": "Hitpoints_Max_Percent_Bonus",
+      "szText": "[{VALUE}*100|1%|] Maximum Life",
+      "hLabel": 2732869853
+    },
+    {
+      "__type__": "StringTableEntry",
+      "__typeHash__": 3844612145,
+      "szLabel": "Skill_Rank_Bonus",
+      "szText": "+{VALUE2} to {c_important}{VALUE1}{/c}",
+      "hLabel": 767539024
+    },
+    {
+      "__type__": "StringTableEntry",
+      "__typeHash__": 3844612145,
+      "szLabel": "Strength_Core",
+      "szText": "[{VALUE}|~|] Strength",
+      "hLabel": 3360429143
+    },
+    {
+      "__type__": "StringTableEntry",
+      "__typeHash__": 3844612145,
+      "szLabel": "Dexterity_Core",
+      "szText": "[{VALUE}|~|] Dexterity",
+      "hLabel": 919868074
+    },
+    {
+      "__type__": "StringTableEntry",
+      "__typeHash__": 3844612145,
+      "szLabel": "Willpower_Core",
+      "szText": "[{VALUE}|~|] Willpower",
+      "hLabel": 2338412301
+    },
+    {
+      "__type__": "StringTableEntry",
+      "__typeHash__": 3844612145,
+      "szLabel": "Intelligence_Core",
+      "szText": "[{VALUE}|~|] Intelligence",
+      "hLabel": 2107797819
+    },
+    {
+      "__type__": "StringTableEntry",
+      "__typeHash__": 3844612145,
+      "szLabel": "Armor_Percent",
+      "szText": "+[{VALUE}*100|1%|] Total Armor",
+      "hLabel": 2510497329
+    },
+    {
+      "__type__": "StringTableEntry",
+      "__typeHash__": 3844612145,
+      "szLabel": "Strength_Total",
+      "szText": "[{VALUE}] Strength",
+      "hLabel": 3540142130
+    },
+    {
+      "__type__": "StringTableEntry",
+      "__typeHash__": 3844612145,
+      "szLabel": "Attack_Speed_Percent_Bonus_Per_Skill_Tag",
+      "szText": "+[{VALUE2} * 100|1%|] {c_important}{VALUE1}{/c} Attack Speed",
+      "hLabel": 581665853
+    }
+  ],
+  "ptMapStringTable": "0"
+}

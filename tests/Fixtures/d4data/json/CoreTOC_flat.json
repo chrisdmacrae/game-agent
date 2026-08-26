@@ -1,0 +1,954 @@
+{
+  "1342": [
+    "PowerFormulaTables",
+    20
+  ],
+  "1343": [
+    "QualityClasses",
+    20
+  ],
+  "4080": [
+    "AttributeDescriptions",
+    42
+  ],
+  "4206": [
+    "RareNameStrings_Prefix_Weapon_SwingBlade",
+    42
+  ],
+  "4269": [
+    "RareNameStrings_Suffix_Weapon_SwingBlade",
+    42
+  ],
+  "52095": [
+    "Chest_Normal_Generic_001",
+    73
+  ],
+  "52197": [
+    "Helm_Normal_Generic_001",
+    73
+  ],
+  "54667": [
+    "HLM_base02",
+    1
+  ],
+  "60369": [
+    "Gloves_Normal_Generic_001",
+    73
+  ],
+  "60370": [
+    "Boots_Normal_Generic_001",
+    73
+  ],
+  "60372": [
+    "Pants_Normal_Generic_001",
+    73
+  ],
+  "72984": [
+    "Sorcerer",
+    39
+  ],
+  "111422": [
+    "Sorcerer_Firewall",
+    29
+  ],
+  "131965": [
+    "Sorcerer",
+    74
+  ],
+  "143483": [
+    "Sorcerer_Spark",
+    29
+  ],
+  "146743": [
+    "Sorcerer_Hydra",
+    29
+  ],
+  "153249": [
+    "Sorcerer_FireBolt",
+    29
+  ],
+  "165023": [
+    "Sorcerer_Fireball",
+    29
+  ],
+  "166562": [
+    "1HAxe_Rare_Generic_005",
+    73
+  ],
+  "167341": [
+    "Sorcerer_FlameShield",
+    29
+  ],
+  "169776": [
+    "Barbarian",
+    74
+  ],
+  "169806": [
+    "Barbarian",
+    39
+  ],
+  "171937": [
+    "Sorcerer_ChargedBolt",
+    29
+  ],
+  "176832": [
+    "barbarianM",
+    1
+  ],
+  "184600": [
+    "Barbarian_WarCry",
+    29
+  ],
+  "186358": [
+    "Barbarian_GroundStomp",
+    29
+  ],
+  "196545": [
+    "Barbarian_Leap",
+    29
+  ],
+  "199516": [
+    "Barbarian_Kick",
+    29
+  ],
+  "200765": [
+    "Barbarian_Bash",
+    29
+  ],
+  "201912": [
+    "AttributeFormulas",
+    20
+  ],
+  "202484": [
+    "Barbarian_Upheaval",
+    29
+  ],
+  "204662": [
+    "Barbarian_Charge",
+    29
+  ],
+  "206435": [
+    "Barbarian_Whirlwind",
+    29
+  ],
+  "206504": [
+    "Barbarian_LungingStrike",
+    29
+  ],
+  "208000": [
+    "Barbarian_DoubleSwing",
+    29
+  ],
+  "210431": [
+    "Barbarian_Maim",
+    29
+  ],
+  "210919": [
+    "Barbarian_Frenzy",
+    29
+  ],
+  "211871": [
+    "Barbarian_WrathoftheBerserker",
+    29
+  ],
+  "211938": [
+    "Barbarian_RallyingCry",
+    29
+  ],
+  "213673": [
+    "Barbarian_HammeroftheAncients",
+    29
+  ],
+  "214106": [
+    "AffixFamilyList",
+    20
+  ],
+  "214786": [
+    "Barbarian_Rend",
+    29
+  ],
+  "215027": [
+    "Barbarian_Rupture",
+    29
+  ],
+  "216092": [
+    "2HAxe_Magic_Generic_001",
+    73
+  ],
+  "217175": [
+    "Barbarian_IronMaelstrom",
+    29
+  ],
+  "232657": [
+    "barbarianF",
+    1
+  ],
+  "287256": [
+    "Sorcerer_FrostBolt",
+    29
+  ],
+  "288106": [
+    "Sorcerer_Teleport",
+    29
+  ],
+  "291215": [
+    "Sorcerer_FrostNova",
+    29
+  ],
+  "291347": [
+    "Sorcerer_FrozenOrb",
+    29
+  ],
+  "291403": [
+    "Sorcerer_Blizzard",
+    29
+  ],
+  "291492": [
+    "Sorcerer_IceBlades",
+    29
+  ],
+  "291827": [
+    "Sorcerer_DeepFreeze",
+    29
+  ],
+  "292074": [
+    "Sorcerer_LightningSpear",
+    29
+  ],
+  "292737": [
+    "Sorcerer_Incinerate",
+    29
+  ],
+  "292757": [
+    "Sorcerer_ChainLightning",
+    29
+  ],
+  "293195": [
+    "Sorcerer_IceShards",
+    29
+  ],
+  "294198": [
+    "Sorcerer_Inferno",
+    29
+  ],
+  "296998": [
+    "Sorcerer_Meteor",
+    29
+  ],
+  "297039": [
+    "Sorcerer_IceArmor",
+    29
+  ],
+  "297902": [
+    "Sorcerer_ArcLash",
+    29
+  ],
+  "298235": [
+    "sorc_chainLightning_cast",
+    14
+  ],
+  "309802": [
+    "Barbarian_CalloftheAncients",
+    29
+  ],
+  "315707": [
+    "PaperDoll_Barbarian",
+    48
+  ],
+  "323105": [
+    "Barbarian_DeathBlow",
+    29
+  ],
+  "340795": [
+    "legendary_barb_001",
+    29
+  ],
+  "354508": [
+    "axe_base00",
+    1
+  ],
+  "356745": [
+    "2HAxe_Unique_Barb_001",
+    73
+  ],
+  "367269": [
+    "resourceOrb_barbarian",
+    1
+  ],
+  "375484": [
+    "Barbarian_ChallengingShout",
+    29
+  ],
+  "446778": [
+    "Mace",
+    98
+  ],
+  "446788": [
+    "Mace2H",
+    98
+  ],
+  "446796": [
+    "Sword",
+    98
+  ],
+  "446799": [
+    "Sword2H",
+    98
+  ],
+  "446801": [
+    "Axe",
+    98
+  ],
+  "446802": [
+    "Axe2H",
+    98
+  ],
+  "446813": [
+    "Polearm",
+    98
+  ],
+  "446830": [
+    "Helm",
+    98
+  ],
+  "450718": [
+    "g_playerClicked",
+    14
+  ],
+  "464217": [
+    "RareNameStrings_Prefix",
+    42
+  ],
+  "464218": [
+    "RareNameStrings_Suffix",
+    42
+  ],
+  "476541": [
+    "Axe Bad Data",
+    98
+  ],
+  "512049": [
+    "barbarian_whirlwind_payload",
+    14
+  ],
+  "512222": [
+    "Barbarian_IronSkin",
+    29
+  ],
+  "514030": [
+    "Sorcerer_BallLightning",
+    29
+  ],
+  "515039": [
+    "FrontEnd_CharacterCustomization_Cam_Barbarian_BodyToEnd",
+    14
+  ],
+  "515040": [
+    "FrontEnd_CharacterCustomization_Cam_Barbarian_BodyToHead",
+    14
+  ],
+  "515041": [
+    "FrontEnd_CharacterCustomization_Cam_Barbarian_HeadToBody",
+    14
+  ],
+  "515042": [
+    "FrontEnd_CharacterCustomization_Cam_Barbarian_HeadToEnd",
+    14
+  ],
+  "515043": [
+    "FrontEnd_CharacterCustomization_Cam_Barbarian_StartToHead",
+    14
+  ],
+  "517417": [
+    "Sorcerer_UnstableCurrents",
+    29
+  ],
+  "517692": [
+    "Play_Skill_Sorc_Lightning_Cast_Chain_1P",
+    40
+  ],
+  "517709": [
+    "Play_Skill_Sorc_Lightning_Cast_Chain_3P_Enemy",
+    40
+  ],
+  "517714": [
+    "Play_Skill_Sorc_Lightning_Cast_Chain_3P_Friendly",
+    40
+  ],
+  "517718": [
+    "Sorcerer_Enchantment_ChainLightning",
+    29
+  ],
+  "518391": [
+    "NEWBarbM_2HS_attk_whirlwind_01_Cast",
+    14
+  ],
+  "525058": [
+    "Mount_Dismount_BARB_LEAP_AB",
+    29
+  ],
+  "545569": [
+    "Boots_Legendary_Generic_Crafted044",
+    73
+  ],
+  "545570": [
+    "Chest_Legendary_Generic_Crafted044",
+    73
+  ],
+  "545572": [
+    "Gloves_Legendary_Generic_Crafted044",
+    73
+  ],
+  "545573": [
+    "Pants_Legendary_Generic_Crafted044",
+    73
+  ],
+  "547685": [
+    "SkillTreeRewards",
+    20
+  ],
+  "558733": [
+    "twoHandAxe_uniq03",
+    1
+  ],
+  "565599": [
+    "Chest_Rare_Generic_003_BlackSabbath",
+    73
+  ],
+  "565639": [
+    "Gloves_Rare_Generic_003_BlackSabbath",
+    73
+  ],
+  "565641": [
+    "Pants_Rare_Generic_003_BlackSabbath",
+    73
+  ],
+  "565642": [
+    "Boots_Rare_Generic_003_BlackSabbath",
+    73
+  ],
+  "575557": [
+    "TEST_Legendary_Power1",
+    29
+  ],
+  "575689": [
+    "CharacterCreate_Names_Barb_M",
+    42
+  ],
+  "575724": [
+    "CharacterCreate_Names_Barb_F",
+    42
+  ],
+  "577051": [
+    "CritChance",
+    104
+  ],
+  "577283": [
+    "TEST_Legendary_Power1",
+    104
+  ],
+  "578706": [
+    "legendary_barb_001",
+    104
+  ],
+  "655773": [
+    "Paragon_Barb_Legendary_001",
+    29
+  ],
+  "671213": [
+    "Barbarian_Legendary_001",
+    106
+  ],
+  "671247": [
+    "Generic_Magic_Armor",
+    106
+  ],
+  "675186": [
+    "Barbarian_Rare_015",
+    106
+  ],
+  "675448": [
+    "Barbarian_Rare_022",
+    106
+  ],
+  "677798": [
+    "sorc_chainLightning_impact",
+    14
+  ],
+  "678628": [
+    "Generic_Magic_Dex",
+    106
+  ],
+  "678629": [
+    "Generic_Magic_Will",
+    106
+  ],
+  "678754": [
+    "Generic_Magic_Damage",
+    106
+  ],
+  "678769": [
+    "Generic_Normal_Str",
+    106
+  ],
+  "678773": [
+    "Generic_Normal_Will",
+    106
+  ],
+  "678775": [
+    "Generic_Normal_Dex",
+    106
+  ],
+  "678776": [
+    "Generic_Normal_Int",
+    106
+  ],
+  "678842": [
+    "Generic_Magic_DamageToElite",
+    106
+  ],
+  "679184": [
+    "Generic_Magic_HPPercent",
+    106
+  ],
+  "681756": [
+    "Generic_Socket",
+    106
+  ],
+  "687105": [
+    "Barbarian_WeaponExpertise_1HAxe",
+    29
+  ],
+  "687645": [
+    "Barbarian_WeaponExpertise_1HMace",
+    29
+  ],
+  "687646": [
+    "Barbarian_WeaponExpertise_1HSword",
+    29
+  ],
+  "687648": [
+    "Barbarian_WeaponExpertise_2HAxe",
+    29
+  ],
+  "687651": [
+    "Barbarian_WeaponExpertise_2HMace",
+    29
+  ],
+  "687667": [
+    "Barbarian_WeaponExpertise_2HPolearm",
+    29
+  ],
+  "687668": [
+    "Barbarian_WeaponExpertise_2HSword",
+    29
+  ],
+  "738519": [
+    "TEST_VFX_CC_Helm",
+    73
+  ],
+  "738520": [
+    "TEST_VFX_CC_Helm",
+    104
+  ],
+  "791099": [
+    "Character_Select_Barbarian_World_NEW",
+    48
+  ],
+  "791858": [
+    "FrontEnd_CharacterSelect_Barbarian_HeadToBody",
+    14
+  ],
+  "791859": [
+    "FrontEnd_CharacterSelect_Barbarian_BodyToHead",
+    14
+  ],
+  "798754": [
+    "Sorcerer_ChainLightning_Passive",
+    29
+  ],
+  "830650": [
+    "StartNodeBarb",
+    106
+  ],
+  "921459": [
+    "Paragon_Barb_00",
+    108
+  ],
+  "921460": [
+    "Paragon_Barb_02",
+    108
+  ],
+  "921475": [
+    "Paragon_Barb_01",
+    108
+  ],
+  "921481": [
+    "Paragon_Barb_03",
+    108
+  ],
+  "939079": [
+    "Paragon_Barb_04",
+    108
+  ],
+  "941951": [
+    "Item_2HAxe_Unique_Barb_001",
+    42
+  ],
+  "943591": [
+    "Item_TEST_VFX_CC_Helm",
+    42
+  ],
+  "944407": [
+    "Barbarian_bodyMarking_01",
+    115
+  ],
+  "955632": [
+    "AllSorcWeapons",
+    116
+  ],
+  "964631": [
+    "Barbarian_SteelGrasp",
+    29
+  ],
+  "975538": [
+    "FrontEnd_CharacterCustomization_Cam_Barbarian_FaceToEnd",
+    14
+  ],
+  "975539": [
+    "FrontEnd_CharacterCustomization_Cam_Barbarian_FaceToHead",
+    14
+  ],
+  "975540": [
+    "FrontEnd_CharacterCustomization_Cam_Barbarian_HeadToFace",
+    14
+  ],
+  "980343": [
+    "Global_12",
+    119
+  ],
+  "993298": [
+    "Paragon_Barb_05",
+    108
+  ],
+  "993711": [
+    "Generic_Rare_066",
+    106
+  ],
+  "994337": [
+    "Generic_Gate",
+    106
+  ],
+  "995865": [
+    "Red",
+    122
+  ],
+  "995879": [
+    "X1_Black",
+    122
+  ],
+  "997728": [
+    "Paragon_Barb_06",
+    108
+  ],
+  "1015310": [
+    "WillPowerSide1",
+    124
+  ],
+  "1015341": [
+    "StrengthSide1",
+    124
+  ],
+  "1015345": [
+    "StrengthMain1",
+    124
+  ],
+  "1023184": [
+    "Rare_001_Intelligence_Main",
+    111
+  ],
+  "1023210": [
+    "Power_001_Intelligence_Main",
+    112
+  ],
+  "1023211": [
+    "Glyph_Intelligence_Main",
+    124
+  ],
+  "1023212": [
+    "ParagonGlyph_001",
+    29
+  ],
+  "1024995": [
+    "SkillTags",
+    20
+  ],
+  "1025587": [
+    "DamageBonus_Intelligence_Generic",
+    112
+  ],
+  "1031625": [
+    "Barbarian_DustDevils",
+    29
+  ],
+  "1068425": [
+    "WillpowerMain1",
+    124
+  ],
+  "1092920": [
+    "Barbarian_WeaponExpertise_1HAxe_Bonus_Rank10",
+    29
+  ],
+  "1092943": [
+    "Barbarian_WeaponExpertise_1HMace_Rank10",
+    29
+  ],
+  "1092977": [
+    "Barbarian_WeaponExpertise_1HSword_Rank10",
+    29
+  ],
+  "1092984": [
+    "Barbarian_WeaponExpertise_2HAxe_Rank10",
+    29
+  ],
+  "1092997": [
+    "Barbarian_WeaponExpertise_2HMace_Rank10",
+    29
+  ],
+  "1092998": [
+    "Barbarian_WeaponExpertise_2HPolearm_Rank10",
+    29
+  ],
+  "1093000": [
+    "Barbarian_WeaponExpertise_2HSword_Rank10",
+    29
+  ],
+  "1105889": [
+    "Affix_CritChance",
+    42
+  ],
+  "1105985": [
+    "Affix_legendary_barb_001",
+    42
+  ],
+  "1111176": [
+    "ParagonNode_Barbarian_Legendary_001",
+    42
+  ],
+  "1111187": [
+    "ParagonNode_Barbarian_Rare_015",
+    42
+  ],
+  "1111246": [
+    "ParagonGlyphAffix_DamageBonus_Intelligence_Generic",
+    42
+  ],
+  "1111518": [
+    "ParagonGlyph_Rare_001_Intelligence_Main",
+    42
+  ],
+  "1111679": [
+    "ParagonNode_Generic_Socket",
+    42
+  ],
+  "1111795": [
+    "ParagonBoard_Paragon_Barb_00",
+    42
+  ],
+  "1115470": [
+    "Power_Barbarian_Whirlwind",
+    42
+  ],
+  "1117106": [
+    "Power_Sorcerer_ChainLightning",
+    42
+  ],
+  "1194322": [
+    "Paragon_Barb_07",
+    108
+  ],
+  "1194330": [
+    "Paragon_Barb_08",
+    108
+  ],
+  "1203037": [
+    "Asp_Legendary_Barb_001",
+    128
+  ],
+  "1205333": [
+    "Barbarian_WeaponAttack",
+    29
+  ],
+  "1226921": [
+    "QST_Class_Barb_Technique",
+    31
+  ],
+  "1272348": [
+    "Blue Medium",
+    131
+  ],
+  "1281243": [
+    "01",
+    132
+  ],
+  "1289411": [
+    "Blue Paint",
+    133
+  ],
+  "1292329": [
+    "018AuburnRed",
+    134
+  ],
+  "1321911": [
+    "Item_1HAxe_Normal_Generic_000",
+    42
+  ],
+  "1321912": [
+    "1HAxe_Normal_Generic_000",
+    73
+  ],
+  "1328736": [
+    "gloves_unique_barb_001_eg",
+    14
+  ],
+  "1356421": [
+    "AnyBarbArsenal",
+    116
+  ],
+  "1363042": [
+    "Caucasian",
+    140
+  ],
+  "1363056": [
+    "H08_PonyTail",
+    138
+  ],
+  "1363066": [
+    "Clean",
+    139
+  ],
+  "1611316": [
+    "X1_Barbarian_WeaponThrow",
+    29
+  ],
+  "1627075": [
+    "X1_Sorcerer_Familiar",
+    29
+  ],
+  "1657015": [
+    "ItemType_Axe",
+    42
+  ],
+  "1742815": [
+    "ResourceBar_Barb",
+    103
+  ],
+  "1822797": [
+    "FrontEnd_CharacterCreate_Cam_Start_Bar",
+    14
+  ],
+  "1829588": [
+    "S04_Damage_All",
+    104
+  ],
+  "1841463": [
+    "TemperedItemLabelGroups",
+    20
+  ],
+  "1867550": [
+    "Affix_SkillRankBonus_Barb_Core_5_Whirlwind_UNIQUE",
+    42
+  ],
+  "1867551": [
+    "SkillRankBonus_Barb_Core_5_Whirlwind_UNIQUE",
+    104
+  ],
+  "1936035": [
+    "DX1_Campfire_Barb",
+    102
+  ],
+  "1942702": [
+    "Tempered_AttackSpeed_Sorc_Tag_Pyromancy_Tier1",
+    104
+  ],
+  "1950377": [
+    "classFxKit_impactTarget_sorc_cold",
+    14
+  ],
+  "1985448": [
+    "Paragon_Barb_10",
+    108
+  ],
+  "1987075": [
+    "TemperRecipeFamily",
+    20
+  ],
+  "2082980": [
+    "Recipe_LegendaryGlyph_Intelligence",
+    49
+  ],
+  "2111844": [
+    "MultDmgPercentAll_Legendary",
+    112
+  ],
+  "2126168": [
+    "Barbarian_Rare_039",
+    106
+  ],
+  "2142815": [
+    "TR_ClassQuest_Barb",
+    126
+  ],
+  "2312856": [
+    "Flail",
+    98
+  ],
+  "2341984": [
+    "sorc_chainLightning_cast_upgradeC",
+    14
+  ],
+  "2350115": [
+    "class_sorc_cold",
+    175
+  ],
+  "2370244": [
+    "AAATestExcelSheet",
+    20
+  ],
+  "2485821": [
+    "Barbarian_Whirlwind_Passive",
+    29
+  ],
+  "2503081": [
+    "Barbarian_IronShrapnel",
+    29
+  ],
+  "2536879": [
+    "SimpleScalarFormulas",
+    20
+  ],
+  "2547732": [
+    "ItemFamilies",
+    20
+  ],
+  "2579563": [
+    "Affix_2HAxe_Unique_Barb_001_x2",
+    42
+  ],
+  "2579564": [
+    "2HAxe_Unique_Barb_001_x2",
+    104
+  ],
+  "2579568": [
+    "2HAxe_Unique_Barb_001_x2",
+    29
+  ],
+  "2638579": [
+    "StringFormulas",
+    20
+  ],
+  "2654066": [
+    "AffixTags",
+    20
+  ]
+}
