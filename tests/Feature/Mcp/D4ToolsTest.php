@@ -15,6 +15,7 @@ use App\Mcp\Tools\D4\SearchGameKnowledgeTool;
 use App\Mcp\Tools\D4\SearchGlyphsTool;
 use App\Mcp\Tools\D4\SearchSkillsTool;
 use App\Mcp\Tools\D4\SearchUniquesTool;
+use App\Models\D4\MetaBuild;
 use Tests\Fixtures\D4Seeder;
 
 beforeEach(function () {
@@ -29,7 +30,53 @@ test('get_meta_context reports the seeded patch, its class roster and the standi
         ->assertSee('Barbarian')
         ->assertSee('dataset_counts')
         ->assertSee('no economy or trade data')
+        ->assertSee('no telemetry-based meta')
         ->assertSee('does not carry a season name');
+});
+
+test('get_meta_context says the tier list has not been ingested when the table is empty', function () {
+    D4Server::tool(GetMetaContextTool::class)
+        ->assertOk()
+        ->assertSee('not_ingested')
+        ->assertSee('No tier list data has been ingested yet');
+});
+
+test('get_meta_context adds the attributed tier list once meta builds are ingested', function () {
+    MetaBuild::insert([
+        [
+            'source' => 'maxroll',
+            'season' => 'season-14-death-awakening',
+            'name' => 'Whirlwind Barb',
+            'class_name' => 'Barbarian',
+            'tier' => 'S',
+            'tags' => '[]',
+            'guide_url' => 'https://maxroll.gg/d4/build-guides/whirlwind-barbarian-guide',
+            'raw' => '{}',
+            'fetched_at' => now(),
+        ],
+        [
+            'source' => 'maxroll',
+            'season' => 'season-14-death-awakening',
+            'name' => 'Meteor Sorc',
+            'class_name' => 'Sorcerer',
+            'tier' => 'D',
+            'tags' => '["down1"]',
+            'guide_url' => 'https://maxroll.gg/d4/build-guides/meteor-sorcerer-guide',
+            'raw' => '{}',
+            'fetched_at' => now(),
+        ],
+    ]);
+
+    D4Server::tool(GetMetaContextTool::class)
+        ->assertOk()
+        ->assertSee('season-14-death-awakening')
+        ->assertSee('editorial tier list data from Maxroll')
+        ->assertSee('https://maxroll.gg/d4/tierlists/endgame-tier-list')
+        ->assertSee(now()->toDateString())
+        ->assertSee('Whirlwind Barb')
+        ->assertSee('whirlwind-barbarian-guide')
+        ->assertSee('Meteor Sorc')
+        ->assertDontSee('not_ingested');
 });
 
 test('list_classes returns the resource and skill count for each class', function () {
@@ -73,6 +120,37 @@ test('get_skill roundtrips by name and by sno_id with its enhancements intact', 
     D4Server::tool(GetSkillTool::class, ['sno_id' => 206435])
         ->assertOk()
         ->assertSee('Whirlwind');
+});
+
+test('get_skill renders its text for the requested rank and keeps the raw text beside it', function () {
+    D4Server::tool(GetSkillTool::class, ['name' => 'Whirlwind'])
+        ->assertOk()
+        // The rendered upgrade text carries the real number the token stood for...
+        ->assertSee('Gain 12%[x] increased Movement Speed during Whirlwind.')
+        // ...while the raw string it came from stays available.
+        ->assertSee('[{SF_35}*100|x%|]')
+        ->assertSee('description_rendered')
+        ->assertSee('rank_values')
+        // Tokens backed by structures we have not resolved survive as tokens.
+        ->assertSee('{payload:DAMAGE_TOOLTIP}')
+        ->assertSee('"rank":1');
+
+    // SF_0 is 1.65 * the skill rank bonus table, so a higher rank moves it.
+    D4Server::tool(GetSkillTool::class, ['name' => 'Whirlwind', 'rank' => 5])
+        ->assertOk()
+        ->assertSee('"rank":5');
+
+    // Out-of-range ranks clamp rather than erroring or rendering nothing.
+    D4Server::tool(GetSkillTool::class, ['name' => 'Whirlwind', 'rank' => 99])
+        ->assertOk()
+        ->assertSee('"rank":15');
+});
+
+test('search_skills carries a rendered description alongside the raw one', function () {
+    D4Server::tool(SearchSkillsTool::class, ['query' => 'whirlwind'])
+        ->assertOk()
+        ->assertSee('description_rendered')
+        ->assertSee('Rapidly attack surrounding enemies');
 });
 
 test('get_skill errors helpfully without a lookup key or for an unknown skill', function () {

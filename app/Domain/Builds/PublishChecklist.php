@@ -2,7 +2,6 @@
 
 namespace App\Domain\Builds;
 
-use App\Domain\Poe2\Validation\BuildValidator;
 use App\Models\Build;
 
 /**
@@ -10,7 +9,10 @@ use App\Models\Build;
  * A draft may be as partial as the assistant left it; publishing is the point
  * where the numbers have to be there.
  *
- * Used by the save_build MCP tool and by the web publish flow.
+ * Stats and patch currency mean the same thing in every game, so they live
+ * here. What counts as a finished gear list, skill setup or passive plan is
+ * game anatomy, so GameBuildProfile supplies those checks. Used by each game's
+ * save_build MCP tool and by the web publish flow.
  */
 class PublishChecklist
 {
@@ -23,8 +25,7 @@ class PublishChecklist
 
         return [
             $this->statsCheck($payload),
-            $this->gearCheck($payload),
-            $this->passiveBudgetCheck($payload),
+            ...GameBuildProfile::forBuild($build)->publishChecks($build),
             $this->patchCheck($build),
         ];
     }
@@ -53,65 +54,11 @@ class PublishChecklist
         $hasHeadline = isset($payload['dps'], $payload['ehp']);
         $hasRows = ($payload['stats']['offence'] ?? []) !== [] && ($payload['stats']['defence'] ?? []) !== [];
 
-        return $this->check(
+        return self::check(
             'stats',
             'Stats present',
             $hasHeadline || $hasRows,
             'Add dps and ehp, or offence and defence rows under stats.',
-        );
-    }
-
-    /**
-     * @param  array<string, mixed>  $payload
-     * @return array{key: string, label: string, passed: bool, detail: string|null}
-     */
-    protected function gearCheck(array $payload): array
-    {
-        $slots = array_column($payload['gear'] ?? [], 'slot');
-
-        $hasBody = in_array('body', $slots, true);
-        $hasWeapon = in_array('weapon1', $slots, true) || in_array('weapon2', $slots, true);
-
-        $missing = array_values(array_filter([
-            $hasBody ? null : 'body armour',
-            $hasWeapon ? null : 'weapon',
-        ]));
-
-        return $this->check(
-            'gear',
-            'Gear list complete',
-            $missing === [],
-            $missing === [] ? null : 'Missing gear for: '.implode(', ', $missing).'.',
-        );
-    }
-
-    /**
-     * @param  array<string, mixed>  $payload
-     * @return array{key: string, label: string, passed: bool, detail: string|null}
-     */
-    protected function passiveBudgetCheck(array $payload): array
-    {
-        $level = $payload['level'] ?? null;
-        $nodeIds = $payload['passives']['node_ids'] ?? [];
-        $pointsUsed = $payload['passives']['points_used'] ?? ($nodeIds !== [] ? count($nodeIds) : null);
-
-        if (! is_numeric($level) || ! is_numeric($pointsUsed)) {
-            return $this->check(
-                'passives',
-                'Passive budget',
-                false,
-                'Set the character level and the passives taken so the point budget can be checked.',
-            );
-        }
-
-        $budget = BuildValidator::passivePointBudget((int) $level);
-        $passed = (int) $pointsUsed <= $budget;
-
-        return $this->check(
-            'passives',
-            'Passive budget',
-            $passed,
-            $passed ? null : "Uses {$pointsUsed} passive points; a level {$level} character has about {$budget}.",
         );
     }
 
@@ -123,12 +70,12 @@ class PublishChecklist
         $activeVersionId = $build->game?->activeVersion()?->id;
 
         if ($activeVersionId === null) {
-            return $this->check('patch', 'Patch current', true, null);
+            return self::check('patch', 'Patch current', true, null);
         }
 
         $passed = $build->game_version_id === $activeVersionId;
 
-        return $this->check(
+        return self::check(
             'patch',
             'Patch current',
             $passed,
@@ -137,9 +84,11 @@ class PublishChecklist
     }
 
     /**
+     * The shape every check returns, here and in the per-game check classes.
+     *
      * @return array{key: string, label: string, passed: bool, detail: string|null}
      */
-    protected function check(string $key, string $label, bool $passed, ?string $detail): array
+    public static function check(string $key, string $label, bool $passed, ?string $detail): array
     {
         return [
             'key' => $key,

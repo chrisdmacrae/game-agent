@@ -43,6 +43,16 @@ return [
         // is live versus unreleased/PTR.
         'maxroll_data_url' => env('D4_MAXROLL_DATA_URL', 'https://assets-ng.maxroll.gg/d4-tools/game/data.min.json'),
 
+        // Maxroll's overall endgame tier list. Editorial, attributed data (the
+        // authors' own build rankings, not telemetry) fetched weekly — Diablo IV
+        // publishes no build-usage statistics and no economy data.
+        'tierlist_url' => env('D4_TIERLIST_URL', 'https://maxroll.gg/d4/tierlists/endgame-tier-list'),
+
+        // The import_build MCP tool reads a user-supplied Maxroll planner from
+        // planners.maxroll.gg. Off by default: it fetches a third party's site
+        // on demand, so it is opt-in per deployment.
+        'maxroll_import_enabled' => (bool) env('D4_MAXROLL_IMPORT_ENABLED', false),
+
         'user_agent' => env('GAMES_USER_AGENT', 'game-agent-theorycrafter/0.1 (contact: admin@localhost)'),
     ],
 ];

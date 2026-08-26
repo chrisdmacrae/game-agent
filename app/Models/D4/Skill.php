@@ -12,6 +12,8 @@ class Skill extends D4Model
             'is_released' => 'boolean',
             'tags' => 'array',
             'enhancements' => 'array',
+            'formulas' => 'array',
+            'rank_values' => 'array',
             'raw' => 'array',
         ];
     }

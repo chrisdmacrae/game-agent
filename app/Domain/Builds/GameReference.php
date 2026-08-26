@@ -2,35 +2,23 @@
 
 namespace App\Domain\Builds;
 
-use App\Domain\Poe2\Validation\BuildRules;
 use App\Models\Game;
-use App\Models\Poe2\Ascendancy;
-use App\Models\Poe2\CharacterClass;
 
 /**
  * The classification options a build form and the hub filter rail offer:
  * classes and ascendancies come from the imported game data, stages and tiers
  * from the fixed taxonomies.
  *
- * PoE 2 is the only game with imported data today; every other game returns
- * empty lists rather than pretending to know its classes.
+ * What a class list means is per-game, so the lookups go through
+ * GameBuildProfile; a game with nothing imported returns empty lists rather
+ * than pretending to know its classes.
  */
 class GameReference
 {
     /** @return list<string> */
     public function classes(Game $game): array
     {
-        $versionId = $this->versionId($game);
-
-        if ($versionId === null) {
-            return [];
-        }
-
-        return CharacterClass::query()
-            ->forVersion($versionId)
-            ->orderBy('name')
-            ->pluck('name')
-            ->all();
+        return GameBuildProfile::for($game)->classes($this->versionId($game));
     }
 
     /**
@@ -42,22 +30,7 @@ class GameReference
      */
     public function ascendancies(Game $game, array $classes = []): array
     {
-        $versionId = $this->versionId($game);
-
-        if ($versionId === null) {
-            return [];
-        }
-
-        return Ascendancy::query()
-            ->forVersion($versionId)
-            ->when($classes !== [], fn ($query) => $query->whereIn('class_name', $classes))
-            ->orderBy('name')
-            ->get(['name', 'class_name'])
-            ->map(fn (Ascendancy $ascendancy) => [
-                'name' => $ascendancy->name,
-                'class_name' => $ascendancy->class_name,
-            ])
-            ->all();
+        return GameBuildProfile::for($game)->ascendancies($this->versionId($game), $classes);
     }
 
     /** @return list<string> */
@@ -67,17 +40,13 @@ class GameReference
     }
 
     /** @return list<string> */
-    public function tiers(): array
+    public function tiers(Game $game): array
     {
-        return BuildRules::TIERS;
+        return GameBuildProfile::for($game)->tiers();
     }
 
     protected function versionId(Game $game): ?int
     {
-        if ($game->slug !== 'poe2') {
-            return null;
-        }
-
         return $game->activeVersion()?->id;
     }
 }

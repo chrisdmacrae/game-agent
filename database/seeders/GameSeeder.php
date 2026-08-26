@@ -6,7 +6,7 @@ use App\Models\Game;
 use Illuminate\Database\Seeder;
 
 /**
- * The games shown on the root landing page. PoE 2 is the only live game; the
+ * The games shown on the root landing page. PoE 2 and Diablo IV are live; the
  * rest are queued and collect waitlist votes.
  *
  * Idempotent on slug so it can run alongside Poe2Importer, which creates the
@@ -44,9 +44,9 @@ class GameSeeder extends Seeder
             'short_name' => 'D4',
             'accent' => 'red-400',
             'icon' => 'skull',
-            'is_live' => false,
+            'is_live' => true,
             'sort_order' => 2,
-            'description' => 'Season rotation makes the numbers move fast. Next in line after Last Epoch.',
+            'description' => 'Full game data: skills, aspects, uniques, affixes and the paragon boards.',
         ],
         [
             'slug' => 'wow',

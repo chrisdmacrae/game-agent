@@ -72,6 +72,7 @@ class UniqueQuery
             'class' => $unique->class_name,
             'is_mythic' => $unique->is_mythic,
             'power_text' => $unique->power_text,
+            'display_text' => $unique->display_text,
             'affix_count' => count($unique->affixes),
             'is_released' => $unique->is_released,
         ];

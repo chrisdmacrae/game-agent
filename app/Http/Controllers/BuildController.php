@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Builds\BuildPayload;
+use App\Domain\Builds\GameBuildProfile;
 use App\Domain\Builds\GameReference;
 use App\Domain\Builds\PublishChecklist;
-use App\Domain\Poe2\BuildPageEnricher;
 use App\Domain\Poe2\BuildPlannerExporter;
 use App\Domain\Poe2\PobExporter;
-use App\Domain\Poe2\Validation\BuildValidator;
 use App\Domain\Seo\OgImageRenderer;
 use App\Domain\Seo\PageMeta;
 use App\Http\Requests\BuildUpdateRequest;
@@ -16,7 +14,6 @@ use App\Models\Build;
 use App\Models\BuildBookmark;
 use App\Models\Endorsement;
 use App\Models\Game;
-use App\Models\Poe2\Ascendancy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -83,6 +80,9 @@ class BuildController extends Controller
     {
         $build = $this->visibleBuild($publicId);
 
+        // Path of Building is a PoE 2 format; no other game exports to it.
+        abort_unless(GameBuildProfile::forBuild($build)->exportsToPathOfBuilding(), 404);
+
         return response()->json([
             'id' => $build->public_id,
             'code' => $exporter->code($build),
@@ -94,6 +94,8 @@ class BuildController extends Controller
     {
         $build = $this->visibleBuild($publicId);
 
+        abort_unless(GameBuildProfile::forBuild($build)->exportsToPathOfBuilding(), 404);
+
         return response($exporter->json($build), 200, [
             'Content-Type' => 'application/json',
             'Content-Disposition' => 'attachment; filename="'.$exporter->filename($build).'"',
@@ -103,6 +105,10 @@ class BuildController extends Controller
     public function ogImage(string $publicId, OgImageRenderer $renderer): HttpResponse
     {
         $build = $this->visibleBuild($publicId);
+
+        // The share-card route predates the game namespace, so the game comes
+        // off the build rather than out of the URL.
+        $game = $build->game;
 
         $definition = $build->build;
         $identity = implode(' · ', array_filter([$definition['class'] ?? null, $definition['ascendancy'] ?? null]));
@@ -114,8 +120,10 @@ class BuildController extends Controller
             $level ? "level {$level}" : null,
         ]));
 
+        $gameName = $game?->name ?? 'this game';
+
         $subtitle = $build->summary
-            ?? ($seoIdentity !== '' ? "{$seoIdentity} build for Path of Exile 2." : 'A build for Path of Exile 2.');
+            ?? ($seoIdentity !== '' ? "{$seoIdentity} build for {$gameName}." : "A build for {$gameName}.");
 
         $badges = array_values(array_filter([
             $identity !== '' ? $identity : null,
@@ -124,7 +132,12 @@ class BuildController extends Controller
             $build->gameVersion?->version ? "Patch {$build->gameVersion->version}" : null,
         ]));
 
-        $png = $renderer->render('PoE2 Theorycrafter', $build->name ?? 'Untitled build', $subtitle, $badges);
+        $png = $renderer->render(
+            GameBuildProfile::for($game)->ogKicker(),
+            $build->name ?? 'Untitled build',
+            $subtitle,
+            $badges,
+        );
 
         return response($png, 200, [
             'Content-Type' => 'image/png',
@@ -133,9 +146,10 @@ class BuildController extends Controller
         ]);
     }
 
-    public function show(Request $request, Game $game, string $publicId, BuildPageEnricher $enricher): Response
+    public function show(Request $request, Game $game, string $publicId): Response
     {
         $build = $this->visibleBuild($publicId, $game);
+        $profile = GameBuildProfile::for($game);
 
         // Escape any embedded HTML: guide content is untrusted input.
         $guideHtml = $build->guide_markdown !== null
@@ -145,7 +159,7 @@ class BuildController extends Controller
             ])
             : null;
 
-        $enriched = $enricher->enrich($build, $guideHtml);
+        $enriched = $profile->enrich($build, $guideHtml);
 
         return Inertia::render('Builds/Show', [
             new PageMeta(
@@ -183,7 +197,7 @@ class BuildController extends Controller
             'entities' => $enriched['entities'],
             'gearView' => $enriched['gear_view'],
             'ascendancyPathIds' => $enriched['ascendancy_path_ids'],
-            ...$this->treeProps($build),
+            ...$profile->treeProps($build),
         ]);
     }
 
@@ -199,6 +213,7 @@ class BuildController extends Controller
         PublishChecklist $checklist,
     ): Response {
         $build = $this->ownedBuild($request, $game, $publicId);
+        $profile = GameBuildProfile::for($game);
 
         return Inertia::render('Builds/Edit', [
             new PageMeta(title: "Edit {$build->name}", noindex: true),
@@ -223,34 +238,14 @@ class BuildController extends Controller
                 'classes' => $reference->classes($game),
                 'ascendancies' => $reference->ascendancies($game),
                 'stages' => $reference->stages(),
-                'tiers' => $reference->tiers(),
+                'tiers' => $reference->tiers($game),
             ],
             'checklist' => $checklist->for($build),
             // The editor renders the same read-only tree preview the build
             // page does; click-to-allocate is not built yet.
-            ...$this->treeProps($build),
+            ...$profile->treeProps($build),
             'ascendancyPathIds' => [],
         ]);
-    }
-
-    /**
-     * The assets the passive tree renderer needs.
-     *
-     * @return array{spriteUrl: string, treeUrl: string|null, ascendancyKey: string|null}
-     */
-    protected function treeProps(Build $build): array
-    {
-        return [
-            'spriteUrl' => asset('games/poe2/tree/skills.webp'),
-            'treeUrl' => is_file(public_path('games/poe2/tree/render.json'))
-                ? asset('games/poe2/tree/render.json')
-                : null,
-            'ascendancyKey' => isset($build->build['ascendancy'])
-                ? Ascendancy::forVersion($build->game_version_id ?? 0)
-                    ->whereLike('name', $build->build['ascendancy'])
-                    ->value('key')
-                : null,
-        ];
     }
 
     /**
@@ -261,20 +256,20 @@ class BuildController extends Controller
         BuildUpdateRequest $request,
         Game $game,
         string $publicId,
-        BuildValidator $validator,
         PublishChecklist $checklist,
     ): RedirectResponse {
         $build = $this->ownedBuild($request, $game, $publicId);
+        $profile = GameBuildProfile::for($game);
 
         $validated = $request->validated();
-        $definition = BuildPayload::normalize($validated['build']);
+        $definition = $profile->normalize($validated['build']);
 
         $build->fill([
             'name' => $validated['name'],
             'summary' => $validated['summary'] ?? null,
             'guide_markdown' => $validated['guide_markdown'] ?? null,
             'build' => $definition,
-            'validation' => $validator->validate($definition),
+            'validation' => $profile->validator()->validate($definition),
             'visibility' => $validated['visibility'],
         ]);
 

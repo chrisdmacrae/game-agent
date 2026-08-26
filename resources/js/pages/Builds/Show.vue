@@ -1,18 +1,25 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import Diablo4BuildShow from '@/components/games/diablo-4/BuildShow.vue';
+import type { D4BuildShowProps } from '@/components/games/diablo-4/types';
 import Poe2BuildShow from '@/components/games/poe2/BuildShow.vue';
 import type { Poe2BuildShowProps } from '@/components/games/poe2/types';
 import SeoHead from '@/components/SeoHead.vue';
 
 /**
  * The build page route. Build anatomy is game specific — PoE 2 has gems,
- * support gems, spirit and a passive tree that no other queued game shares —
- * so this page only resolves the game's renderer.
+ * support gems, spirit and a passive tree that Diablo IV's action bar, paragon
+ * boards and keyed gear map share nothing with — so this page only resolves the
+ * game's renderer.
  */
-const props = defineProps<Poe2BuildShowProps>();
+const props = defineProps<Poe2BuildShowProps | D4BuildShowProps>();
 
-/** PoE 2 is the only game with a build renderer today. */
-const supported = computed(() => props.game.slug === 'poe2');
+const renderer = computed(() =>
+    props.game.slug === 'diablo-4' ? 'diablo-4' : 'poe2',
+);
+
+const poe2 = computed(() => props as Poe2BuildShowProps);
+const diablo4 = computed(() => props as D4BuildShowProps);
 </script>
 
 <template>
@@ -21,9 +28,14 @@ const supported = computed(() => props.game.slug === 'poe2');
              BuildController's PageMeta. -->
         <SeoHead />
 
-        <Poe2BuildShow v-if="supported" v-bind="props" />
-        <p v-else class="py-16 text-[15px] text-[var(--fg-2)]">
-            Build pages for {{ game.name }} are not live yet.
-        </p>
+        <Diablo4BuildShow
+            v-if="renderer === 'diablo-4'"
+            :build="diablo4.build"
+            :game="diablo4.game"
+            :viewer="diablo4.viewer"
+            :similar-builds="diablo4.similarBuilds"
+            :paragon-boards="diablo4.paragonBoards"
+        />
+        <Poe2BuildShow v-else v-bind="poe2" />
     </div>
 </template>

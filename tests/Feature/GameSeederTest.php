@@ -19,7 +19,22 @@ test('the game seeder seeds the four v1 games', function () {
         ->and($poe2->icon)->toBe('swords')
         ->and($poe2->sort_order)->toBe(0);
 
-    expect(Game::where('is_live', false)->count())->toBe(3);
+    $diablo4 = Game::where('slug', 'diablo-4')->sole();
+
+    expect($diablo4->short_name)->toBe('D4')
+        ->and($diablo4->is_live)->toBeTrue()
+        ->and($diablo4->accent)->toBe('red-400');
+
+    // PoE 2 and Diablo IV are live; Last Epoch and WoW still collect votes.
+    expect(Game::where('is_live', false)->count())->toBe(2);
+});
+
+test('the go-live migration flips an already-seeded diablo-4 row', function () {
+    Game::create(['slug' => 'diablo-4', 'name' => 'Diablo IV', 'is_live' => false]);
+
+    (require database_path('migrations/2026_08_26_000001_mark_diablo_4_live.php'))->up();
+
+    expect(Game::where('slug', 'diablo-4')->sole()->is_live)->toBeTrue();
 });
 
 test('the game seeder is idempotent and adopts a game the importer created', function () {

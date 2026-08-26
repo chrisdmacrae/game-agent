@@ -14,7 +14,7 @@ class GetUniqueTool extends Tool
 {
     protected string $name = 'get_unique';
 
-    protected string $description = 'Get one Diablo IV unique item by exact name (or sno_id) with its unique power text and every forced affix, including affixes whose text could not be resolved (those come back with a null text rather than being dropped).';
+    protected string $description = 'Get one Diablo IV unique item by exact name (or sno_id) with its unique power text and every forced affix, including affixes whose text could not be resolved (those come back with a null text rather than being dropped). Every text comes twice: `power_text` / `text` is the raw game string and `display_text` the same line with the evaluated roll range substituted. Tokens still standing in a display_text are not computable from the data.';
 
     public function handle(Request $request, UniqueQuery $uniques): Response
     {

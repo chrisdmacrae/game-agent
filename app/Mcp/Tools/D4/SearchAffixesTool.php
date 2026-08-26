@@ -14,7 +14,7 @@ class SearchAffixesTool extends Tool
 {
     protected string $name = 'search_affixes';
 
-    protected string $description = 'Search the Diablo IV affix pool: the stat lines, legendary powers and tempering manual affixes that can appear on gear. Filter by text, by magic_type (stat = ordinary rollable stat, power = legendary power, unique_power = forced onto a unique), by class, by item type, and by is_tempering / temper_family to answer "what can I temper onto this?". Affix text keeps its raw roll tokens (e.g. "+[{VALUE}*100|1%|] Critical Strike Chance") and value_range says whether a literal range could be derived or only a formula name is known.';
+    protected string $description = 'Search the Diablo IV affix pool: the stat lines, legendary powers and tempering manual affixes that can appear on gear. Filter by text, by magic_type (stat = ordinary rollable stat, power = legendary power, unique_power = forced onto a unique), by class, by item type, and by is_tempering / temper_family to answer "what can I temper onto this?". Each affix comes with both texts: `text` is the raw game string with its roll tokens ("+[{VALUE}*100|1%|] Critical Strike Chance") and `display_text` is the same line with the evaluated roll substituted ("+[3.0 – 8.0]% Critical Strike Chance"). `value_range` carries the numeric min/max and the item power breakpoint they were evaluated at. A token still standing in display_text is one that cannot be computed from the data - quote it, never guess it.';
 
     public function handle(Request $request, AffixQuery $affixes): Response
     {

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import Diablo4BuildEdit from '@/components/games/diablo-4/BuildEdit.vue';
+import type { D4BuildEditProps } from '@/components/games/diablo-4/types';
 import Poe2BuildEdit from '@/components/games/poe2/BuildEdit.vue';
 import type { Poe2BuildEditProps } from '@/components/games/poe2/types';
 import SeoHead from '@/components/SeoHead.vue';
@@ -9,25 +11,44 @@ import SeoHead from '@/components/SeoHead.vue';
  * this page only resolves the game's editor and owns the page metadata.
  */
 const props = defineProps<
-    Poe2BuildEditProps & {
-        spriteUrl: string;
-        treeUrl: string | null;
-        ascendancyKey: string | null;
-        ascendancyPathIds: number[];
-    }
+    | (Poe2BuildEditProps & {
+          spriteUrl: string;
+          treeUrl: string | null;
+          ascendancyKey: string | null;
+          ascendancyPathIds: number[];
+      })
+    | D4BuildEditProps
 >();
 
-/** PoE 2 is the only game with an editor today. */
-const supported = computed(() => props.game.slug === 'poe2');
+const renderer = computed(() =>
+    props.game.slug === 'diablo-4' ? 'diablo-4' : 'poe2',
+);
+
+const poe2 = computed(
+    () =>
+        props as Poe2BuildEditProps & {
+            spriteUrl: string;
+            treeUrl: string | null;
+            ascendancyKey: string | null;
+            ascendancyPathIds: number[];
+        },
+);
+
+const diablo4 = computed(() => props as D4BuildEditProps);
 </script>
 
 <template>
     <div>
         <SeoHead />
 
-        <Poe2BuildEdit v-if="supported" v-bind="props" />
-        <p v-else class="py-16 text-[15px] text-[var(--fg-2)]">
-            The editor for {{ game.name }} is not live yet.
-        </p>
+        <Diablo4BuildEdit
+            v-if="renderer === 'diablo-4'"
+            :game="diablo4.game"
+            :build="diablo4.build"
+            :options="diablo4.options"
+            :checklist="diablo4.checklist"
+            :paragon-boards="diablo4.paragonBoards"
+        />
+        <Poe2BuildEdit v-else v-bind="poe2" />
     </div>
 </template>

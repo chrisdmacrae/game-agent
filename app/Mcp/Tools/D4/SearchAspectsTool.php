@@ -14,7 +14,7 @@ class SearchAspectsTool extends Tool
 {
     protected string $name = 'search_aspects';
 
-    protected string $description = 'Search Diablo IV legendary aspects (the codex powers you imprint on gear) by name or power text, and filter by category (offensive, defensive, resource, utility, mobility), by the class the aspect belongs to, or by an item type it can be imprinted on. This is the tool to answer "which aspects interact with skill X" — search the skill name as the query.';
+    protected string $description = 'Search Diablo IV legendary aspects (the codex powers you imprint on gear) by name or power text, and filter by category (offensive, defensive, resource, utility, mobility), by the class the aspect belongs to, or by an item type it can be imprinted on. This is the tool to answer "which aspects interact with skill X" — search the skill name as the query. `text` is the raw game string and `display_text` the same power with its evaluated numbers substituted; tokens left standing there are not computable from the data, so quote them rather than guessing.';
 
     public function handle(Request $request, AspectQuery $aspects): Response
     {

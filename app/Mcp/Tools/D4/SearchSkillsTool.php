@@ -14,7 +14,7 @@ class SearchSkillsTool extends Tool
 {
     protected string $name = 'search_skills';
 
-    protected string $description = 'Search Diablo IV class skills by name or description text, and filter by class, skill-tree category (basic, core, defensive, ultimate, mastery, conjuration, ...) or game tag. Returns summaries; use get_skill for the full skill with its enhancements/upgrades. Descriptions are raw game text containing unevaluated tokens such as {c_number}, {SF_10} and {payload:...}.';
+    protected string $description = 'Search Diablo IV class skills by name or description text, and filter by class, skill-tree category (basic, core, defensive, ultimate, mastery, conjuration, ...) or game tag. Returns summaries; use get_skill for the full skill with its enhancements/upgrades. Each summary carries the raw `description` and a `description_rendered` with its formula tokens evaluated at rank 1; get_skill renders any rank. Tokens still standing in the rendered text are not computable from the data.';
 
     public function handle(Request $request, SkillQuery $skills): Response
     {

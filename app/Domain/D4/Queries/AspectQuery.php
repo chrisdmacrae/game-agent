@@ -43,6 +43,7 @@ class AspectQuery
                 'category' => $aspect->category,
                 'class' => ($aspect->raw['class_name'] ?? '') ?: null,
                 'text' => $aspect->text,
+                'display_text' => $aspect->display_text,
                 'item_types' => $aspect->item_types,
                 'value_range' => $aspect->value_range,
                 'is_released' => $aspect->is_released,

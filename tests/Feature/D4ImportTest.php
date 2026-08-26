@@ -1,6 +1,7 @@
 <?php
 
 use App\Domain\D4\Import\D4Importer;
+use App\Domain\D4\TooltipText;
 use App\Models\D4\Affix;
 use App\Models\D4\Aspect;
 use App\Models\D4\CharacterClass;
@@ -182,6 +183,98 @@ test('literal roll ranges are derived and richer formulas are kept as text', fun
         ->and($legendary->value_range['min'])->toBeNull()
         ->and($legendary->value_range['max'])->toBeNull()
         ->and(collect($legendary->raw['attributes'])->pluck('attribute')->all())->toBe(['Affix_Value_1']);
+});
+
+test('a power keeps its script formulas and their value at every rank', function () {
+    $version = d4Importer()->import();
+
+    $whirlwind = Skill::forVersion($version->id)->where('sno_id', 206435)->sole();
+
+    expect($whirlwind->formulas['35'])->toBe('0.12')
+        ->and($whirlwind->formulas['0'])->toBe('1.65 * Table(34,sLevel)')
+        // Blank entries hold their index open in the source array but are not stored.
+        ->and($whirlwind->formulas)->not->toHaveKey('13');
+
+    expect($whirlwind->rank_values)->toHaveCount(15)
+        ->and($whirlwind->rank_values[1])->not->toBeEmpty()
+        // SF_35 is a literal, so it is flat across ranks; SF_0 reads the skill
+        // rank bonus table and climbs with them.
+        ->and($whirlwind->rank_values[1]['35'])->toBe(0.12)
+        ->and($whirlwind->rank_values[15]['35'])->toBe(0.12)
+        ->and($whirlwind->rank_values[1]['0'])->toBe(1.65)
+        ->and($whirlwind->rank_values[5]['0'])->toBe(2.3925)
+        // SF_9 reads live player state and SF_7 is a ternary; neither evaluates.
+        ->and($whirlwind->rank_values[1])->not->toHaveKey('9')
+        ->and($whirlwind->rank_values[1])->not->toHaveKey('7');
+});
+
+test('a rank-capped skill renders the number the game shows for its movement speed upgrade', function () {
+    $version = d4Importer()->import();
+
+    $whirlwind = Skill::forVersion($version->id)->where('sno_id', 206435)->sole();
+    $tooltips = new TooltipText;
+    $values = TooltipText::scriptFormulaValues($whirlwind->rank_values[1]);
+
+    $upgrade = collect($whirlwind->enhancements)->firstWhere('mod_id', 11);
+
+    expect($tooltips->render($upgrade['description'], $values))
+        ->toBe('Gain 12%[x] increased Movement Speed during Whirlwind.');
+
+    // The description's own tokens all come from structures we have not
+    // resolved, so they survive rendering as tokens rather than as numbers.
+    expect($tooltips->render($whirlwind->description, $values))
+        ->toContain('{Resource Cost}')
+        ->toContain('{payload:DAMAGE_TOOLTIP}')
+        ->toContain('Rapidly attack surrounding enemies');
+});
+
+test('an affix roll range is evaluated at its highest item power breakpoint', function () {
+    $version = d4Importer()->import();
+
+    $crit = Affix::forVersion($version->id)->where('key', 'CritChance')->sole();
+
+    expect($crit->value_range)->toMatchArray([
+        'min' => 0.03,
+        'max' => 0.08,
+        'item_power' => 750,
+    ])->and($crit->display_text)->toBe('+[3.0 – 8.0]% Critical Strike Chance')
+        ->and($crit->text)->toBe('+[{VALUE}*100|1%|] Critical Strike Chance');
+});
+
+test('an affix whose formula does not evaluate keeps its token in the display text', function () {
+    $version = d4Importer()->import();
+
+    $legendary = Affix::forVersion($version->id)->where('key', 'legendary_barb_001')->sole();
+
+    // CurrentLegendaryRank() is not derivable from the dump, so the roll stays
+    // a token — but the static value beside it does resolve.
+    expect($legendary->value_range['min'])->toBeNull()
+        ->and($legendary->display_text)->toBe(
+            'While Berserking, your direct damage inflicts [Affix_Value_1*100|%|] bonus Bleeding damage over 5 seconds.'
+        );
+});
+
+test('a unique roll range evaluates through the named roll functions', function () {
+    $version = d4Importer()->import();
+
+    $unique = UniqueItem::forVersion($version->id)->where('sno_id', 356745)->sole();
+    $power = collect($unique->affixes)->firstWhere('key', '2HAxe_Unique_Barb_001_x2');
+
+    expect($power['value_range'])->toMatchArray(['min' => 0.45, 'max' => 0.6])
+        ->and($power['display_text'])
+        ->toBe('Enemies hit by Steel Grasp take [45 – 60]%[x] increased damage from you for 9 seconds.')
+        ->and($unique->display_text)->toBe($power['display_text'])
+        ->and($unique->power_text)->toContain('{c_important}Steel Grasp{/c}');
+});
+
+test('an aspect renders through the affix it points at', function () {
+    $version = d4Importer()->import();
+
+    $aspect = Aspect::forVersion($version->id)->sole();
+
+    expect($aspect->display_text)->toBe(
+        'While Berserking, your direct damage inflicts [Affix_Value_1*100|%|] bonus Bleeding damage over 5 seconds.'
+    )->and($aspect->text)->toContain('{c_important}{u}Berserking{/u}{/c}');
 });
 
 test('an aspect borrows everything from the affix it points at', function () {

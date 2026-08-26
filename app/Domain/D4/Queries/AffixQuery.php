@@ -43,6 +43,7 @@ class AffixQuery
                 'name' => $affix->name,
                 'magic_type' => $affix->magic_type,
                 'text' => $affix->text,
+                'display_text' => $affix->display_text,
                 'class' => $affix->class_name,
                 'item_types' => $affix->item_types,
                 'is_tempering' => $affix->is_tempering,

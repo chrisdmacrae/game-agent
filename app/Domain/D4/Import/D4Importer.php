@@ -2,6 +2,7 @@
 
 namespace App\Domain\D4\Import;
 
+use App\Domain\D4\TooltipText;
 use App\Models\D4\Affix;
 use App\Models\D4\Aspect;
 use App\Models\D4\CharacterClass;
@@ -46,6 +47,16 @@ class D4Importer
     protected const DIR_ITEM = 'json/base/meta/Item';
 
     protected const DIR_ITEM_TYPE = 'json/base/meta/ItemType';
+
+    protected const FILE_POWER_FORMULA_TABLES = 'json/base/meta/GameBalance/PowerFormulaTables.gam.json';
+
+    /**
+     * Values are rounded before they land in jsonb. The dump's floats are
+     * single precision widened to double — a formula table holds
+     * 1.100000023841858 for 1.1 — so anything multiplied through one of them
+     * would otherwise be stored, and rendered, with that noise attached.
+     */
+    protected const VALUE_PRECISION = 6;
 
     /**
      * The order of every 8-wide class mask in the dump (`fUsableByClass`,
@@ -117,6 +128,10 @@ class D4Importer
 
     /** @var array<int, int>|null Power SNO id => max talent ranks */
     protected ?array $skillMaxRanks = null;
+
+    protected ?FormulaEvaluator $evaluator = null;
+
+    protected ?TooltipText $tooltips = null;
 
     public function __construct(
         protected D4DataSource $source,
@@ -222,6 +237,8 @@ class D4Importer
 
             $strings = $this->strings->labelsFor('Power', $key);
             $primaryTag = SnoRefs::name($definition['tPrimaryTag']['gbidSkillTag'] ?? null);
+            $maxRank = $this->skillMaxRanks()[$snoId] ?? 0;
+            $formulas = $this->scriptFormulas($definition);
 
             $tags = [];
             $searchTags = [];
@@ -246,10 +263,12 @@ class D4Importer
                 'name' => $strings['name'] ?? $key,
                 'class_name' => $className,
                 'category' => $this->skillCategory($primaryTag),
-                'max_rank' => $this->skillMaxRanks()[$snoId] ?? 0,
+                'max_rank' => $maxRank,
                 'description' => $strings['desc'] ?? null,
                 'tags' => json_encode($tags),
                 'enhancements' => json_encode($this->skillEnhancements($definition, $strings)),
+                'formulas' => json_encode($formulas, JSON_FORCE_OBJECT),
+                'rank_values' => json_encode($this->skillRankValues($formulas, $maxRank), JSON_FORCE_OBJECT),
                 'is_released' => $this->filter->isReleased($key, $definition, honourVisibleInUi: true),
                 'raw' => json_encode([
                     'key' => $key,
@@ -352,13 +371,15 @@ class D4Importer
 
         foreach ($this->definitions(self::DIR_AFFIX, 'aff') as $key => $definition) {
             $strings = $this->strings->labelsFor('Affix', $key);
+            $text = $this->affixText($definition, $strings);
 
             $rows[] = [
                 'game_version_id' => $gameVersion->id,
                 'key' => mb_substr($key, 0, 512),
                 'name' => $strings['name'] ?? null,
                 'magic_type' => self::MAGIC_TYPES[(int) ($definition['eMagicType'] ?? -1)] ?? null,
-                'text' => $this->affixText($definition, $strings),
+                'text' => $text,
+                'display_text' => $this->affixDisplayText($text, $definition),
                 'item_types' => json_encode($this->itemTypesForLabels($definition['arAllowedItemLabels'] ?? [])),
                 'class_name' => $this->singleClass($definition['fAllowedForPlayerClass'] ?? null),
                 'is_tempering' => ($definition['bIsTemperedAffix'] ?? false) === true,
@@ -392,13 +413,15 @@ class D4Importer
             $affixKey = SnoRefs::name($affixRef);
             $affix = $this->optionalJson(SnoRefs::path($affixRef)) ?? [];
             $affixStrings = $affixKey !== null ? $this->strings->labelsFor('Affix', $affixKey) : [];
+            $text = $this->affixText($affix, $affixStrings);
 
             $rows[] = [
                 'game_version_id' => $gameVersion->id,
                 'sno_id' => $snoId,
                 'name' => $affixStrings['name'] ?? $key,
                 'category' => $this->aspectCategory($affix),
-                'text' => $this->affixText($affix, $affixStrings),
+                'text' => $text,
+                'display_text' => $this->affixDisplayText($text, $affix),
                 'item_types' => json_encode($this->itemTypesForLabels($affix['arAllowedItemLabels'] ?? [])),
                 'value_range' => json_encode($this->affixValueRange($affix)),
                 'is_released' => $this->filter->isReleased($key, $definition)
@@ -437,6 +460,7 @@ class D4Importer
             $name = $strings['name'] ?? $key;
             $affixes = $this->forcedAffixes($definition);
             $powerText = implode("\n", array_filter(array_column($affixes, 'text')));
+            $displayText = implode("\n", array_filter(array_column($affixes, 'display_text')));
             $itemTypeKey = SnoRefs::name($definition['snoItemType'] ?? null);
 
             $rows[] = [
@@ -448,6 +472,7 @@ class D4Importer
                 'is_mythic' => $this->isMythic($key, $name, $definition),
                 'affixes' => json_encode($affixes),
                 'power_text' => $powerText !== '' ? $powerText : null,
+                'display_text' => $displayText !== '' ? $displayText : null,
                 'is_released' => $this->filter->isReleased($key, $definition),
                 'raw' => json_encode([
                     'key' => $key,
@@ -627,6 +652,72 @@ class D4Importer
     }
 
     /**
+     * A power's script formulas, keyed by their position in
+     * `ptScriptFormulas` — that position *is* the `SF_12` token's number, and
+     * blank entries are kept out of the map rather than stored as empty
+     * strings. This is the one part of the power definition the row's `raw`
+     * payload deliberately drops (fifty formulas per power, mostly noise), so
+     * the map lands in its own column instead.
+     *
+     * @param  array<array-key, mixed>  $definition
+     * @return array<int, string>
+     */
+    protected function scriptFormulas(array $definition): array
+    {
+        $formulas = [];
+
+        foreach (array_values((array) ($definition['ptScriptFormulas'] ?? [])) as $index => $entry) {
+            $formula = is_array($entry) ? $this->formulaValue($entry['tFormula'] ?? null) : null;
+
+            if ($formula !== null) {
+                $formulas[$index] = $formula;
+            }
+        }
+
+        return $formulas;
+    }
+
+    /**
+     * Evaluate every script formula at every rank the skill can reach, so the
+     * numbers a tooltip needs are computed once here rather than per request.
+     *
+     * `sLevel` is the skill's rank and indexes the formula tables directly, so
+     * ranks run 1..max_rank (a skill with no rank-up node still gets rank 1).
+     * Formulas that do not evaluate — anything reading player state, another
+     * power's tuning or a legendary rank — are simply absent, which is what
+     * keeps their tokens visible as tokens in the rendered text.
+     *
+     * @param  array<int, string>  $formulas
+     * @return array<int, array<int, float|array{min: float, max: float}>>
+     */
+    protected function skillRankValues(array $formulas, int $maxRank): array
+    {
+        if ($formulas === []) {
+            return [];
+        }
+
+        $values = [];
+
+        for ($rank = 1; $rank <= max($maxRank, 1); $rank++) {
+            $atRank = [];
+
+            foreach ($formulas as $index => $formula) {
+                $interval = $this->evaluator()->evaluate($formula, ['sLevel' => $rank], $formulas);
+
+                if ($interval !== null) {
+                    $atRank[$index] = $this->compactInterval($interval);
+                }
+            }
+
+            if ($atRank !== []) {
+                $values[$rank] = $atRank;
+            }
+        }
+
+        return $values;
+    }
+
+    /**
      * @param  array<array-key, mixed>  $definition
      * @return list<array<string, mixed>>
      */
@@ -785,20 +876,19 @@ class D4Importer
     }
 
     /**
-     * The roll range of an affix's first attribute — the number its display
+     * The roll range of one of an affix's attributes — the number its display
      * text substitutes. Values come either from an AttributeFormulas row keyed
-     * by item power, or from an inline formula on the attribute itself. Only
-     * literals and plain `RandomInt(a, b)` calls yield a min/max; anything
-     * richer (item-power curves, legendary-rank scaling, table lookups) keeps
-     * its formula text for a later evaluation phase. Additional attributes are
-     * preserved in the row's `raw` payload.
+     * by item power, or from an inline formula on the attribute itself, and
+     * both are run through the evaluator. Whatever refuses to evaluate (a
+     * legendary rank, a player-state lookup) keeps its formula text and a null
+     * min/max, so the token stays a token in the rendered text.
      *
      * @param  array<array-key, mixed>  $definition
      * @return array<string, mixed>
      */
-    protected function affixValueRange(array $definition): array
+    protected function affixValueRange(array $definition, int $index = 0): array
     {
-        $attribute = $this->primaryAttribute($definition);
+        $attribute = $this->attributeAt($definition, $index);
 
         if ($attribute === []) {
             return [];
@@ -825,15 +915,13 @@ class D4Importer
                 ];
             }
 
-            $formula = $ranges[0]['formula'] ?? null;
-
             return [
                 'attribute' => $attribute['__eAttribute_name__'] ?? null,
                 'source' => 'formula',
                 'formula_name' => SnoRefs::name($formulaRef),
-                'formula' => $formula,
+                'formula' => $ranges[0]['formula'] ?? null,
                 'ranges' => $ranges,
-            ] + $this->literalBounds($formula);
+            ] + $this->itemPowerBounds($ranges);
         }
 
         $inline = $this->formulaValue($attribute['szAttributeFormula'] ?? null);
@@ -846,25 +934,110 @@ class D4Importer
             'attribute' => $attribute['__eAttribute_name__'] ?? null,
             'source' => 'inline',
             'formula' => $inline,
-        ] + $this->literalBounds($inline);
+        ] + $this->bounds($this->evaluator()->evaluate($inline));
     }
 
     /**
-     * @return array{min: float|null, max: float|null}
+     * Reduce an attribute's piecewise item-power curve to one roll range.
+     *
+     * The breakpoints are cumulative tiers — a 750-item-power roll uses the
+     * 750 range, not the 0 one — so the **highest** breakpoint is the one
+     * evaluated, because that is the roll a level-capped character actually
+     * sees and the only one worth planning around. Its `nItemPowerRangeStart`
+     * doubles as the `ItemPower` the formula reads and is stored alongside the
+     * bounds, so a reader knows which tier the numbers describe. A breakpoint
+     * that does not evaluate falls back to the next one down rather than
+     * giving up on the affix.
+     *
+     * @param  list<array<string, mixed>>  $ranges
+     * @return array{min: float|null, max: float|null, item_power?: int}
      */
-    protected function literalBounds(?string $formula): array
+    protected function itemPowerBounds(array $ranges): array
     {
-        $formula = trim((string) $formula);
+        usort($ranges, fn (array $a, array $b) => $b['item_power'] <=> $a['item_power']);
 
-        if (preg_match('/^-?\d+(?:\.\d+)?$/', $formula) === 1) {
-            return ['min' => (float) $formula, 'max' => (float) $formula];
-        }
+        foreach ($ranges as $range) {
+            $formula = $range['formula'] ?? null;
 
-        if (preg_match('/^RandomInt\(\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*\)$/i', $formula, $matches) === 1) {
-            return ['min' => (float) $matches[1], 'max' => (float) $matches[2]];
+            if (! is_string($formula)) {
+                continue;
+            }
+
+            $interval = $this->evaluator()->evaluate($formula, ['ItemPower' => $range['item_power']]);
+
+            if ($interval !== null) {
+                return $this->bounds($interval) + ['item_power' => $range['item_power']];
+            }
         }
 
         return ['min' => null, 'max' => null];
+    }
+
+    /**
+     * @param  array{min: float, max: float}|null  $interval
+     * @return array{min: float|null, max: float|null}
+     */
+    protected function bounds(?array $interval): array
+    {
+        return $interval === null
+            ? ['min' => null, 'max' => null]
+            : ['min' => $this->round($interval['min']), 'max' => $this->round($interval['max'])];
+    }
+
+    /**
+     * The values an affix's display text can substitute.
+     *
+     * `Affix_Value_1` / `Affix_Value_2` are its attributes' roll ranges, and
+     * `Affix."Static Value N"` its hand-authored constants. The generic
+     * AttributeDescriptions templates spell the same things `{VALUE}` and,
+     * when the attribute carries a parameter, `{VALUE1}` for the parameter and
+     * `{VALUE2}` for the number — so `{VALUE2}` only means "the first
+     * attribute's roll" on a single-attribute affix, and `{VALUE1}` is left
+     * unresolved either way because the parameter is a raw gbid hash.
+     *
+     * @param  array<array-key, mixed>  $definition
+     * @return array<string, float|array{min: float, max: float}>
+     */
+    protected function affixTokenValues(array $definition): array
+    {
+        $attributeCount = count((array) ($definition['ptItemAffixAttributes'] ?? []));
+        $tokensByAttribute = [
+            0 => $attributeCount === 1 ? ['VALUE', 'VALUE2', 'Affix_Value_1'] : ['VALUE', 'Affix_Value_1'],
+            1 => ['VALUE2', 'Affix_Value_2'],
+        ];
+        $values = [];
+
+        foreach ($tokensByAttribute as $index => $tokens) {
+            $range = $this->affixValueRange($definition, $index);
+
+            if (($range['min'] ?? null) === null || ($range['max'] ?? null) === null) {
+                continue;
+            }
+
+            foreach ($tokens as $token) {
+                $values[$token] = ['min' => (float) $range['min'], 'max' => (float) $range['max']];
+            }
+        }
+
+        foreach (array_values((array) ($definition['arStaticValues'] ?? [])) as $index => $static) {
+            if (is_numeric($static)) {
+                $values['Affix."Static Value '.$index.'"'] = (float) $static;
+                $values['Affix.Static_Value_'.$index] = (float) $static;
+            }
+        }
+
+        return $values;
+    }
+
+    /**
+     * The readable rendering of an affix-derived string: markup stripped and
+     * every roll token this affix can supply substituted.
+     *
+     * @param  array<array-key, mixed>  $definition
+     */
+    protected function affixDisplayText(?string $text, array $definition): ?string
+    {
+        return $this->tooltips()->render($text, $this->affixTokenValues($definition));
     }
 
     /**
@@ -974,12 +1147,14 @@ class D4Importer
 
             $affix = $this->optionalJson(SnoRefs::path($ref)) ?? [];
             $strings = $this->strings->labelsFor('Affix', $key);
+            $text = $this->affixText($affix, $strings);
 
             $affixes[] = [
                 'key' => $key,
                 'sno_id' => SnoRefs::id($ref),
                 'name' => $strings['name'] ?? null,
-                'text' => $this->affixText($affix, $strings),
+                'text' => $text,
+                'display_text' => $this->affixDisplayText($text, $affix),
                 'value_range' => $this->affixValueRange($affix),
                 'static_values' => $affix['arStaticValues'] ?? [],
             ];
@@ -1171,9 +1346,72 @@ class D4Importer
      */
     protected function primaryAttribute(array $definition): array
     {
-        $attribute = $definition['ptItemAffixAttributes'][0]['tAttribute'] ?? null;
+        return $this->attributeAt($definition, 0);
+    }
+
+    /**
+     * One `ptItemAffixAttributes` entry's attribute specifier.
+     *
+     * @param  array<array-key, mixed>  $definition
+     * @return array<string, mixed>
+     */
+    protected function attributeAt(array $definition, int $index): array
+    {
+        $attribute = array_values((array) ($definition['ptItemAffixAttributes'] ?? []))[$index]['tAttribute'] ?? null;
 
         return is_array($attribute) ? $attribute : [];
+    }
+
+    /**
+     * The evaluator, loaded once with the positional PowerFormulaTables sheet
+     * that backs every `Table(n, sLevel)` call.
+     */
+    protected function evaluator(): FormulaEvaluator
+    {
+        return $this->evaluator ??= new FormulaEvaluator($this->powerFormulaTables());
+    }
+
+    protected function tooltips(): TooltipText
+    {
+        return $this->tooltips ??= new TooltipText($this->evaluator());
+    }
+
+    /**
+     * PowerFormulaTables rows carry no id of their own: `Table(34, sLevel)`
+     * means the 35th entry of the sheet, so the index has to stay positional.
+     *
+     * @return array<int, list<float>>
+     */
+    protected function powerFormulaTables(): array
+    {
+        $sheet = $this->optionalJson(self::FILE_POWER_FORMULA_TABLES) ?? [];
+        $tables = [];
+
+        foreach (array_values((array) ($sheet['ptData'][0]['tEntries'] ?? [])) as $index => $entry) {
+            $values = is_array($entry) ? ($entry['flValue'] ?? null) : null;
+
+            if (is_array($values)) {
+                $tables[$index] = array_map(fn (mixed $value): float => (float) $value, array_values($values));
+            }
+        }
+
+        return $tables;
+    }
+
+    /**
+     * @param  array{min: float, max: float}  $interval
+     * @return float|array{min: float, max: float}
+     */
+    protected function compactInterval(array $interval): float|array
+    {
+        return $interval['min'] === $interval['max']
+            ? $this->round($interval['min'])
+            : ['min' => $this->round($interval['min']), 'max' => $this->round($interval['max'])];
+    }
+
+    protected function round(float $value): float
+    {
+        return round($value, self::VALUE_PRECISION);
     }
 
     /**

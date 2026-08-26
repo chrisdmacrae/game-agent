@@ -36,12 +36,15 @@ function d4ToolNames(): array
 }
 
 /**
- * Phase 2 is entirely read-only: nothing on the D4 server is user-gated, so an
- * anonymous client must see the whole toolset.
+ * Every D4 tool except the two gated ones is read-only and anonymous:
+ * save_build needs a signed-in user and import_build is off unless the
+ * deployment opts into reading Maxroll.
  */
-test('every registered D4 tool is visible to an anonymous client', function () {
+test('every ungated D4 tool is visible to an anonymous client', function () {
     $registered = collect((new ReflectionClass(D4Server::class))->getDefaultProperties()['tools'])
         ->map(fn (string $tool) => (new ReflectionClass($tool))->getDefaultProperties()['name'])
+        ->reject(fn (string $name) => in_array($name, ['save_build', 'import_build'], true))
+        ->values()
         ->all();
 
     expect($registered)->not->toBeEmpty()
@@ -52,6 +55,14 @@ test('the D4 endpoint answers on its own name and does not serve the poe2 toolse
     expect(route('mcp.d4'))->toEndWith('/mcp/d4');
 
     expect(d4ToolNames())
-        ->toContain('get_meta_context', 'search_skills', 'get_paragon_board', 'search_aspects')
-        ->not->toContain('search_gems', 'save_build', 'validate_build');
+        ->toContain('get_meta_context', 'search_skills', 'get_paragon_board', 'search_aspects', 'validate_build', 'get_build')
+        ->not->toContain('search_gems', 'plan_tree_path');
+});
+
+test('save_build is hidden from anonymous clients and import_build is hidden unless enabled', function () {
+    expect(d4ToolNames())->not->toContain('save_build', 'import_build');
+
+    config()->set('games.diablo-4.maxroll_import_enabled', true);
+
+    expect(d4ToolNames())->toContain('import_build')->not->toContain('save_build');
 });
