@@ -1,0 +1,326 @@
+{
+ "All_Stats_Percent_Bonus": {
+  "eAttrib": 17,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "All_Stats_Percent_Bonus"
+ },
+ "Armor_Bonus": {
+  "eAttrib": 485,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Armor_Bonus"
+ },
+ "Armor_Percent": {
+  "eAttrib": 482,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Armor_Percent"
+ },
+ "Armor_Total": {
+  "eAttrib": 480,
+  "defaultValue": 0,
+  "formula": "Max(0, (Effective_Armor + Armor_Bonus + Core_Stat_Armor_Bonus) * (1.0 + Armor_Percent))",
+  "name": "Armor_Total"
+ },
+ "Attacks_Per_Second_Total": {
+  "eAttrib": 228,
+  "defaultValue": 1,
+  "formula": "(1.0 + Weapon_Speed_Percent_Bonus - Weapon_Speed_Percent_Reduction)",
+  "name": "Attacks_Per_Second_Total"
+ },
+ "Core_Stat_Armor_Bonus": {
+  "eAttrib": 481,
+  "defaultValue": 0,
+  "formula": "Core_Stat_Minor_Benefit_Scalar_Strength * Strength_Total",
+  "name": "Core_Stat_Armor_Bonus"
+ },
+ "Core_Stat_Dodge_Chance_Bonus": {
+  "eAttrib": 340,
+  "defaultValue": 0,
+  "formula": "Core_Stat_Minor_Benefit_Scalar_Dexterity * Dexterity_Total",
+  "name": "Core_Stat_Dodge_Chance_Bonus"
+ },
+ "Core_Stat_Minor_Benefit_Scalar_Dexterity": {
+  "eAttrib": 29,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Core_Stat_Minor_Benefit_Scalar_Dexterity"
+ },
+ "Core_Stat_Minor_Benefit_Scalar_Intelligence": {
+  "eAttrib": 27,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Core_Stat_Minor_Benefit_Scalar_Intelligence"
+ },
+ "Core_Stat_Minor_Benefit_Scalar_Strength": {
+  "eAttrib": 26,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Core_Stat_Minor_Benefit_Scalar_Strength"
+ },
+ "Core_Stats_Bonus_Dexterity": {
+  "eAttrib": 25,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Core_Stats_Bonus_Dexterity"
+ },
+ "Core_Stats_Bonus_Intelligence": {
+  "eAttrib": 23,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Core_Stats_Bonus_Intelligence"
+ },
+ "Core_Stats_Bonus_Strength": {
+  "eAttrib": 22,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Core_Stats_Bonus_Strength"
+ },
+ "Core_Stats_Bonus_Willpower": {
+  "eAttrib": 24,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Core_Stats_Bonus_Willpower"
+ },
+ "Default_HP_Max_Total": {
+  "eAttrib": 125,
+  "defaultValue": 0,
+  "formula": "(Hitpoints_Max + Hitpoints_Max_Bonus + TableHealthFromFlat(Flat_Hitpoints_Max_Bonus + Flat_Hitpoints_Max_Bonus_Unscaled_By_Player_Health, Level)) * (1 + Hitpoints_Max_Percent_Bonus) * (1 + Hitpoints_Max_Percent_Bonus_Item)",
+  "name": "Default_HP_Max_Total"
+ },
+ "Dexterity": {
+  "eAttrib": 7,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Dexterity"
+ },
+ "Dexterity_Core": {
+  "eAttrib": 12,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Dexterity_Core"
+ },
+ "Dexterity_Percent_Bonus": {
+  "eAttrib": 16,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Dexterity_Percent_Bonus"
+ },
+ "Dexterity_Total": {
+  "eAttrib": 21,
+  "defaultValue": 0,
+  "formula": "(Dexterity    + Dexterity_Core    + Plus_All_Stats + Core_Stats_Bonus_Dexterity)    * (1.0 + (Dexterity_Percent_Bonus    + All_Stats_Percent_Bonus))",
+  "name": "Dexterity_Total"
+ },
+ "Effective_Armor": {
+  "eAttrib": 479,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Effective_Armor"
+ },
+ "Flat_Hitpoints_Max_Bonus": {
+  "eAttrib": 133,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Flat_Hitpoints_Max_Bonus"
+ },
+ "Flat_Hitpoints_Max_Bonus_Unscaled_By_Player_Health": {
+  "eAttrib": 134,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Flat_Hitpoints_Max_Bonus_Unscaled_By_Player_Health"
+ },
+ "Hitpoints_Max": {
+  "eAttrib": 118,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Hitpoints_Max"
+ },
+ "Hitpoints_Max_Bonus": {
+  "eAttrib": 119,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Hitpoints_Max_Bonus"
+ },
+ "Hitpoints_Max_Percent_Bonus": {
+  "eAttrib": 142,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Hitpoints_Max_Percent_Bonus"
+ },
+ "Hitpoints_Max_Percent_Bonus_Item": {
+  "eAttrib": 143,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Hitpoints_Max_Percent_Bonus_Item"
+ },
+ "Hitpoints_Max_Total": {
+  "eAttrib": 120,
+  "defaultValue": 0,
+  "formula": "Max(0.01, Use_Prog2_Monster_HP_Formula ? Monster_HP_Max_Total : Default_HP_Max_Total)",
+  "name": "Hitpoints_Max_Total"
+ },
+ "Hitpoints_Scalar": {
+  "eAttrib": 123,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Hitpoints_Scalar"
+ },
+ "Intelligence": {
+  "eAttrib": 5,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Intelligence"
+ },
+ "Intelligence_Core": {
+  "eAttrib": 10,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Intelligence_Core"
+ },
+ "Intelligence_Percent_Bonus": {
+  "eAttrib": 14,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Intelligence_Percent_Bonus"
+ },
+ "Intelligence_Total": {
+  "eAttrib": 19,
+  "defaultValue": 0,
+  "formula": "(Intelligence + Intelligence_Core + Plus_All_Stats + Core_Stats_Bonus_Intelligence) * (1.0 + (Intelligence_Percent_Bonus + All_Stats_Percent_Bonus))",
+  "name": "Intelligence_Total"
+ },
+ "Level": {
+  "eAttrib": 42,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Level"
+ },
+ "Monster_HP_Max_Total": {
+  "eAttrib": 124,
+  "defaultValue": 0,
+  "formula": "(Hitpoints_Max + TableHealthFromFlat(Flat_Hitpoints_Max_Bonus + Flat_Hitpoints_Max_Bonus_Unscaled_By_Player_Health, Level)) * (1 + Hitpoints_Max_Percent_Bonus) * Hitpoints_Scalar#DifficultyTier",
+  "name": "Monster_HP_Max_Total"
+ },
+ "Plus_All_Stats": {
+  "eAttrib": 8,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Plus_All_Stats"
+ },
+ "Resistance": {
+  "eAttrib": 74,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Resistance"
+ },
+ "Resistance_All": {
+  "eAttrib": 77,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Resistance_All"
+ },
+ "Resistance_All_Bonus": {
+  "eAttrib": 78,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Resistance_All_Bonus"
+ },
+ "Resistance_All_Bonus_Percent": {
+  "eAttrib": 79,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Resistance_All_Bonus_Percent"
+ },
+ "Resistance_All_Core_Stat_Bonus": {
+  "eAttrib": 80,
+  "defaultValue": 0,
+  "formula": "Round(Core_Stat_Minor_Benefit_Scalar_Intelligence * Intelligence_Total)",
+  "name": "Resistance_All_Core_Stat_Bonus"
+ },
+ "Resistance_Bonus": {
+  "eAttrib": 75,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Resistance_Bonus"
+ },
+ "Resistance_Bonus_Percent": {
+  "eAttrib": 76,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Resistance_Bonus_Percent"
+ },
+ "Resistance_Total": {
+  "eAttrib": 81,
+  "defaultValue": 0,
+  "formula": "Round((Resistance + Resistance_Bonus + Resistance_All#NONE + Resistance_All_Bonus#NONE + Resistance_All_Core_Stat_Bonus#NONE) * (1.0 + Resistance_Bonus_Percent + Resistance_All_Bonus_Percent#NONE))",
+  "name": "Resistance_Total"
+ },
+ "Strength": {
+  "eAttrib": 4,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Strength"
+ },
+ "Strength_Core": {
+  "eAttrib": 9,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Strength_Core"
+ },
+ "Strength_Percent_Bonus": {
+  "eAttrib": 13,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Strength_Percent_Bonus"
+ },
+ "Strength_Total": {
+  "eAttrib": 18,
+  "defaultValue": 0,
+  "formula": "(Strength     + Strength_Core     + Plus_All_Stats + Core_Stats_Bonus_Strength)     * (1.0 + (Strength_Percent_Bonus     + All_Stats_Percent_Bonus))",
+  "name": "Strength_Total"
+ },
+ "Use_Prog2_Monster_HP_Formula": {
+  "eAttrib": 126,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Use_Prog2_Monster_HP_Formula"
+ },
+ "Weapon_Speed_Percent_Bonus": {
+  "eAttrib": 226,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Weapon_Speed_Percent_Bonus"
+ },
+ "Weapon_Speed_Percent_Reduction": {
+  "eAttrib": 227,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Weapon_Speed_Percent_Reduction"
+ },
+ "Willpower": {
+  "eAttrib": 6,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Willpower"
+ },
+ "Willpower_Core": {
+  "eAttrib": 11,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Willpower_Core"
+ },
+ "Willpower_Percent_Bonus": {
+  "eAttrib": 15,
+  "defaultValue": 0,
+  "formula": null,
+  "name": "Willpower_Percent_Bonus"
+ },
+ "Willpower_Total": {
+  "eAttrib": 20,
+  "defaultValue": 0,
+  "formula": "(Willpower    + Willpower_Core    + Plus_All_Stats + Core_Stats_Bonus_Willpower)    * (1.0 + (Willpower_Percent_Bonus    + All_Stats_Percent_Bonus))",
+  "name": "Willpower_Total"
+ }
+}

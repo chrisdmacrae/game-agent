@@ -1,0 +1,65 @@
+{
+ "__fileName__": "base/meta/Global/globals.glo",
+ "__snoID__": 1360,
+ "__type__": "GlobalDefinition",
+ "__typeHash__": 3967226522,
+ "ptContent": [
+  {
+   "flPlayerCritDamageScalar": 0.5,
+   "nParagonPointsEarnedPerLevel": 1,
+   "arGlyphRadiusLevels": [
+    0,
+    0,
+    0,
+    25,
+    50
+   ],
+   "arAffixCountPerQuality": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    5,
+    5,
+    5
+   ],
+   "flItemUpgradeAttributeBonus": 0.10000000149011612,
+   "arItemUpgradeArmorPowerLevels": [
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "arItemUpgradeWeaponPowerLevels": [
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "arItemUpgradeJewelryPowerLevels": [
+    5,
+    5,
+    5,
+    5,
+    5
+   ],
+   "arParagonPowerBudgetMultiplier": [
+    0.009999999776482582,
+    0.02500000037252903,
+    0.019999999552965164,
+    0.05000000074505806,
+    0.03999999910593033,
+    0.05000000074505806,
+    0.03999999910593033,
+    0.15000000596046448,
+    0.05000000074505806,
+    0.032999999821186066,
+    0.10000000149011612
+   ]
+  }
+ ]
+}

@@ -6,7 +6,10 @@ Before planning or editing, find the row whose globs match the file's path and r
 | --- | --- |
 | app/Http/Controllers/Auth/** | .ai/rules/auth.md |
 | resources/js/pages/Builds/** | .ai/rules/builds.md |
+| app/Domain/D4/Calc/** | .ai/rules/calc.md |
+| app/Http/Controllers/HomeController.php | .ai/rules/controllers.md |
 | app/Domain/D4/Validation/D4BuildRules.php | .ai/rules/d4-validation.md |
+| app/Domain/D4/** | .ai/rules/d4.md |
 | resources/js/components/games/diablo-4/** | .ai/rules/diablo-4.md |
 | app/Domain/Builds/** | .ai/rules/domain-builds.md |
 | app/Domain/** | .ai/rules/domain.md |

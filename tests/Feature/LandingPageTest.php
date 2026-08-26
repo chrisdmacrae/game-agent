@@ -16,10 +16,17 @@ test('the landing page carries the hero stats and the game grid', function () {
         'sort_order' => 0,
     ]);
 
+    Game::factory()->live()->create([
+        'slug' => 'diablo-4',
+        'name' => 'Diablo IV',
+        'short_name' => 'D4',
+        'sort_order' => 1,
+    ]);
+
     $queued = Game::factory()->create([
         'slug' => 'last-epoch',
         'name' => 'Last Epoch',
-        'sort_order' => 1,
+        'sort_order' => 2,
     ]);
 
     Build::factory()->count(2)->public()->for($live)->create();
@@ -32,15 +39,45 @@ test('the landing page carries the hero stats and the game grid', function () {
         ->assertInertia(fn ($page) => $page
             ->component('Welcome')
             ->where('stats.builds_published', 2)
-            ->where('stats.games_live', 1)
-            ->has('gameCards', 2)
+            ->where('stats.games_live', 2)
+            ->has('gameCards', 3)
             ->where('gameCards.0.slug', 'poe2')
             ->where('gameCards.0.is_live', true)
             ->where('gameCards.0.builds', 2)
-            ->where('gameCards.1.is_live', false)
-            ->where('gameCards.1.votes', 1)
-            ->where('gameCards.1.url', route('games.show', 'last-epoch'))
-            ->has('tools')
-            ->has('models')
+            ->where('gameCards.2.is_live', false)
+            ->where('gameCards.2.votes', 1)
+            ->where('gameCards.2.url', route('games.show', 'last-epoch'))
+            ->has('toolkits', 2)
+        );
+});
+
+/**
+ * Each live game exposes its own MCP endpoint with its own toolset, so the
+ * homepage receives one toolkit per live game rather than a single flat list.
+ */
+test('the landing page carries one toolkit per live game', function () {
+    Game::factory()->live()->create([
+        'slug' => 'poe2',
+        'name' => 'Path of Exile 2',
+        'short_name' => 'PoE 2',
+        'sort_order' => 0,
+    ]);
+
+    Game::factory()->live()->create([
+        'slug' => 'diablo-4',
+        'name' => 'Diablo IV',
+        'short_name' => 'D4',
+        'sort_order' => 1,
+    ]);
+
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page
+            ->component('Welcome')
+            ->has('toolkits', 2)
+            ->where('toolkits.0.slug', 'poe2')
+            ->where('toolkits.1.slug', 'diablo-4')
+            ->where('toolkits.0.tools', fn ($tools) => collect($tools)->pluck('name')->contains('search_gems'))
+            ->where('toolkits.1.tools', fn ($tools) => collect($tools)->pluck('name')->contains('search_aspects'))
         );
 });

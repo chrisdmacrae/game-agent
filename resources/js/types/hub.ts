@@ -10,6 +10,13 @@ export type HubGame = {
     url?: string;
 };
 
+/** A live game as ConnectPanel's endpoint selector wants it. */
+export type ConnectGame = {
+    slug: string;
+    label: string;
+    mcpUrl: string;
+};
+
 /** A build shaped for a BuildCard (see BuildHubQuery::card()). */
 export type HubBuild = {
     id: string;
@@ -41,6 +48,34 @@ export type HubFilters = {
     current_patch_only: boolean;
     hardcore_viable: boolean;
     sort: string;
+};
+
+/** A query-string key the rail drives (see GameBuildProfile::hubFilters()). */
+export type HubFilterParam = keyof Omit<HubFilters, 'sort'>;
+
+/**
+ * One control on the filter rail, as the game's profile describes it. The page
+ * draws the rail from this list, so which filters a game offers — Diablo IV has
+ * no ascendancy, budget or hardcore filter — is a server-side decision.
+ */
+export type HubFilterDescriptor = {
+    key: string;
+    label: string;
+    type: 'checkboxes' | 'select' | 'radio' | 'number_range' | 'toggle';
+    /** The query-string keys this control owns. */
+    params: HubFilterParam[];
+    /** The list in `options` this control reads its choices from. */
+    options: keyof HubOptions | null;
+    /** Label of the "any" choice on a select or radio group. */
+    placeholder: string | null;
+    /** The inputs of a `number_range`, in order. */
+    fields: HubFilterField[];
+};
+
+export type HubFilterField = {
+    param: HubFilterParam;
+    placeholder: string;
+    label: string;
 };
 
 /** Every filter plus the view toggle, i.e. the hub's whole query string. */

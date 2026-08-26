@@ -2,6 +2,8 @@
 
 namespace App\Domain\Builds;
 
+use App\Domain\D4\Calc\ComputedStats;
+use App\Domain\D4\D4BuildPageEnricher;
 use App\Domain\D4\D4BuildPayload;
 use App\Domain\D4\D4PublishChecks;
 use App\Domain\D4\Validation\D4BuildRules;
@@ -82,6 +84,21 @@ class GameBuildProfile
     }
 
     /**
+     * Normalize a payload for saving and, where the game has a stat
+     * calculator, fold its computed dps/ehp/stat rows in. Every path that
+     * persists `build` should come through here rather than normalize().
+     *
+     * @param  array<string, mixed>  $payload
+     * @return array<string, mixed>
+     */
+    public function finalize(array $payload, ?int $versionId = null): array
+    {
+        $payload = $this->normalize($payload);
+
+        return $this->isD4() ? ComputedStats::apply($payload, $versionId) : $payload;
+    }
+
+    /**
      * The heuristic validator for this game. Both games' validators expose the
      * same `validate(array $definition): array` contract.
      */
@@ -111,6 +128,94 @@ class GameBuildProfile
     public function tiers(): array
     {
         return $this->isD4() ? D4BuildRules::TIERS : BuildRules::TIERS;
+    }
+
+    /**
+     * The hub's filter rail for this game, in the order it is drawn. The page
+     * renders these generically — `type` picks the control, `params` names the
+     * query-string keys the control owns, and `options` names the list in the
+     * hub's `options` prop it reads its choices from — so adding a game means
+     * editing this method and nothing in the Vue.
+     *
+     * A Diablo IV character has no second class layer and no divine-orb
+     * economy, so the ascendancy select and the budget inputs are not on
+     * offer; hardcore is left off deliberately too, even though the game has
+     * the mode.
+     *
+     * @return list<array{key: string, label: string, type: string, params: list<string>, options: string|null, placeholder: string|null, fields: list<array{param: string, placeholder: string, label: string}>}>
+     */
+    public function hubFilters(): array
+    {
+        $classes = $this->hubFilter('classes', 'Class', 'checkboxes', ['classes'], options: 'classes');
+        $stage = $this->hubFilter('stage', 'Game stage', 'radio', ['stage'], options: 'stages', placeholder: 'Any stage');
+        $patch = $this->hubFilter('current_patch_only', 'Current patch only', 'toggle', ['current_patch_only']);
+
+        if ($this->isD4()) {
+            return [$classes, $stage, $patch];
+        }
+
+        return [
+            $classes,
+            $this->hubFilter('ascendancy', 'Ascendancy', 'select', ['ascendancy'], options: 'ascendancies', placeholder: 'Any ascendancy'),
+            $stage,
+            $this->hubFilter('budget', 'Budget', 'number_range', ['min_divine', 'max_divine'], fields: [
+                ['param' => 'min_divine', 'placeholder' => 'Min div', 'label' => 'Minimum divine'],
+                ['param' => 'max_divine', 'placeholder' => 'Max div', 'label' => 'Maximum divine'],
+            ]),
+            $patch,
+            $this->hubFilter('hardcore_viable', 'Hardcore viable', 'toggle', ['hardcore_viable']),
+        ];
+    }
+
+    /**
+     * Every query-string key the rail offers; anything else is dropped from a
+     * hub request rather than filtering the list — see BuildHubQuery::gate().
+     *
+     * @return list<string>
+     */
+    public function hubFilterParams(): array
+    {
+        return array_values(array_merge(
+            ...array_map(fn (array $filter) => $filter['params'], $this->hubFilters()),
+        ));
+    }
+
+    /**
+     * The sorts the hub offers. Cheapest-first is a divine-orb sort, so it is
+     * PoE 2 only.
+     *
+     * @return list<string>
+     */
+    public function hubSorts(): array
+    {
+        return $this->isD4()
+            ? ['updated', 'endorsements', 'dps']
+            : BuildHubQuery::SORTS;
+    }
+
+    /**
+     * @param  list<string>  $params
+     * @param  list<array{param: string, placeholder: string, label: string}>  $fields
+     * @return array{key: string, label: string, type: string, params: list<string>, options: string|null, placeholder: string|null, fields: list<array{param: string, placeholder: string, label: string}>}
+     */
+    protected function hubFilter(
+        string $key,
+        string $label,
+        string $type,
+        array $params,
+        ?string $options = null,
+        ?string $placeholder = null,
+        array $fields = [],
+    ): array {
+        return [
+            'key' => $key,
+            'label' => $label,
+            'type' => $type,
+            'params' => $params,
+            'options' => $options,
+            'placeholder' => $placeholder,
+            'fields' => $fields,
+        ];
     }
 
     /**
@@ -167,20 +272,23 @@ class GameBuildProfile
     }
 
     /**
-     * The hover-card dictionary and gear view the build page renders. Only
-     * PoE 2 has an enricher; Diablo IV gets the same prop keys, empty, so the
-     * page shell can render without special-casing a missing prop.
+     * The hover-card dictionary and gear view the build page renders. Each
+     * game has its own enricher; the D4 one carries no gear view or
+     * ascendancy paths, so those keys come back empty for it and the page
+     * shell renders without special-casing a missing prop.
      *
      * @return array{entities: array<string, mixed>, ascendancy_path_ids: list<int>, gear_view: array{slots: array<string, mixed>, jewels: list<mixed>}, guide_html: string|null}
      */
     public function enrich(Build $build, ?string $guideHtml): array
     {
         if ($this->isD4()) {
+            $enriched = app(D4BuildPageEnricher::class)->enrich($build, $guideHtml);
+
             return [
-                'entities' => [],
+                'entities' => $enriched['entities'],
                 'ascendancy_path_ids' => [],
                 'gear_view' => ['slots' => [], 'jewels' => []],
-                'guide_html' => $guideHtml,
+                'guide_html' => $enriched['guide_html'],
             ];
         }
 

@@ -67,3 +67,59 @@ test('normalize accepts tempered affixes as bare strings and keeps false flags',
         ['affix' => 'Crit', 'tier' => 2],
     ])->and($payload['hardcore_viable'])->toBeFalse();
 });
+
+test('normalize dedupes paragon nodes and keeps only a complete attach gate', function () {
+    $payload = D4BuildPayload::normalize([
+        'equipped_skills' => [['skill' => 'Whirlwind']],
+        'paragon' => [[
+            'board' => 'Start',
+            'nodes' => [
+                ['row' => '13', 'col' => '10'],
+                ['row' => 13, 'col' => 10],
+                ['row' => -1, 'col' => 2],
+                ['row' => 6],
+                'nonsense',
+            ],
+            'attach' => ['to' => '0', 'gate' => ['row' => 0, 'col' => 10]],
+        ], [
+            'board' => 'Other',
+            'attach' => ['gate' => ['row' => 5]],
+        ]],
+    ]);
+
+    expect($payload['paragon'][0]['nodes'])->toBe([['row' => 13, 'col' => 10]])
+        ->and($payload['paragon'][0]['attach'])->toBe(['to' => 0, 'gate' => ['row' => 0, 'col' => 10]])
+        ->and($payload['paragon'][1])->not->toHaveKey('attach')
+        ->and($payload['paragon'][1])->not->toHaveKey('nodes');
+});
+
+test('normalize canonicalises affix entries and keeps the legacy string shape readable', function () {
+    $payload = D4BuildPayload::normalize([
+        'equipped_skills' => [['skill' => 'Whirlwind']],
+        'gear' => [
+            'helm' => [
+                'name' => 'Soul Onus',
+                'affixes' => [
+                    ' +845 Maximum Life ',
+                    ['affix' => 'Max_Life_Flat', 'value' => '845', 'greater' => true, 'text' => '+845 Maximum Life'],
+                    ['value' => 12],
+                    ['text' => '  '],
+                    ['affix' => 'CritChance', 'greater' => false],
+                ],
+                'tempered' => [['affix' => 'Tempered_X', 'tier' => 2, 'value' => '18.5']],
+            ],
+        ],
+    ]);
+
+    expect($payload['gear']['helm']['affixes'])->toBe([
+        ['text' => '+845 Maximum Life'],
+        ['text' => '+845 Maximum Life', 'affix' => 'Max_Life_Flat', 'value' => 845, 'greater' => true],
+        ['affix' => 'CritChance'],
+    ])
+        ->and($payload['gear']['helm']['tempered'])->toBe([
+            ['affix' => 'Tempered_X', 'tier' => 2, 'value' => 18.5],
+        ])
+        ->and(D4BuildPayload::affixLabel('+90 Dexterity'))->toBe('+90 Dexterity')
+        ->and(D4BuildPayload::affixLabel(['affix' => 'CritChance']))->toBe('CritChance')
+        ->and(D4BuildPayload::affixLabel(['text' => '+845 Maximum Life', 'affix' => 'Max_Life_Flat']))->toBe('+845 Maximum Life');
+});

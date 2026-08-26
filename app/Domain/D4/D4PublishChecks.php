@@ -33,6 +33,52 @@ class D4PublishChecks
             $this->gearCheck($payload),
             $this->skillsCheck($payload),
             $this->paragonCheck($payload),
+            $this->computedCheck($payload),
+        ];
+    }
+
+    /**
+     * The stat calculator ran and produced numbers. It always runs on save,
+     * so a miss means the build predates the calculator (re-save it) or the
+     * payload gave it nothing to work with; the detail names the blockers.
+     *
+     * @param  array<string, mixed>  $payload
+     * @return array{key: string, label: string, passed: bool, detail: string|null}
+     */
+    protected function computedCheck(array $payload): array
+    {
+        $computed = is_array($payload['computed'] ?? null) ? $payload['computed'] : [];
+
+        if ($computed !== [] && ($computed['dps'] ?? null) !== null && ($computed['ehp'] ?? null) !== null) {
+            return ['key' => 'computed', 'label' => 'Computed stats', 'passed' => true, 'detail' => null];
+        }
+
+        $blockers = [];
+
+        if ($computed === []) {
+            $blockers[] = 'the calculator has not run — re-save the build';
+        } else {
+            if (($computed['dps'] ?? null) === null) {
+                $blockers[] = 'no computable DPS (equip a weapon with a recognisable item type)';
+            }
+
+            if (($computed['ehp'] ?? null) === null) {
+                $blockers[] = 'no computable EHP';
+            }
+
+            $unstructured = (int) ($computed['coverage']['unstructured_slots'] ?? 0);
+
+            if ($unstructured > 0) {
+                $blockers[] = "{$unstructured} item(s) carry only unstructured affix text";
+            }
+        }
+
+        return [
+            'key' => 'computed',
+            'label' => 'Computed stats',
+            // Advisory: hand-entered dps/ehp still satisfies the stats gate.
+            'passed' => ($payload['dps'] ?? null) !== null && ($payload['ehp'] ?? null) !== null,
+            'detail' => implode('; ', $blockers) ?: null,
         ];
     }
 

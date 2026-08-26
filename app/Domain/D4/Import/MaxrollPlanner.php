@@ -4,6 +4,7 @@ namespace App\Domain\D4\Import;
 
 use App\Domain\D4\D4BuildPayload;
 use App\Domain\D4\D4Context;
+use App\Domain\D4\D4ParagonGraph;
 use App\Domain\D4\Validation\D4BuildRules;
 use App\Models\D4\Affix;
 use App\Models\D4\Aspect;
@@ -308,6 +309,18 @@ class MaxrollPlanner
                     : null,
             ];
 
+            $nodes = $this->paragonNodes($board, $entry);
+
+            if ($nodes !== []) {
+                $mapped['nodes'] = $nodes;
+
+                $gate = $this->paragonEntryGate($board, $nodes, isFirst: $boards === []);
+
+                if ($gate !== null) {
+                    $mapped['attach'] = ['gate' => $gate];
+                }
+            }
+
             $glyphKey = $entry['glyph'] ?? null;
 
             if (is_string($glyphKey) && $glyphKey !== '') {
@@ -329,6 +342,96 @@ class MaxrollPlanner
         }
 
         return array_slice($boards, 0, D4BuildRules::MAX_PARAGON_BOARDS);
+    }
+
+    /**
+     * The planner's `nodes` is a map of flat row-major grid indices (the same
+     * order the game's arEntries uses) to an allocation flag. Verified against
+     * the board layout: index 10 on the 21-wide Barbarian start board is its
+     * single gate at (0,10). Indices that fall outside the grid or on empty
+     * cells are reported rather than guessed at.
+     *
+     * @param  array<string, mixed>  $entry
+     * @return list<array{row: int, col: int}>
+     */
+    protected function paragonNodes(ParagonBoard $board, array $entry): array
+    {
+        $allocated = $entry['nodes'] ?? null;
+
+        if (! is_array($allocated) || $allocated === []) {
+            return [];
+        }
+
+        $grid = is_array($board->grid) ? $board->grid : [];
+        $width = (int) ($board->raw['width'] ?? count($grid));
+
+        if ($width <= 0) {
+            return [];
+        }
+
+        $nodes = [];
+
+        foreach ($allocated as $index => $taken) {
+            if (! is_numeric($index) || ! $taken) {
+                continue;
+            }
+
+            $row = intdiv((int) $index, $width);
+            $col = (int) $index % $width;
+
+            if (! is_array($grid[$row][$col] ?? null)) {
+                $this->unmapped[] = $this->note(
+                    'paragon_node',
+                    "{$board->name}#{$index}",
+                    'This planner node index lands on empty space in the imported grid; the board layout may have changed between patches.',
+                );
+
+                continue;
+            }
+
+            $nodes[] = ['row' => $row, 'col' => $col];
+        }
+
+        return $nodes;
+    }
+
+    /**
+     * The gate the board is entered through: the allocated gate cell from
+     * which the rest of the allocation is reachable. The planner does not
+     * store attachment explicitly, but a legal allocation always purchases its
+     * entry gate, so the best-connected allocated gate is the entry.
+     *
+     * @param  list<array{row: int, col: int}>  $nodes
+     * @return array{row: int, col: int}|null
+     */
+    protected function paragonEntryGate(ParagonBoard $board, array $nodes, bool $isFirst): ?array
+    {
+        if ($isFirst) {
+            return null; // The start board has no attachment.
+        }
+
+        $grid = is_array($board->grid) ? $board->grid : [];
+        $graph = new D4ParagonGraph($this->context);
+
+        $best = null;
+        $bestUnreached = PHP_INT_MAX;
+
+        foreach ($nodes as $node) {
+            $cell = $graph->cellAt($grid, $node['row'], $node['col']);
+
+            if ($cell === null || ($cell['is_gate'] ?? false) !== true) {
+                continue;
+            }
+
+            $unreached = count($graph->reachability($grid, $node, $nodes)['unreached']);
+
+            if ($unreached < $bestUnreached) {
+                $best = $node;
+                $bestUnreached = $unreached;
+            }
+        }
+
+        return $best;
     }
 
     /**
@@ -424,7 +527,7 @@ class MaxrollPlanner
 
         $mapped['item_type'] ??= Str::before($key, '_');
         $mapped['aspect'] = $this->aspectName($item, $id);
-        $mapped['affixes'] = $this->affixNames($item['explicits'] ?? []);
+        $mapped['affixes'] = $this->affixEntries($item['explicits'] ?? []);
         $mapped['greater_affixes'] = $this->greaterCount($item);
         $mapped['tempered'] = array_map(
             fn (string $affix) => ['affix' => $affix],
@@ -469,6 +572,48 @@ class MaxrollPlanner
         }
 
         return $aspect->name;
+    }
+
+    /**
+     * Rolled explicits, kept structured so the stat calculator can count
+     * them: the imported affix key, the display name as the text line, and
+     * the planner's greater flag.
+     *
+     * @return list<array<string, mixed>>
+     */
+    protected function affixEntries(mixed $entries): array
+    {
+        if (! is_array($entries)) {
+            return [];
+        }
+
+        $structured = [];
+
+        foreach ($entries as $entry) {
+            $nid = is_array($entry) ? ($entry['nid'] ?? null) : null;
+
+            if (! is_numeric($nid)) {
+                continue;
+            }
+
+            $affix = Affix::forVersion($this->context->versionId())
+                ->where('raw->sno_id', (int) $nid)
+                ->first();
+
+            if ($affix === null) {
+                $this->unmapped[] = $this->note('affix', (string) $nid, 'This affix sno is not in the imported data.');
+
+                continue;
+            }
+
+            $structured[] = array_filter([
+                'affix' => $affix->key,
+                'text' => $affix->name,
+                'greater' => ($entry['greater'] ?? false) === true ? true : null,
+            ], fn (mixed $value) => $value !== null && $value !== '');
+        }
+
+        return array_slice($structured, 0, 8);
     }
 
     /**

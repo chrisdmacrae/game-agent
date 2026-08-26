@@ -6,6 +6,12 @@
             "runtimeExecutable": "php",
             "runtimeArgs": ["artisan", "serve", "--port=8321"],
             "port": 8321
+        },
+        {
+            "name": "app-8322",
+            "runtimeExecutable": "php",
+            "runtimeArgs": ["artisan", "serve", "--port=8322"],
+            "port": 8322
         }
     ]
 }

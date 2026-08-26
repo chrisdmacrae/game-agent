@@ -40,14 +40,30 @@ class D4DataSource
         'json/base/meta/Aspect',
         'json/base/meta/Affix',
         'json/base/meta/GameBalance',
+        'json/base/meta/Global',
         'json/base/meta/Season',
         'json/enUS_Text/meta/StringList',
     ];
 
     /**
-     * Top-level files the importer needs. Cone-mode sparse checkouts always
-     * include root files, so these come along with SPARSE_DIRS for free —
-     * passing them to `git sparse-checkout set` is rejected as "not a directory".
+     * File-level subsets of directories far too large to clone whole. The
+     * Texture group holds ~142k files of 3D material art; only the 2DUI_* and
+     * 2DInventory_* atlases (~6k files) carry the icon frame tables the
+     * importer reads. These force the checkout into no-cone mode.
+     *
+     * @var list<string>
+     */
+    public const SPARSE_FILE_PATTERNS = [
+        'json/base/meta/Texture/2DUI_*',
+        'json/base/meta/Texture/2DInventory_*',
+    ];
+
+    /**
+     * Top-level files the importer needs. No-cone checkouts match only what
+     * the patterns name, so these are listed explicitly alongside SPARSE_DIRS.
+     *
+     * attributes.json / attributeList.json are the game's derived-attribute
+     * formula graph — the backbone of the stat calculator.
      *
      * @var list<string>
      */
@@ -56,6 +72,8 @@ class D4DataSource
         'GBID.json',
         'eGameBalanceType.json',
         'buildVersion.txt',
+        'attributes.json',
+        'attributeList.json',
     ];
 
     protected ?string $fingerprint = null;
@@ -251,9 +269,25 @@ class D4DataSource
             $this->run(['git', 'checkout', '--force', 'FETCH_HEAD'], $repo);
         }
 
-        $this->run(array_merge(['git', 'sparse-checkout', 'set'], self::SPARSE_DIRS), $repo);
+        $this->run(array_merge(['git', 'sparse-checkout', 'set', '--no-cone'], self::sparsePatterns()), $repo);
 
         $this->linkTreeTo($repo);
+    }
+
+    /**
+     * The no-cone sparse-checkout pattern list. Root-anchored so a directory
+     * name can never match deeper in the tree, and shared with the CI workflow
+     * that builds the production tarball — keep the two in sync.
+     *
+     * @return list<string>
+     */
+    public static function sparsePatterns(): array
+    {
+        return array_merge(
+            array_map(fn (string $file): string => '/'.$file, self::ROOT_FILES),
+            array_map(fn (string $dir): string => '/'.$dir.'/', self::SPARSE_DIRS),
+            array_map(fn (string $pattern): string => '/'.$pattern, self::SPARSE_FILE_PATTERNS),
+        );
     }
 
     /**

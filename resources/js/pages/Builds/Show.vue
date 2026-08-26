@@ -34,6 +34,7 @@ const diablo4 = computed(() => props as D4BuildShowProps);
             :game="diablo4.game"
             :viewer="diablo4.viewer"
             :similar-builds="diablo4.similarBuilds"
+            :entities="diablo4.entities"
             :paragon-boards="diablo4.paragonBoards"
         />
         <Poe2BuildShow v-else v-bind="poe2" />

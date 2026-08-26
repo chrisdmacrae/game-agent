@@ -1,5 +1,8 @@
 import type {
+    D4AffixEntry,
     D4BuildDefinition,
+    D4Entity,
+    D4EntityIcon,
     D4EquippedSkill,
     D4Gear,
     D4GearItem,
@@ -124,6 +127,70 @@ export function skillMeta(skill: D4EquippedSkill): string {
 /** An item card's headline: the name, else the base type, else the slot. */
 export function itemLabel(item: D4GearItem, fallback: string): string {
     return item.name || item.item_type || fallback;
+}
+
+/**
+ * The display line of one affix entry: legacy rows are plain strings, newer
+ * rows are structured objects. A structured entry with only a key and a value
+ * still reads like an affix line.
+ */
+export function affixLabel(entry: D4AffixEntry): string {
+    if (typeof entry === 'string') {
+        return entry;
+    }
+
+    const base = entry.text || entry.affix || '';
+
+    return entry.value != null && !entry.text
+        ? `${base} ${entry.value}`.trim()
+        : base;
+}
+
+/** Whether the entry rolled as a Greater Affix. */
+export function isGreaterAffix(entry: D4AffixEntry): boolean {
+    return typeof entry !== 'string' && entry.greater === true;
+}
+
+/** Case-insensitive lookup: guide mentions differ in casing from the payload. */
+export function entityIndex(
+    entities: Record<string, D4Entity>,
+): Record<string, D4Entity> {
+    const index: Record<string, D4Entity> = {};
+
+    for (const entity of Object.values(entities)) {
+        index[entity.name.toLowerCase()] = entity;
+    }
+
+    return index;
+}
+
+/**
+ * CSS that crops one icon out of its atlas sheet using the fractional UV
+ * rect. Percentage background math keeps it resolution-independent, so the
+ * extractor may downscale the sheets freely.
+ */
+export function atlasStyle(
+    icon: D4EntityIcon,
+    sizePx = 32,
+): Record<string, string> {
+    const width = icon.u1 - icon.u0;
+    const height = icon.v1 - icon.v0;
+
+    if (width <= 0 || height <= 0) {
+        return { width: `${sizePx}px`, height: `${sizePx}px` };
+    }
+
+    const positionX = width >= 1 ? 0 : (icon.u0 / (1 - width)) * 100;
+    const positionY = height >= 1 ? 0 : (icon.v0 / (1 - height)) * 100;
+
+    return {
+        width: `${sizePx}px`,
+        height: `${Math.round((sizePx * height) / width)}px`,
+        backgroundImage: `url(${icon.url})`,
+        backgroundSize: `${100 / width}% ${100 / height}%`,
+        backgroundPosition: `${positionX}% ${positionY}%`,
+        backgroundRepeat: 'no-repeat',
+    };
 }
 
 /** True when the item has anything at all worth drawing a card for. */

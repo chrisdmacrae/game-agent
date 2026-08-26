@@ -3,6 +3,7 @@
 namespace App\Mcp\Tools\D4;
 
 use App\Domain\Builds\PublishChecklist;
+use App\Domain\D4\Calc\ComputedStats;
 use App\Domain\D4\D4BuildPayload;
 use App\Domain\D4\D4Context;
 use App\Domain\D4\Validation\D4BuildRules;
@@ -52,7 +53,7 @@ class SaveBuildTool extends Tool
         ], D4BuildRules::rules('build.')));
 
         $version = $context->version();
-        $definition = D4BuildPayload::normalize($validated['build']);
+        $definition = ComputedStats::apply(D4BuildPayload::normalize($validated['build']), $version->id);
 
         if (isset($validated['id'])) {
             $build = Build::query()
@@ -104,6 +105,7 @@ class SaveBuildTool extends Tool
             'url' => $build->url(),
             'visibility' => $build->visibility,
             'validation' => $build->validation,
+            'computed' => $definition['computed'] ?? null,
             'checklist' => $checklist->for($build),
             'note' => $build->isDraft()
                 ? 'Saved as a draft: only the signed-in user can see the page. Share the url with them — they can finish the build and publish it on the web, or you can save again with this id and visibility "public" once the pre-flight checks pass.'

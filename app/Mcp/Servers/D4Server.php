@@ -11,6 +11,7 @@ use App\Mcp\Tools\D4\GetUniqueTool;
 use App\Mcp\Tools\D4\ImportBuildTool;
 use App\Mcp\Tools\D4\ListClassesTool;
 use App\Mcp\Tools\D4\ListGameModelsTool;
+use App\Mcp\Tools\D4\PlanParagonPathTool;
 use App\Mcp\Tools\D4\SaveBuildTool;
 use App\Mcp\Tools\D4\SearchAffixesTool;
 use App\Mcp\Tools\D4\SearchAspectsTool;
@@ -74,6 +75,7 @@ class D4Server extends Server
         SearchSkillsTool::class,
         GetSkillTool::class,
         GetParagonBoardTool::class,
+        PlanParagonPathTool::class,
         SearchGlyphsTool::class,
         SearchAspectsTool::class,
         SearchUniquesTool::class,

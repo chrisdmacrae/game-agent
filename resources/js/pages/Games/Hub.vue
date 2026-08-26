@@ -25,6 +25,8 @@ import { show as gameShow } from '@/routes/games';
 import type {
     HubBuild,
     HubFacets,
+    HubFilterDescriptor,
+    HubFilterParam,
     HubFilters,
     HubGame,
     HubOptions,
@@ -36,12 +38,17 @@ import type {
  * The game hub (scope §3.4). Every filter, the sort and the view toggle live in
  * the query string and round-trip through the server — the list is the point of
  * the page, so it is never filtered in the browser.
+ *
+ * The rail itself is drawn from `filterRail`, the descriptor the game's
+ * GameBuildProfile hands over: which filters a game offers is a server-side
+ * decision, so a new game means a profile edit and nothing here.
  */
 const props = defineProps<{
     game: HubGame;
     patch: string | null;
     builds: HubBuild[];
     filters: HubFilters;
+    filterRail: HubFilterDescriptor[];
     view: HubView;
     facets: HubFacets;
     options: HubOptions;
@@ -65,8 +72,8 @@ const publishOpen = ref(false);
 /** Only the list and the rail change; the connect panel and strip stay put. */
 const RELOAD_ONLY = ['builds', 'filters', 'facets', 'options', 'view'];
 
-const ANY_ASCENDANCY = '';
-const ANY_STAGE = '';
+/** The empty value of a select or radio group, i.e. "any". */
+const ANY = '';
 
 const SORT_LABELS: Record<string, string> = {
     updated: 'Newest',
@@ -82,13 +89,77 @@ const sortOptions = computed(() =>
     })),
 );
 
-const ascendancyOptions = computed(() => [
-    { label: 'Any ascendancy', value: ANY_ASCENDANCY },
-    ...props.options.ascendancies.map((ascendancy) => ({
-        label: ascendancy.name,
-        value: ascendancy.name,
-    })),
-]);
+/** Toggles sit together at the foot of the rail; the rest are bordered rows. */
+const railSections = computed(() =>
+    props.filterRail.filter((filter) => filter.type !== 'toggle'),
+);
+
+const railToggles = computed(() =>
+    props.filterRail.filter((filter) => filter.type === 'toggle'),
+);
+
+type Choice = { label: string; value: string };
+
+/** A control's option list, normalised to label/value pairs. */
+function choices(filter: HubFilterDescriptor): Choice[] {
+    if (filter.options === 'ascendancies') {
+        return props.options.ascendancies.map((ascendancy) => ({
+            label: ascendancy.name,
+            value: ascendancy.name,
+        }));
+    }
+
+    if (filter.options === 'stages') {
+        return props.options.stages.map((stage) => ({
+            label: stageLabel(stage) ?? stage,
+            value: stage,
+        }));
+    }
+
+    if (filter.options === 'classes') {
+        return props.options.classes.map((name) => ({
+            label: name,
+            value: name,
+        }));
+    }
+
+    return [];
+}
+
+/** The same list with the "any" entry in front, for a select. */
+function choicesWithAny(filter: HubFilterDescriptor): Choice[] {
+    return [
+        { label: filter.placeholder ?? 'Any', value: ANY },
+        ...choices(filter),
+    ];
+}
+
+/** Result counts per option, for the controls that report them. */
+function countFor(filter: HubFilterDescriptor, value: string): number {
+    return filter.options === 'classes'
+        ? (props.facets.classes[value] ?? 0)
+        : 0;
+}
+
+function listValue(param: HubFilterParam): string[] {
+    const value = props.filters[param];
+
+    return Array.isArray(value) ? value : [];
+}
+
+function stringValue(param: HubFilterParam): string {
+    const value = props.filters[param];
+
+    return typeof value === 'string' ? value : ANY;
+}
+
+function boolValue(param: HubFilterParam): boolean {
+    return props.filters[param] === true;
+}
+
+function setParam(param: HubFilterParam, value: unknown): void {
+    apply({ [param]: value } as Partial<HubQueryState>);
+}
 
 /** Drop defaults so a pristine hub keeps a clean URL. */
 function queryFrom(overrides: Partial<HubQueryState>) {
@@ -125,16 +196,23 @@ function apply(overrides: Partial<HubQueryState>): void {
 }
 
 /**
- * The ascendancy list is derived from the selected classes, so changing the
- * classes drops an ascendancy that may no longer be on offer.
+ * Add or drop one value of a multi-select filter. The ascendancy list is
+ * derived from the selected classes, so changing them drops an ascendancy that
+ * may no longer be on offer — a no-op on a hub that has no ascendancy filter.
  */
-function toggleClass(name: string, selected: boolean): void {
+function toggleChoice(
+    param: HubFilterParam,
+    value: string,
+    selected: boolean,
+): void {
+    const current = listValue(param);
+
     apply({
-        classes: selected
-            ? [...props.filters.classes, name]
-            : props.filters.classes.filter((entry) => entry !== name),
+        [param]: selected
+            ? [...current, value]
+            : current.filter((entry) => entry !== value),
         ascendancy: null,
-    });
+    } as Partial<HubQueryState>);
 }
 
 function clearAll(): void {
@@ -152,11 +230,25 @@ function clearAll(): void {
     );
 }
 
-const minDivine = ref(toField(props.filters.min_divine));
-const maxDivine = ref(toField(props.filters.max_divine));
+/** The typed-in value of every number_range input the rail offers. */
+const rangeDraft = ref<Record<string, string>>(draftFromFilters());
 
-function toField(value: number | null): string {
-    return value === null ? '' : String(value);
+function rangeParams(): HubFilterParam[] {
+    return props.filterRail.flatMap((filter) =>
+        filter.fields.map((field) => field.param),
+    );
+}
+
+function draftFromFilters(): Record<string, string> {
+    const draft: Record<string, string> = {};
+
+    rangeParams().forEach((param) => {
+        const value = props.filters[param];
+
+        draft[param] = typeof value === 'number' ? String(value) : '';
+    });
+
+    return draft;
 }
 
 function toNumber(value: string): number | null {
@@ -167,29 +259,32 @@ function toNumber(value: string): number | null {
         : Number(trimmed);
 }
 
-let divineTimer: ReturnType<typeof setTimeout> | undefined;
+let rangeTimer: ReturnType<typeof setTimeout> | undefined;
 
 /** Typing a budget should not fire a request per keystroke. */
-function onDivineInput(): void {
-    clearTimeout(divineTimer);
+function onRangeInput(): void {
+    clearTimeout(rangeTimer);
 
-    divineTimer = setTimeout(() => {
-        apply({
-            min_divine: toNumber(minDivine.value),
-            max_divine: toNumber(maxDivine.value),
+    rangeTimer = setTimeout(() => {
+        const overrides: Record<string, number | null> = {};
+
+        rangeParams().forEach((param) => {
+            overrides[param] = toNumber(rangeDraft.value[param] ?? '');
         });
+
+        apply(overrides as Partial<HubQueryState>);
     }, 350);
 }
 
 watch(
-    () => [props.filters.min_divine, props.filters.max_divine] as const,
-    ([min, max]) => {
-        minDivine.value = toField(min);
-        maxDivine.value = toField(max);
+    () => props.filters,
+    () => {
+        rangeDraft.value = draftFromFilters();
     },
+    { deep: true },
 );
 
-onBeforeUnmount(() => clearTimeout(divineTimer));
+onBeforeUnmount(() => clearTimeout(rangeTimer));
 
 type ActiveFilter = {
     key: string;
@@ -205,7 +300,7 @@ const activeFilters = computed<ActiveFilter[]>(() => {
         active.push({
             key: `class:${name}`,
             label: name,
-            remove: () => toggleClass(name, false),
+            remove: () => toggleChoice('classes', name, false),
         }),
     );
 
@@ -391,95 +486,102 @@ const railSection =
 
             <div class="flex flex-col items-start gap-8 lg:flex-row">
                 <aside class="w-full lg:w-[var(--layout-rail)] lg:shrink-0">
-                    <div :class="railSection">
-                        <p :class="LABEL_CLASS">Class</p>
-                        <div
-                            v-if="options.classes.length"
-                            class="flex flex-col gap-3"
-                        >
-                            <Checkbox
-                                v-for="name in options.classes"
-                                :key="name"
-                                :label="name"
-                                :count="facets.classes[name] ?? 0"
-                                :model-value="filters.classes.includes(name)"
-                                @update:model-value="toggleClass(name, $event)"
-                            />
-                        </div>
-                        <p v-else class="text-[13px] text-[var(--fg-3)]">
-                            No class data imported for this game.
-                        </p>
-                    </div>
+                    <div
+                        v-for="filter in railSections"
+                        :key="filter.key"
+                        :class="railSection"
+                    >
+                        <p :class="LABEL_CLASS">{{ filter.label }}</p>
 
-                    <div :class="railSection">
-                        <p :class="LABEL_CLASS">Ascendancy</p>
+                        <template v-if="filter.type === 'checkboxes'">
+                            <div
+                                v-if="choices(filter).length"
+                                class="flex flex-col gap-3"
+                            >
+                                <Checkbox
+                                    v-for="choice in choices(filter)"
+                                    :key="choice.value"
+                                    :label="choice.label"
+                                    :count="countFor(filter, choice.value)"
+                                    :model-value="
+                                        listValue(filter.params[0]).includes(
+                                            choice.value,
+                                        )
+                                    "
+                                    @update:model-value="
+                                        toggleChoice(
+                                            filter.params[0],
+                                            choice.value,
+                                            $event,
+                                        )
+                                    "
+                                />
+                            </div>
+                            <p v-else class="text-[13px] text-[var(--fg-3)]">
+                                No {{ filter.label.toLowerCase() }} data
+                                imported for this game.
+                            </p>
+                        </template>
+
                         <Select
+                            v-else-if="filter.type === 'select'"
                             size="sm"
-                            :options="ascendancyOptions"
-                            :model-value="filters.ascendancy ?? ANY_ASCENDANCY"
-                            aria-label="Ascendancy"
-                            :disabled="options.ascendancies.length === 0"
+                            :options="choicesWithAny(filter)"
+                            :model-value="stringValue(filter.params[0])"
+                            :aria-label="filter.label"
+                            :disabled="choices(filter).length === 0"
                             @update:model-value="
-                                apply({ ascendancy: String($event) || null })
+                                setParam(
+                                    filter.params[0],
+                                    String($event) || null,
+                                )
                             "
                         />
-                    </div>
 
-                    <div :class="railSection">
-                        <p :class="LABEL_CLASS">Game stage</p>
                         <RadioGroup
-                            :model-value="filters.stage ?? ANY_STAGE"
+                            v-else-if="filter.type === 'radio'"
+                            :model-value="stringValue(filter.params[0])"
                             @update:model-value="
-                                apply({ stage: String($event) || null })
+                                setParam(
+                                    filter.params[0],
+                                    String($event) || null,
+                                )
                             "
                         >
-                            <Radio :value="ANY_STAGE" label="Any stage" />
                             <Radio
-                                v-for="stage in options.stages"
-                                :key="stage"
-                                :value="stage"
-                                :label="stageLabel(stage) ?? stage"
+                                v-for="choice in choicesWithAny(filter)"
+                                :key="choice.value"
+                                :value="choice.value"
+                                :label="choice.label"
                             />
                         </RadioGroup>
-                    </div>
 
-                    <div :class="railSection">
-                        <p :class="LABEL_CLASS">Budget</p>
-                        <div class="flex gap-3">
+                        <div
+                            v-else-if="filter.type === 'number_range'"
+                            class="flex gap-3"
+                        >
                             <Input
-                                v-model="minDivine"
+                                v-for="field in filter.fields"
+                                :key="field.param"
+                                v-model="rangeDraft[field.param]"
                                 size="sm"
                                 mono
                                 inputmode="decimal"
-                                placeholder="Min div"
-                                aria-label="Minimum divine"
-                                @update:model-value="onDivineInput"
-                            />
-                            <Input
-                                v-model="maxDivine"
-                                size="sm"
-                                mono
-                                inputmode="decimal"
-                                placeholder="Max div"
-                                aria-label="Maximum divine"
-                                @update:model-value="onDivineInput"
+                                :placeholder="field.placeholder"
+                                :aria-label="field.label"
+                                @update:model-value="onRangeInput"
                             />
                         </div>
                     </div>
 
-                    <div class="flex flex-col gap-4">
+                    <div v-if="railToggles.length" class="flex flex-col gap-4">
                         <Switch
-                            label="Current patch only"
-                            :model-value="filters.current_patch_only"
+                            v-for="filter in railToggles"
+                            :key="filter.key"
+                            :label="filter.label"
+                            :model-value="boolValue(filter.params[0])"
                             @update:model-value="
-                                apply({ current_patch_only: $event })
-                            "
-                        />
-                        <Switch
-                            label="Hardcore viable"
-                            :model-value="filters.hardcore_viable"
-                            @update:model-value="
-                                apply({ hardcore_viable: $event })
+                                setParam(filter.params[0], $event)
                             "
                         />
                     </div>

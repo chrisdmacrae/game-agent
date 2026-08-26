@@ -15,15 +15,18 @@ import { LABEL_CLASS } from '@/components/byb/controls';
 import Dialog from '@/components/byb/Dialog.vue';
 import Icon from '@/components/byb/Icon.vue';
 import Toaster from '@/components/byb/Toaster.vue';
+import { gameMcpUrl } from '@/lib/hub';
 import { cn } from '@/lib/utils';
 import { login, logout, myBuilds } from '@/routes';
 import { edit as editProfile } from '@/routes/profile';
+import type { ConnectGame } from '@/types/hub';
 
 type GameLink = {
     name: string;
     short_name?: string;
     slug?: string;
     url?: string;
+    is_live?: boolean;
 };
 
 const page = usePage();
@@ -53,6 +56,25 @@ const mcpUrl = computed<string>(() => {
 });
 
 const connectOpen = ref(false);
+
+/** Live games only — each one is a selectable endpoint in the connect dialog. */
+const connectGames = computed<ConnectGame[]>(() =>
+    games.value.flatMap((game) =>
+        game.is_live && game.slug
+            ? [
+                  {
+                      slug: game.slug,
+                      label: gameLabel(game),
+                      mcpUrl: gameMcpUrl(
+                          page.props.mcpUrl,
+                          game.slug,
+                          page.props.mcpUrls,
+                      ),
+                  },
+              ]
+            : [],
+    ),
+);
 
 function gameHref(game: GameLink): string {
     return game.url ?? (game.slug ? `/${game.slug}` : '/');
@@ -194,10 +216,14 @@ const menuItemClass =
             v-model:open="connectOpen"
             eyebrow="MCP server"
             title="Connect Build Your Build"
-            description="Add it in your client settings. Pick the client you use."
+            description="Add it in your client settings. Pick your game and client."
             :width="560"
         >
-            <ConnectPanel :mcp-url="mcpUrl" filename="server url" />
+            <ConnectPanel
+                :mcp-url="mcpUrl"
+                :games="connectGames"
+                filename="server url"
+            />
         </Dialog>
 
         <Toaster />

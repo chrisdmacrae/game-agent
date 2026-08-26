@@ -67,6 +67,9 @@ type EditableBuild = {
     mercenary: { hired: string; reinforcement: string };
     milestones: D4Milestone[];
     stats: D4BuildDefinition['stats'];
+    /** The calculator's block, passed through untouched so its `wrote` list
+     * survives web saves and recomputation keeps its own numbers current. */
+    computed: D4BuildDefinition['computed'];
     how_it_plays: string[];
     works_because: string[];
     watch_out_for: string[];
@@ -135,6 +138,7 @@ const initialBuild: EditableBuild = {
         ...milestone,
     })),
     stats: definition.stats ?? null,
+    computed: definition.computed ?? null,
     how_it_plays: definition.how_it_plays ?? [],
     works_because: definition.works_because ?? [],
     watch_out_for: definition.watch_out_for ?? [],
@@ -171,7 +175,15 @@ function cleanItem(item: D4GearItem): D4GearItem | null {
         item_type: textOrNull(item.item_type),
         rarity: textOrNull(item.rarity),
         aspect: textOrNull(item.aspect),
-        affixes: (item.affixes ?? []).filter((affix) => affix.trim() !== ''),
+        affixes: (item.affixes ?? [])
+            .map((affix) =>
+                typeof affix === 'string' ? { text: affix.trim() } : affix,
+            )
+            .filter(
+                (affix) =>
+                    textOrNull(affix.text ?? null) !== null ||
+                    textOrNull(affix.affix ?? null) !== null,
+            ),
         greater_affixes: numberOrNull(item.greater_affixes),
         masterwork_level: numberOrNull(item.masterwork_level),
         runes: (item.runes ?? []).filter((rune) => rune.trim() !== ''),
@@ -180,6 +192,7 @@ function cleanItem(item: D4GearItem): D4GearItem | null {
             .map((temper) => ({
                 affix: temper.affix.trim(),
                 tier: numberOrNull(temper.tier),
+                value: numberOrNull(temper.value),
             })),
     };
 

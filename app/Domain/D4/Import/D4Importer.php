@@ -2,9 +2,12 @@
 
 namespace App\Domain\D4\Import;
 
+use App\Domain\D4\D4Context;
+use App\Domain\D4\IconManifest;
 use App\Domain\D4\TooltipText;
 use App\Models\D4\Affix;
 use App\Models\D4\Aspect;
+use App\Models\D4\CalcTable;
 use App\Models\D4\CharacterClass;
 use App\Models\D4\ItemType;
 use App\Models\D4\ParagonBoard;
@@ -49,6 +52,58 @@ class D4Importer
     protected const DIR_ITEM_TYPE = 'json/base/meta/ItemType';
 
     protected const FILE_POWER_FORMULA_TABLES = 'json/base/meta/GameBalance/PowerFormulaTables.gam.json';
+
+    protected const FILE_ATTRIBUTE_FORMULAS = 'json/base/meta/GameBalance/AttributeFormulas.gam.json';
+
+    protected const FILE_LEVEL_SCALING = 'json/base/meta/GameBalance/LevelScaling.gam.json';
+
+    protected const FILE_GLOBALS = 'json/base/meta/Global/globals.glo.json';
+
+    protected const FILE_ATTRIBUTES = 'attributes.json';
+
+    /**
+     * The AttributeFormulas rows that give a weapon's damage roll per item
+     * power, one per attack-speed class.
+     *
+     * @var array<string, string>
+     */
+    protected const WEAPON_DAMAGE_FORMULAS = [
+        'slow' => 'GearAffix_Slow_Weapon_Damage',
+        'normal' => 'GearAffix_Normal_Weapon_Damage',
+        'fast' => 'GearAffix_Fast_Weapon_Damage',
+        'very_fast' => 'GearAffix_VeryFast_Weapon_Damage',
+    ];
+
+    /**
+     * `eContributingCoreStat` in PlayerClass `arCoreStatBenefit`. Derived
+     * empirically like the class mask order; the dump ships no name map.
+     *
+     * @var array<int, string>
+     */
+    protected const CORE_STATS = [
+        0 => 'strength',
+        1 => 'intelligence',
+        2 => 'willpower',
+        3 => 'dexterity',
+    ];
+
+    /**
+     * The globals.glo.json fields the calculator (and paragon planner) read.
+     * An allowlist, because the file is half a megabyte of engine knobs.
+     *
+     * @var list<string>
+     */
+    protected const GLOBAL_FIELDS = [
+        'flPlayerCritDamageScalar',
+        'nParagonPointsEarnedPerLevel',
+        'arGlyphRadiusLevels',
+        'arAffixCountPerQuality',
+        'flItemUpgradeAttributeBonus',
+        'arItemUpgradeArmorPowerLevels',
+        'arItemUpgradeWeaponPowerLevels',
+        'arItemUpgradeJewelryPowerLevels',
+        'arParagonPowerBudgetMultiplier',
+    ];
 
     /**
      * Values are rounded before they land in jsonb. The dump's floats are
@@ -133,6 +188,8 @@ class D4Importer
 
     protected ?TooltipText $tooltips = null;
 
+    protected ?TextureFrames $textureFrames = null;
+
     public function __construct(
         protected D4DataSource $source,
     ) {
@@ -162,6 +219,7 @@ class D4Importer
         $this->importAspects($gameVersion);
         $this->importUniques($gameVersion);
         $this->importItemTypes($gameVersion);
+        $this->importCalcTables($gameVersion);
 
         $gameVersion->update([
             'fingerprint' => $this->source->fingerprint(),
@@ -172,6 +230,8 @@ class D4Importer
         GameVersion::where('game_id', $game->id)
             ->whereKeyNot($gameVersion->id)
             ->update(['is_active' => false]);
+
+        $this->counts['icon_manifest'] = new IconManifest(new D4Context)->write();
 
         return $gameVersion;
     }
@@ -269,6 +329,7 @@ class D4Importer
                 'enhancements' => json_encode($this->skillEnhancements($definition, $strings)),
                 'formulas' => json_encode($formulas, JSON_FORCE_OBJECT),
                 'rank_values' => json_encode($this->skillRankValues($formulas, $maxRank), JSON_FORCE_OBJECT),
+                'icon' => $this->encodedIcon($definition['hIconNormal'] ?? null),
                 'is_released' => $this->filter->isReleased($key, $definition, honourVisibleInUi: true),
                 'raw' => json_encode([
                     'key' => $key,
@@ -287,11 +348,50 @@ class D4Importer
                     'cooldown' => $this->formulaValue($definition['tCooldownTime'] ?? null),
                     'lucky_hit_chance' => $this->formulaValue($definition['tCombatEffectChance'] ?? null),
                     'resource_costs' => $this->resourceCosts($definition),
+                    'damage' => $this->damagePayload($definition),
                 ]),
             ];
         }
 
         $this->counts['skills'] = $this->replace(Skill::class, $gameVersion, $rows, ['sno_id']);
+    }
+
+    /**
+     * The skill's primary damage payload, for the stat calculator: the
+     * weapon-damage coefficient (an `SF_n` reference into the stored
+     * formulas, or a literal), the class base-damage scalar index and the
+     * variance. `eType 0` is the weapon-damage-percent case — near universal
+     * for player skills. The first payload with a non-zero coefficient is the
+     * primary hit.
+     *
+     * @param  array<array-key, mixed>  $definition
+     * @return array<string, mixed>|null
+     */
+    protected function damagePayload(array $definition): ?array
+    {
+        foreach ($definition['arPayloads'] ?? [] as $payload) {
+            if (! is_array($payload)) {
+                continue;
+            }
+
+            $damage = $payload['tDamage'] ?? null;
+            $scalar = is_array($damage) ? $this->formulaValue($damage['tHitpointScalar'] ?? null) : null;
+
+            if ($scalar === null || $scalar === '0') {
+                continue;
+            }
+
+            return [
+                'type' => $damage['eType'] ?? null,
+                'scalar' => $scalar,
+                'flat_level' => $this->formulaValue($damage['tFlatLevel'] ?? null),
+                'class_scalar_index' => $payload['eClassBaseDamageScalar'] ?? null,
+                'attack_speed' => $this->formulaValue($payload['tAttackSpeed'] ?? null),
+                'variance' => $this->formulaValue($payload['tDamageVariance'] ?? null),
+            ];
+        }
+
+        return null;
     }
 
     /**
@@ -323,6 +423,7 @@ class D4Importer
                     'file' => $definition['__fileName__'] ?? null,
                     'width' => $width,
                     'filled_cells' => count(array_filter((array) ($definition['arEntries'] ?? []))),
+                    'legendary_node_icon' => $this->textureFrames()->resolve($definition['legendaryNodeIcon'] ?? null),
                 ]),
             ];
         }
@@ -424,6 +525,7 @@ class D4Importer
                 'display_text' => $this->affixDisplayText($text, $affix),
                 'item_types' => json_encode($this->itemTypesForLabels($affix['arAllowedItemLabels'] ?? [])),
                 'value_range' => json_encode($this->affixValueRange($affix)),
+                'icon' => $this->encodedIcon($definition['hIconOverride'] ?? null),
                 'is_released' => $this->filter->isReleased($key, $definition)
                     && ($affixKey === null || $this->filter->isReleased($affixKey, $affix)),
                 'raw' => json_encode([
@@ -473,6 +575,7 @@ class D4Importer
                 'affixes' => json_encode($affixes),
                 'power_text' => $powerText !== '' ? $powerText : null,
                 'display_text' => $displayText !== '' ? $displayText : null,
+                'icon' => $this->encodedIcon($this->itemIconHandle($definition)),
                 'is_released' => $this->filter->isReleased($key, $definition),
                 'raw' => json_encode([
                     'key' => $key,
@@ -801,6 +904,7 @@ class D4Importer
             'is_gate' => ($node['bIsGate'] ?? false) === true,
             'passive_power' => SnoRefs::name($node['snoPassivePower'] ?? null),
             'attributes' => $this->attributeNames($node['ptAttributes'] ?? []),
+            'icon' => $this->textureFrames()->resolve($node['hIconMask'] ?? null),
         ];
     }
 
@@ -1366,6 +1470,294 @@ class D4Importer
      * The evaluator, loaded once with the positional PowerFormulaTables sheet
      * that backs every `Table(n, sLevel)` call.
      */
+    protected function textureFrames(): TextureFrames
+    {
+        return $this->textureFrames ??= new TextureFrames($this->source);
+    }
+
+    /**
+     * An icon handle's atlas frame, encoded for a nullable jsonb column.
+     */
+    protected function encodedIcon(mixed $handle): ?string
+    {
+        $icon = $this->textureFrames()->resolve($handle);
+
+        return $icon === null ? null : json_encode($icon);
+    }
+
+    /**
+     * The icon handle an item shows in the inventory: its own gendered images
+     * first, then its vendor icon, then — one hop — whatever its base item
+     * shows. Most base items ship no handle at all (their art hangs off the
+     * actor), so null is common and the UI falls back to a letter badge.
+     *
+     * @param  array<array-key, mixed>  $definition
+     */
+    protected function itemIconHandle(array $definition, bool $followBaseItem = true): mixed
+    {
+        foreach ($definition['tInvImages'] ?? [] as $images) {
+            if (! is_array($images)) {
+                continue;
+            }
+
+            foreach (['hDefaultImage', 'hFemaleImage'] as $field) {
+                if (is_numeric($images[$field] ?? null) && (int) $images[$field] !== 0) {
+                    return $images[$field];
+                }
+            }
+        }
+
+        if (is_numeric($definition['hVendorIcon'] ?? null) && (int) $definition['hVendorIcon'] !== 0) {
+            return $definition['hVendorIcon'];
+        }
+
+        if ($followBaseItem) {
+            $baseItem = $this->optionalJson(SnoRefs::path($definition['snoBaseItem'] ?? null));
+
+            if ($baseItem !== null) {
+                return $this->itemIconHandle($baseItem, followBaseItem: false);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Persist the slices of the dump the stat calculator reads at request
+     * time, so computing a build's stats never touches the source tree.
+     */
+    protected function importCalcTables(GameVersion $gameVersion): void
+    {
+        $tables = [
+            'attribute_graph' => $this->attributeGraph(),
+            'weapon_damage_breakpoints' => $this->weaponDamageBreakpoints(),
+            'item_types' => $this->calcItemTypes(),
+            'level_scaling' => $this->levelScalingTable(),
+            'class_core_stats' => $this->classCoreStats(),
+            'globals' => $this->calcGlobals(),
+            // sno => atlas object name; the icon manifest and the offline CASC
+            // extractor use it to locate the sheets. Populated as a side
+            // effect of the icon passes that ran before this.
+            'texture_atlases' => $this->textureFrames()->atlases(),
+        ];
+
+        $rows = [];
+
+        foreach ($tables as $key => $data) {
+            $rows[] = [
+                'game_version_id' => $gameVersion->id,
+                'key' => $key,
+                'data' => json_encode($data),
+            ];
+        }
+
+        $this->counts['calc_tables'] = $this->replace(CalcTable::class, $gameVersion, $rows, ['key']);
+    }
+
+    /**
+     * The derived-attribute formula graph from attributes.json: how the game
+     * composes totals (Default_HP_Max_Total, Armor_Total, ...) out of leaf
+     * attributes. Leaves keep a null formula; their values come from gear,
+     * paragon or the engine.
+     *
+     * @return array<string, array{formula: string|null, default: float|int}>
+     */
+    protected function attributeGraph(): array
+    {
+        $graph = [];
+
+        foreach ($this->source->optionalJson(self::FILE_ATTRIBUTES) ?? [] as $name => $entry) {
+            if (! is_string($name) || $name === '' || ! is_array($entry)) {
+                continue;
+            }
+
+            $formula = $entry['formula'] ?? null;
+
+            $graph[$name] = [
+                'formula' => is_string($formula) && $formula !== '' ? $formula : null,
+                'default' => is_numeric($entry['defaultValue'] ?? null) ? $entry['defaultValue'] + 0 : 0,
+            ];
+        }
+
+        return $graph;
+    }
+
+    /**
+     * A weapon's damage roll per item-power breakpoint, one row per
+     * attack-speed class, each breakpoint evaluated at its own item power the
+     * same way affix ranges are.
+     *
+     * @return array<string, list<array<string, mixed>>>
+     */
+    protected function weaponDamageBreakpoints(): array
+    {
+        $sheet = $this->source->optionalJson(self::FILE_ATTRIBUTE_FORMULAS) ?? [];
+        $wanted = array_flip(self::WEAPON_DAMAGE_FORMULAS);
+        $breakpoints = [];
+
+        foreach ($sheet['ptData'][0]['tEntries'] ?? [] as $entry) {
+            $name = $entry['tHeader']['szName'] ?? null;
+
+            if (! is_string($name) || ! isset($wanted[$name])) {
+                continue;
+            }
+
+            $ranges = [];
+
+            foreach ($entry['arRanges'] ?? [] as $range) {
+                if (! is_array($range)) {
+                    continue;
+                }
+
+                $itemPower = (int) ($range['nItemPowerRangeStart'] ?? 0);
+                $formula = $this->formulaValue($range['tFormula'] ?? null);
+                $interval = $formula === null
+                    ? null
+                    : $this->evaluator()->evaluate($formula, ['ItemPower' => $itemPower]);
+
+                $ranges[] = [
+                    'item_power' => $itemPower,
+                    'formula' => $formula,
+                ] + $this->bounds($interval);
+            }
+
+            $breakpoints[$wanted[$name]] = $ranges;
+        }
+
+        return $breakpoints;
+    }
+
+    /**
+     * The per-item-type constants weapon DPS is built from. `unk_b2500f1` is
+     * the type's share of the damage budget (verified empirically: 1.0 for
+     * two-hand axes down to 0.375 for daggers and foci, 0 for shields) and
+     * `unk_4811bbe` the min-to-max spread, uniformly 0.2 — both unnamed in the
+     * dump, so they stay flagged as assumptions where the calculator uses them.
+     *
+     * @return array<string, array<string, mixed>>
+     */
+    protected function calcItemTypes(): array
+    {
+        $types = [];
+
+        foreach ($this->definitions(self::DIR_ITEM_TYPE, 'itt') as $key => $definition) {
+            $innate = [];
+
+            foreach ($definition['arInnateStatList'] ?? [] as $stat) {
+                if (! is_array($stat)) {
+                    continue;
+                }
+
+                $innate[] = [
+                    'attribute' => $stat['__eAttribute_name__'] ?? null,
+                    'value' => is_numeric($stat['flBonus'] ?? null) ? $this->round((float) $stat['flBonus']) : null,
+                ];
+            }
+
+            $types[$key] = [
+                'name' => $this->itemTypeNames()[$key] ?? $key,
+                'slot' => $this->itemTypeSlot($definition),
+                'weapon_class' => $definition['eWeaponClass'] ?? null,
+                'damage_multiplier' => is_numeric($definition['unk_b2500f1'] ?? null) ? $this->round((float) $definition['unk_b2500f1']) : null,
+                'damage_spread' => is_numeric($definition['unk_4811bbe'] ?? null) ? $this->round((float) $definition['unk_4811bbe']) : null,
+                'innate_stats' => $innate,
+            ];
+        }
+
+        return $types;
+    }
+
+    /**
+     * Per-character-level scaling: the item power a level sees and the armor /
+     * resistance damping curves EHP math needs.
+     *
+     * @return list<array<string, mixed>>
+     */
+    protected function levelScalingTable(): array
+    {
+        $sheet = $this->source->optionalJson(self::FILE_LEVEL_SCALING) ?? [];
+        $levels = [];
+
+        foreach ($sheet['ptData'][0]['tEntries'] ?? [] as $entry) {
+            if (! is_array($entry) || ! is_numeric($entry['nLevel'] ?? null)) {
+                continue;
+            }
+
+            $levels[] = [
+                'level' => (int) $entry['nLevel'],
+                'base_item_power' => $entry['nBaseItemPower'] ?? null,
+                'loot_item_power' => $entry['nLootItemPower'] ?? null,
+                'real_item_power' => $entry['nRealItemPower'] ?? null,
+                'armor_damping' => $entry['nArmorDampingFactor'] ?? null,
+                'armor_dr_scalar' => isset($entry['flArmorDamageReductionScalar']) ? $this->round((float) $entry['flArmorDamageReductionScalar']) : null,
+                'resistance_damping' => $entry['nResistanceDampingFactor'] ?? null,
+                'resistance_dr_scalar' => isset($entry['flResistanceDamageReductionScalar']) ? $this->round((float) $entry['flResistanceDamageReductionScalar']) : null,
+                'estimated_armor' => $entry['nPlayerEstimatedArmor'] ?? null,
+                'ideal_armor' => $entry['nPlayerIdealArmor'] ?? null,
+                'estimated_resistance' => $entry['nPlayerEstimatedResistance'] ?? null,
+                'ideal_resistance' => $entry['nPlayerIdealResistance'] ?? null,
+                'class_base_damage_scalar' => $entry['flClassBaseDamageScalar'] ?? null,
+            ];
+        }
+
+        return $levels;
+    }
+
+    /**
+     * Which core stat feeds each class's damage buckets and by how much —
+     * PlayerClass `arCoreStatBenefit`, slots keyed by the benefit they feed.
+     *
+     * @return array<string, list<array<string, mixed>>>
+     */
+    protected function classCoreStats(): array
+    {
+        $classes = [];
+
+        foreach ($this->definitions(self::DIR_PLAYER_CLASS, 'pcl') as $key => $definition) {
+            $benefits = [];
+
+            foreach ($definition['arCoreStatBenefit'] ?? [] as $slot => $benefit) {
+                foreach ((array) ($benefit['unk_8754bdb'] ?? []) as $entry) {
+                    if (! is_array($entry)) {
+                        continue;
+                    }
+
+                    $coreStat = $entry['eContributingCoreStat'] ?? null;
+
+                    $benefits[] = [
+                        'slot' => $slot,
+                        'core_stat' => is_numeric($coreStat) ? (self::CORE_STATS[(int) $coreStat] ?? null) : null,
+                        'scalar' => is_numeric($entry['flContributionScalar'] ?? null) ? $this->round((float) $entry['flContributionScalar']) : null,
+                    ];
+                }
+            }
+
+            $classes[$key] = $benefits;
+        }
+
+        return $classes;
+    }
+
+    /**
+     * The engine constants the calculator and paragon planner read, allowlisted
+     * out of globals.glo.json.
+     *
+     * @return array<string, mixed>
+     */
+    protected function calcGlobals(): array
+    {
+        $content = $this->source->optionalJson(self::FILE_GLOBALS)['ptContent'][0] ?? [];
+        $globals = [];
+
+        foreach (self::GLOBAL_FIELDS as $field) {
+            if (array_key_exists($field, $content)) {
+                $globals[$field] = $content[$field];
+            }
+        }
+
+        return $globals;
+    }
+
     protected function evaluator(): FormulaEvaluator
     {
         return $this->evaluator ??= new FormulaEvaluator($this->powerFormulaTables());

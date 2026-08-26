@@ -162,11 +162,66 @@ class D4BuildPayload
                 'rotation' => self::int($entry['rotation'] ?? null),
                 'glyph' => self::text($entry['glyph'] ?? null),
                 'glyph_level' => self::int($entry['glyph_level'] ?? null),
+                'nodes' => self::paragonNodes($entry['nodes'] ?? null),
+                'attach' => self::paragonAttach($entry['attach'] ?? null),
                 'notables' => self::textList($entry['notables'] ?? null),
             ]);
         }
 
         return $normalized;
+    }
+
+    /**
+     * Allocated cells as deduplicated {row, col} pairs in pre-rotation grid
+     * coordinates. Rows saved before nodes existed simply have none.
+     *
+     * @return list<array{row: int, col: int}>
+     */
+    protected static function paragonNodes(mixed $nodes): array
+    {
+        if (! is_array($nodes)) {
+            return [];
+        }
+
+        $normalized = [];
+        $seen = [];
+
+        foreach ($nodes as $node) {
+            if (! is_array($node)) {
+                continue;
+            }
+
+            $row = self::int($node['row'] ?? null);
+            $col = self::int($node['col'] ?? null);
+
+            if ($row === null || $col === null || $row < 0 || $col < 0 || isset($seen["{$row},{$col}"])) {
+                continue;
+            }
+
+            $seen["{$row},{$col}"] = true;
+            $normalized[] = ['row' => $row, 'col' => $col];
+        }
+
+        return $normalized;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected static function paragonAttach(mixed $attach): array
+    {
+        if (! is_array($attach)) {
+            return [];
+        }
+
+        $gate = $attach['gate'] ?? null;
+        $gateRow = is_array($gate) ? self::int($gate['row'] ?? null) : null;
+        $gateCol = is_array($gate) ? self::int($gate['col'] ?? null) : null;
+
+        return self::withoutEmpty([
+            'to' => self::int($attach['to'] ?? null),
+            'gate' => $gateRow !== null && $gateCol !== null ? ['row' => $gateRow, 'col' => $gateCol] : null,
+        ]);
     }
 
     /**
@@ -252,12 +307,72 @@ class D4BuildPayload
             'item_type' => self::text($item['item_type'] ?? null),
             'rarity' => $rarity === null ? null : strtolower($rarity),
             'aspect' => self::text($item['aspect'] ?? null),
-            'affixes' => self::textList($item['affixes'] ?? null),
+            'affixes' => self::affixEntries($item['affixes'] ?? null),
             'greater_affixes' => self::int($item['greater_affixes'] ?? null),
             'tempered' => self::tempered($item['tempered'] ?? null),
             'masterwork_level' => self::int($item['masterwork_level'] ?? null),
             'runes' => self::textList($item['runes'] ?? null),
         ]);
+    }
+
+    /**
+     * Rolled affixes, canonicalised to objects: a bare display string (the
+     * legacy shape, still accepted everywhere) becomes `{text}`, and the
+     * structured shape keeps its affix key, rolled value and greater flag.
+     * Readers must go through this the way skill supports go through
+     * BuildPayload::supportNames() — stored rows written before the
+     * structured shape still hold plain strings.
+     *
+     * @return list<array<string, mixed>>
+     */
+    public static function affixEntries(mixed $affixes): array
+    {
+        if (! is_array($affixes)) {
+            return [];
+        }
+
+        $normalized = [];
+
+        foreach ($affixes as $entry) {
+            if (is_string($entry)) {
+                $entry = ['text' => $entry];
+            }
+
+            if (! is_array($entry)) {
+                continue;
+            }
+
+            $canonical = self::withoutEmpty([
+                'text' => self::text($entry['text'] ?? null),
+                'affix' => self::text($entry['affix'] ?? null),
+                'value' => is_numeric($entry['value'] ?? null) ? $entry['value'] + 0 : null,
+                'greater' => ($entry['greater'] ?? null) === true ? true : null,
+            ]);
+
+            if (isset($canonical['text']) || isset($canonical['affix'])) {
+                $normalized[] = $canonical;
+            }
+        }
+
+        return $normalized;
+    }
+
+    /**
+     * The display line of one canonical (or legacy) affix entry.
+     *
+     * @param  array<string, mixed>|string  $entry
+     */
+    public static function affixLabel(mixed $entry): ?string
+    {
+        if (is_string($entry)) {
+            return self::text($entry);
+        }
+
+        if (! is_array($entry)) {
+            return null;
+        }
+
+        return self::text($entry['text'] ?? null) ?? self::text($entry['affix'] ?? null);
     }
 
     /**
@@ -289,6 +404,7 @@ class D4BuildPayload
             $normalized[] = self::withoutEmpty([
                 'affix' => $affix,
                 'tier' => self::int($entry['tier'] ?? null),
+                'value' => is_numeric($entry['value'] ?? null) ? $entry['value'] + 0 : null,
             ]);
         }
 

@@ -1,0 +1,10 @@
+{
+    "name": "d4-icon-extractor",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "description": "Offline tool: selects, renames and converts the Diablo IV texture atlases the app's icon manifest asks for, from a CASC extraction of a local game install.",
+    "scripts": {
+        "pack": "node pack.mjs"
+    }
+}

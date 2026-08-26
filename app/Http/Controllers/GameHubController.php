@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Builds\BuildHubQuery;
 use App\Domain\Builds\BuildStage;
+use App\Domain\Builds\GameBuildProfile;
 use App\Domain\Builds\GameReference;
 use App\Domain\Seo\PageMeta;
 use App\Models\Build;
@@ -30,10 +31,14 @@ class GameHubController extends Controller
      */
     protected function hub(Request $request, Game $game, GameReference $reference): Response
     {
-        $filters = $this->filters($request);
+        $profile = GameBuildProfile::for($game);
         $version = $game->activeVersion();
 
-        $query = new BuildHubQuery($game, $filters, $version?->id);
+        $query = new BuildHubQuery($game, $this->filters($request), $version?->id);
+
+        // Read the filters back off the query: it has already dropped anything
+        // this game's rail does not offer.
+        $filters = $query->filters();
 
         $builds = $query->results()
             ->with(['user:id,name,handle', 'game:id,slug', 'gameVersion:id,version'])
@@ -50,6 +55,7 @@ class GameHubController extends Controller
             'patch' => $version?->version,
             'builds' => BuildHubQuery::cards($builds),
             'filters' => $filters,
+            'filterRail' => $profile->hubFilters(),
             'view' => $this->view($request),
             'facets' => [
                 'classes' => $query->classFacets(),
@@ -58,7 +64,7 @@ class GameHubController extends Controller
                 'classes' => $reference->classes($game),
                 'ascendancies' => $reference->ascendancies($game, $filters['classes']),
                 'stages' => $reference->stages(),
-                'sorts' => BuildHubQuery::SORTS,
+                'sorts' => $profile->hubSorts(),
             ],
             'yourBuilds' => $request->user() === null ? [] : BuildHubQuery::cards(
                 Build::query()
@@ -113,13 +119,13 @@ class GameHubController extends Controller
 
     /**
      * Query-string filters, normalised rather than validated: a hub with a
-     * junk parameter renders the default list instead of erroring.
+     * junk parameter renders the default list instead of erroring. Which of
+     * them the game actually offers is BuildHubQuery::gate()'s call.
      *
-     * @return array{classes: list<string>, ascendancy: string|null, stage: string|null, min_divine: float|null, max_divine: float|null, current_patch_only: bool, hardcore_viable: bool, sort: string}
+     * @return array<string, mixed>
      */
     protected function filters(Request $request): array
     {
-        $sort = (string) $request->query('sort', 'updated');
         $stage = $this->stringOrNull($request->query('stage'));
 
         return [
@@ -130,7 +136,7 @@ class GameHubController extends Controller
             'max_divine' => $this->numberOrNull($request->query('max_divine')),
             'current_patch_only' => $request->boolean('current_patch_only'),
             'hardcore_viable' => $request->boolean('hardcore_viable'),
-            'sort' => in_array($sort, BuildHubQuery::SORTS, true) ? $sort : 'updated',
+            'sort' => (string) $request->query('sort', 'updated'),
         ];
     }
 

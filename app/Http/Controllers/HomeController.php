@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Domain\Games\ModelDocRepository;
 use App\Domain\Poe2\Queries\MetaQuery;
 use App\Domain\Seo\PageMeta;
+use App\Mcp\Servers\D4Server;
 use App\Mcp\Servers\Poe2Server;
 use App\Models\Build;
 use App\Models\Game;
@@ -17,6 +18,17 @@ use Throwable;
 
 class HomeController extends Controller
 {
+    /**
+     * Game slug → MCP server class. A live game appears in the homepage
+     * toolkit list only when it is mapped here.
+     *
+     * @var array<string, class-string>
+     */
+    protected const array SERVERS = [
+        'poe2' => Poe2Server::class,
+        'diablo-4' => D4Server::class,
+    ];
+
     public function __invoke(Request $request, ModelDocRepository $docs): Response
     {
         try {
@@ -35,14 +47,7 @@ class HomeController extends Controller
             'mcpUrl' => route('mcp.poe2'),
             'gameCards' => $this->gameCards(),
             'stats' => $this->stats(),
-            'tools' => $this->tools(),
-            'models' => $docs->all('poe2')
-                ->map(fn (array $doc) => [
-                    'id' => $doc['id'],
-                    'title' => $doc['title'],
-                    'summary' => $doc['summary'],
-                ])
-                ->all(),
+            'toolkits' => $this->toolkits($docs),
         ]);
     }
 
@@ -99,10 +104,38 @@ class HomeController extends Controller
         ];
     }
 
-    /** @return list<array{name: string, description: string}> */
-    protected function tools(): array
+    /**
+     * One toolkit per live game: the MCP tools its server registers and how
+     * many game-model documents it serves. Each endpoint has its own toolset,
+     * so the section renders them per game instead of one flat list.
+     *
+     * @return list<array{slug: string, name: string, short_name: string, tools: list<array{name: string, description: string}>, models: int}>
+     */
+    protected function toolkits(ModelDocRepository $docs): array
     {
-        $property = new ReflectionClass(Poe2Server::class)->getProperty('tools');
+        return Game::query()
+            ->where('is_live', true)
+            ->whereIn('slug', array_keys(static::SERVERS))
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get()
+            ->map(fn (Game $game) => [
+                'slug' => $game->slug,
+                'name' => $game->name,
+                'short_name' => $game->short_name ?? $game->name,
+                'tools' => $this->serverTools(static::SERVERS[$game->slug]),
+                'models' => $docs->all($game->slug)->count(),
+            ])
+            ->all();
+    }
+
+    /**
+     * @param  class-string  $server
+     * @return list<array{name: string, description: string}>
+     */
+    protected function serverTools(string $server): array
+    {
+        $property = new ReflectionClass($server)->getProperty('tools');
 
         return collect($property->getDefaultValue())
             ->map(fn (string $class) => [

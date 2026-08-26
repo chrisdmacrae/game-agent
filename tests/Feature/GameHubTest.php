@@ -126,6 +126,55 @@ test('the ascendancy options follow the selected classes', function () {
         );
 });
 
+test('the filter rail is per game: PoE 2 offers ascendancy, budget and hardcore, Diablo IV does not', function () {
+    $poe2 = Game::factory()->live()->create(['slug' => 'poe2']);
+    $d4 = Game::factory()->live()->create(['slug' => 'diablo-4']);
+
+    $keys = fn (Game $game) => collect(
+        $this->get(route('games.show', $game->slug))->inertiaPage()['props']['filterRail']
+    )->pluck('key')->all();
+
+    expect($keys($poe2))->toBe([
+        'classes', 'ascendancy', 'stage', 'budget', 'current_patch_only', 'hardcore_viable',
+    ])->and($keys($d4))->toBe(['classes', 'stage', 'current_patch_only']);
+
+    // Cheapest-first sorts on divine orbs, so it is PoE 2 only.
+    $this->get(route('games.show', $poe2->slug))
+        ->assertInertia(fn ($page) => $page->where('options.sorts', ['updated', 'endorsements', 'dps', 'cost']));
+
+    $this->get(route('games.show', $d4->slug))
+        ->assertInertia(fn ($page) => $page->where('options.sorts', ['updated', 'endorsements', 'dps']));
+});
+
+test('a filter the game does not offer is ignored rather than applied', function () {
+    $d4 = Game::factory()->live()->create(['slug' => 'diablo-4']);
+
+    hubBuild($d4, ['class' => 'Barbarian', 'cost_divine' => 2, 'hardcore_viable' => true]);
+    hubBuild($d4, ['class' => 'Sorcerer', 'cost_divine' => 40]);
+
+    $this->get(route('games.show', [
+        $d4->slug,
+        'ascendancy' => 'Infernalist',
+        'min_divine' => 10,
+        'max_divine' => 20,
+        'hardcore_viable' => 1,
+        'sort' => 'cost',
+    ]))
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page
+            ->has('builds', 2)
+            ->where('filters.ascendancy', null)
+            ->where('filters.min_divine', null)
+            ->where('filters.max_divine', null)
+            ->where('filters.hardcore_viable', false)
+            ->where('filters.sort', 'updated')
+        );
+
+    // The filters it does offer still work.
+    $this->get(route('games.show', [$d4->slug, 'classes' => ['Barbarian']]))
+        ->assertInertia(fn ($page) => $page->has('builds', 1)->where('filters.classes', ['Barbarian']));
+});
+
 test('signed-in visitors get a strip of their three most recent builds for the game', function () {
     $game = Game::factory()->live()->create();
     $user = User::factory()->create();

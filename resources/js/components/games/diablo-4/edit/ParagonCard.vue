@@ -14,7 +14,9 @@ import {
 } from '@/components/games/diablo-4/types';
 import type {
     D4ParagonBoardGrid,
+    D4ParagonCell,
     D4ParagonEntry,
+    D4ParagonNodeRef,
 } from '@/components/games/diablo-4/types';
 
 /**
@@ -81,6 +83,44 @@ function setNotables(index: number, value: string[]): void {
 
 function errorFor(index: number, field: string): string | undefined {
     return props.errors[`build.paragon.${index}.${field}`];
+}
+
+/**
+ * Clicking a cell in the preview toggles it in the entry's allocated path.
+ * The first click on a gate cell of a non-first board also records it as the
+ * attachment gate, since entering through a gate is what attaching means.
+ */
+function toggleNode(
+    index: number,
+    node: D4ParagonNodeRef,
+    cell: D4ParagonCell,
+): void {
+    const entry = paragon.value[index];
+
+    if (!entry) {
+        return;
+    }
+
+    const nodes = entry.nodes ?? [];
+    const position = nodes.findIndex(
+        (existing) => existing.row === node.row && existing.col === node.col,
+    );
+
+    if (position >= 0) {
+        nodes.splice(position, 1);
+    } else {
+        nodes.push({ ...node });
+
+        if (index > 0 && cell.is_gate && !entry.attach?.gate) {
+            entry.attach = { to: index - 1, gate: { ...node } };
+        }
+    }
+
+    entry.nodes = nodes;
+}
+
+function nodeCount(entry: D4ParagonEntry): number {
+    return entry.nodes?.length ?? 0;
 }
 </script>
 
@@ -190,13 +230,28 @@ function errorFor(index: number, field: string): string | undefined {
             </div>
         </div>
 
-        <!-- Read-only preview, the way the editor previews the PoE 2 tree. -->
+        <!-- The preview doubles as the path editor: clicking a cell toggles
+             it in that entry's allocated nodes. -->
         <div v-if="showPreview" class="mt-6">
-            <p :class="LABEL_CLASS">Preview</p>
+            <div class="flex items-baseline gap-3">
+                <p :class="LABEL_CLASS">Path</p>
+                <span class="font-mono text-[12px] text-[var(--fg-3)]">
+                    click cells to allocate —
+                    {{
+                        paragon.reduce(
+                            (total, entry) => total + nodeCount(entry),
+                            0,
+                        )
+                    }}
+                    points
+                </span>
+            </div>
             <ParagonView
                 class="mt-3"
                 :entries="paragon"
                 :boards="props.boards"
+                editable
+                @toggle-node="toggleNode"
             />
         </div>
     </Card>

@@ -20,13 +20,71 @@ class BuildHubQuery
     public const SORTS = ['updated', 'endorsements', 'dps', 'cost'];
 
     /**
-     * @param  array{classes?: list<string>, ascendancy?: string|null, stage?: string|null, min_divine?: float|null, max_divine?: float|null, current_patch_only?: bool, hardcore_viable?: bool, sort?: string}  $filters
+     * Every filter the rail can carry, with the value that means "not applied".
+     *
+     * @var array<string, mixed>
+     */
+    protected const DEFAULTS = [
+        'classes' => [],
+        'ascendancy' => null,
+        'stage' => null,
+        'min_divine' => null,
+        'max_divine' => null,
+        'current_patch_only' => false,
+        'hardcore_viable' => false,
+    ];
+
+    /** @var array{classes: list<string>, ascendancy: string|null, stage: string|null, min_divine: float|null, max_divine: float|null, current_patch_only: bool, hardcore_viable: bool, sort: string} */
+    protected array $filters;
+
+    /**
+     * @param  array<string, mixed>  $filters
      */
     public function __construct(
         protected Game $game,
-        protected array $filters = [],
+        array $filters = [],
         protected ?int $activeVersionId = null,
-    ) {}
+    ) {
+        $this->filters = self::gate($game, $filters);
+    }
+
+    /**
+     * The filters as they were actually applied: a parameter this game's rail
+     * does not offer (a crafted `?ascendancy=` on the Diablo IV hub, say) falls
+     * back to its default instead of filtering the list, and an unoffered sort
+     * falls back to the newest-first default. The page prop is read back off
+     * here so the rail and the query can never disagree.
+     *
+     * @param  array<string, mixed>  $filters
+     * @return array{classes: list<string>, ascendancy: string|null, stage: string|null, min_divine: float|null, max_divine: float|null, current_patch_only: bool, hardcore_viable: bool, sort: string}
+     */
+    public static function gate(Game|string|null $game, array $filters): array
+    {
+        $profile = GameBuildProfile::for($game);
+        $offered = $profile->hubFilterParams();
+
+        $gated = [];
+
+        foreach (self::DEFAULTS as $param => $default) {
+            $gated[$param] = in_array($param, $offered, true)
+                ? ($filters[$param] ?? $default)
+                : $default;
+        }
+
+        $sort = $filters['sort'] ?? 'updated';
+        $gated['sort'] = in_array($sort, $profile->hubSorts(), true) ? $sort : 'updated';
+
+        /** @var array{classes: list<string>, ascendancy: string|null, stage: string|null, min_divine: float|null, max_divine: float|null, current_patch_only: bool, hardcore_viable: bool, sort: string} $gated */
+        return $gated;
+    }
+
+    /**
+     * @return array{classes: list<string>, ascendancy: string|null, stage: string|null, min_divine: float|null, max_divine: float|null, current_patch_only: bool, hardcore_viable: bool, sort: string}
+     */
+    public function filters(): array
+    {
+        return $this->filters;
+    }
 
     /**
      * The filtered, sorted result set.

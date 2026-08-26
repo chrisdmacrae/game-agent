@@ -50,8 +50,8 @@ class D4BuildSchema
             'content_tier' => $schema->string()->enum(D4BuildRules::CONTENT_TIERS)->description('Content the build targets: "leveling", "endgame" (Nightmare Dungeons, Helltides, Infernal Hordes) or "pit_push" (high Pit tiers).'),
             'stage' => $schema->string()->enum(['leveling', 'mapping', 'endgame', 'bossing'])->description('The game-agnostic stage tag used by the site\'s build hub.'),
             'tier' => $schema->string()->enum(D4BuildRules::TIERS)->description('How strong the build is relative to the current meta.'),
-            'dps' => $schema->integer()->description('Headline damage per second, as a plain number.'),
-            'ehp' => $schema->integer()->description('Effective hit points, as a plain number.'),
+            'dps' => $schema->integer()->description('Headline damage per second. Leave it out: the server computes it from the structured build (weapon, skills, affixes) on save. Only set it when reporting a number actually read off an in-game sheet — never invent one.'),
+            'ehp' => $schema->integer()->description('Effective hit points. Leave it out: the server computes it on save. Only set a number actually read off an in-game sheet — never invent one.'),
             'hardcore_viable' => $schema->boolean()->description('Whether the build is viable in hardcore.'),
         ];
     }
@@ -92,7 +92,20 @@ class D4BuildSchema
                     'rotation' => $schema->integer()->enum([0, 90, 180, 270])->description('How the board is rotated when attached, in degrees.'),
                     'glyph' => $schema->string()->description('The glyph socketed in this board, by name from search_glyphs.'),
                     'glyph_level' => $schema->integer()->description('The glyph\'s level, which sets its effect radius.'),
-                    'notables' => $schema->array()->max(20)->items($schema->string())->description('Notable/legendary nodes taken on this board.'),
+                    'nodes' => $schema->array()->max(441)->items(
+                        $schema->object([
+                            'row' => $schema->integer()->required(),
+                            'col' => $schema->integer()->required(),
+                        ]),
+                    )->description('The cells allocated on this board, as 0-based row/col indices into the PRE-ROTATION grid from get_paragon_board. Paragon allocation is a contiguous path: it enters through a gate and every node must connect 4-neighbour-wise back to it. Use plan_paragon_path to compute a legal route instead of picking cells freehand.'),
+                    'attach' => $schema->object([
+                        'to' => $schema->integer()->description('Index of the earlier paragon entry this board hangs off (0 is the start board).'),
+                        'gate' => $schema->object([
+                            'row' => $schema->integer()->required(),
+                            'col' => $schema->integer()->required(),
+                        ])->description('The gate cell on THIS board (pre-rotation coordinates) that welds onto the parent board.'),
+                    ])->description('How this board attaches to the tree of boards. Omit on the class start board.'),
+                    'notables' => $schema->array()->max(20)->items($schema->string())->description('Notable/legendary nodes taken on this board, by name — the human-readable summary of `nodes`.'),
                 ]),
             )->description('The paragon boards attached, in attachment order starting from the class start board.'),
         ];
@@ -108,12 +121,20 @@ class D4BuildSchema
             'item_type' => $schema->string()->description('Base item type, e.g. "Two-Handed Axe", "Amulet".'),
             'rarity' => $schema->string()->enum(D4BuildRules::RARITIES),
             'aspect' => $schema->string()->description('The legendary aspect imprinted on this item, by name from search_aspects. Each aspect can only be used once per character.'),
-            'affixes' => $schema->array()->max(8)->items($schema->string())->description('The affixes rolled on the item, as displayed.'),
+            'affixes' => $schema->array()->max(8)->items(
+                $schema->object([
+                    'text' => $schema->string()->description('The affix line as displayed, e.g. "+845 Maximum Life".'),
+                    'affix' => $schema->string()->description('The affix key from search_affixes. Prefer setting it: only structured affixes count toward the computed DPS/EHP.'),
+                    'value' => $schema->number()->description('The rolled number, within the value_range search_affixes reports.'),
+                    'greater' => $schema->boolean()->description('Whether this line rolled as a Greater Affix.'),
+                ]),
+            )->description('The affixes rolled on the item. A plain display string is also accepted, but only structured entries feed the stat calculator.'),
             'greater_affixes' => $schema->integer()->description('How many of the affixes are Greater Affixes (0-4).'),
             'tempered' => $schema->array()->max(2)->items(
                 $schema->object([
                     'affix' => $schema->string()->required()->description('The tempered affix or its tempering family, from search_affixes with is_tempering.'),
                     'tier' => $schema->integer()->description('The tempering recipe tier.'),
+                    'value' => $schema->number()->description('The rolled number on the tempered line.'),
                 ]),
             )->description('Tempered affixes added with a tempering manual.'),
             'masterwork_level' => $schema->integer()->description('Masterworking level, 0-12. Levels 4, 8 and 12 each critically upgrade one affix.'),

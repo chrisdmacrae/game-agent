@@ -163,6 +163,19 @@ class D4BuildRules
             // Glyph levels have been raised twice already; stay permissive and
             // let the validator report an implausible level.
             $prefix.'paragon.*.glyph_level' => 'nullable|integer|min:1|max:200',
+            // Allocated cells in pre-rotation grid coordinates. Board widths
+            // vary per board (21 today), so the bounds stay permissive and the
+            // validator checks against the real grid.
+            $prefix.'paragon.*.nodes' => 'nullable|array|max:441',
+            $prefix.'paragon.*.nodes.*.row' => 'required|integer|min:0|max:40',
+            $prefix.'paragon.*.nodes.*.col' => 'required|integer|min:0|max:40',
+            // Which earlier entry this board hangs off and through which of its
+            // own gate cells (pre-rotation coordinates). The start board omits it.
+            $prefix.'paragon.*.attach' => 'nullable|array',
+            $prefix.'paragon.*.attach.to' => 'nullable|integer|min:0|max:'.(self::MAX_PARAGON_BOARDS - 1),
+            $prefix.'paragon.*.attach.gate' => 'nullable|array',
+            $prefix.'paragon.*.attach.gate.row' => 'required_with:'.$prefix.'paragon.*.attach.gate|integer|min:0|max:40',
+            $prefix.'paragon.*.attach.gate.col' => 'required_with:'.$prefix.'paragon.*.attach.gate|integer|min:0|max:40',
             $prefix.'paragon.*.notables' => 'nullable|array|max:20',
             $prefix.'paragon.*.notables.*' => 'string|max:100',
         ];
@@ -200,7 +213,9 @@ class D4BuildRules
             $path.'.rarity' => 'nullable|string|in:'.implode(',', self::RARITIES),
             $path.'.aspect' => 'nullable|string|max:120',
             $path.'.affixes' => 'nullable|array|max:8',
-            $path.'.affixes.*' => 'string|max:150',
+            // A display string (legacy) or a structured {text, affix, value,
+            // greater} object the calculator can count.
+            $path.'.affixes.*' => [new Rules\AffixEntry],
             $path.'.greater_affixes' => 'nullable|integer|min:0|max:4',
             // One tempered affix per item today; two is allowed here because
             // the recipe count has moved before and the validator reports the
@@ -208,6 +223,7 @@ class D4BuildRules
             $path.'.tempered' => 'nullable|array|max:2',
             $path.'.tempered.*.affix' => 'required|string|max:150',
             $path.'.tempered.*.tier' => 'nullable|integer|min:1|max:20',
+            $path.'.tempered.*.value' => 'nullable|numeric',
             $path.'.masterwork_level' => 'nullable|integer|min:0|max:12',
             // Two runes make a runeword: one condition, one effect.
             $path.'.runes' => 'nullable|array|max:2',

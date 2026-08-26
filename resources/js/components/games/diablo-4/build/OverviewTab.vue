@@ -52,6 +52,13 @@ const resistances = computed(() => {
 
 const armor = computed(() => props.definition.armor ?? null);
 
+/** The stat calculator's breakdown, when the build has been saved through it. */
+const engine = computed(() => props.definition.computed ?? null);
+
+const engineSkills = computed(() => engine.value?.skills ?? []);
+
+const engineAssumptions = computed(() => engine.value?.assumptions ?? []);
+
 const seasonalPower = computed(() => props.definition.seasonal_power ?? null);
 
 const mercenary = computed(() => {
@@ -132,6 +139,67 @@ const hasNarrative = computed(
                 />
             </Card>
         </div>
+
+        <Card v-if="engine">
+            <div class="flex items-baseline gap-3">
+                <p :class="LABEL_CLASS">Engine-computed baseline</p>
+                <span class="ml-auto font-mono text-[12px] text-[var(--fg-3)]">
+                    {{ engineAssumptions.length }} assumption{{
+                        engineAssumptions.length === 1 ? '' : 's'
+                    }}
+                </span>
+            </div>
+
+            <div
+                v-if="engine.weapon"
+                class="mt-4 flex flex-wrap items-baseline gap-x-6 gap-y-1 border-b border-[var(--border-hairline)] pb-3 font-mono text-[13px] text-[var(--fg-2)]"
+            >
+                <span>
+                    {{ engine.weapon.item_type }} · item power
+                    {{ engine.weapon.item_power }}
+                </span>
+                <span>
+                    {{ Math.round(engine.weapon.average_hit ?? 0) }} per hit ·
+                    {{ engine.weapon.attacks_per_second }} APS
+                </span>
+            </div>
+
+            <div v-if="engineSkills.length" class="mt-3 flex flex-col">
+                <div
+                    v-for="skill in engineSkills"
+                    :key="skill.skill"
+                    class="flex items-baseline gap-4 border-b border-[var(--border-hairline)] py-[7px]"
+                >
+                    <span
+                        class="flex-1 text-[13px] text-[var(--fg-2)]"
+                        :data-entity="skill.skill"
+                    >
+                        {{ skill.skill }}
+                        <span class="font-mono text-[11px] text-[var(--fg-3)]">
+                            r{{ skill.rank }} ·
+                            {{ skill.weapon_damage_percent }}% weapon
+                        </span>
+                    </span>
+                    <span class="font-mono text-[14px] text-[var(--fg-1)]">
+                        {{ plainNumber(skill.dps) }} dps
+                    </span>
+                </div>
+            </div>
+
+            <details
+                v-if="engineAssumptions.length"
+                class="mt-3 font-mono text-[12px] text-[var(--fg-3)]"
+            >
+                <summary class="cursor-pointer select-none">
+                    What these numbers rest on
+                </summary>
+                <ul class="mt-2 flex flex-col gap-1">
+                    <li v-for="line in engineAssumptions" :key="line">
+                        · {{ line }}
+                    </li>
+                </ul>
+            </details>
+        </Card>
 
         <Card v-if="resistances.length || armor !== null">
             <div class="flex items-center">

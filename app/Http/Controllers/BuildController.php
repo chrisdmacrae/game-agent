@@ -262,7 +262,7 @@ class BuildController extends Controller
         $profile = GameBuildProfile::for($game);
 
         $validated = $request->validated();
-        $definition = $profile->normalize($validated['build']);
+        $definition = $profile->finalize($validated['build'], $build->game_version_id);
 
         $build->fill([
             'name' => $validated['name'],

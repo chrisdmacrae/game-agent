@@ -110,6 +110,32 @@ test('paragon rotations must be quarter turns and boards need a name', function 
     ]))->toContain('paragon.0.board');
 });
 
+test('paragon nodes are coordinate pairs and attach names an earlier entry and a gate', function () {
+    expect(d4RuleErrors([
+        'equipped_skills' => [['skill' => 'Whirlwind']],
+        'paragon' => [[
+            'board' => 'Start',
+            'nodes' => [['row' => 13, 'col' => 10]],
+            'attach' => ['to' => 0, 'gate' => ['row' => 0, 'col' => 10]],
+        ]],
+    ]))->toBe([]);
+
+    expect(d4RuleErrors([
+        'equipped_skills' => [['skill' => 'Whirlwind']],
+        'paragon' => [['board' => 'Start', 'nodes' => [['row' => 99, 'col' => -1]]]],
+    ]))->toContain('paragon.0.nodes.0.row', 'paragon.0.nodes.0.col');
+
+    expect(d4RuleErrors([
+        'equipped_skills' => [['skill' => 'Whirlwind']],
+        'paragon' => [['board' => 'Start', 'nodes' => [['row' => 3]]]],
+    ]))->toContain('paragon.0.nodes.0.col');
+
+    expect(d4RuleErrors([
+        'equipped_skills' => [['skill' => 'Whirlwind']],
+        'paragon' => [['board' => 'Start', 'attach' => ['gate' => ['row' => 5]]]],
+    ]))->toContain('paragon.0.attach.gate.col');
+});
+
 test('gear rarity, greater affix count and rune sockets are bounded', function () {
     expect(d4RuleErrors([
         'equipped_skills' => [['skill' => 'Whirlwind']],
@@ -139,4 +165,35 @@ test('the weapons list is capped and validated like any other item', function ()
         'equipped_skills' => [['skill' => 'Whirlwind']],
         'gear' => ['weapons' => [['name' => 'Axe', 'rarity' => 'shiny']]],
     ]))->toContain('gear.weapons.0.rarity');
+});
+
+test('affixes accept a display string or a structured entry, and nothing else', function () {
+    expect(d4RuleErrors([
+        'equipped_skills' => [['skill' => 'Whirlwind']],
+        'gear' => ['helm' => ['affixes' => [
+            '+845 Maximum Life',
+            ['affix' => 'Max_Life_Flat', 'value' => 845, 'greater' => true],
+            ['text' => '+90 Dexterity'],
+        ]]],
+    ]))->toBe([]);
+
+    expect(d4RuleErrors([
+        'equipped_skills' => [['skill' => 'Whirlwind']],
+        'gear' => ['helm' => ['affixes' => [['value' => 845]]]],
+    ]))->toContain('gear.helm.affixes.0');
+
+    expect(d4RuleErrors([
+        'equipped_skills' => [['skill' => 'Whirlwind']],
+        'gear' => ['helm' => ['affixes' => [['affix' => 'X', 'value' => 'high']]]],
+    ]))->toContain('gear.helm.affixes.0');
+
+    expect(d4RuleErrors([
+        'equipped_skills' => [['skill' => 'Whirlwind']],
+        'gear' => ['helm' => ['affixes' => [42]]],
+    ]))->toContain('gear.helm.affixes.0');
+
+    expect(d4RuleErrors([
+        'equipped_skills' => [['skill' => 'Whirlwind']],
+        'gear' => ['helm' => ['tempered' => [['affix' => 'X', 'value' => 'not-a-number']]]],
+    ]))->toContain('gear.helm.tempered.0.value');
 });

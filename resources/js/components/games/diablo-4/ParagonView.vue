@@ -24,6 +24,18 @@ const props = defineProps<{
     entries: D4ParagonEntry[];
     /** Imported grids, matched to entries by board name. Optional by design. */
     boards?: D4ParagonBoardGrid[];
+    /** The editor turns cells into buttons that toggle path allocation. */
+    editable?: boolean;
+}>();
+
+const emit = defineEmits<{
+    /** A cell was clicked, addressed in PRE-rotation grid coordinates. */
+    (
+        event: 'toggle-node',
+        entryIndex: number,
+        node: { row: number; col: number },
+        cell: D4ParagonCell,
+    ): void;
 }>();
 
 /**
@@ -81,6 +93,13 @@ type DrawnCell = {
     x: number;
     y: number;
     cell: D4ParagonCell;
+    /** Whether the build's stored path purchases this cell. */
+    allocated: boolean;
+    /** The gate the board is entered through. */
+    entryGate: boolean;
+    /** Pre-rotation grid address — what the payload stores. */
+    sourceRow: number;
+    sourceCol: number;
 };
 
 type DrawnBoard = {
@@ -90,6 +109,21 @@ type DrawnBoard = {
     height: number;
     cells: DrawnCell[];
     sockets: DrawnCell[];
+    /** True when the entry carries node data, so allocation can be shown. */
+    hasAllocation: boolean;
+};
+
+/**
+ * A grid cell tagged with the build's allocation before rotation, so the flags
+ * travel with the cell however the board is turned. Payload coordinates are
+ * pre-rotation by contract.
+ */
+type TaggedCell = {
+    cell: D4ParagonCell;
+    allocated: boolean;
+    entryGate: boolean;
+    sourceRow: number;
+    sourceCol: number;
 };
 
 /**
@@ -97,15 +131,10 @@ type DrawnBoard = {
  * the glyph socket and its label all come out in final orientation, so nothing
  * has to be counter-rotated to stay readable.
  */
-function rotate(
-    grid: (D4ParagonCell | null)[][],
-    degrees: number,
-): (D4ParagonCell | null)[][] {
+function rotate<T>(grid: (T | null)[][], degrees: number): (T | null)[][] {
     const size = Math.max(grid.length, ...grid.map((row) => row.length), 1);
-    const square: (D4ParagonCell | null)[][] = Array.from(
-        { length: size },
-        (_, row) =>
-            Array.from({ length: size }, (_, col) => grid[row]?.[col] ?? null),
+    const square: (T | null)[][] = Array.from({ length: size }, (_, row) =>
+        Array.from({ length: size }, (_, col) => grid[row]?.[col] ?? null),
     );
 
     const turns = (((degrees % 360) + 360) % 360) / 90;
@@ -140,13 +169,36 @@ const drawn = computed<Record<number, DrawnBoard>>(() => {
             return;
         }
 
-        const grid = rotate(board.grid, entry.rotation ?? 0);
+        const allocatedKeys = new Set(
+            (entry.nodes ?? []).map((node) => `${node.row},${node.col}`),
+        );
+        const gate = entry.attach?.gate;
+        const gateKey = gate ? `${gate.row},${gate.col}` : null;
+        const hasAllocation = allocatedKeys.size > 0;
+
+        const tagged: (TaggedCell | null)[][] = board.grid.map(
+            (row, rowIndex) =>
+                row.map((cell, colIndex) =>
+                    cell
+                        ? {
+                              cell,
+                              allocated: allocatedKeys.has(
+                                  `${rowIndex},${colIndex}`,
+                              ),
+                              entryGate: gateKey === `${rowIndex},${colIndex}`,
+                              sourceRow: rowIndex,
+                              sourceCol: colIndex,
+                          }
+                        : null,
+                ),
+        );
+
+        const grid = rotate(tagged, entry.rotation ?? 0);
 
         // The imported grid is a fixed square with blank rows and columns
         // around the board; crop to what is actually there so the drawing
         // fills its box instead of floating in padding.
-        const occupied: { row: number; col: number; cell: D4ParagonCell }[] =
-            [];
+        const occupied: { row: number; col: number; cell: TaggedCell }[] = [];
 
         grid.forEach((row, rowIndex) => {
             row.forEach((cell, colIndex) => {
@@ -173,12 +225,16 @@ const drawn = computed<Record<number, DrawnBoard>>(() => {
                 key: `${order}-${row}-${col}`,
                 x: (col - minCol) * STEP,
                 y: (row - minRow) * STEP,
-                cell,
+                cell: cell.cell,
+                allocated: cell.allocated,
+                entryGate: cell.entryGate,
+                sourceRow: cell.sourceRow,
+                sourceCol: cell.sourceCol,
             };
 
             cells.push(drawnCell);
 
-            if (cell.has_socket) {
+            if (cell.cell.has_socket) {
                 sockets.push(drawnCell);
             }
         }
@@ -190,6 +246,7 @@ const drawn = computed<Record<number, DrawnBoard>>(() => {
             height: (maxRow - minRow + 1) * STEP - GUTTER,
             cells,
             sockets,
+            hasAllocation,
         };
     });
 
@@ -240,6 +297,25 @@ function legendFor(order: number): LegendKey[] {
 
     const cells = board.cells.map((drawnCell) => drawnCell.cell);
     const keys: LegendKey[] = [];
+
+    if (board.hasAllocation) {
+        const points = board.cells.filter(
+            (drawnCell) => drawnCell.allocated,
+        ).length;
+
+        keys.push({
+            label: `Path · ${points} points (dim cells not taken)`,
+            color: BOARD_COLORS.legendary,
+        });
+    }
+
+    if (board.cells.some((drawnCell) => drawnCell.entryGate)) {
+        keys.push({
+            label: 'Entry gate',
+            color: BOARD_COLORS.legendary,
+            dashed: true,
+        });
+    }
 
     if (board.sockets.length > 0) {
         keys.push({
@@ -310,6 +386,7 @@ const hasEntries = computed(() => props.entries.length > 0);
                         <p
                             v-if="glyphMeta(entry)"
                             class="mt-0.5 font-mono text-[12px] text-[var(--violet-400)]"
+                            :data-entity="entry.glyph ?? undefined"
                         >
                             {{ glyphMeta(entry) }}
                         </p>
@@ -332,6 +409,33 @@ const hasEntries = computed(() => props.entries.length > 0);
                     <g
                         v-for="drawnCell in drawn[order].cells"
                         :key="drawnCell.key"
+                        :class="editable ? 'cursor-pointer' : undefined"
+                        :role="editable ? 'button' : undefined"
+                        :tabindex="editable ? 0 : undefined"
+                        @click="
+                            editable &&
+                            emit(
+                                'toggle-node',
+                                order,
+                                {
+                                    row: drawnCell.sourceRow,
+                                    col: drawnCell.sourceCol,
+                                },
+                                drawnCell.cell,
+                            )
+                        "
+                        @keydown.enter="
+                            editable &&
+                            emit(
+                                'toggle-node',
+                                order,
+                                {
+                                    row: drawnCell.sourceRow,
+                                    col: drawnCell.sourceCol,
+                                },
+                                drawnCell.cell,
+                            )
+                        "
                     >
                         <title>
                             {{
@@ -347,8 +451,19 @@ const hasEntries = computed(() => props.entries.length > 0);
                             :height="CELL"
                             rx="2"
                             :fill="fillFor(drawnCell.cell)"
-                            :stroke="strokeFor(drawnCell.cell)"
+                            :fill-opacity="
+                                drawn[order].hasAllocation &&
+                                !drawnCell.allocated
+                                    ? 0.18
+                                    : 1
+                            "
+                            :stroke="
+                                drawnCell.entryGate
+                                    ? BOARD_COLORS.legendary
+                                    : strokeFor(drawnCell.cell)
+                            "
                             :stroke-width="
+                                drawnCell.entryGate ||
                                 drawnCell.cell.has_socket ||
                                 drawnCell.cell.is_gate
                                     ? 1.4
@@ -400,6 +515,7 @@ const hasEntries = computed(() => props.entries.length > 0);
                             v-for="notable in entry.notables"
                             :key="`${order}-${notable}`"
                             class="inline-flex items-center rounded-[var(--radius-pill)] border border-[var(--border-subtle)] bg-[var(--surface-card-hover)] px-2.5 py-1 font-mono text-[12px] leading-none text-[var(--fg-2)]"
+                            :data-entity="notable"
                         >
                             {{ notable }}
                         </span>

@@ -148,11 +148,14 @@ test('the mapper resolves skills, boards, glyphs, aspects, uniques and tempering
         ->and($payload['content_tier'])->toBe('endgame')
         ->and($payload['equipped_skills'])->toBe([['skill' => 'Whirlwind']])
         // Maxroll drops the leading zero on some board ids; the mapper retries padded.
+        // The planner's flat node index 10 lands on the 21-wide start board's
+        // gate at (0,10) — the characterization pin for the row-major mapping.
         ->and($payload['paragon'])->toBe([[
             'board' => 'Start',
             'rotation' => 90,
             'glyph' => 'Enchanter',
             'glyph_level' => 100,
+            'nodes' => [['row' => 0, 'col' => 10]],
         ]])
         ->and($payload['gear']['helm']['aspect'])->toBe('of Berserk Ripping')
         ->and($payload['gear']['helm']['tempered'])->toBe([['affix' => 'Tempered_AttackSpeed_Sorc_Tag_Pyromancy_Tier1']])

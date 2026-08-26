@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import Badge from '@/components/byb/Badge.vue';
 import Button from '@/components/byb/Button.vue';
@@ -14,8 +14,9 @@ import StatBlock from '@/components/byb/StatBlock.vue';
 import Tag from '@/components/byb/Tag.vue';
 import Tooltip from '@/components/byb/Tooltip.vue';
 import SeoHead from '@/components/SeoHead.vue';
+import { gameMcpUrl } from '@/lib/hub';
 import { cn } from '@/lib/utils';
-import type { HubGame } from '@/types/hub';
+import type { ConnectGame, HubGame } from '@/types/hub';
 
 /**
  * Root landing page (scope §3.1). Sections, in order: hero, how it works,
@@ -41,19 +42,23 @@ type Tool = {
     description: string;
 };
 
-type ModelDoc = {
-    id: string;
-    title: string;
-    summary: string;
+/** One live game's MCP endpoint contents (see HomeController::toolkits()). */
+type Toolkit = {
+    slug: string;
+    name: string;
+    short_name: string;
+    tools: Tool[];
+    models: number;
 };
 
 const props = defineProps<{
     mcpUrl: string;
     gameCards: GameCard[];
     stats: Stats;
-    tools: Tool[];
-    models: ModelDoc[];
+    toolkits: Toolkit[];
 }>();
+
+const page = usePage();
 
 const connectOpen = ref(false);
 
@@ -77,9 +82,22 @@ function numeral(count: number): string {
     return NUMERALS[count] ?? String(count);
 }
 
-const liveGame = computed<GameCard | undefined>(() =>
-    props.gameCards.find((game) => game.is_live),
+const liveGames = computed<GameCard[]>(() =>
+    props.gameCards.filter((game) => game.is_live),
 );
+
+/** Live games as the connect panel's endpoint selector wants them. */
+const connectGames = computed<ConnectGame[]>(() =>
+    liveGames.value.map((game) => ({
+        slug: game.slug,
+        label: game.short_name,
+        mcpUrl: endpointUrl(game.slug),
+    })),
+);
+
+function endpointUrl(slug: string): string {
+    return gameMcpUrl(props.mcpUrl, slug, page.props.mcpUrls);
+}
 
 const queuedCount = computed(
     () => props.gameCards.filter((game) => !game.is_live).length,
@@ -221,9 +239,15 @@ const headingClass =
                     Connect the server
                 </Button>
                 <!-- `icon`/`iconRight` render outside the child under as-child, so the glyph goes in the Link. -->
-                <Button v-if="liveGame" size="lg" variant="ghost" as-child>
-                    <Link :href="liveGame.url">
-                        Browse {{ liveGame.short_name }} builds
+                <Button
+                    v-for="game in liveGames"
+                    :key="game.slug"
+                    size="lg"
+                    variant="ghost"
+                    as-child
+                >
+                    <Link :href="game.url">
+                        Browse {{ game.short_name }} builds
                         <Icon name="chevron-right" :size="16" />
                     </Link>
                 </Button>
@@ -327,37 +351,52 @@ const headingClass =
                     <p :class="cn(LABEL_CLASS, 'mb-4')">Connect it</p>
                     <ConnectPanel
                         :mcp-url="mcpUrl"
-                        filename="poe2 server url"
+                        :games="connectGames"
+                        filename="server url"
                     />
                 </Card>
             </div>
         </section>
 
-        <!-- What the server exposes -->
+        <!-- What the servers expose -->
         <section :class="sectionClass">
-            <p :class="LABEL_CLASS">What the server exposes</p>
+            <p :class="LABEL_CLASS">What the servers expose</p>
             <h2 :class="headingClass">
-                {{ tools.length }} tools, one endpoint per game.
+                One endpoint per game, each with its own toolkit.
             </h2>
 
-            <div class="flex flex-wrap gap-2">
-                <Tooltip
-                    v-for="tool in tools"
-                    :key="tool.name"
-                    :text="tool.description"
-                >
-                    <Tag>{{ tool.name }}</Tag>
-                </Tooltip>
+            <div class="flex flex-col gap-10">
+                <div v-for="kit in toolkits" :key="kit.slug">
+                    <div
+                        class="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1"
+                    >
+                        <p
+                            class="text-[18px] leading-[1.28] font-semibold text-[var(--fg-1)]"
+                        >
+                            {{ kit.name }}
+                        </p>
+                        <p class="font-mono text-[12px] text-[var(--fg-3)]">
+                            {{ kit.tools.length }} tools · {{ kit.models }} game
+                            models ·
+                            {{ endpointUrl(kit.slug) }}
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        <Tooltip
+                            v-for="tool in kit.tools"
+                            :key="tool.name"
+                            :text="tool.description"
+                        >
+                            <Tag>{{ tool.name }}</Tag>
+                        </Tooltip>
+                    </div>
+                </div>
             </div>
 
-            <p
-                v-if="models.length"
-                class="mt-6 text-[13px] leading-[1.5] text-[var(--fg-3)]"
-            >
-                It also serves
-                <span class="font-mono">{{ models.length }}</span> game models —
-                the rules of the game written down, so the assistant reasons
-                from them instead of guessing.
+            <p class="mt-6 text-[13px] leading-[1.5] text-[var(--fg-3)]">
+                Game models are the rules of each game written down, so the
+                assistant reasons from them instead of guessing.
             </p>
         </section>
 
@@ -457,10 +496,14 @@ const headingClass =
             v-model:open="connectOpen"
             eyebrow="MCP server"
             title="Connect Build Your Build"
-            description="Add it in your client settings. Pick the client you use."
+            description="Add it in your client settings. Pick your game and client."
             :width="560"
         >
-            <ConnectPanel :mcp-url="mcpUrl" filename="poe2 server url" />
+            <ConnectPanel
+                :mcp-url="mcpUrl"
+                :games="connectGames"
+                filename="server url"
+            />
         </Dialog>
     </div>
 </template>

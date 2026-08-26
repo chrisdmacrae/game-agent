@@ -169,7 +169,7 @@ test('the pre-flight reports D4 anatomy, never passive points or body armour', f
 
     $checks = collect(app(PublishChecklist::class)->for($build));
 
-    expect($checks->pluck('key')->all())->toBe(['stats', 'gear', 'skills', 'paragon', 'patch']);
+    expect($checks->pluck('key')->all())->toBe(['stats', 'gear', 'skills', 'paragon', 'computed', 'patch']);
 
     $details = $checks->pluck('detail')->filter()->join(' ');
 
@@ -215,7 +215,7 @@ test('a leveling D4 build publishes without a paragon plan', function () {
 |--------------------------------------------------------------------------
 */
 
-test('a D4 build page renders with the PoE 2 props present but empty', function () {
+test('a D4 build page ships its entity dictionary, with the PoE 2-only props empty', function () {
     $build = Build::factory()
         ->public()
         ->for($this->owner)
@@ -228,7 +228,7 @@ test('a D4 build page renders with the PoE 2 props present but empty', function 
             ->component('Builds/Show')
             ->where('game.slug', 'diablo-4')
             ->where('build.definition.paragon.0.board', 'Start')
-            ->where('entities', [])
+            ->where('entities.Whirlwind.kind', 'skill')
             ->where('gearView', ['slots' => [], 'jewels' => []])
             ->where('ascendancyPathIds', [])
             ->where('spriteUrl', null)
@@ -326,7 +326,7 @@ test('the D4 editor offers D4 classes, no ascendancies and the shared tiers', fu
             ->where('options.ascendancies', [])
             ->where('options.tiers', ['S', 'A', 'B', 'C'])
             ->where('options.classes', fn ($classes) => $classes->contains('Barbarian'))
-            ->has('checklist', 5)
+            ->has('checklist', 6)
         );
 });
 

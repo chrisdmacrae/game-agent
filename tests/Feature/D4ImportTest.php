@@ -4,6 +4,7 @@ use App\Domain\D4\Import\D4Importer;
 use App\Domain\D4\TooltipText;
 use App\Models\D4\Affix;
 use App\Models\D4\Aspect;
+use App\Models\D4\CalcTable;
 use App\Models\D4\CharacterClass;
 use App\Models\D4\ItemType;
 use App\Models\D4\ParagonBoard;
@@ -33,6 +34,8 @@ const D4_FIXTURE_COUNTS = [
     'aspects' => 1,
     'uniques' => 2,
     'item_types' => 2,
+    'calc_tables' => 7,
+    'icon_manifest' => 7,
 ];
 
 test('the importer lands every dataset in the fixture tree', function () {
@@ -369,4 +372,74 @@ test('importing a second version deactivates the first', function () {
         ->and(GameVersion::count())->toBe(2)
         ->and(Skill::forVersion($first->id)->count())->toBe(2)
         ->and(Skill::forVersion($second->id)->count())->toBe(2);
+});
+
+test('entity icons resolve to texture atlas frames with fractional uvs', function () {
+    $version = d4Importer()->import();
+
+    $whirlwind = Skill::forVersion($version->id)->where('sno_id', 206435)->sole();
+
+    expect($whirlwind->icon['texture'])->toBe(65420)
+        ->and($whirlwind->icon['frame'])->toBe(39)
+        ->and($whirlwind->icon['u0'])->toBeGreaterThanOrEqual(0)->toBeLessThanOrEqual(1)
+        ->and($whirlwind->icon['v1'])->toBeGreaterThan($whirlwind->icon['v0']);
+
+    $aspect = Aspect::forVersion($version->id)->sole();
+
+    expect($aspect->icon['texture'])->toBe(1955578)
+        ->and($aspect->icon['frame'])->toBe(3);
+
+    // The helm carries its own inventory image; the unique axe (and its base
+    // item chain) ships no icon handle at all, so it stays null for the
+    // letter-badge fallback.
+    $helm = UniqueItem::forVersion($version->id)->where('name', 'VFX Testing Hat')->sole();
+    $axe = UniqueItem::forVersion($version->id)->where('name', "Ancients' Oath")->sole();
+
+    expect($helm->icon['texture'])->toBe(2632174)
+        ->and($helm->icon['frame'])->toBe(56)
+        ->and($axe->icon)->toBeNull();
+
+    $board = ParagonBoard::forVersion($version->id)->sole();
+    $cells = collect($board->grid)->flatten(1)->filter()->values();
+
+    expect($cells->firstWhere('key', 'Generic_Gate')['icon']['frame'])->toBeInt()
+        ->and($cells->firstWhere('key', 'Generic_Socket')['icon'])->toBeNull();
+});
+
+test('the calculator tables persist the dump slices stat math reads', function () {
+    $version = d4Importer()->import();
+
+    $tables = CalcTable::forVersion($version->id)->get()->keyBy('key');
+
+    expect($tables->keys()->sort()->values()->all())->toBe([
+        'attribute_graph', 'class_core_stats', 'globals', 'item_types', 'level_scaling', 'texture_atlases', 'weapon_damage_breakpoints',
+    ]);
+
+    $graph = $tables['attribute_graph']->data;
+
+    expect($graph['Hitpoints_Max_Total']['formula'])->toContain('Default_HP_Max_Total')
+        ->and($graph['Hitpoints_Max']['formula'])->toBeNull();
+
+    $weapons = $tables['weapon_damage_breakpoints']->data;
+
+    expect($weapons)->toHaveKeys(['slow', 'normal', 'fast', 'very_fast'])
+        ->and($weapons['slow'])->toHaveCount(3);
+
+    $top = collect($weapons['slow'])->firstWhere('item_power', 900);
+
+    expect($top['min'])->toBeFloat()->toBeGreaterThan(0)
+        ->and($top['max'])->toBeGreaterThan($top['min']);
+
+    $levels = $tables['level_scaling']->data;
+
+    expect($levels)->toHaveCount(200)
+        ->and(collect($levels)->firstWhere('level', 60)['loot_item_power'])->toBe(750);
+
+    $globals = $tables['globals']->data;
+
+    expect($globals['flPlayerCritDamageScalar'])->toBe(0.5)
+        ->and($globals['arGlyphRadiusLevels'])->toBe([0, 0, 0, 25, 50]);
+
+    expect($tables['class_core_stats']->data['Barbarian'])->not->toBeEmpty()
+        ->and($tables['item_types']->data['Axe']['damage_multiplier'])->toBeFloat();
 });

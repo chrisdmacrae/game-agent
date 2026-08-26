@@ -2,7 +2,9 @@
 import { computed } from 'vue';
 import { LABEL_CLASS } from '@/components/byb/controls';
 import {
+    affixLabel,
     gearCells,
+    isGreaterAffix,
     itemLabel,
     masterworkLabel,
     rarityColor,
@@ -56,6 +58,7 @@ const chipClass =
                                 :style="{
                                     color: rarityColor(cell.item.rarity),
                                 }"
+                                :data-entity="cell.item.name ?? undefined"
                             >
                                 {{ itemLabel(cell.item, cell.label) }}
                             </p>
@@ -97,6 +100,7 @@ const chipClass =
                     <p
                         v-if="cell.item.aspect"
                         class="font-mono text-[12px] text-[var(--violet-400)]"
+                        :data-entity="cell.item.aspect"
                     >
                         {{ cell.item.aspect }}
                     </p>
@@ -106,10 +110,16 @@ const chipClass =
                         class="flex flex-col gap-0.5 font-mono text-[12px] text-[var(--fg-2)]"
                     >
                         <li
-                            v-for="affix in cell.item.affixes"
-                            :key="`${cell.slot}-${affix}`"
+                            v-for="(affix, affixIndex) in cell.item.affixes"
+                            :key="`${cell.slot}-affix-${affixIndex}`"
                         >
-                            {{ affix }}
+                            <span
+                                v-if="isGreaterAffix(affix)"
+                                class="text-[var(--gold-400)]"
+                                title="Greater Affix"
+                                >★
+                            </span>
+                            {{ affixLabel(affix) }}
                         </li>
                     </ul>
 
@@ -170,6 +180,7 @@ const chipClass =
                             <p
                                 class="text-[15px] leading-tight font-semibold"
                                 :style="{ color: rarityColor(weapon.rarity) }"
+                                :data-entity="weapon.name ?? undefined"
                             >
                                 {{ itemLabel(weapon, `Weapon ${index + 1}`) }}
                             </p>
@@ -208,6 +219,7 @@ const chipClass =
                     <p
                         v-if="weapon.aspect"
                         class="font-mono text-[12px] text-[var(--violet-400)]"
+                        :data-entity="weapon.aspect"
                     >
                         {{ weapon.aspect }}
                     </p>
@@ -217,10 +229,16 @@ const chipClass =
                         class="flex flex-col gap-0.5 font-mono text-[12px] text-[var(--fg-2)]"
                     >
                         <li
-                            v-for="affix in weapon.affixes"
-                            :key="`weapon-${index}-${affix}`"
+                            v-for="(affix, affixIndex) in weapon.affixes"
+                            :key="`weapon-${index}-affix-${affixIndex}`"
                         >
-                            {{ affix }}
+                            <span
+                                v-if="isGreaterAffix(affix)"
+                                class="text-[var(--gold-400)]"
+                                title="Greater Affix"
+                                >★
+                            </span>
+                            {{ affixLabel(affix) }}
                         </li>
                     </ul>
 

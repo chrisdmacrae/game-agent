@@ -12,6 +12,7 @@ class UniqueItem extends D4Model
             'is_released' => 'boolean',
             'is_mythic' => 'boolean',
             'affixes' => 'array',
+            'icon' => 'array',
             'raw' => 'array',
         ];
     }

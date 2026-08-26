@@ -3,6 +3,7 @@
 namespace App\Domain\D4\Validation;
 
 use App\Domain\D4\D4Context;
+use App\Domain\D4\D4ParagonGraph;
 use App\Models\D4\Affix;
 use App\Models\D4\Aspect;
 use App\Models\D4\CharacterClass;
@@ -60,6 +61,7 @@ class D4BuildValidator
         $this->checkGear($build, $className);
         $this->checkDefences($build);
         $this->checkMilestones($build);
+        $this->checkComputedDisagreement($build);
 
         return [
             'valid' => $this->violations === [],
@@ -216,17 +218,26 @@ class D4BuildValidator
         }
 
         $boardsSeen = [];
+        $resolved = [];
 
-        foreach ($paragon as $entry) {
+        foreach ($paragon as $index => $entry) {
             $boardName = $entry['board'] ?? null;
+            $resolved[$index] = null;
 
             if (is_string($boardName) && $boardName !== '') {
                 $boardsSeen[mb_strtolower($boardName)] = ($boardsSeen[mb_strtolower($boardName)] ?? 0) + 1;
 
-                $board = ParagonBoard::forVersion($this->context->versionId())
+                // Board names repeat across classes (every class has a
+                // "Start"), so the build's class breaks the tie.
+                $candidates = ParagonBoard::forVersion($this->context->versionId())
                     ->whereLike('name', $boardName)
                     ->orderByDesc('is_released')
-                    ->first();
+                    ->get();
+
+                $board = ($className === null ? null : $candidates->first(
+                    fn (ParagonBoard $candidate) => $candidate->class_name !== null
+                        && $this->sameName($candidate->class_name, $className),
+                )) ?? $candidates->first();
 
                 if ($board === null) {
                     $this->violations[] = "Unknown paragon board \"{$boardName}\". Use get_paragon_board to list the boards for the class.";
@@ -234,6 +245,8 @@ class D4BuildValidator
                     && $board->class_name !== null
                     && ! $this->sameName($board->class_name, $className)) {
                     $this->violations[] = "Paragon board \"{$board->name}\" belongs to {$board->class_name}, not {$className}.";
+                } else {
+                    $resolved[$index] = $board;
                 }
             }
 
@@ -243,6 +256,199 @@ class D4BuildValidator
         foreach ($boardsSeen as $board => $count) {
             if ($count > 1) {
                 $this->violations[] = "Paragon board \"{$board}\" is attached {$count} times; each board can only be attached once.";
+            }
+        }
+
+        $this->checkParagonConnectivity($paragon, $resolved);
+    }
+
+    /**
+     * Paragon allocation is a path, not a pick list: it enters the start board
+     * through its single gate and every purchased node must connect back to it
+     * 4-neighbour-wise, crossing onto later boards only through gate cells.
+     * Entries without node data predate the path model and are legal forever —
+     * they just skip these checks.
+     *
+     * @param  list<array<string, mixed>>  $paragon
+     * @param  array<int, ParagonBoard|null>  $resolved
+     */
+    protected function checkParagonConnectivity(array $paragon, array $resolved): void
+    {
+        $graph = new D4ParagonGraph($this->context);
+        $withNodes = array_filter($paragon, fn (array $entry) => ($entry['nodes'] ?? []) !== []);
+
+        if ($withNodes === []) {
+            $this->suggestions[] = 'No paragon entry lists allocated nodes, so path connectivity and paragon stat contributions were not checked. Use plan_paragon_path to compute routes and store them in paragon[].nodes.';
+
+            $this->checkParagonNotables($paragon, $resolved, $graph, hasNodes: false);
+
+            return;
+        }
+
+        $totalNodes = 0;
+
+        foreach ($paragon as $index => $entry) {
+            $nodes = $entry['nodes'] ?? [];
+            $board = $resolved[$index] ?? null;
+            $label = is_string($entry['board'] ?? null) ? $entry['board'] : 'board #'.$index;
+
+            if ($nodes === [] || $board === null) {
+                continue;
+            }
+
+            $totalNodes += count($nodes);
+            $grid = is_array($board->grid) ? $board->grid : [];
+
+            $offGrid = array_values(array_filter($nodes, fn (array $node) => $graph->cellAt($grid, $node['row'], $node['col']) === null));
+
+            if ($offGrid !== []) {
+                $samples = array_slice(array_map(fn (array $node) => "({$node['row']},{$node['col']})", $offGrid), 0, 4);
+                $this->violations[] = 'Paragon board "'.$label.'" allocates '.count($offGrid)
+                    .' cells that are empty space on its grid: '.implode(', ', $samples)
+                    .'. Coordinates are 0-based pre-rotation row/col from get_paragon_board.';
+
+                continue;
+            }
+
+            $seed = $this->paragonEntrySeed($graph, $grid, $entry, $index, $label);
+
+            if ($seed === null) {
+                continue;
+            }
+
+            $reachability = $graph->reachability($grid, $seed, $nodes);
+
+            if ($reachability['unreached'] !== []) {
+                $samples = array_slice(array_map(fn (array $node) => "({$node['row']},{$node['col']})", $reachability['unreached']), 0, 4);
+                $this->violations[] = 'Paragon board "'.$label.'": '.count($reachability['unreached'])
+                    .' allocated nodes do not connect back to the entry gate at ('.$seed['row'].','.$seed['col']
+                    .'): '.implode(', ', $samples).'. Paragon nodes must form a contiguous path; use plan_paragon_path.';
+            }
+
+            $this->checkParagonSocket($graph, $grid, $entry, $nodes, $label);
+        }
+
+        // The paragon ladder grants a bounded pool of points; the exact pool
+        // has moved between seasons, so overshooting is a warning, not a 422.
+        if ($totalNodes > 300) {
+            $this->warnings[] = "The paragon entries allocate {$totalNodes} nodes in total, above the 300 paragon points a maxed ladder grants.";
+        }
+
+        $this->checkParagonNotables($paragon, $resolved, $graph, hasNodes: true);
+    }
+
+    /**
+     * Where a board's allocation enters: the single gate on the start board,
+     * or the attach.gate the payload names on a later board.
+     *
+     * @param  list<list<array<string, mixed>|null>>  $grid
+     * @param  array<string, mixed>  $entry
+     * @return array{row: int, col: int}|null
+     */
+    protected function paragonEntrySeed(D4ParagonGraph $graph, array $grid, array $entry, int $index, string $label): ?array
+    {
+        if ($index === 0) {
+            $seed = $graph->startNode($grid) ?? $graph->startGate($grid);
+
+            if ($seed === null) {
+                $this->violations[] = "The first paragon entry \"{$label}\" is not a start board (start boards carry the free starting node allocation grows from). Attach the class start board first.";
+            }
+
+            return $seed;
+        }
+
+        $attach = is_array($entry['attach'] ?? null) ? $entry['attach'] : [];
+        $gate = is_array($attach['gate'] ?? null) ? $attach['gate'] : null;
+
+        $to = $attach['to'] ?? null;
+
+        if (is_numeric($to) && (int) $to >= $index) {
+            $this->violations[] = "Paragon board \"{$label}\" attaches to entry #{$to}, which is not an earlier entry.";
+        }
+
+        if ($gate === null) {
+            $this->warnings[] = "Paragon board \"{$label}\" lists nodes but no attach.gate, so its connectivity from the previous board was not checked.";
+
+            return null;
+        }
+
+        $cell = $graph->cellAt($grid, (int) $gate['row'], (int) $gate['col']);
+
+        if ($cell === null || ($cell['is_gate'] ?? false) !== true) {
+            $this->violations[] = "Paragon board \"{$label}\": attach.gate ({$gate['row']},{$gate['col']}) is not a gate cell on this board.";
+
+            return null;
+        }
+
+        return ['row' => (int) $gate['row'], 'col' => (int) $gate['col']];
+    }
+
+    /**
+     * A socketed glyph only works when the allocation reaches the socket.
+     *
+     * @param  list<list<array<string, mixed>|null>>  $grid
+     * @param  array<string, mixed>  $entry
+     * @param  list<array{row: int, col: int}>  $nodes
+     */
+    protected function checkParagonSocket(D4ParagonGraph $graph, array $grid, array $entry, array $nodes, string $label): void
+    {
+        if (! is_string($entry['glyph'] ?? null) || $entry['glyph'] === '') {
+            return;
+        }
+
+        foreach ($nodes as $node) {
+            $cell = $graph->cellAt($grid, $node['row'], $node['col']);
+
+            if ($cell !== null && ($cell['has_socket'] ?? false) === true) {
+                return;
+            }
+        }
+
+        $this->warnings[] = "Paragon board \"{$label}\" sockets \"{$entry['glyph']}\" but no allocated node is the glyph socket, so the glyph would be inactive.";
+    }
+
+    /**
+     * Notables are the human-readable half of the allocation; each one should
+     * exist on its board, and when node data is present, be covered by it.
+     *
+     * @param  list<array<string, mixed>>  $paragon
+     * @param  array<int, ParagonBoard|null>  $resolved
+     */
+    protected function checkParagonNotables(array $paragon, array $resolved, D4ParagonGraph $graph, bool $hasNodes): void
+    {
+        foreach ($paragon as $index => $entry) {
+            $board = $resolved[$index] ?? null;
+            $notables = $entry['notables'] ?? [];
+
+            if ($board === null || ! is_array($notables) || $notables === []) {
+                continue;
+            }
+
+            $grid = is_array($board->grid) ? $board->grid : [];
+            $nodes = $entry['nodes'] ?? [];
+
+            $allocated = [];
+
+            foreach (is_array($nodes) ? $nodes : [] as $node) {
+                $allocated[$node['row'].','.$node['col']] = true;
+            }
+
+            foreach ($notables as $notable) {
+                if (! is_string($notable) || trim($notable) === '') {
+                    continue;
+                }
+
+                $cells = $graph->cellsNamed($grid, $notable);
+
+                if ($cells === []) {
+                    $this->warnings[] = "Notable \"{$notable}\" is not a node on paragon board \"{$board->name}\"; check the grid with get_paragon_board.";
+
+                    continue;
+                }
+
+                if ($hasNodes && $allocated !== [] && array_intersect_key($cells, $allocated) === []) {
+                    $this->warnings[] = "Notable \"{$notable}\" on board \"{$board->name}\" is not covered by the allocated nodes.";
+                }
             }
         }
     }
@@ -284,11 +490,13 @@ class D4BuildValidator
     protected function checkGear(array $build, ?string $className): void
     {
         $aspectSlots = [];
+        $unstructuredSlots = [];
 
         foreach ($this->gearItems($build) as $slot => $item) {
             $this->checkItemAspect($slot, $item, $className, $aspectSlots);
             $this->checkItemUnique($slot, $item);
             $this->checkItemTempering($slot, $item);
+            $this->checkItemAffixes($slot, $item, $unstructuredSlots);
         }
 
         foreach ($aspectSlots as $aspect => $slots) {
@@ -296,6 +504,93 @@ class D4BuildValidator
                 $this->violations[] = "Aspect \"{$aspect}\" is imprinted on ".count($slots).' items ('
                     .implode(', ', $slots).'); each aspect can only be used once per character.';
             }
+        }
+
+        if ($unstructuredSlots !== []) {
+            $this->warnings[] = count($unstructuredSlots).' gear item(s) ('.implode(', ', $unstructuredSlots)
+                .') carry only unstructured affix text; those lines cannot contribute to the computed DPS/EHP. Use search_affixes and store {affix, value} entries.';
+        }
+    }
+
+    /**
+     * Structured affix entries resolve against the imported affix pool and
+     * their rolled values sit inside the datamined roll range. Plain display
+     * strings are legal but invisible to the calculator, which gets a single
+     * summary warning per build.
+     *
+     * @param  array<string, mixed>  $item
+     * @param  list<string>  $unstructuredSlots
+     */
+    protected function checkItemAffixes(string $slot, array $item, array &$unstructuredSlots): void
+    {
+        $affixes = $item['affixes'] ?? [];
+
+        if (! is_array($affixes) || $affixes === []) {
+            return;
+        }
+
+        $hasStructured = false;
+
+        foreach ($affixes as $entry) {
+            $key = is_array($entry) ? ($entry['affix'] ?? null) : null;
+
+            if (! is_string($key) || $key === '') {
+                continue;
+            }
+
+            $hasStructured = true;
+
+            $affix = Affix::forVersion($this->context->versionId())
+                ->where(fn (Builder $query) => $query
+                    ->whereLike('key', $key)
+                    ->orWhereLike('name', $key))
+                ->orderByDesc('is_released')
+                ->first();
+
+            if ($affix === null) {
+                $this->warnings[] = "Affix \"{$key}\" ({$slot}) does not resolve in the imported affix pool; check the key with search_affixes.";
+
+                continue;
+            }
+
+            $this->checkAffixValue($slot, $affix, $entry['value'] ?? null);
+        }
+
+        if (! $hasStructured) {
+            $unstructuredSlots[] = $slot;
+        }
+    }
+
+    /**
+     * The affix's stored roll range is evaluated at the top item-power
+     * breakpoint. Some ranges are stored as fractions of the displayed
+     * percentage, so a value is accepted when it fits either scale — this is
+     * a plausibility net, not a calculator.
+     */
+    protected function checkAffixValue(string $slot, Affix $affix, mixed $value): void
+    {
+        if (! is_numeric($value)) {
+            return;
+        }
+
+        $range = is_array($affix->value_range) ? $affix->value_range : [];
+        $min = $range['min'] ?? null;
+        $max = $range['max'] ?? null;
+
+        if (! is_numeric($min) || ! is_numeric($max) || (float) $max <= 0.0) {
+            return;
+        }
+
+        $value = (float) $value;
+        $fitsRaw = $value >= (float) $min && $value <= (float) $max;
+        $fitsPercent = $value >= (float) $min * 100 && $value <= (float) $max * 100;
+
+        if (! $fitsRaw && ! $fitsPercent) {
+            $label = $affix->name ?? $affix->key;
+            $itemPower = $range['item_power'] ?? null;
+
+            $this->warnings[] = "Affix \"{$label}\" ({$slot}) is listed at {$value}, outside the datamined roll range {$min}–{$max}"
+                .($itemPower !== null ? " at item power {$itemPower}" : '').'.';
         }
     }
 
@@ -511,6 +806,36 @@ class D4BuildValidator
 
             if (is_numeric($milestoneLevel) && (int) $milestoneLevel > (int) $level) {
                 $this->warnings[] = "Leveling milestone at level {$milestoneLevel} is past the build's target level {$level}.";
+            }
+        }
+    }
+
+    /**
+     * A hand-entered headline number that sits far from the calculator's
+     * baseline deserves a second look — either the sheet reading is stale or
+     * the structured build is missing the pieces that explain it.
+     *
+     * @param  array<string, mixed>  $build
+     */
+    protected function checkComputedDisagreement(array $build): void
+    {
+        $computed = is_array($build['computed'] ?? null) ? $build['computed'] : [];
+        $wrote = (array) ($computed['wrote'] ?? []);
+
+        foreach (['dps', 'ehp'] as $field) {
+            $stated = $build[$field] ?? null;
+            $baseline = $computed[$field] ?? null;
+
+            if (! is_numeric($stated) || ! is_numeric($baseline)
+                || in_array($field, $wrote, true)
+                || (float) $baseline <= 0 || (float) $stated <= 0) {
+                continue;
+            }
+
+            $ratio = (float) $stated / (float) $baseline;
+
+            if ($ratio >= 5.0 || $ratio <= 0.2) {
+                $this->warnings[] = 'The stated '.strtoupper($field)." ({$stated}) is more than 5x away from the computed baseline ({$baseline}). If it came off an in-game sheet, the structured build is probably missing the pieces that explain it.";
             }
         }
     }

@@ -5,8 +5,10 @@ import { computed, onMounted, ref, watch } from 'vue';
 import Card from '@/components/byb/Card.vue';
 import Icon from '@/components/byb/Icon.vue';
 import Tabs from '@/components/byb/Tabs.vue';
+import { entityIndex } from '@/components/games/diablo-4/build';
 import BuildHeader from '@/components/games/diablo-4/build/BuildHeader.vue';
 import BuildSidebar from '@/components/games/diablo-4/build/BuildSidebar.vue';
+import EntityCard from '@/components/games/diablo-4/build/EntityCard.vue';
 import GearTab from '@/components/games/diablo-4/build/GearTab.vue';
 import NotesTab from '@/components/games/diablo-4/build/NotesTab.vue';
 import OverviewTab from '@/components/games/diablo-4/build/OverviewTab.vue';
@@ -14,6 +16,7 @@ import ParagonTab from '@/components/games/diablo-4/build/ParagonTab.vue';
 import SkillsTab from '@/components/games/diablo-4/build/SkillsTab.vue';
 import type {
     D4BuildShowProps,
+    D4Entity,
     D4Validation,
 } from '@/components/games/diablo-4/types';
 
@@ -66,10 +69,76 @@ watch(tab, (value) => {
 const showSidebar = computed(
     () => tab.value === 'overview' || tab.value === 'notes',
 );
+
+const index = computed(() => entityIndex(props.entities ?? {}));
+
+function entityFor(name: string): D4Entity | null {
+    return index.value[name.toLowerCase()] ?? null;
+}
+
+// One floating hover card, driven by delegation so it also works for
+// data-entity spans inside the server-rendered guide HTML.
+const hovered = ref<D4Entity | null>(null);
+const cardStyle = ref<Record<string, string>>({});
+let hideTimer: ReturnType<typeof setTimeout> | null = null;
+
+function showCardFor(target: HTMLElement): void {
+    const name = target.dataset.entity;
+    const entity = name ? entityFor(name) : null;
+
+    if (!entity) {
+        return;
+    }
+
+    if (hideTimer) {
+        clearTimeout(hideTimer);
+    }
+
+    const rect = target.getBoundingClientRect();
+    const cardWidth = 340;
+    const left = Math.min(
+        Math.max(8, rect.left),
+        window.innerWidth - cardWidth - 8,
+    );
+    const below = rect.bottom + 8;
+    const flip = below > window.innerHeight - 260;
+
+    cardStyle.value = {
+        left: `${left}px`,
+        ...(flip
+            ? { bottom: `${window.innerHeight - rect.top + 8}px` }
+            : { top: `${below}px` }),
+    };
+    hovered.value = entity;
+}
+
+function onOver(event: MouseEvent): void {
+    const target = (event.target as HTMLElement).closest<HTMLElement>(
+        '[data-entity]',
+    );
+
+    if (target) {
+        showCardFor(target);
+    }
+}
+
+function onOut(event: MouseEvent): void {
+    const target = (event.target as HTMLElement).closest<HTMLElement>(
+        '[data-entity]',
+    );
+
+    if (!target) {
+        return;
+    }
+
+    hideTimer = setTimeout(() => {
+        hovered.value = null;
+    }, 120);
+}
 </script>
 
 <template>
-    <div class="py-8">
+    <div class="py-8" @mouseover="onOver" @mouseout="onOut">
         <BuildHeader
             :build="build"
             :game="game"
@@ -122,7 +191,10 @@ const showSidebar = computed(
                         <OverviewTab :definition="definition" />
                     </TabsContent>
                     <TabsContent value="skills">
-                        <SkillsTab :definition="definition" />
+                        <SkillsTab
+                            :definition="definition"
+                            :entity-for="entityFor"
+                        />
                     </TabsContent>
                     <TabsContent value="gear">
                         <GearTab :definition="definition" />
@@ -147,6 +219,12 @@ const showSidebar = computed(
                 />
             </div>
         </Tabs>
+
+        <EntityCard
+            v-if="hovered"
+            :entity="hovered"
+            :style="cardStyle"
+        />
 
         <footer
             class="mt-12 border-t border-[var(--border-subtle)] pt-4 font-mono text-[12px] text-[var(--fg-3)]"

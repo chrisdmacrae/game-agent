@@ -26,25 +26,36 @@ jobs:
           git clone --depth 1 --filter=blob:none --sparse \
             --branch "$D4DATA_REF" "$D4DATA_REPO" tree
           cd tree
-          # Cone mode always keeps root files (CoreTOC_flat.json, GBID.json,
-          # buildVersion.txt), and rejects them as arguments here.
-          git sparse-checkout set \
-            json/base/meta/Power \
-            json/base/meta/PlayerClass \
-            json/base/meta/SkillKit \
-            json/base/meta/GenericSkillTree \
-            json/base/meta/ParagonBoard \
-            json/base/meta/ParagonNode \
-            json/base/meta/ParagonGlyph \
-            json/base/meta/ParagonGlyphAffix \
-            json/base/meta/ParagonThreshold \
-            json/base/meta/Item \
-            json/base/meta/ItemType \
-            json/base/meta/Aspect \
-            json/base/meta/Affix \
-            json/base/meta/GameBalance \
-            json/base/meta/Season \
-            json/enUS_Text/meta/StringList
+          # No-cone patterns, kept in sync with D4DataSource::sparsePatterns().
+          # No-cone (rather than cone) because the Texture group is ~142k files
+          # of 3D material art and only the 2D atlas subset is wanted; root
+          # files must then be listed explicitly.
+          git sparse-checkout set --no-cone \
+            /CoreTOC_flat.json \
+            /GBID.json \
+            /eGameBalanceType.json \
+            /buildVersion.txt \
+            /attributes.json \
+            /attributeList.json \
+            /json/base/meta/Power/ \
+            /json/base/meta/PlayerClass/ \
+            /json/base/meta/SkillKit/ \
+            /json/base/meta/GenericSkillTree/ \
+            /json/base/meta/ParagonBoard/ \
+            /json/base/meta/ParagonNode/ \
+            /json/base/meta/ParagonGlyph/ \
+            /json/base/meta/ParagonGlyphAffix/ \
+            /json/base/meta/ParagonThreshold/ \
+            /json/base/meta/Item/ \
+            /json/base/meta/ItemType/ \
+            /json/base/meta/Aspect/ \
+            /json/base/meta/Affix/ \
+            /json/base/meta/GameBalance/ \
+            /json/base/meta/Global/ \
+            /json/base/meta/Season/ \
+            /json/enUS_Text/meta/StringList/ \
+            '/json/base/meta/Texture/2DUI_*' \
+            '/json/base/meta/Texture/2DInventory_*'
 
       - name: Read commit and build version
         id: source

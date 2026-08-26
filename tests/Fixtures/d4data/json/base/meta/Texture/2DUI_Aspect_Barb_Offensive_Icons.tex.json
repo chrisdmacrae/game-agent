@@ -1,0 +1,34 @@
+{
+ "__fileName__": "base/meta/Texture/2DUI_Aspect_Barb_Offensive_Icons.tex",
+ "__snoID__": 1955578,
+ "__type__": "TextureDefinition",
+ "__typeHash__": 3631735738,
+ "dwWidth": 2688,
+ "dwHeight": 192,
+ "ptFrame": [
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 0
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 0
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 0
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 678284105,
+   "flU0": 0.1480654776096344,
+   "flV0": 0.010416666977107525,
+   "flU1": 0.1956845223903656,
+   "flV1": 0.6770833730697632,
+   "flTrimU0": 0.1488095223903656,
+   "flTrimV0": 0.02083333395421505,
+   "flTrimU1": 0.1949404776096344,
+   "flTrimV1": 0.6614583730697632
+  }
+ ]
+}

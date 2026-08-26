@@ -1,0 +1,86 @@
+{
+ "__fileName__": "base/meta/Texture/2DUI_ParagonNodes.tex",
+ "__snoID__": 1208406,
+ "__type__": "TextureDefinition",
+ "__typeHash__": 3631735738,
+ "dwWidth": 3264,
+ "dwHeight": 192,
+ "ptFrame": [
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 0
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 0
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 0
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 0
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 0
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 0
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 0
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 0
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 0
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 0
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 0
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 635104014,
+   "flU0": 0.46200981736183167,
+   "flV0": 0.0052083334885537624,
+   "flU1": 0.5033701062202454,
+   "flV1": 0.7083333730697632,
+   "flTrimU0": 0.46200981736183167,
+   "flTrimV0": 0.0052083334885537624,
+   "flTrimU1": 0.5033701062202454,
+   "flTrimV1": 0.7083333730697632
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 0
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 0
+  },
+  {
+   "__type__": "TexFrame",
+   "hImageHandle": 3778111510,
+   "flU0": 0.5879289507865906,
+   "flV0": 0.0052083334885537624,
+   "flU1": 0.6292892098426819,
+   "flV1": 0.7083333730697632,
+   "flTrimU0": 0.5879289507865906,
+   "flTrimV0": 0.0052083334885537624,
+   "flTrimU1": 0.6292892098426819,
+   "flTrimV1": 0.7083333730697632
+  }
+ ]
+}

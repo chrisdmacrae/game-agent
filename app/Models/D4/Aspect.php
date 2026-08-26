@@ -12,6 +12,7 @@ class Aspect extends D4Model
             'is_released' => 'boolean',
             'item_types' => 'array',
             'value_range' => 'array',
+            'icon' => 'array',
             'raw' => 'array',
         ];
     }

@@ -2,14 +2,27 @@
 import { computed } from 'vue';
 import Card from '@/components/byb/Card.vue';
 import { LABEL_CLASS } from '@/components/byb/controls';
-import { D4_ACCENT, skillMeta } from '@/components/games/diablo-4/build';
+import {
+    atlasStyle,
+    D4_ACCENT,
+    skillMeta,
+} from '@/components/games/diablo-4/build';
 import EmptyBlock from '@/components/games/diablo-4/build/EmptyBlock.vue';
 import { D4_MAX_EQUIPPED_SKILLS } from '@/components/games/diablo-4/types';
-import type { D4BuildDefinition } from '@/components/games/diablo-4/types';
+import type {
+    D4BuildDefinition,
+    D4Entity,
+} from '@/components/games/diablo-4/types';
 
 const props = defineProps<{
     definition: D4BuildDefinition;
+    /** Hover-card lookup from BuildShow; icons render when the atlas exists. */
+    entityFor?: (name: string) => D4Entity | null;
 }>();
+
+function iconFor(name: string): D4Entity['icon'] {
+    return props.entityFor?.(name)?.icon ?? null;
+}
 
 /**
  * The action bar holds six. Empty slots are drawn so a five-skill bar reads as
@@ -65,6 +78,13 @@ const skillPoints = computed(() =>
                         class="flex items-start gap-3 border-b border-[var(--border-hairline)] p-4"
                     >
                         <span
+                            v-if="iconFor(slot.skill.skill)"
+                            class="inline-block shrink-0 rounded-[var(--radius-xs)] border border-[var(--border-subtle)] bg-[var(--ink-950)]"
+                            :style="atlasStyle(iconFor(slot.skill.skill)!, 34)"
+                            :data-entity="slot.skill.skill"
+                        />
+                        <span
+                            v-else
                             class="flex size-[34px] shrink-0 items-center justify-center rounded-[var(--radius-xs)] border border-[var(--border-subtle)] bg-[var(--surface-card-hover)] font-mono text-[13px] font-bold"
                             :style="{ color: D4_ACCENT }"
                         >
@@ -73,6 +93,7 @@ const skillPoints = computed(() =>
                         <div class="min-w-0 flex-1">
                             <p
                                 class="text-[18px] leading-[1.28] font-semibold text-[var(--fg-1)]"
+                                :data-entity="slot.skill.skill"
                             >
                                 {{ slot.skill.skill }}
                             </p>
@@ -136,7 +157,10 @@ const skillPoints = computed(() =>
                     :key="entry.skill"
                     class="flex items-center gap-3 rounded-[var(--radius-sm)] border border-[var(--border-hairline)] bg-[var(--surface-card-hover)] px-3 py-2"
                 >
-                    <span class="flex-1 text-[13px] text-[var(--fg-2)]">
+                    <span
+                        class="flex-1 text-[13px] text-[var(--fg-2)]"
+                        :data-entity="entry.skill"
+                    >
                         {{ entry.skill }}
                     </span>
                     <span class="font-mono text-[14px] text-[var(--fg-1)]">
