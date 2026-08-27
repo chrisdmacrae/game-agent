@@ -3,16 +3,21 @@
 namespace App\Mcp\Servers;
 
 use App\Mcp\Prompts\CraftBuildPrompt;
+use App\Mcp\Tools\Poe2\CompareCharacterToBuildTool;
+use App\Mcp\Tools\Poe2\ConnectPoeAccountTool;
 use App\Mcp\Tools\Poe2\GetAscendancyTool;
 use App\Mcp\Tools\Poe2\GetBuildTool;
 use App\Mcp\Tools\Poe2\GetGameModelTool;
 use App\Mcp\Tools\Poe2\GetGemTool;
 use App\Mcp\Tools\Poe2\GetMetaContextTool;
+use App\Mcp\Tools\Poe2\GetMyCharacterTool;
 use App\Mcp\Tools\Poe2\GetPricesTool;
 use App\Mcp\Tools\Poe2\GetSupportsForGemTool;
 use App\Mcp\Tools\Poe2\GetUniqueTool;
+use App\Mcp\Tools\Poe2\ImportCharacterAsBuildTool;
 use App\Mcp\Tools\Poe2\ListClassesTool;
 use App\Mcp\Tools\Poe2\ListGameModelsTool;
+use App\Mcp\Tools\Poe2\ListMyCharactersTool;
 use App\Mcp\Tools\Poe2\PlanTreePathTool;
 use App\Mcp\Tools\Poe2\SaveBuildTool;
 use App\Mcp\Tools\Poe2\SearchGameKnowledgeTool;
@@ -40,6 +45,16 @@ class Poe2Server extends Server
       pre-release information are often wrong.
     - **validate_build** to check a draft build against hard game rules. Always validate
       before presenting a build.
+    - **The user's own characters**, when they have linked their Grinding Gear Games
+      account (list_my_characters / get_my_character / compare_character_to_build /
+      import_character_as_build). Reach for these whenever the user says "my character",
+      asks what to upgrade next, or asks how far they are from a build — comparing against
+      what they actually have beats generic advice. The character API carries gear, gems
+      and passives but **no computed stats**: there are no resistances, DPS or EHP numbers
+      in it, and the data reflects the last time the game saved the character rather than
+      live state. Ask the user for anything the API does not carry. If nothing is linked,
+      connect_poe_account hands back the link that starts it — the consent screen is Grinding
+      Gear Games' own and has to be opened in the user's browser.
 
     Never invent numeric values: if a number is not in a tool response, say you don't know.
     Start with get_meta_context to see which game version the data reflects.
@@ -64,6 +79,11 @@ class Poe2Server extends Server
         GetPricesTool::class,
         SaveBuildTool::class,
         GetBuildTool::class,
+        ConnectPoeAccountTool::class,
+        ListMyCharactersTool::class,
+        GetMyCharacterTool::class,
+        CompareCharacterToBuildTool::class,
+        ImportCharacterAsBuildTool::class,
     ];
 
     protected array $prompts = [
