@@ -397,6 +397,9 @@ export type D4SkillTreeNode = {
     level: number;
     kind: 'hub' | 'skill' | 'passive' | 'modifier' | 'socket';
     name?: string | null;
+    /** For modifier nodes: the parent skill's display name. */
+    skill?: string | null;
+    mod_id?: number | null;
     power_sno?: number | null;
     max_ranks?: number | null;
     /** The skill's atlas crop, drawn inside the node when its sheet exists. */

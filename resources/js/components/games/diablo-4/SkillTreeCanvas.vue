@@ -73,28 +73,59 @@ const allocatedRanks = computed(() => {
     return ranks;
 });
 
+/** skill name -> the modifier names the build picked under it. */
+const chosenModifiers = computed(() => {
+    const chosen = new Map<string, Set<string>>();
+
+    for (const setup of props.definition.equipped_skills ?? []) {
+        if (setup.skill && setup.modifiers?.length) {
+            chosen.set(
+                setup.skill.toLowerCase(),
+                new Set(setup.modifiers.map((m) => m.toLowerCase())),
+            );
+        }
+    }
+
+    return chosen;
+});
+
 const scene = computed(() => {
     const nodes: WorldNode[] = [];
     const byId = new Map<number, WorldNode>();
 
     for (const node of props.tree.nodes) {
-        // Only the skill node itself matches the build by name; modifier
-        // satellites share their parent's name and must not light as taken.
         const nameTaken = node.name
             ? allocatedRanks.value.has(node.name.toLowerCase())
             : false;
+        const parentTaken = node.skill
+            ? allocatedRanks.value.has(node.skill.toLowerCase())
+            : false;
+        // A modifier lights when the build explicitly picked it on its
+        // parent skill; its siblings only warm up with the parent.
+        const modifierChosen =
+            node.kind === 'modifier' &&
+            parentTaken &&
+            Boolean(
+                node.name &&
+                    chosenModifiers.value
+                        .get(node.skill!.toLowerCase())
+                        ?.has(node.name.toLowerCase()),
+            );
         const allocated =
-            (node.kind === 'skill' || node.kind === 'passive') && nameTaken;
+            ((node.kind === 'skill' || node.kind === 'passive') && nameTaken) ||
+            modifierChosen;
 
         const world: WorldNode = {
             node,
             x: node.x * SCALE,
             y: node.y * SCALE,
             allocated,
-            parentLit: node.kind === 'modifier' && nameTaken,
-            rank: allocated
-                ? (allocatedRanks.value.get(node.name!.toLowerCase()) ?? null)
-                : null,
+            parentLit: node.kind === 'modifier' && parentTaken && !allocated,
+            rank:
+                allocated && node.kind !== 'modifier'
+                    ? (allocatedRanks.value.get(node.name!.toLowerCase()) ??
+                      null)
+                    : null,
             radius:
                 node.kind === 'skill'
                     ? 16
@@ -301,11 +332,12 @@ function draw(): void {
             context.stroke();
         }
 
-        // The skill's real art inside the frame, when its sheet exists.
+        // The node's real art inside the frame, when its sheet exists —
+        // skill crops, and the game's own gate / socket chrome.
         let drewIcon = false;
         const icon = world.node.icon;
 
-        if (kind === 'skill' && icon && typeof icon.texture === 'number') {
+        if (icon && typeof icon.texture === 'number') {
             const sheet = atlasImage(icon.texture);
 
             if (sheet) {
@@ -316,13 +348,19 @@ function draw(): void {
 
                 if (sw > 0 && sh > 0) {
                     const r = world.radius - 3;
+                    const circle =
+                        kind === 'passive' || kind === 'socket';
                     context.save();
                     context.beginPath();
-                    context.moveTo(world.x, world.y - r);
-                    context.lineTo(world.x + r, world.y);
-                    context.lineTo(world.x, world.y + r);
-                    context.lineTo(world.x - r, world.y);
-                    context.closePath();
+                    if (circle) {
+                        context.arc(world.x, world.y, r, 0, Math.PI * 2);
+                    } else {
+                        context.moveTo(world.x, world.y - r);
+                        context.lineTo(world.x + r, world.y);
+                        context.lineTo(world.x, world.y + r);
+                        context.lineTo(world.x - r, world.y);
+                        context.closePath();
+                    }
                     context.clip();
                     context.globalAlpha = world.allocated ? 1 : 0.45;
                     context.drawImage(
@@ -428,14 +466,16 @@ function onPointerMove(event: PointerEvent): void {
               ),
               y: event.clientY - rect.top - 14,
               title:
-                  world.node.kind === 'modifier'
-                      ? `${world.node.name ?? 'Skill'} modifier`
-                      : (world.node.name ??
-                        (world.node.kind === 'socket'
-                            ? 'Passive node'
-                            : 'Cluster gate')),
+                  world.node.name ??
+                  (world.node.kind === 'socket'
+                      ? 'Passive node'
+                      : world.node.kind === 'modifier'
+                        ? 'Skill modifier'
+                        : 'Cluster gate'),
               meta: [
-                  world.node.kind,
+                  world.node.kind === 'modifier' && world.node.skill
+                      ? `${world.node.skill} modifier`
+                      : world.node.kind,
                   world.allocated
                       ? world.rank
                           ? `rank ${world.rank}`

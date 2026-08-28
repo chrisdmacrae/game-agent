@@ -56,6 +56,8 @@ class D4DataSource
     public const SPARSE_FILE_PATTERNS = [
         'json/base/meta/Texture/2DUI_*',
         'json/base/meta/Texture/2DInventory_*',
+        // The skill tree's own chrome: gate / node / rune frame masks.
+        'json/base/meta/Texture/UI_SkillTree*',
     ];
 
     /**

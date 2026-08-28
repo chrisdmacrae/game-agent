@@ -55,7 +55,8 @@ jobs:
             /json/base/meta/Season/ \
             /json/enUS_Text/meta/StringList/ \
             '/json/base/meta/Texture/2DUI_*' \
-            '/json/base/meta/Texture/2DInventory_*'
+            '/json/base/meta/Texture/2DInventory_*' \
+            '/json/base/meta/Texture/UI_SkillTree*'
 
       - name: Read commit and build version
         id: source

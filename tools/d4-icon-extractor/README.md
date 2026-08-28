@@ -58,6 +58,7 @@ repo's `public/games/diablo-4/icons/` → commit.
 #    object name, which is what pack.mjs matches on). Output: .\output\textures\
 d4-extract extract "C:\Program Files (x86)\Diablo IV" --filter "2DUI*"
 d4-extract extract "C:\Program Files (x86)\Diablo IV" --filter "2DInventory*"
+d4-extract extract "C:\Program Files (x86)\Diablo IV" --filter "UI_SkillTree*"
 
 # 2. Select, rename by texture SNO and convert the manifest's sheets:
 node pack.mjs --manifest <path-or-url-to>/icon-manifest.json --input .\output\textures --out .\icons

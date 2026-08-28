@@ -1,14 +1,14 @@
 {
-    "generated_at": "2026-08-28T03:25:05+00:00",
+    "generated_at": "2026-08-28T03:39:03+00:00",
     "game_version": "3.1.3.73224",
     "textures": {
         "65420": {
             "name": "2DUI_Skills_Barbarian",
-            "refs": 48
+            "refs": 72
         },
         "87142": {
             "name": "2DUI_Skills_Sorceress",
-            "refs": 47
+            "refs": 71
         },
         "87185": {
             "name": "2DUI_Skills_General",
@@ -44,11 +44,11 @@
         },
         "385527": {
             "name": "2DUI_Skills_Rogue",
-            "refs": 47
+            "refs": 71
         },
         "393336": {
             "name": "2DUI_Skills_Druid",
-            "refs": 35
+            "refs": 60
         },
         "403893": {
             "name": "2DUI_Talents_Druid",
@@ -68,7 +68,7 @@
         },
         "959609": {
             "name": "2DUI_Skills_Necromancer",
-            "refs": 37
+            "refs": 60
         },
         "966508": {
             "name": "2DUI_Talents_Rogue",
@@ -146,6 +146,14 @@
             "name": "2DUI_ParagonNodesIcons_Sorc",
             "refs": 29
         },
+        "1405333": {
+            "name": "UI_SkillTree_Diamond_Gate_Mask",
+            "refs": 48
+        },
+        "1407334": {
+            "name": "UI_SkillTree_Round_Node_Mask",
+            "refs": 584
+        },
         "1433814": {
             "name": "2DUI_Aspect_Tab_Icons",
             "refs": 1
@@ -156,7 +164,7 @@
         },
         "1563300": {
             "name": "2DUI_Skills_Spiritborn",
-            "refs": 32
+            "refs": 56
         },
         "1812279": {
             "name": "2DInventory_Bundle_HArmor_dru_stor194",
@@ -284,7 +292,7 @@
         },
         "2312319": {
             "name": "2DUI_Skills_Paladin",
-            "refs": 28
+            "refs": 52
         },
         "2349520": {
             "name": "2DInventory_Daggers_e002",
@@ -312,7 +320,7 @@
         },
         "2498746": {
             "name": "2DUI_Skills_Warlock",
-            "refs": 35
+            "refs": 59
         },
         "2513425": {
             "name": "2DUI_Aspect_Pal_Icons",
@@ -328,7 +336,7 @@
         },
         "2630765": {
             "name": "2DUI_Skills_Sorceress_sharedElements",
-            "refs": 4
+            "refs": 5
         },
         "2631559": {
             "name": "2DInventory_Items_Necromancer",

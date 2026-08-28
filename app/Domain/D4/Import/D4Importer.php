@@ -1752,8 +1752,14 @@ class D4Importer
     protected function skillTrees(GameVersion $gameVersion): array
     {
         $skillsBySno = Skill::forVersion($gameVersion->id)
-            ->get(['sno_id', 'name', 'raw', 'icon'])
+            ->get(['sno_id', 'name', 'raw', 'icon', 'enhancements'])
             ->keyBy('sno_id');
+
+        // The tree's own chrome, straight from the game's UI textures: the
+        // cluster gate emblem and the round passive-node frame. Whole-texture
+        // crops, since each mask is its own sheet.
+        $gateIcon = $this->fullTextureIcon('UI_SkillTree_Diamond_Gate_Mask');
+        $socketIcon = $this->fullTextureIcon('UI_SkillTree_Round_Node_Mask');
 
         $trees = [];
 
@@ -1780,9 +1786,8 @@ class D4Importer
 
                 // Reward-less nodes split by eRootNodeType: 1 is a cluster
                 // gate, 2 a passive socket. Which passive sits in which
-                // socket is NOT in the kit (the talent binding lives behind
-                // the same naming convention as skill modifiers), so sockets
-                // stay anonymous rather than guessed.
+                // socket is NOT in the kit, so sockets stay anonymous rather
+                // than guessed.
                 $kind = match (true) {
                     $reward === null => (int) ($node['eRootNodeType'] ?? 0) === 2 ? 'socket' : 'hub',
                     (int) ($reward['eType'] ?? -1) === 1 => 'modifier',
@@ -1790,20 +1795,43 @@ class D4Importer
                     default => 'skill',
                 };
 
+                // A modifier reward names its exact mod: `szPowerMod` is the
+                // hash the power's arMods store as szName, so reward -> mod
+                // -> enhancement display name is a plain equality join.
+                $modifier = null;
+
+                if ($kind === 'modifier' && $skill !== null) {
+                    $modId = $this->rewardModId($reward);
+                    $modifier = $modId === null
+                        ? null
+                        : collect($skill->enhancements)->firstWhere('mod_id', $modId);
+                }
+
                 $nodes[] = [
                     'id' => (int) $node['dwID'],
                     'x' => $this->round((float) ($node['vPosition']['x'] ?? 0)),
                     'y' => $this->round((float) ($node['vPosition']['y'] ?? 0)),
                     'level' => (int) ($node['dwNodeRequiredPlayerLevel'] ?? 0),
                     'kind' => $kind,
-                    'name' => $skill?->name,
+                    'name' => $kind === 'modifier'
+                        ? ($modifier['name'] ?? null) ?? $skill?->name
+                        : $skill?->name,
+                    // The parent skill, so a modifier node knows whose tree
+                    // page it belongs to.
+                    'skill' => $kind === 'modifier' ? $skill?->name : null,
+                    'mod_id' => $modifier['mod_id'] ?? null,
                     'power_sno' => $powerSno,
                     'max_ranks' => is_numeric($reward['dwMaxTalentRanks'] ?? null)
                         ? (int) $reward['dwMaxTalentRanks']
                         : null,
-                    // The skill's atlas crop, so the tree canvas can draw the
-                    // real art inside the node frame.
-                    'icon' => $kind === 'skill' && is_array($skill?->icon) ? $skill->icon : null,
+                    // The node's art: the skill's atlas crop, or the game's
+                    // own chrome for gates and passive sockets.
+                    'icon' => match ($kind) {
+                        'skill' => is_array($skill?->icon) ? $skill->icon : null,
+                        'hub' => $gateIcon,
+                        'socket' => $socketIcon,
+                        default => null,
+                    },
                 ];
             }
 
@@ -1824,6 +1852,69 @@ class D4Importer
         }
 
         return $trees;
+    }
+
+    /**
+     * A whole texture as an icon crop — for single-image UI sheets like the
+     * skill tree's gate and node masks.
+     *
+     * @return array{texture: int, frame: int, u0: float, v0: float, u1: float, v1: float, w: int, h: int}|null
+     */
+    protected function fullTextureIcon(string $textureName): ?array
+    {
+        $texture = $this->source->optionalJson("json/base/meta/Texture/{$textureName}.tex.json");
+        $snoId = $texture['__snoID__'] ?? null;
+        $width = $texture['dwWidth'] ?? null;
+        $height = $texture['dwHeight'] ?? null;
+
+        if (! is_numeric($snoId) || ! is_numeric($width) || ! is_numeric($height) || $width <= 0 || $height <= 0) {
+            return null;
+        }
+
+        return [
+            'texture' => (int) $snoId,
+            'frame' => 0,
+            'u0' => 0.0,
+            'v0' => 0.0,
+            'u1' => 1.0,
+            'v1' => 1.0,
+            'w' => (int) $width,
+            'h' => (int) $height,
+        ];
+    }
+
+    /** @var array<int, array<int, int>> power sno => szName hash => dwModId */
+    protected array $powerModIds = [];
+
+    /**
+     * The dwModId a skill-tree reward's `szPowerMod` hash names, from the
+     * power's own arMods.
+     *
+     * @param  array<string, mixed>  $reward
+     */
+    protected function rewardModId(array $reward): ?int
+    {
+        $ref = $reward['snoPower'] ?? null;
+        $sno = SnoRefs::id($ref);
+        $hash = $reward['szPowerMod'] ?? null;
+
+        if ($sno === null || ! is_numeric($hash)) {
+            return null;
+        }
+
+        if (! isset($this->powerModIds[$sno])) {
+            $map = [];
+
+            foreach ($this->optionalJson(SnoRefs::path($ref))['arMods'] ?? [] as $mod) {
+                if (is_numeric($mod['szName'] ?? null) && is_numeric($mod['dwModId'] ?? null)) {
+                    $map[(int) $mod['szName']] = (int) $mod['dwModId'];
+                }
+            }
+
+            $this->powerModIds[$sno] = $map;
+        }
+
+        return $this->powerModIds[$sno][(int) $hash] ?? null;
     }
 
     /**

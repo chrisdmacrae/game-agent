@@ -75,6 +75,16 @@ class IconManifest
                 }
             });
 
+        // Skill tree nodes carry their own art references (skill crops plus
+        // the gate / socket chrome sheets).
+        $trees = CalcTable::forVersion($versionId)->where('key', 'skill_trees')->value('data');
+
+        foreach (is_array($trees) ? $trees : [] as $tree) {
+            foreach ($tree['nodes'] ?? [] as $node) {
+                $collect(is_array($node) ? ($node['icon'] ?? null) : null);
+            }
+        }
+
         ksort($textures);
 
         $atlasNames = CalcTable::forVersion($versionId)
