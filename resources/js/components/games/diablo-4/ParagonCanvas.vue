@@ -39,20 +39,23 @@ const emit = defineEmits<{
  * accents in step with resources/css/byb/colors.css.
  */
 const C = {
-    plate: '#0b0e13',
-    plateEdge: '#242d3a',
-    label: '#6c7c8f',
-    labelBright: '#a2b1c2',
-    cellEmpty: '#131820',
-    cellStroke: '#2f3a49',
-    bone: '#c9d2dc',
+    plate: '#0a0908',
+    plateEdge: '#4a4238',
+    label: '#8a7c66',
+    labelBright: '#efe6d5',
+    cellEmpty: '#15120d',
+    cellStroke: '#4a4238',
+    frame: '#c79b5a',
+    frameBright: '#f0d9a0',
+    glow: '#ffd77a',
+    bone: '#d9d2c4',
     magic: '#5aa9ff',
     rare: '#ffc857',
     legendary: '#ff5a5f',
     socket: '#9c7bff',
-    path: '#ff5a5f',
-    start: '#7ee0c2',
-    gate: '#a2b1c2',
+    path: '#c79b5a',
+    start: '#f0d9a0',
+    gate: '#8a7c66',
 } as const;
 
 const RARITY: Record<string, string> = {
@@ -567,7 +570,7 @@ function draw(): void {
         context.fill();
     }
 
-    // The allocated route, drawn as lit rails beneath the cells.
+    // The allocated route, drawn as lit gold rails beneath the tiles.
     context.lineCap = 'round';
 
     for (const { a, b } of links) {
@@ -575,9 +578,12 @@ function draw(): void {
         context.moveTo(a.x, a.y);
         context.lineTo(b.x, b.y);
         context.strokeStyle = C.path;
-        context.lineWidth = 5;
-        context.globalAlpha = 0.85;
+        context.lineWidth = 4.5;
+        context.globalAlpha = 0.9;
+        context.shadowColor = C.glow;
+        context.shadowBlur = 6;
         context.stroke();
+        context.shadowBlur = 0;
         context.globalAlpha = 1;
     }
 
@@ -610,59 +616,60 @@ function draw(): void {
         const lit = cell.allocated || cell.isStart;
         const isRare = cell.cell.rarity === 'rare';
         const isLegendary = cell.cell.rarity === 'legendary';
-        const size = isLegendary ? CELL + 12 : isRare ? CELL + 4 : CELL;
+        const size = isLegendary ? CELL + 14 : isRare ? CELL + 6 : CELL;
         const half = size / 2;
 
-        // D4's node vocabulary: normals and magics are round gems, rares are
-        // gold diamonds, legendaries are the big centerpiece diamond.
-        const shape = () => {
-            if (isRare || isLegendary) {
-                diamond(context, cell.x, cell.y, half);
-            } else {
-                context.beginPath();
-                context.arc(cell.x, cell.y, half - 1, 0, Math.PI * 2);
-            }
-        };
+        // Every paragon tile is a diamond in Diablo IV; rarity shows in the
+        // rim, allocation in the gold glow.
+        const shape = (r: number) => diamond(context, cell.x, cell.y, r);
 
         if (lit) {
-            context.shadowColor = rarity;
+            context.shadowColor = C.glow;
             context.shadowBlur = 16;
         }
 
-        shape();
-        context.fillStyle = lit ? rarity : C.cellEmpty;
-        context.globalAlpha = lit ? 1 : showDim ? 0.55 : 0.9;
+        shape(half);
+        context.fillStyle = C.cellEmpty;
+        context.globalAlpha = lit ? 1 : showDim ? 0.5 : 0.85;
         context.fill();
         context.shadowBlur = 0;
 
-        // Node art from the atlas, sitting on the gem. Unallocated nodes keep
-        // a ghost of their icon so the board reads like the game's.
-        shape();
+        // Node art from the atlas, sitting on the tile. Unallocated nodes
+        // keep a ghost of their icon so the board reads like the game's.
+        shape(half);
         const drewIcon = drawCellIcon(
             context,
             cell,
-            size * 0.86,
+            size * 0.8,
             lit ? 0.95 : showDim ? 0.3 : 0.55,
         );
 
-        shape();
-        context.strokeStyle = lit
-            ? rarity
-            : cell.cell.rarity && cell.cell.rarity !== 'normal'
-              ? rarity + '77'
-              : C.cellStroke;
-        context.lineWidth = lit ? 2 : 1.2;
+        // Rarity rim, then the gold frame when taken.
+        shape(half);
+        context.strokeStyle =
+            cell.cell.rarity && cell.cell.rarity !== 'normal'
+                ? rarity + (lit ? '' : '88')
+                : lit
+                  ? C.frame
+                  : C.cellStroke;
+        context.lineWidth = lit ? 2.6 : 1.3;
         context.stroke();
+
+        if (lit) {
+            shape(half - 3);
+            context.strokeStyle = C.frameBright;
+            context.lineWidth = 1.1;
+            context.stroke();
+        }
+
         context.globalAlpha = 1;
 
-        // A lit gem with no art gets an inner core so it still reads as taken.
+        // A lit tile with no art gets a bright core so it still reads taken.
         if (lit && !drewIcon) {
             context.beginPath();
             context.arc(cell.x, cell.y, size / 7, 0, Math.PI * 2);
-            context.fillStyle = C.plate;
-            context.globalAlpha = 0.55;
+            context.fillStyle = isLegendary || isRare ? rarity : C.frameBright;
             context.fill();
-            context.globalAlpha = 1;
         }
 
         // Socket cells carry the glyph gem.

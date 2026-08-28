@@ -60,8 +60,8 @@ const totalPoints = computed(() =>
 
 /** Only the vocabulary the canvas actually draws. */
 const LEGEND = [
-    { label: 'Allocated path', color: '#ff5a5f' },
-    { label: 'Start', color: '#7ee0c2' },
+    { label: 'Allocated path', color: '#c79b5a' },
+    { label: 'Start', color: '#f0d9a0' },
     { label: 'Glyph socket', color: '#9c7bff' },
     { label: 'Rare', color: '#ffc857' },
     { label: 'Magic', color: '#5aa9ff' },

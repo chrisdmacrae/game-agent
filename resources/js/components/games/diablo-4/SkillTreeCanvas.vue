@@ -23,18 +23,22 @@ const props = defineProps<{
     entityFor?: (name: string) => D4Entity | null;
 }>();
 
+/**
+ * Diablo IV's own UI vocabulary: gold beveled diamond frames on a near-black
+ * plate, warm glows for what is taken, bronze-dulled frames for what is not.
+ */
 const C = {
-    plate: '#07090d',
-    hub: '#2f3a49',
-    node: '#131820',
-    stroke: '#2f3a49',
-    skill: '#ff5a5f',
-    passive: '#5aa9ff',
-    modifier: '#ffc857',
-    rail: '#3b4656',
-    litRail: '#ff5a5f',
-    label: '#6c7c8f',
-    labelBright: '#e8ebef',
+    plate: '#0a0908',
+    node: '#15120d',
+    frameDim: '#4a4238',
+    frame: '#c79b5a',
+    frameBright: '#f0d9a0',
+    glow: '#ffd77a',
+    passive: '#8fb8d8',
+    rail: '#3a332a',
+    litRail: '#c79b5a',
+    label: '#8a7c66',
+    labelBright: '#efe6d5',
 } as const;
 
 /** In-game coordinates are huge; shrink into comfortable world units. */
@@ -143,6 +147,48 @@ function fitToScene(): void {
     view.y = el.clientHeight / 2 - ((minY + maxY) / 2) * view.zoom;
 }
 
+/** A D4-style node: a beveled diamond — dark gold outer rim, light gold
+ * inner rim, dark center. */
+function drawFrame(
+    context: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    half: number,
+    lit: boolean,
+    circle = false,
+): void {
+    const path = (r: number) => {
+        context.beginPath();
+        if (circle) {
+            context.arc(x, y, r, 0, Math.PI * 2);
+        } else {
+            context.moveTo(x, y - r);
+            context.lineTo(x + r, y);
+            context.lineTo(x, y + r);
+            context.lineTo(x - r, y);
+            context.closePath();
+        }
+    };
+
+    if (lit) {
+        context.shadowColor = C.glow;
+        context.shadowBlur = 16;
+    }
+
+    path(half);
+    context.fillStyle = C.node;
+    context.fill();
+    context.shadowBlur = 0;
+    context.strokeStyle = lit ? C.frame : C.frameDim;
+    context.lineWidth = lit ? 3 : 1.6;
+    context.stroke();
+
+    path(half - (lit ? 3.5 : 2.5));
+    context.strokeStyle = lit ? C.frameBright : C.frameDim + '99';
+    context.lineWidth = 1.2;
+    context.stroke();
+}
+
 function draw(): void {
     const el = canvas.value;
     const context = el?.getContext('2d');
@@ -194,30 +240,29 @@ function draw(): void {
 
     for (const world of nodes) {
         const kind = world.node.kind;
-        const color =
-            kind === 'skill'
-                ? C.skill
-                : kind === 'passive'
-                  ? C.passive
-                  : kind === 'modifier'
-                    ? C.modifier
-                    : C.hub;
 
-        if (world.allocated) {
-            context.shadowColor = color;
-            context.shadowBlur = 14;
+        // Actives and modifiers are diamonds, passives are circles, hubs are
+        // small connective diamonds — the game's own shapes.
+        drawFrame(
+            context,
+            world.x,
+            world.y,
+            world.radius,
+            world.allocated,
+            kind === 'passive',
+        );
+
+        if (world.allocated && kind === 'passive') {
+            context.beginPath();
+            context.arc(world.x, world.y, world.radius / 2.6, 0, Math.PI * 2);
+            context.fillStyle = C.passive;
+            context.fill();
+        } else if (world.allocated && kind !== 'hub') {
+            context.beginPath();
+            context.arc(world.x, world.y, world.radius / 3.2, 0, Math.PI * 2);
+            context.fillStyle = C.frameBright;
+            context.fill();
         }
-
-        context.beginPath();
-        context.arc(world.x, world.y, world.radius, 0, Math.PI * 2);
-        context.fillStyle = world.allocated ? color : C.node;
-        context.globalAlpha = world.allocated ? 1 : 0.85;
-        context.fill();
-        context.shadowBlur = 0;
-        context.strokeStyle = world.allocated ? color : C.stroke;
-        context.lineWidth = world.allocated ? 2 : 1;
-        context.stroke();
-        context.globalAlpha = 1;
 
         // Allocated actives and passives get their name and rank.
         if (world.allocated && world.node.name && kind !== 'modifier') {
@@ -231,7 +276,7 @@ function draw(): void {
             );
 
             if (world.rank) {
-                context.fillStyle = C.modifier;
+                context.fillStyle = C.glow;
                 context.font = `700 10px ${mono}`;
                 context.fillText(
                     String(world.rank),

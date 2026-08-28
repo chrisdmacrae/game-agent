@@ -83,14 +83,15 @@ const skillPoints = computed(() =>
                     :style="
                         slot.skill
                             ? {
-                                  borderColor: D4_ACCENT,
-                                  background: '#11151c',
-                                  boxShadow: '0 0 14px rgba(255,90,95,0.25)',
+                                  borderColor: '#c79b5a',
+                                  background: '#15120d',
+                                  boxShadow:
+                                      '0 0 16px rgba(255,215,122,0.22), inset 0 0 0 1px rgba(240,217,160,0.35)',
                               }
                             : {
-                                  borderColor: '#2f3a49',
+                                  borderColor: '#4a4238',
                                   borderStyle: 'dashed',
-                                  background: '#0b0e13',
+                                  background: '#0a0908',
                               }
                     "
                     :data-entity="slot.skill?.skill"
@@ -103,7 +104,7 @@ const skillPoints = computed(() =>
                     <span
                         v-else-if="slot.skill"
                         class="font-mono text-[22px] font-bold"
-                        :style="{ color: D4_ACCENT }"
+                        style="color: #c79b5a"
                     >
                         {{ slot.skill.skill.charAt(0) }}
                     </span>
@@ -111,9 +112,9 @@ const skillPoints = computed(() =>
                         v-if="slot.skill?.rank"
                         class="absolute -right-1.5 -bottom-1.5 flex min-w-[20px] items-center justify-center rounded-[5px] border px-1 font-mono text-[11px] font-bold"
                         style="
-                            background: #1b222c;
-                            border-color: #2f3a49;
-                            color: #ffc857;
+                            background: #15120d;
+                            border-color: #c79b5a;
+                            color: #f0d9a0;
                         "
                     >
                         {{ slot.skill.rank }}
@@ -135,10 +136,8 @@ const skillPoints = computed(() =>
             <div class="mt-2 flex flex-wrap items-center gap-3">
                 <p :class="LABEL_CLASS">Skill tree</p>
                 <span class="font-mono text-[11px] text-[var(--fg-3)]">
-                    <span style="color: #ff5a5f">●</span> skill
-                    <span class="ml-2" style="color: #5aa9ff">●</span> passive
-                    <span class="ml-2" style="color: #ffc857">●</span> modifier
-                    — lit nodes are this build's picks
+                    <span style="color: #f0d9a0">◆</span> gold frames are this
+                    build's picks · diamonds are skills, circles passives
                 </span>
             </div>
             <SkillTreeCanvas
