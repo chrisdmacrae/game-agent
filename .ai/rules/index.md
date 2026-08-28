@@ -13,10 +13,12 @@ Before planning or editing, find the row whose globs match the file's path and r
 | resources/js/components/games/diablo-4/** | .ai/rules/diablo-4.md |
 | app/Domain/Builds/** | .ai/rules/domain-builds.md |
 | app/Domain/** | .ai/rules/domain.md |
+| app/Domain/Poe2/Ggg/** | .ai/rules/ggg.md |
 | app/Domain/D4/Import/** | .ai/rules/import.md |
 | resources/js/**/*.vue | .ai/rules/js.md |
 | app/Domain/D4/Meta/** | .ai/rules/meta.md |
 | app/Models/Build.php | .ai/rules/models.md |
+| app/Mcp/Tools/Poe2/** | .ai/rules/poe2.md |
 | app/Http/Requests/BuildUpdateRequest.php | .ai/rules/requests.md |
 | routes/**, routes/ai.php | .ai/rules/routes.md |
 | app/Domain/Seo/** | .ai/rules/seo.md |

@@ -11,15 +11,28 @@ is the only supported pixel source.
 
 ## How the pieces fit
 
-- `php artisan d4:icon-manifest` (runs automatically at the end of
-  `d4:import`) writes `public/games/diablo-4/icon-manifest.json`: every
-  texture atlas the imported entities reference, keyed by **Texture SNO id**,
-  each with its atlas object `name` (e.g. `2DUI_Skills_Barbarian`).
-- This tool extracts those textures from CASC and converts them to
-  `{sno}.webp` sheets.
+Two machines, two jobs:
+
+- **The app machine** (wherever the Laravel app runs) owns the data side.
+  `php artisan d4:import --from-git` imports the game data and, as its last
+  step, writes `public/games/diablo-4/icon-manifest.json`: every texture
+  atlas the imported entities reference, keyed by **Texture SNO id**, each
+  with its atlas object `name` (e.g. `2DUI_Skills_Barbarian`). You do NOT
+  need to re-run it before an extraction — the manifest in the repo is
+  current whenever the data is. Re-run it (with `--refresh` to re-acquire
+  the dump) only after a game patch; `php artisan d4:icon-manifest` alone
+  regenerates the manifest from already-imported data.
+- **The Windows machine** (this tool) owns the pixel side: it extracts the
+  manifest's textures from a game install's CASC storage and converts them
+  to `{sno}.webp` sheets. It never runs artisan — it only needs a copy of
+  the manifest file.
 - The app crops individual icons out of a sheet with **fractional UV rects**
   stored at import time, so sheets are resolution-independent — downscaling
   them is fine.
+
+The loop, end to end: app machine `d4:import` → copy the manifest to the
+Windows box → extract + `pack.mjs` → copy `icons\*.webp` back into the
+repo's `public/games/diablo-4/icons/` → commit.
 
 ## One-time setup (Windows)
 

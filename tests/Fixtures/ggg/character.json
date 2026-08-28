@@ -1,0 +1,84 @@
+{
+    "character": {
+        "id": "7f3c1d9ab24e5f60",
+        "name": "TestWitch",
+        "realm": "poe2",
+        "class": "Infernalist",
+        "league": "Test League",
+        "level": 78,
+        "experience": 1284000000,
+        "current": true,
+        "equipment": [
+            {
+                "inventoryId": "BodyArmour",
+                "frameTypeId": 2,
+                "name": "<<set:MS>><<set:M>><<set:S>>Corpse Shroud",
+                "typeLine": "<<set:MS>><<set:M>><<set:S>>Silk Robe",
+                "baseType": "Silk Robe",
+                "implicitMods": ["10% increased Energy Shield"],
+                "explicitMods": [
+                    "+89 to maximum Life",
+                    "+31% to Fire Resistance",
+                    "+24% to Cold Resistance"
+                ],
+                "sockets": [{ "group": 0 }, { "group": 0 }],
+                "socketedItems": [
+                    {
+                        "socket": 0,
+                        "baseType": "Iron Rune",
+                        "typeLine": "Iron Rune"
+                    }
+                ]
+            },
+            {
+                "inventoryId": "Helm",
+                "frameTypeId": 3,
+                "name": "<<set:MS>><<set:M>><<set:S>>Wanderlust",
+                "typeLine": "Wanderlust",
+                "baseType": "Feathered Cap",
+                "explicitMods": ["+20 to Intelligence"]
+            },
+            {
+                "inventoryId": "Ring",
+                "frameTypeId": 2,
+                "name": "",
+                "typeLine": "<<set:MS>><<set:M>><<set:S>>Sapphire Ring",
+                "baseType": "Sapphire Ring",
+                "explicitMods": ["+18% to Lightning Resistance"]
+            },
+            {
+                "inventoryId": "Flask",
+                "frameTypeId": 1,
+                "typeLine": "Ruby Flask",
+                "baseType": "Ruby Flask"
+            }
+        ],
+        "skills": [
+            {
+                "baseType": "Spark",
+                "typeLine": "Spark",
+                "properties": [
+                    { "name": "Level", "values": [["19", 0]] },
+                    { "name": "Quality", "values": [["+18%", 1]] }
+                ],
+                "socketedItems": [
+                    { "socket": 0, "baseType": "Pierce", "typeLine": "Pierce" },
+                    {
+                        "socket": 1,
+                        "baseType": "Martial Tempo Support",
+                        "typeLine": "Martial Tempo Support"
+                    }
+                ]
+            },
+            {
+                "baseType": "Flame Wall",
+                "typeLine": "Flame Wall",
+                "properties": [{ "name": "Level", "values": [["12", 0]] }]
+            }
+        ],
+        "passives": {
+            "hashes": [1000, 1001, 2001],
+            "specialisations": { "set1": [] }
+        }
+    }
+}

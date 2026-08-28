@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -51,6 +52,17 @@ class User extends Authenticatable implements OAuthenticatable
     public function builds(): HasMany
     {
         return $this->hasMany(Build::class);
+    }
+
+    /**
+     * The user's linked Grinding Gear Games account, if they have connected
+     * one. Absent for everyone else — the feature is opt-in per user.
+     *
+     * @return HasOne<PoeAccount, $this>
+     */
+    public function poeAccount(): HasOne
+    {
+        return $this->hasOne(PoeAccount::class);
     }
 
     /** @return HasMany<Endorsement, $this> */

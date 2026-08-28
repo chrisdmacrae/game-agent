@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\Domain\Poe2\Ggg\GggOAuth;
 use App\Domain\Seo\PageMeta;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
@@ -23,7 +24,7 @@ class ProfileController extends Controller
     /**
      * Show the user's profile settings page.
      */
-    public function edit(Request $request): Response
+    public function edit(Request $request, GggOAuth $poeOAuth): Response
     {
         $user = $request->user();
 
@@ -44,7 +45,32 @@ class ProfileController extends Controller
                 ->where('expires_at', '>', now())
                 ->value('email'),
             'buildCounts' => $this->buildCounts($user),
+            'poeConnection' => $this->poeConnection($user, $poeOAuth),
         ]);
+    }
+
+    /**
+     * The Path of Exile account link, as the settings card needs it.
+     *
+     * `null` when GGG credentials are not configured at all — the feature is
+     * hidden rather than shown broken, since GGG is not issuing new developer
+     * applications. Tokens never appear here.
+     *
+     * @return array{connected: bool, account: string|null, connected_at: string|null}|null
+     */
+    protected function poeConnection(User $user, GggOAuth $poeOAuth): ?array
+    {
+        if (! $poeOAuth->enabled()) {
+            return null;
+        }
+
+        $account = $user->poeAccount;
+
+        return [
+            'connected' => $account !== null,
+            'account' => $account?->ggg_name,
+            'connected_at' => $account?->connected_at?->toIso8601String(),
+        ];
     }
 
     /**

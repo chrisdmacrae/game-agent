@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Settings\EmailChangeController;
+use App\Http\Controllers\Settings\PoeConnectionController;
 use App\Http\Controllers\Settings\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -9,6 +10,18 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('settings/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('settings/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    // Linking a Grinding Gear Games account, so the PoE2 MCP tools can read
+    // the user's own characters. All three 404 unless GGG OAuth credentials
+    // are configured (PoeConnectionController's constructor).
+    Route::get('settings/connections/poe/redirect', [PoeConnectionController::class, 'redirect'])
+        ->name('settings.poe.redirect');
+
+    Route::get('settings/connections/poe/callback', [PoeConnectionController::class, 'callback'])
+        ->name('settings.poe.callback');
+
+    Route::delete('settings/connections/poe', [PoeConnectionController::class, 'destroy'])
+        ->name('settings.poe.destroy');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
