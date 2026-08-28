@@ -57,6 +57,7 @@ class D4BuildValidator
 
         $className = $this->checkIdentity($build);
         $this->checkSkills($build, $className);
+        $this->checkSkillPoints($build, $className);
         $this->checkParagon($build, $className);
         $this->checkGear($build, $className);
         $this->checkDefences($build);
@@ -151,6 +152,59 @@ class D4BuildValidator
         foreach ($seen as $key => $count) {
             if ($count > 1) {
                 $this->violations[] = "Skill \"{$key}\" is equipped {$count} times; each skill occupies one action bar slot.";
+            }
+        }
+    }
+
+    /**
+     * The skill-point spends get the same scrutiny as the action bar: every
+     * entry must be a real skill or passive, belong to the class, appear
+     * once, and stay inside its rank cap where the import knows one.
+     *
+     * @param  array<string, mixed>  $build
+     */
+    protected function checkSkillPoints(array $build, ?string $className): void
+    {
+        $seen = [];
+
+        foreach ($build['skill_points'] ?? [] as $index => $entry) {
+            $name = is_array($entry) ? ($entry['skill'] ?? null) : null;
+
+            if (! is_string($name) || $name === '') {
+                continue;
+            }
+
+            $key = mb_strtolower($name);
+            $seen[$key] = ($seen[$key] ?? 0) + 1;
+
+            $skill = $this->findSkill($name);
+
+            if ($skill === null) {
+                $this->violations[] = "Unknown skill or passive \"{$name}\" in skill_points. Use search_skills to find the right name.";
+
+                continue;
+            }
+
+            if (! $skill->is_released) {
+                $this->warnings[] = "\"{$skill->name}\" (skill_points) is datamined but not live yet.";
+            }
+
+            if ($className !== null
+                && $skill->class_name !== null
+                && ! $this->sameName($skill->class_name, $className)) {
+                $this->violations[] = "\"{$skill->name}\" (skill_points) is a {$skill->class_name} skill and cannot be taken by a {$className}.";
+            }
+
+            $points = is_array($entry) ? ($entry['points'] ?? null) : null;
+
+            if (is_numeric($points) && $skill->max_rank > 0 && (int) $points > $skill->max_rank) {
+                $this->warnings[] = "\"{$skill->name}\" (skill_points) lists {$points} points, above the imported maximum of {$skill->max_rank}.";
+            }
+        }
+
+        foreach ($seen as $key => $count) {
+            if ($count > 1) {
+                $this->violations[] = "\"{$key}\" appears {$count} times in skill_points; list each skill or passive once with its total points.";
             }
         }
     }

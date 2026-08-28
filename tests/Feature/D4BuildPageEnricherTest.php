@@ -52,9 +52,16 @@ test('every referenced skill, aspect, unique, glyph and notable becomes an entit
         ->and($entities['Glyph Socket']['kind'])->toBe('paragon-node')
         ->and($entities['Glyph Socket']['board'])->toBe('Start');
 
-    // No atlas sheets are extracted in the test environment, so icons are
-    // null and the UI letter-badges them.
-    expect($entities['Whirlwind']['icon'])->toBeNull();
+    // The icon is null until the atlas sheet is extracted into
+    // public/games/diablo-4/icons/, and a full crop reference once it is —
+    // the suite must pass in both worlds, since sheets are committed art.
+    $icon = $entities['Whirlwind']['icon'];
+
+    if ($icon !== null) {
+        expect($icon['url'])->toContain('/games/diablo-4/icons/')
+            ->and($icon['u1'])->toBeGreaterThan($icon['u0'])
+            ->and($icon['w'])->toBe(128);
+    }
 });
 
 test('guide mentions are collected and tagged with data-entity spans', function () {
