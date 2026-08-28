@@ -168,26 +168,33 @@ export function entityIndex(
  * CSS that crops one icon out of its atlas sheet using the fractional UV
  * rect. Percentage background math keeps it resolution-independent, so the
  * extractor may downscale the sheets freely.
+ *
+ * The element's aspect ratio comes from the crop's PIXEL size (`w`/`h`) —
+ * the UV fractions cannot provide it, because u is a fraction of the sheet's
+ * width and v of its height. Icons without pixel dimensions (imported before
+ * they were stored) render square, which all skill/aspect/node icons are.
  */
 export function atlasStyle(
     icon: D4EntityIcon,
     sizePx = 32,
 ): Record<string, string> {
-    const width = icon.u1 - icon.u0;
-    const height = icon.v1 - icon.v0;
+    const uSpan = icon.u1 - icon.u0;
+    const vSpan = icon.v1 - icon.v0;
 
-    if (width <= 0 || height <= 0) {
+    if (uSpan <= 0 || vSpan <= 0) {
         return { width: `${sizePx}px`, height: `${sizePx}px` };
     }
 
-    const positionX = width >= 1 ? 0 : (icon.u0 / (1 - width)) * 100;
-    const positionY = height >= 1 ? 0 : (icon.v0 / (1 - height)) * 100;
+    const aspect = icon.w && icon.h && icon.w > 0 ? icon.h / icon.w : 1;
+
+    const positionX = uSpan >= 1 ? 0 : (icon.u0 / (1 - uSpan)) * 100;
+    const positionY = vSpan >= 1 ? 0 : (icon.v0 / (1 - vSpan)) * 100;
 
     return {
         width: `${sizePx}px`,
-        height: `${Math.round((sizePx * height) / width)}px`,
+        height: `${Math.max(1, Math.round(sizePx * aspect))}px`,
         backgroundImage: `url(${icon.url})`,
-        backgroundSize: `${100 / width}% ${100 / height}%`,
+        backgroundSize: `${100 / uSpan}% ${100 / vSpan}%`,
         backgroundPosition: `${positionX}% ${positionY}%`,
         backgroundRepeat: 'no-repeat',
     };

@@ -252,7 +252,7 @@ class D4BuildPageEnricher
      * fractional crop rect. Null until the sheet's pixels are extracted, which
      * the UI renders as a letter badge.
      *
-     * @return array{url: string, u0: float, v0: float, u1: float, v1: float}|null
+     * @return array{url: string, u0: float, v0: float, u1: float, v1: float, w: int|null, h: int|null}|null
      */
     protected function icon(mixed $icon): ?array
     {
@@ -272,6 +272,10 @@ class D4BuildPageEnricher
             'v0' => (float) ($icon['v0'] ?? 0),
             'u1' => (float) ($icon['u1'] ?? 0),
             'v1' => (float) ($icon['v1'] ?? 0),
+            // Crop pixel size — the only way to know the icon's aspect ratio,
+            // since the UV fractions are relative to different sheet axes.
+            'w' => is_numeric($icon['w'] ?? null) ? (int) $icon['w'] : null,
+            'h' => is_numeric($icon['h'] ?? null) ? (int) $icon['h'] : null,
         ];
     }
 

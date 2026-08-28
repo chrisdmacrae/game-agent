@@ -32,7 +32,12 @@ class TextureFrames
      * The atlas frame behind an icon handle, or null when no cloned atlas
      * carries it (a few talent passives and most base items ship none).
      *
-     * @return array{texture: int, frame: int, u0: float, v0: float, u1: float, v1: float}|null
+     * `w`/`h` are the crop's pixel size on the original sheet: UV fractions
+     * alone cannot give the icon's aspect ratio, because u is a fraction of
+     * the sheet's width and v of its height — different numbers on the tall
+     * strip atlases.
+     *
+     * @return array{texture: int, frame: int, u0: float, v0: float, u1: float, v1: float, w: int, h: int}|null
      */
     public function resolve(mixed $handle): ?array
     {
@@ -111,13 +116,20 @@ class TextureFrames
                     continue;
                 }
 
+                $u0 = (float) ($frame['flU0'] ?? 0);
+                $v0 = (float) ($frame['flV0'] ?? 0);
+                $u1 = (float) ($frame['flU1'] ?? 0);
+                $v1 = (float) ($frame['flV1'] ?? 0);
+
                 $index[(int) $handle] = [
                     'texture' => (int) $snoId,
                     'frame' => (int) $position,
-                    'u0' => round((float) ($frame['flU0'] ?? 0), 6),
-                    'v0' => round((float) ($frame['flV0'] ?? 0), 6),
-                    'u1' => round((float) ($frame['flU1'] ?? 0), 6),
-                    'v1' => round((float) ($frame['flV1'] ?? 0), 6),
+                    'u0' => round($u0, 6),
+                    'v0' => round($v0, 6),
+                    'u1' => round($u1, 6),
+                    'v1' => round($v1, 6),
+                    'w' => (int) round(($u1 - $u0) * (float) $width),
+                    'h' => (int) round(($v1 - $v0) * (float) $height),
                 ];
             }
         }

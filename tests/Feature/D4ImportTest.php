@@ -382,7 +382,11 @@ test('entity icons resolve to texture atlas frames with fractional uvs', functio
     expect($whirlwind->icon['texture'])->toBe(65420)
         ->and($whirlwind->icon['frame'])->toBe(39)
         ->and($whirlwind->icon['u0'])->toBeGreaterThanOrEqual(0)->toBeLessThanOrEqual(1)
-        ->and($whirlwind->icon['v1'])->toBeGreaterThan($whirlwind->icon['v0']);
+        ->and($whirlwind->icon['v1'])->toBeGreaterThan($whirlwind->icon['v0'])
+        // Pixel size of the crop on the sheet — the aspect ratio the UV
+        // fractions cannot express (u is a fraction of width, v of height).
+        ->and($whirlwind->icon['w'])->toBe(128)
+        ->and($whirlwind->icon['h'])->toBe(129);
 
     $aspect = Aspect::forVersion($version->id)->sole();
 

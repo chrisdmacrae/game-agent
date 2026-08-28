@@ -104,6 +104,9 @@ export type D4EntityIcon = {
     v0: number;
     u1: number;
     v1: number;
+    /** Crop pixel size on the original sheet; drives the aspect ratio. */
+    w?: number | null;
+    h?: number | null;
 };
 
 /** One hover-card entity from the build page's entity dictionary. */
