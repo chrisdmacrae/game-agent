@@ -156,6 +156,34 @@ function fitToScene(): void {
     view.y = el.clientHeight / 2 - ((minY + maxY) / 2) * view.zoom;
 }
 
+/**
+ * Atlas sheets by texture SNO, lazily loaded; a 404 is remembered and the
+ * node keeps its plain frame — same fallback philosophy as everywhere else.
+ */
+const atlasCache = new Map<number, HTMLImageElement | 'missing'>();
+
+function atlasImage(texture: number): HTMLImageElement | null {
+    const cached = atlasCache.get(texture);
+
+    if (cached === 'missing') {
+        return null;
+    }
+
+    if (cached) {
+        return cached.complete && cached.naturalWidth > 0 ? cached : null;
+    }
+
+    const image = new Image();
+    image.src = `/games/diablo-4/icons/${texture}.webp`;
+    image.onload = () => draw();
+    image.onerror = () => {
+        atlasCache.set(texture, 'missing');
+    };
+    atlasCache.set(texture, image);
+
+    return null;
+}
+
 /** A D4-style node: a beveled diamond — dark gold outer rim, light gold
  * inner rim, dark center. */
 function drawFrame(
@@ -273,12 +301,53 @@ function draw(): void {
             context.stroke();
         }
 
+        // The skill's real art inside the frame, when its sheet exists.
+        let drewIcon = false;
+        const icon = world.node.icon;
+
+        if (kind === 'skill' && icon && typeof icon.texture === 'number') {
+            const sheet = atlasImage(icon.texture);
+
+            if (sheet) {
+                const sx = icon.u0 * sheet.naturalWidth;
+                const sy = icon.v0 * sheet.naturalHeight;
+                const sw = (icon.u1 - icon.u0) * sheet.naturalWidth;
+                const sh = (icon.v1 - icon.v0) * sheet.naturalHeight;
+
+                if (sw > 0 && sh > 0) {
+                    const r = world.radius - 3;
+                    context.save();
+                    context.beginPath();
+                    context.moveTo(world.x, world.y - r);
+                    context.lineTo(world.x + r, world.y);
+                    context.lineTo(world.x, world.y + r);
+                    context.lineTo(world.x - r, world.y);
+                    context.closePath();
+                    context.clip();
+                    context.globalAlpha = world.allocated ? 1 : 0.45;
+                    context.drawImage(
+                        sheet,
+                        sx,
+                        sy,
+                        sw,
+                        sh,
+                        world.x - world.radius,
+                        world.y - world.radius,
+                        world.radius * 2,
+                        world.radius * 2,
+                    );
+                    context.restore();
+                    drewIcon = true;
+                }
+            }
+        }
+
         if (world.allocated && kind === 'passive') {
             context.beginPath();
             context.arc(world.x, world.y, world.radius / 2.6, 0, Math.PI * 2);
             context.fillStyle = C.passive;
             context.fill();
-        } else if (world.allocated && kind !== 'hub') {
+        } else if (world.allocated && kind !== 'hub' && !drewIcon) {
             context.beginPath();
             context.arc(world.x, world.y, world.radius / 3.2, 0, Math.PI * 2);
             context.fillStyle = C.frameBright;

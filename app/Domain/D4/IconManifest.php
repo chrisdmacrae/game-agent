@@ -95,6 +95,14 @@ class IconManifest
 
     public function write(): int
     {
+        // The fixture import runs inside the test suite and must never
+        // clobber the repo's committed manifest with the fixtures' seven
+        // textures — that poisoned manifest once starved the offline
+        // extractor down to seven sheets.
+        if (app()->runningUnitTests()) {
+            return count($this->build()['textures']);
+        }
+
         $manifest = $this->build();
 
         $directory = public_path('games/diablo-4');

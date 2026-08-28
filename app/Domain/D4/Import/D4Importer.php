@@ -1752,7 +1752,7 @@ class D4Importer
     protected function skillTrees(GameVersion $gameVersion): array
     {
         $skillsBySno = Skill::forVersion($gameVersion->id)
-            ->get(['sno_id', 'name', 'raw'])
+            ->get(['sno_id', 'name', 'raw', 'icon'])
             ->keyBy('sno_id');
 
         $trees = [];
@@ -1801,6 +1801,9 @@ class D4Importer
                     'max_ranks' => is_numeric($reward['dwMaxTalentRanks'] ?? null)
                         ? (int) $reward['dwMaxTalentRanks']
                         : null,
+                    // The skill's atlas crop, so the tree canvas can draw the
+                    // real art inside the node frame.
+                    'icon' => $kind === 'skill' && is_array($skill?->icon) ? $skill->icon : null,
                 ];
             }
 

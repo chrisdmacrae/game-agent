@@ -399,6 +399,8 @@ export type D4SkillTreeNode = {
     name?: string | null;
     power_sno?: number | null;
     max_ranks?: number | null;
+    /** The skill's atlas crop, drawn inside the node when its sheet exists. */
+    icon?: D4CellIcon | null;
 };
 
 export type D4SkillTree = {
