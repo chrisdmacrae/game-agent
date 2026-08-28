@@ -1778,8 +1778,13 @@ class D4Importer
                 $powerSno = $reward === null ? null : SnoRefs::id($reward['snoPower'] ?? null);
                 $skill = $powerSno === null ? null : $skillsBySno->get($powerSno);
 
+                // Reward-less nodes split by eRootNodeType: 1 is a cluster
+                // gate, 2 a passive socket. Which passive sits in which
+                // socket is NOT in the kit (the talent binding lives behind
+                // the same naming convention as skill modifiers), so sockets
+                // stay anonymous rather than guessed.
                 $kind = match (true) {
-                    $reward === null => 'hub',
+                    $reward === null => (int) ($node['eRootNodeType'] ?? 0) === 2 ? 'socket' : 'hub',
                     (int) ($reward['eType'] ?? -1) === 1 => 'modifier',
                     $skill !== null && (bool) ($skill->raw['is_passive'] ?? false) => 'passive',
                     default => 'skill',

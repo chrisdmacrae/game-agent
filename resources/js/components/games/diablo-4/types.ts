@@ -395,7 +395,7 @@ export type D4SkillTreeNode = {
     x: number;
     y: number;
     level: number;
-    kind: 'hub' | 'skill' | 'passive' | 'modifier';
+    kind: 'hub' | 'skill' | 'passive' | 'modifier' | 'socket';
     name?: string | null;
     power_sno?: number | null;
     max_ranks?: number | null;

@@ -49,6 +49,8 @@ type WorldNode = {
     x: number;
     y: number;
     allocated: boolean;
+    /** A modifier whose parent skill is taken: half-lit, never labelled. */
+    parentLit: boolean;
     rank: number | null;
     radius: number;
 };
@@ -76,26 +78,33 @@ const scene = computed(() => {
     const byId = new Map<number, WorldNode>();
 
     for (const node of props.tree.nodes) {
-        const allocated = node.name
+        // Only the skill node itself matches the build by name; modifier
+        // satellites share their parent's name and must not light as taken.
+        const nameTaken = node.name
             ? allocatedRanks.value.has(node.name.toLowerCase())
             : false;
+        const allocated =
+            (node.kind === 'skill' || node.kind === 'passive') && nameTaken;
 
         const world: WorldNode = {
             node,
             x: node.x * SCALE,
             y: node.y * SCALE,
             allocated,
-            rank: node.name
-                ? (allocatedRanks.value.get(node.name.toLowerCase()) ?? null)
+            parentLit: node.kind === 'modifier' && nameTaken,
+            rank: allocated
+                ? (allocatedRanks.value.get(node.name!.toLowerCase()) ?? null)
                 : null,
             radius:
                 node.kind === 'skill'
                     ? 16
                     : node.kind === 'hub'
-                      ? 7
-                      : node.kind === 'passive'
-                        ? 11
-                        : 9,
+                      ? 6
+                      : node.kind === 'socket'
+                        ? 8
+                        : node.kind === 'passive'
+                          ? 11
+                          : 6.5,
         };
 
         nodes.push(world);
@@ -223,10 +232,9 @@ function draw(): void {
     context.lineCap = 'round';
 
     for (const { a, b } of edges) {
-        const lit =
-            (a.allocated || a.node.kind === 'hub') &&
-            (b.allocated || b.node.kind === 'hub') &&
-            (a.allocated || b.allocated);
+        const on = (n: WorldNode) =>
+            n.allocated || n.parentLit || n.node.kind === 'hub';
+        const lit = on(a) && on(b) && (a.allocated || b.allocated);
 
         context.beginPath();
         context.moveTo(a.x, a.y);
@@ -241,16 +249,29 @@ function draw(): void {
     for (const world of nodes) {
         const kind = world.node.kind;
 
-        // Actives and modifiers are diamonds, passives are circles, hubs are
-        // small connective diamonds — the game's own shapes.
+        // Actives and modifiers are diamonds; passives and their sockets are
+        // circles; hubs are small connective diamonds — the game's shapes.
         drawFrame(
             context,
             world.x,
             world.y,
             world.radius,
             world.allocated,
-            kind === 'passive',
+            kind === 'passive' || kind === 'socket',
         );
+
+        // A taken skill's modifier satellites warm up without full glow.
+        if (world.parentLit) {
+            context.beginPath();
+            context.moveTo(world.x, world.y - world.radius + 2.5);
+            context.lineTo(world.x + world.radius - 2.5, world.y);
+            context.lineTo(world.x, world.y + world.radius - 2.5);
+            context.lineTo(world.x - world.radius + 2.5, world.y);
+            context.closePath();
+            context.strokeStyle = C.frame + 'aa';
+            context.lineWidth = 1.4;
+            context.stroke();
+        }
 
         if (world.allocated && kind === 'passive') {
             context.beginPath();
@@ -264,8 +285,8 @@ function draw(): void {
             context.fill();
         }
 
-        // Allocated actives and passives get their name and rank.
-        if (world.allocated && world.node.name && kind !== 'modifier') {
+        // Only the skill node itself gets its name and rank written out.
+        if (world.allocated && world.node.name && kind === 'skill') {
             context.fillStyle = C.labelBright;
             context.font = `600 11px ${mono}`;
             context.textAlign = 'center';
@@ -338,10 +359,12 @@ function onPointerMove(event: PointerEvent): void {
               ),
               y: event.clientY - rect.top - 14,
               title:
-                  world.node.name ??
-                  (world.node.kind === 'hub'
-                      ? 'Cluster gate'
-                      : 'Skill modifier'),
+                  world.node.kind === 'modifier'
+                      ? `${world.node.name ?? 'Skill'} modifier`
+                      : (world.node.name ??
+                        (world.node.kind === 'socket'
+                            ? 'Passive node'
+                            : 'Cluster gate')),
               meta: [
                   world.node.kind,
                   world.allocated
