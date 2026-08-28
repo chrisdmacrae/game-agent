@@ -2,6 +2,7 @@
 
 namespace App\Domain\D4;
 
+use App\Domain\D4\Import\FormulaEvaluator;
 use App\Models\Build;
 use App\Models\D4\Aspect;
 use App\Models\D4\ParagonBoard;
@@ -83,6 +84,7 @@ class D4BuildPageEnricher
         foreach ($skills as $skill) {
             $rank = max(1, min($ranks[$skill->name] ?? 1, max($skill->max_rank, 1)));
             $values = TooltipText::scriptFormulaValues($skill->rank_values[$rank] ?? null);
+            $values = array_merge($values, $this->namedTokenValues($skill, $values));
 
             $entities[$skill->name] = [
                 'kind' => 'skill',
@@ -91,7 +93,7 @@ class D4BuildPageEnricher
                 'class_name' => $skill->class_name,
                 'rank' => $rank,
                 'max_rank' => $skill->max_rank,
-                'description' => $this->tooltips->render($skill->description, $values),
+                'description' => $this->tooltips->renderForDisplay($skill->description, $values),
                 'tags' => array_slice(is_array($skill->tags) ? $skill->tags : [], 0, 6),
                 'icon' => $this->icon($skill->icon),
             ];
@@ -123,7 +125,7 @@ class D4BuildPageEnricher
                 'kind' => 'aspect',
                 'name' => $aspect->name,
                 'category' => $aspect->category,
-                'description' => $aspect->display_text ?? $this->tooltips->render($aspect->text),
+                'description' => $this->displayText($aspect->display_text ?? $aspect->text),
                 'item_types' => array_slice(is_array($aspect->item_types) ? $aspect->item_types : [], 0, 6),
                 'icon' => $this->icon($aspect->icon),
             ];
@@ -157,7 +159,7 @@ class D4BuildPageEnricher
                 'name' => $unique->name,
                 'item_type' => $unique->item_type,
                 'is_mythic' => $unique->is_mythic,
-                'description' => $unique->display_text ?? $unique->power_text,
+                'description' => $this->displayText($unique->display_text ?? $unique->power_text),
                 'icon' => $this->icon($unique->icon),
             ];
         }
@@ -187,7 +189,7 @@ class D4BuildPageEnricher
             $effects = collect(is_array($glyph->effects) ? $glyph->effects : [])
                 ->pluck('text')
                 ->filter(fn (mixed $text) => is_string($text) && $text !== '')
-                ->map(fn (string $text) => $this->tooltips->render($text) ?? $text)
+                ->map(fn (string $text) => $this->tooltips->renderForDisplay($text) ?? $text)
                 ->values()
                 ->all();
 
@@ -245,6 +247,59 @@ class D4BuildPageEnricher
                 }
             }
         }
+    }
+
+    /**
+     * The named tokens a skill tooltip uses beside its `SF_n` values —
+     * `{Resource Cost}`, `{Cooldown Time}`, `{Combat Effect Chance}` — whose
+     * formulas the importer kept on `raw`. They evaluate against the same
+     * per-rank SF values; whatever refuses to evaluate simply stays out of
+     * the map and scrubs to a dash.
+     *
+     * @param  array<string, float|array{min: float, max: float}>  $sfValues
+     * @return array<string, float|array{min: float, max: float}>
+     */
+    protected function namedTokenValues(Skill $skill, array $sfValues): array
+    {
+        $evaluator = new FormulaEvaluator;
+        $tokens = [];
+
+        $costs = $skill->raw['resource_costs'][0] ?? [];
+        $costFormula = collect([$costs['channelling'] ?? null, $costs['initial'] ?? null])
+            ->first(fn (mixed $formula) => is_string($formula) && trim($formula) !== '' && trim($formula) !== '0');
+
+        foreach ([
+            'Cooldown Time' => $skill->raw['cooldown'] ?? null,
+            'Combat Effect Chance' => $skill->raw['lucky_hit_chance'] ?? null,
+            'Resource Cost' => $costFormula,
+        ] as $token => $formula) {
+            if (! is_string($formula) || trim($formula) === '' || trim($formula) === '0') {
+                continue;
+            }
+
+            $interval = $evaluator->evaluate($formula, $sfValues);
+
+            if ($interval !== null) {
+                $tokens[$token] = $interval;
+            }
+        }
+
+        return $tokens;
+    }
+
+    /**
+     * Text rendered at import time (display_text) can still carry unresolved
+     * markup; hover cards get the scrubbed version.
+     */
+    protected function displayText(?string $text): ?string
+    {
+        if ($text === null || trim($text) === '') {
+            return null;
+        }
+
+        $scrubbed = trim($this->tooltips->scrub($text));
+
+        return $scrubbed !== '' ? $scrubbed : null;
     }
 
     /**

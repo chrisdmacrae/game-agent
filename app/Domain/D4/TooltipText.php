@@ -57,6 +57,60 @@ class TooltipText
     }
 
     /**
+     * Render for a human-facing surface (the build page hover cards), where
+     * raw markup would read as a bug rather than as provenance.
+     *
+     * Two departures from render(), both still refusing to invent a number:
+     * modifier/state conditionals resolve to their BASE branch instead of a
+     * labelled variant block (the variants are listed separately on the skill
+     * itself), and any expression or token whose value is not in the data is
+     * replaced by an em dash rather than left as raw `{SF_7}` markup — a
+     * reader still sees "not in the data", just not the plumbing.
+     *
+     * @param  array<string, float|int|array{min: float, max: float}>  $values
+     */
+    public function renderForDisplay(?string $text, array $values = []): ?string
+    {
+        if ($text === null || trim($text) === '') {
+            return null;
+        }
+
+        $rendered = str_replace(["\r\n", "\r"], "\n", $text);
+        $rendered = (string) preg_replace(self::COSMETIC_PATTERN, '', $rendered);
+        $rendered = $this->resolveConditionals($rendered, preferBaseBranch: true);
+        $rendered = $this->resolveExpressions($rendered, $values);
+        $rendered = $this->resolveTokens($rendered, $values);
+        // Tokens with spaced names ({Combat Effect Chance}) only substitute in
+        // the token pass, so expressions wrapping them need a second look.
+        $rendered = $this->resolveExpressions($rendered, $values);
+        $rendered = $this->scrub($rendered);
+        $rendered = $this->tidy($rendered);
+
+        return $rendered !== '' ? $rendered : null;
+    }
+
+    /**
+     * Strip the markup a render pass could not resolve. Failed display
+     * expressions still carry `{...}` tokens inside their brackets — which is
+     * what separates them from successfully rendered ranges like "[45 – 60]%",
+     * whose brackets contain no braces — and lone `{Token}`s are the tokens
+     * themselves. Both become an em dash. Also applies to text rendered at
+     * import time (aspect/unique display_text), which can carry the same
+     * leftovers.
+     */
+    public function scrub(string $text): string
+    {
+        // A labelled conditional block that survived an import-time render:
+        // "[Mod.UpgradeC: ...]" — variant text, not base behaviour.
+        $text = (string) preg_replace('/\[[A-Za-z_.0-9 ]+:\s[^\[\]]*\]\s*/u', '', $text);
+        $text = (string) preg_replace('/\[[^\[\]]*\{[^\[\]]*\]/u', '—', $text);
+        $text = (string) preg_replace('/\{[^{}]+\}/u', '—', $text);
+
+        // Collapse dash pile-ups left by adjacent unresolved pieces.
+        return (string) preg_replace('/—(?:\s*[%x+]*\s*—)+/u', '—', $text);
+    }
+
+    /**
      * The token map for a skill rank, from the `rank_values` an import stored:
      * script formula index => value becomes `SF_<index>` => value.
      *
@@ -92,14 +146,14 @@ class TooltipText
      * the branch is kept but labelled with its condition rather than asserted
      * unconditionally. A branch that renders empty collapses away.
      */
-    protected function resolveConditionals(string $text): string
+    protected function resolveConditionals(string $text, bool $preferBaseBranch = false): string
     {
         $pattern = '/\{if:(?P<condition>[^}]*)\}(?P<body>(?:(?!\{if:|\{\/if\}).)*)\{\/if\}/su';
 
         for ($pass = 0; $pass < 10; $pass++) {
             $resolved = preg_replace_callback(
                 $pattern,
-                fn (array $match): string => $this->resolveConditional($match['condition'], $match['body']),
+                fn (array $match): string => $this->resolveConditional($match['condition'], $match['body'], $preferBaseBranch),
                 $text,
                 -1,
                 $count,
@@ -119,7 +173,7 @@ class TooltipText
         return (string) preg_replace('/\{(?:if:[^}]*|else|\/if)\}/', '', $text);
     }
 
-    protected function resolveConditional(string $condition, string $body): string
+    protected function resolveConditional(string $condition, string $body, bool $preferBaseBranch = false): string
     {
         [$then, $otherwise] = array_pad(preg_split('/\{else\}/', $body, 2) ?: [], 2, '');
 
@@ -129,6 +183,12 @@ class TooltipText
 
         if (mb_strtoupper(trim($condition)) === 'ADVANCED_TOOLTIP') {
             return $then;
+        }
+
+        // Display surfaces show base behaviour: the else branch is what holds
+        // without the modifier/state the condition names.
+        if ($preferBaseBranch) {
+            return $otherwise;
         }
 
         // The branch's own leading and trailing whitespace stays outside the
