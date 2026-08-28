@@ -130,7 +130,7 @@ const scene = computed(() => {
                 node.kind === 'skill'
                     ? 16
                     : node.kind === 'hub'
-                      ? 6
+                      ? 24
                       : node.kind === 'socket'
                         ? 8
                         : node.kind === 'passive'
@@ -290,6 +290,23 @@ function draw(): void {
 
     context.lineCap = 'round';
 
+    // The tree's spine: cluster gates chained in unlock order, the way the
+    // game draws the path between clusters.
+    const gates = nodes
+        .filter((n) => n.node.kind === 'hub')
+        .sort((a, b) => a.node.level - b.node.level || a.y - b.y);
+
+    for (let i = 0; i + 1 < gates.length; i++) {
+        context.beginPath();
+        context.moveTo(gates[i].x, gates[i].y);
+        context.lineTo(gates[i + 1].x, gates[i + 1].y);
+        context.strokeStyle = C.frameDim;
+        context.lineWidth = 5;
+        context.globalAlpha = 0.7;
+        context.stroke();
+        context.globalAlpha = 1;
+    }
+
     for (const { a, b } of edges) {
         const on = (n: WorldNode) =>
             n.allocated || n.parentLit || n.node.kind === 'hub';
@@ -352,7 +369,14 @@ function draw(): void {
                         kind === 'passive' || kind === 'socket';
                     context.save();
                     context.beginPath();
-                    if (circle) {
+                    if (kind === 'hub') {
+                        context.rect(
+                            world.x - world.radius,
+                            world.y - world.radius,
+                            world.radius * 2,
+                            world.radius * 2,
+                        );
+                    } else if (circle) {
                         context.arc(world.x, world.y, r, 0, Math.PI * 2);
                     } else {
                         context.moveTo(world.x, world.y - r);
