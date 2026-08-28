@@ -36,6 +36,7 @@ const diablo4 = computed(() => props as D4BuildShowProps);
             :similar-builds="diablo4.similarBuilds"
             :entities="diablo4.entities"
             :paragon-boards="diablo4.paragonBoards"
+            :skill-tree="diablo4.skillTree"
         />
         <Poe2BuildShow v-else v-bind="poe2" />
     </div>

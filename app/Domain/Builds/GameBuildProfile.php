@@ -13,6 +13,7 @@ use App\Domain\Poe2\Poe2PublishChecks;
 use App\Domain\Poe2\Validation\BuildRules;
 use App\Domain\Poe2\Validation\BuildValidator;
 use App\Models\Build;
+use App\Models\D4\CalcTable as D4CalcTable;
 use App\Models\D4\CharacterClass as D4CharacterClass;
 use App\Models\D4\ParagonBoard;
 use App\Models\Game;
@@ -300,7 +301,7 @@ class GameBuildProfile
      * tree sprite and render data; Diablo IV gets those keys empty and the
      * grids of the paragon boards its build actually attaches.
      *
-     * @return array{spriteUrl: string|null, treeUrl: string|null, ascendancyKey: string|null, paragonBoards: list<array{name: string, class_name: string|null, grid: array<int, mixed>}>}
+     * @return array{spriteUrl: string|null, treeUrl: string|null, ascendancyKey: string|null, paragonBoards: list<array{name: string, class_name: string|null, grid: array<int, mixed>}>, skillTree: array{nodes: list<array<string, mixed>>, edges: list<array{0: int, 1: int}>}|null}
      */
     public function treeProps(Build $build): array
     {
@@ -310,6 +311,7 @@ class GameBuildProfile
                 'treeUrl' => null,
                 'ascendancyKey' => null,
                 'paragonBoards' => $this->paragonBoards($build),
+                'skillTree' => $this->d4SkillTree($build),
             ];
         }
 
@@ -324,7 +326,41 @@ class GameBuildProfile
                     ->value('key')
                 : null,
             'paragonBoards' => [],
+            'skillTree' => null,
         ];
+    }
+
+    /**
+     * The build's class skill tree — the SkillKit nodes and connections the
+     * importer persisted — so the skills tab can draw the real tree with the
+     * build's picks lit. Null when the class is unknown or the data predates
+     * the skill_trees calc table.
+     *
+     * @return array{nodes: list<array<string, mixed>>, edges: list<array{0: int, 1: int}>}|null
+     */
+    protected function d4SkillTree(Build $build): ?array
+    {
+        $className = $build->build['class'] ?? null;
+
+        if (! is_string($className) || $className === '' || $build->game_version_id === null) {
+            return null;
+        }
+
+        $trees = D4CalcTable::forVersion($build->game_version_id)
+            ->where('key', 'skill_trees')
+            ->value('data');
+
+        if (! is_array($trees)) {
+            return null;
+        }
+
+        foreach ($trees as $treeClass => $tree) {
+            if (mb_strtolower((string) $treeClass) === mb_strtolower($className)) {
+                return is_array($tree) ? $tree : null;
+            }
+        }
+
+        return null;
     }
 
     /**

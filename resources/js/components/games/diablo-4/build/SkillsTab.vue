@@ -8,16 +8,20 @@ import {
     skillMeta,
 } from '@/components/games/diablo-4/build';
 import EmptyBlock from '@/components/games/diablo-4/build/EmptyBlock.vue';
+import SkillTreeCanvas from '@/components/games/diablo-4/SkillTreeCanvas.vue';
 import { D4_MAX_EQUIPPED_SKILLS } from '@/components/games/diablo-4/types';
 import type {
     D4BuildDefinition,
     D4Entity,
+    D4SkillTree,
 } from '@/components/games/diablo-4/types';
 
 const props = defineProps<{
     definition: D4BuildDefinition;
     /** Hover-card lookup from BuildShow; icons render when the atlas exists. */
     entityFor?: (name: string) => D4Entity | null;
+    /** The class skill tree, when the server sent it. Optional by design. */
+    skillTree?: D4SkillTree | null;
 }>();
 
 function iconFor(name: string): D4Entity['icon'] {
@@ -62,7 +66,89 @@ const skillPoints = computed(() =>
             message="No skills on the action bar yet."
         />
 
-        <div v-else class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        <!-- The bar itself, the way the game (and every D4 build site) draws
+             it: six slots in a row, icon art in a socket, rank badged. -->
+        <div
+            v-if="hasSkills"
+            class="flex flex-wrap items-start justify-center gap-3 rounded-[var(--radius-md)] border border-[var(--border-subtle)] px-4 py-5"
+            style="background: #07090d"
+        >
+            <div
+                v-for="slot in slots"
+                :key="`bar-${slot.index}`"
+                class="flex w-[86px] flex-col items-center gap-2"
+            >
+                <div
+                    class="relative flex size-[64px] items-center justify-center rounded-[10px] border-2"
+                    :style="
+                        slot.skill
+                            ? {
+                                  borderColor: D4_ACCENT,
+                                  background: '#11151c',
+                                  boxShadow: '0 0 14px rgba(255,90,95,0.25)',
+                              }
+                            : {
+                                  borderColor: '#2f3a49',
+                                  borderStyle: 'dashed',
+                                  background: '#0b0e13',
+                              }
+                    "
+                    :data-entity="slot.skill?.skill"
+                >
+                    <span
+                        v-if="slot.skill && iconFor(slot.skill.skill)"
+                        class="inline-block rounded-[6px]"
+                        :style="atlasStyle(iconFor(slot.skill.skill)!, 54)"
+                    />
+                    <span
+                        v-else-if="slot.skill"
+                        class="font-mono text-[22px] font-bold"
+                        :style="{ color: D4_ACCENT }"
+                    >
+                        {{ slot.skill.skill.charAt(0) }}
+                    </span>
+                    <span
+                        v-if="slot.skill?.rank"
+                        class="absolute -right-1.5 -bottom-1.5 flex min-w-[20px] items-center justify-center rounded-[5px] border px-1 font-mono text-[11px] font-bold"
+                        style="
+                            background: #1b222c;
+                            border-color: #2f3a49;
+                            color: #ffc857;
+                        "
+                    >
+                        {{ slot.skill.rank }}
+                    </span>
+                </div>
+                <p
+                    class="w-full truncate text-center font-mono text-[11px] leading-tight"
+                    :style="{ color: slot.skill ? 'var(--fg-2)' : 'var(--fg-3)' }"
+                    :data-entity="slot.skill?.skill"
+                >
+                    {{ slot.skill?.skill ?? '—' }}
+                </p>
+            </div>
+        </div>
+
+        <!-- The class skill tree, laid out the way the game lays it out,
+             with this build's picks lit. -->
+        <template v-if="skillTree && skillTree.nodes.length">
+            <div class="mt-2 flex flex-wrap items-center gap-3">
+                <p :class="LABEL_CLASS">Skill tree</p>
+                <span class="font-mono text-[11px] text-[var(--fg-3)]">
+                    <span style="color: #ff5a5f">●</span> skill
+                    <span class="ml-2" style="color: #5aa9ff">●</span> passive
+                    <span class="ml-2" style="color: #ffc857">●</span> modifier
+                    — lit nodes are this build's picks
+                </span>
+            </div>
+            <SkillTreeCanvas
+                :tree="skillTree"
+                :definition="definition"
+                :entity-for="entityFor"
+            />
+        </template>
+
+        <div v-if="hasSkills" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             <Card
                 v-for="slot in slots"
                 :key="`slot-${slot.index}`"

@@ -1535,6 +1535,7 @@ class D4Importer
             'level_scaling' => $this->levelScalingTable(),
             'class_core_stats' => $this->classCoreStats(),
             'globals' => $this->calcGlobals(),
+            'skill_trees' => $this->skillTrees($gameVersion),
             // sno => atlas object name; the icon manifest and the offline CASC
             // extractor use it to locate the sheets. Populated as a side
             // effect of the icon passes that ran before this.
@@ -1736,6 +1737,85 @@ class D4Importer
         }
 
         return $classes;
+    }
+
+    /**
+     * Each class's skill tree, straight from its SkillKit: nodes with their
+     * in-game positions and the connections between them, so the web app can
+     * draw the real tree. A node's `gbidReward` resolves through
+     * SkillTreeRewards (type 43): eType 0 grants the power itself (a skill or
+     * passive), eType 1 one of its modifier upgrades; a node with no reward
+     * is a cluster hub.
+     *
+     * @return array<string, array{nodes: list<array<string, mixed>>, edges: list<array{0: int, 1: int}>}>
+     */
+    protected function skillTrees(GameVersion $gameVersion): array
+    {
+        $skillsBySno = Skill::forVersion($gameVersion->id)
+            ->get(['sno_id', 'name', 'raw'])
+            ->keyBy('sno_id');
+
+        $trees = [];
+
+        foreach ($this->definitions(self::DIR_PLAYER_CLASS, 'pcl') as $className => $definition) {
+            $kitName = SnoRefs::name($definition['snoSkillKit'] ?? null);
+            $kit = $kitName === null
+                ? null
+                : $this->source->optionalJson("json/base/meta/SkillKit/{$kitName}.skl.json");
+
+            if ($kit === null) {
+                continue;
+            }
+
+            $nodes = [];
+
+            foreach ($kit['arNodes'] ?? [] as $node) {
+                if (! is_array($node) || ! is_numeric($node['dwID'] ?? null)) {
+                    continue;
+                }
+
+                $reward = $this->refs->gameBalanceRow($node['gbidReward'] ?? null);
+                $powerSno = $reward === null ? null : SnoRefs::id($reward['snoPower'] ?? null);
+                $skill = $powerSno === null ? null : $skillsBySno->get($powerSno);
+
+                $kind = match (true) {
+                    $reward === null => 'hub',
+                    (int) ($reward['eType'] ?? -1) === 1 => 'modifier',
+                    $skill !== null && (bool) ($skill->raw['is_passive'] ?? false) => 'passive',
+                    default => 'skill',
+                };
+
+                $nodes[] = [
+                    'id' => (int) $node['dwID'],
+                    'x' => $this->round((float) ($node['vPosition']['x'] ?? 0)),
+                    'y' => $this->round((float) ($node['vPosition']['y'] ?? 0)),
+                    'level' => (int) ($node['dwNodeRequiredPlayerLevel'] ?? 0),
+                    'kind' => $kind,
+                    'name' => $skill?->name,
+                    'power_sno' => $powerSno,
+                    'max_ranks' => is_numeric($reward['dwMaxTalentRanks'] ?? null)
+                        ? (int) $reward['dwMaxTalentRanks']
+                        : null,
+                ];
+            }
+
+            $edges = [];
+
+            foreach ($kit['arConnections'] ?? [] as $connection) {
+                $source = $connection['dwSourceId'] ?? null;
+                $destination = $connection['dwDestinationId'] ?? null;
+
+                if (is_numeric($source) && is_numeric($destination)) {
+                    $edges[] = [(int) $source, (int) $destination];
+                }
+            }
+
+            if ($nodes !== []) {
+                $trees[$className] = ['nodes' => $nodes, 'edges' => $edges];
+            }
+        }
+
+        return $trees;
     }
 
     /**

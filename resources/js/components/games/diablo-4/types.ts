@@ -296,6 +296,21 @@ export type D4Validation = {
  * One cell of an imported paragon board, as `d4_paragon_boards.grid` stores it.
  * A null cell is a hole in the board rather than an unallocated node.
  */
+/**
+ * An atlas crop reference as stored in imported data (no URL — the sheet may
+ * or may not be extracted; the client tries `/games/diablo-4/icons/{texture}.webp`).
+ */
+export type D4CellIcon = {
+    texture: number;
+    frame: number;
+    u0: number;
+    v0: number;
+    u1: number;
+    v1: number;
+    w?: number | null;
+    h?: number | null;
+};
+
 export type D4ParagonCell = {
     name?: string | null;
     key?: string | null;
@@ -303,6 +318,8 @@ export type D4ParagonCell = {
     is_gate?: boolean;
     has_socket?: boolean;
     attributes?: string[];
+    /** The node's icon mask crop, when the importer resolved one. */
+    icon?: D4CellIcon | null;
 };
 
 /**
@@ -368,6 +385,25 @@ export type D4BuildShowProps = {
     entities: Record<string, D4Entity>;
     /** Grid data for the boards this build attaches, when the server has it. */
     paragonBoards?: D4ParagonBoardGrid[];
+    /** The class skill tree (SkillKit nodes + edges), when the server has it. */
+    skillTree?: D4SkillTree | null;
+};
+
+/** One node of a class skill tree, positioned as the game lays it out. */
+export type D4SkillTreeNode = {
+    id: number;
+    x: number;
+    y: number;
+    level: number;
+    kind: 'hub' | 'skill' | 'passive' | 'modifier';
+    name?: string | null;
+    power_sno?: number | null;
+    max_ranks?: number | null;
+};
+
+export type D4SkillTree = {
+    nodes: D4SkillTreeNode[];
+    edges: [number, number][];
 };
 
 export type D4BuildEditProps = {

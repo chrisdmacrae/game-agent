@@ -194,6 +194,7 @@ function onOut(event: MouseEvent): void {
                         <SkillsTab
                             :definition="definition"
                             :entity-for="entityFor"
+                            :skill-tree="skillTree"
                         />
                     </TabsContent>
                     <TabsContent value="gear">

@@ -393,6 +393,98 @@ function roundedRect(
     context.roundRect(x, y, w, h, r);
 }
 
+function diamond(
+    context: CanvasRenderingContext2D,
+    cx: number,
+    cy: number,
+    half: number,
+): void {
+    context.beginPath();
+    context.moveTo(cx, cy - half);
+    context.lineTo(cx + half, cy);
+    context.lineTo(cx, cy + half);
+    context.lineTo(cx - half, cy);
+    context.closePath();
+}
+
+/**
+ * Atlas sheets, loaded lazily by texture SNO id. A sheet that has not been
+ * extracted 404s once, is remembered as missing, and the node falls back to
+ * its plain gem shape — the same letter-badge philosophy as the rest of the
+ * icon pipeline.
+ */
+const atlasCache = new Map<number, HTMLImageElement | 'missing'>();
+
+function atlasImage(texture: number): HTMLImageElement | null {
+    const cached = atlasCache.get(texture);
+
+    if (cached === 'missing') {
+        return null;
+    }
+
+    if (cached) {
+        return cached.complete && cached.naturalWidth > 0 ? cached : null;
+    }
+
+    const image = new Image();
+    image.src = `/games/diablo-4/icons/${texture}.webp`;
+    image.onload = () => draw();
+    image.onerror = () => {
+        atlasCache.set(texture, 'missing');
+    };
+    atlasCache.set(texture, image);
+
+    return null;
+}
+
+/** Draw a cell's icon mask, cropped from its atlas, clipped to the path
+ * currently defined on the context. */
+function drawCellIcon(
+    context: CanvasRenderingContext2D,
+    cell: WorldCell,
+    size: number,
+    alpha: number,
+): boolean {
+    const icon = cell.cell.icon;
+
+    if (!icon || typeof icon.texture !== 'number') {
+        return false;
+    }
+
+    const sheet = atlasImage(icon.texture);
+
+    if (!sheet) {
+        return false;
+    }
+
+    const sx = icon.u0 * sheet.naturalWidth;
+    const sy = icon.v0 * sheet.naturalHeight;
+    const sw = (icon.u1 - icon.u0) * sheet.naturalWidth;
+    const sh = (icon.v1 - icon.v0) * sheet.naturalHeight;
+
+    if (sw <= 0 || sh <= 0) {
+        return false;
+    }
+
+    context.save();
+    context.clip();
+    context.globalAlpha = alpha;
+    context.drawImage(
+        sheet,
+        sx,
+        sy,
+        sw,
+        sh,
+        cell.x - size / 2,
+        cell.y - size / 2,
+        size,
+        size,
+    );
+    context.restore();
+
+    return true;
+}
+
 function draw(): void {
     const el = canvas.value;
     const context = el?.getContext('2d');
@@ -491,7 +583,7 @@ function draw(): void {
 
     // Cells.
     for (const cell of cells) {
-        const half = CELL / 2;
+        const gateHalf = CELL / 2;
         const rarity = RARITY[cell.cell.rarity ?? 'normal'] ?? C.bone;
         const showDim = frames.some(
             (f) => f.entryIndex === cell.entryIndex && f.hasAllocation,
@@ -504,11 +596,11 @@ function draw(): void {
             context.setLineDash(cell.isEntryGate ? [] : [4, 3]);
             roundedRect(
                 context,
-                cell.x - half,
-                cell.y - half,
+                cell.x - gateHalf,
+                cell.y - gateHalf,
                 CELL,
                 CELL,
-                half,
+                gateHalf,
             );
             context.stroke();
             context.setLineDash([]);
@@ -516,28 +608,62 @@ function draw(): void {
         }
 
         const lit = cell.allocated || cell.isStart;
-        const size = cell.cell.rarity === 'legendary' ? CELL + 8 : CELL;
-        const s = size / 2;
+        const isRare = cell.cell.rarity === 'rare';
+        const isLegendary = cell.cell.rarity === 'legendary';
+        const size = isLegendary ? CELL + 12 : isRare ? CELL + 4 : CELL;
+        const half = size / 2;
+
+        // D4's node vocabulary: normals and magics are round gems, rares are
+        // gold diamonds, legendaries are the big centerpiece diamond.
+        const shape = () => {
+            if (isRare || isLegendary) {
+                diamond(context, cell.x, cell.y, half);
+            } else {
+                context.beginPath();
+                context.arc(cell.x, cell.y, half - 1, 0, Math.PI * 2);
+            }
+        };
 
         if (lit) {
             context.shadowColor = rarity;
-            context.shadowBlur = 14;
+            context.shadowBlur = 16;
         }
 
+        shape();
         context.fillStyle = lit ? rarity : C.cellEmpty;
         context.globalAlpha = lit ? 1 : showDim ? 0.55 : 0.9;
-        roundedRect(context, cell.x - s, cell.y - s, size, size, 7);
         context.fill();
         context.shadowBlur = 0;
 
+        // Node art from the atlas, sitting on the gem. Unallocated nodes keep
+        // a ghost of their icon so the board reads like the game's.
+        shape();
+        const drewIcon = drawCellIcon(
+            context,
+            cell,
+            size * 0.86,
+            lit ? 0.95 : showDim ? 0.3 : 0.55,
+        );
+
+        shape();
         context.strokeStyle = lit
             ? rarity
             : cell.cell.rarity && cell.cell.rarity !== 'normal'
-              ? rarity + '66'
+              ? rarity + '77'
               : C.cellStroke;
         context.lineWidth = lit ? 2 : 1.2;
         context.stroke();
         context.globalAlpha = 1;
+
+        // A lit gem with no art gets an inner core so it still reads as taken.
+        if (lit && !drewIcon) {
+            context.beginPath();
+            context.arc(cell.x, cell.y, size / 7, 0, Math.PI * 2);
+            context.fillStyle = C.plate;
+            context.globalAlpha = 0.55;
+            context.fill();
+            context.globalAlpha = 1;
+        }
 
         // Socket cells carry the glyph gem.
         if (cell.hasSocket) {

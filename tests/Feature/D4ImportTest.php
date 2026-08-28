@@ -34,7 +34,7 @@ const D4_FIXTURE_COUNTS = [
     'aspects' => 1,
     'uniques' => 2,
     'item_types' => 2,
-    'calc_tables' => 7,
+    'calc_tables' => 8,
     'icon_manifest' => 7,
 ];
 
@@ -416,7 +416,7 @@ test('the calculator tables persist the dump slices stat math reads', function (
     $tables = CalcTable::forVersion($version->id)->get()->keyBy('key');
 
     expect($tables->keys()->sort()->values()->all())->toBe([
-        'attribute_graph', 'class_core_stats', 'globals', 'item_types', 'level_scaling', 'texture_atlases', 'weapon_damage_breakpoints',
+        'attribute_graph', 'class_core_stats', 'globals', 'item_types', 'level_scaling', 'skill_trees', 'texture_atlases', 'weapon_damage_breakpoints',
     ]);
 
     $graph = $tables['attribute_graph']->data;
@@ -446,4 +446,11 @@ test('the calculator tables persist the dump slices stat math reads', function (
 
     expect($tables['class_core_stats']->data['Barbarian'])->not->toBeEmpty()
         ->and($tables['item_types']->data['Axe']['damage_multiplier'])->toBeFloat();
+
+    $tree = $tables['skill_trees']->data['Barbarian'];
+
+    expect($tree['nodes'])->not->toBeEmpty()
+        ->and($tree['edges'])->not->toBeEmpty()
+        ->and(collect($tree['nodes'])->firstWhere('name', 'Whirlwind'))->not->toBeNull()
+        ->and(collect($tree['nodes'])->first()['x'])->toBeNumeric();
 });
